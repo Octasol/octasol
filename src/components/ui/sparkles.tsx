@@ -222,8 +222,8 @@ export const SparklesCore = ({
               number: {
                 density: {
                   enable: true,
-                  width: 400,
-                  height: 400,
+                  width: 800,
+                  height: 800,
                 },
                 limit: {
                   mode: "delete",

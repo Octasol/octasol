@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { ReactNode } from "react";
 
-type Props = {}
+type Props = { children: ReactNode };
 
 const Layout = (props: Props) => {
   return (
-    <div>Layout</div>
-  )
-}
+    <>
+      <div className="flex overflow-hidden h-screen">{props.children}</div>
+    </>
+  );
+};
 
-export default Layout
+export default Layout;
