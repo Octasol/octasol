@@ -2,11 +2,9 @@ import React from "react";
 
 const Dashboard = () => {
   return (
-    <div className="flex flex-col gap-4 ">
-      <h1 className="text-xl md:text-3xl sticky top-0 right-0 left-0 z-[10] p-4 flex items-center">
-        Dashboard
-      </h1>
-      <div className=" overflow-auto h-[85vh] pb-14 md:pb-8 px-8">
+    <div className="flex flex-col gap-4 pt-24">
+      <h1 className="text-xl md:text-3xl  px-8 ">Dashboard</h1>
+      <div className=" overflow-auto h-[80vh] pb-14 md:pb-8 px-8">
         laborum vitae quo unde magni qui consectetur eveniet ratione autem in
         itaque id quos libero fugiat, modi nihil similique at recusandae
         asperiores veniam. Odit recusandae cumque cupiditate similique quis

@@ -1,11 +1,12 @@
 import Image from "next/image";
 import React from "react";
 import Login from "../Button/Login";
+
 type Props = {};
 
 const Header = (props: Props) => {
   return (
-    <nav className="text-white fixed top-0 right-0 left-0 w-full h-20 flex justify-between items-center md:px-32 px-8 py-4 ">
+    <nav className="text-white fixed top-0 right-0 left-0 w-full h-20 flex justify-between items-center md:px-32 px-8 py-6 border-b border-slate-600/50 bg-black">
       <Image src="/octasolLandingLogo.png" alt="logo" width={80} height={80} />
       <div className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block">
         <span className="absolute inset-0 overflow-hidden rounded-full">
