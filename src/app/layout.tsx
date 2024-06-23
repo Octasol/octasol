@@ -2,20 +2,22 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Session } from "next-auth";
+import SessionProviderWrapper from "@/components/SessionProviderWrapper"; // Adjust the path as necessary
+
+interface Props {
+  session: Session | null;
+  children: React.ReactNode;
+}
 
 const poppins = Poppins({ weight: ["200", "400"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Octasol",
-  icons: "/octasolLogo.jpg",
   description: "Green Commits",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children, session }: Props) {
   return (
     <html lang="en">
       <body
@@ -24,7 +26,9 @@ export default function RootLayout({
           poppins.className
         )}
       >
-        {children}
+        <SessionProviderWrapper session={session}>
+          {children}
+        </SessionProviderWrapper>
       </body>
     </html>
   );
