@@ -1,9 +1,9 @@
 "use client";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setUser } from "@/app/Redux/Features/user/userSlice";
+import { setUser } from "@/app/Redux/user/userSlice";
 
 export default function Login() {
   const { data: session } = useSession();
@@ -11,7 +11,7 @@ export default function Login() {
   const pathname = usePathname();
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (session) {
       const array = session?.user?.image?.split("/");
       if (array && array.length > 0) {

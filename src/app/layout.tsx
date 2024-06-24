@@ -16,6 +16,7 @@ const poppins = Poppins({ weight: ["200", "400"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Octasol",
+  icons:"/octasolLogo.jpg",
   description: "Green Commits",
 };
 
