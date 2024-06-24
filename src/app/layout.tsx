@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Session } from "next-auth";
 import SessionProviderWrapper from "@/components/SessionProviderWrapper"; // Adjust the path as necessary
 import Header from "@/components/Header";
+import { Providers } from "./Redux/provider";
 
 interface Props {
   session: Session | null;
@@ -27,12 +28,14 @@ export default function RootLayout({ children, session }: Props) {
           poppins.className
         )}
       >
-        <SessionProviderWrapper session={session}>
-          <div className="min-h-screen w-full flex flex-col bg-black">
-            <Header />
-            {children}
-          </div>
-        </SessionProviderWrapper>
+        <Providers>
+          <SessionProviderWrapper session={session}>
+            <div className="min-h-screen w-full flex flex-col bg-black">
+              <Header />
+              {children}
+            </div>
+          </SessionProviderWrapper>
+        </Providers>
       </body>
     </html>
   );
