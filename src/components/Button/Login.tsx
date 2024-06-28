@@ -81,10 +81,7 @@ export default function Login() {
               </ImportButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-black text-white border-2  border-t-green-500/20 border-b-indigo-500/20 border-r-green-500/40 border-l-indigo-500/40 ">
-              <DropdownMenuLabel
-                onClick={logout}
-                className="cursor-pointer"
-              >
+              <DropdownMenuLabel onClick={logout} className="cursor-pointer">
                 <div className="flex items-center gap-4">
                   <span>Sign Out</span>
                   <LogOut size={20} />
@@ -95,8 +92,8 @@ export default function Login() {
         </>
       ) : (
         <ImportButton>
-          <button onClick={() => signIn("github")}>
-            <span className="text-sm md:text-base">Connect with us&nbsp;</span>
+          <button onClick={() => signIn("github")} className="py-2">
+            <span className="text-sm md:text-base ">Connect with us&nbsp;</span>
             <span className="pt-[2px]">&gt;</span>
           </button>
         </ImportButton>

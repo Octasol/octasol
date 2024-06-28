@@ -1,0 +1,12 @@
+@keyframes move-meteor {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+.meteor {
+  animation: move-meteor linear infinite;
+}

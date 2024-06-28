@@ -1,0 +1,16 @@
+@keyframes floating {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-40px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.repo-model {
+  animation: floating 2s ease-in-out infinite;
+}

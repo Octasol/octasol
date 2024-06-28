@@ -7,7 +7,7 @@ const Layout = ({ children }: Props) => {
   return (
     <>
       <div className="flex w-12/12 h-full">
-        <div className="w-fit">
+        <div className="w-fit hidden md:flex">
           <Sidebar />
         </div>
         <div className="w-full ">{children}</div>
