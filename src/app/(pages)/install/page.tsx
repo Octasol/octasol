@@ -3,6 +3,8 @@ import React from "react";
 
 import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
+import { v4 as uuidv4 } from "uuid";
+import cookie from "js-cookie";
 
 interface Installation {
   id: number;
@@ -30,7 +32,12 @@ const Install = () => {
     const clientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID ?? "";
     const redirectUri =
       process.env.NEXT_PUBLIC_GITHUB_APP_INSTALLATION_CALLBACK_URL ?? "";
-    const installUrl = `https://github.com/apps/Octasol-DEV-app/installations/new?state=YOUR_UNIQUE_STATE_STRING&client_id=${clientId}&redirect_uri=${encodeURIComponent(
+    const state = uuidv4(); // Generate a unique state string
+    cookie.set("oauth_state", state, {
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+    const installUrl = `https://github.com/apps/Octasol-DEV-app/installations/new?state=${state}&client_id=${clientId}&redirect_uri=${encodeURIComponent(
       redirectUri
     )}`;
     window.location.href = installUrl;
