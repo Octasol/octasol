@@ -42,111 +42,111 @@ export function RepoInitializeForm() {
             <TableRow>
               <TableCell className="1-9/12">Repo Name</TableCell>
               <TableCell className="text-right">
-                <ImportButton
-                  children={
+                <ImportButton>
+                  <>
                     <span className="text-sm md:text-base">Import&nbsp;</span>
-                  }
-                />
+                  </>
+                </ImportButton>
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="1-9/12">Repo Name</TableCell>
               <TableCell className="text-right">
-                <ImportButton
-                  children={
+                <ImportButton>
+                  <>
                     <span className="text-sm md:text-base">Import&nbsp;</span>
-                  }
-                />
+                  </>
+                </ImportButton>
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="1-9/12">Repo Name</TableCell>
               <TableCell className="text-right">
-                <ImportButton
-                  children={
+                <ImportButton>
+                  <>
                     <span className="text-sm md:text-base">Import&nbsp;</span>
-                  }
-                />
+                  </>
+                </ImportButton>
               </TableCell>
             </TableRow>{" "}
             <TableRow>
               <TableCell className="1-9/12">Repo Name</TableCell>
               <TableCell className="text-right">
-                <ImportButton
-                  children={
+                <ImportButton>
+                  <>
                     <span className="text-sm md:text-base">Import&nbsp;</span>
-                  }
-                />
+                  </>
+                </ImportButton>
               </TableCell>
             </TableRow>{" "}
             <TableRow>
               <TableCell className="1-9/12">Repo Name</TableCell>
               <TableCell className="text-right">
-                <ImportButton
-                  children={
+                <ImportButton>
+                  <>
                     <span className="text-sm md:text-base">Import&nbsp;</span>
-                  }
-                />
+                  </>
+                </ImportButton>
               </TableCell>
             </TableRow>{" "}
             <TableRow>
               <TableCell className="1-9/12">Repo Name</TableCell>
               <TableCell className="text-right">
-                <ImportButton
-                  children={
+                <ImportButton>
+                  <>
                     <span className="text-sm md:text-base">Import&nbsp;</span>
-                  }
-                />
+                  </>
+                </ImportButton>
               </TableCell>
             </TableRow>{" "}
             <TableRow>
               <TableCell className="1-9/12">Repo Name</TableCell>
               <TableCell className="text-right">
-                <ImportButton
-                  children={
+                <ImportButton>
+                  <>
                     <span className="text-sm md:text-base">Import&nbsp;</span>
-                  }
-                />
+                  </>
+                </ImportButton>
               </TableCell>
             </TableRow>{" "}
             <TableRow>
               <TableCell className="1-9/12">Repo Name</TableCell>
               <TableCell className="text-right">
-                <ImportButton
-                  children={
+                <ImportButton>
+                  <>
                     <span className="text-sm md:text-base">Import&nbsp;</span>
-                  }
-                />
+                  </>
+                </ImportButton>
               </TableCell>
             </TableRow>{" "}
             <TableRow>
               <TableCell className="1-9/12">Repo Name</TableCell>
               <TableCell className="text-right">
-                <ImportButton
-                  children={
+                <ImportButton>
+                  <>
                     <span className="text-sm md:text-base">Import&nbsp;</span>
-                  }
-                />
+                  </>
+                </ImportButton>
               </TableCell>
             </TableRow>{" "}
             <TableRow>
               <TableCell className="1-9/12">Repo Name</TableCell>
               <TableCell className="text-right">
-                <ImportButton
-                  children={
+                <ImportButton>
+                  <>
                     <span className="text-sm md:text-base">Import&nbsp;</span>
-                  }
-                />
+                  </>
+                </ImportButton>
               </TableCell>
             </TableRow>{" "}
             <TableRow>
               <TableCell className="1-9/12">Repo Name</TableCell>
               <TableCell className="text-right">
-                <ImportButton
-                  children={
+                <ImportButton>
+                  <>
                     <span className="text-sm md:text-base">Import&nbsp;</span>
-                  }
-                />
+                  </>
+                </ImportButton>
               </TableCell>
             </TableRow>
           </TableBody>

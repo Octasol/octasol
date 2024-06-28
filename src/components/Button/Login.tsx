@@ -1,7 +1,7 @@
 "use client";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   DropdownMenu,
@@ -21,11 +21,13 @@ export default function Login() {
   const router = useRouter();
   const pathname = usePathname();
   const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.user);
 
-  useLayoutEffect(() => {
-    console.log(session);
-    console.log(pathname);
+  useEffect(() => {
+    console.log("user", user);
+  }, [user]);
 
+  useEffect(() => {
     if (session) {
       const array = session?.user?.image?.split("/");
       if (array && array.length > 0) {
@@ -47,7 +49,7 @@ export default function Login() {
     } else {
       router.push("/");
     }
-  }, [session]);
+  }, [session, user, pathname]);
 
   const logout = () => {
     signOut();
