@@ -35,9 +35,9 @@ export default function Login() {
           })
         );
       }
-      router.push("/dashboard");
+      // router.push("/dashboard");
     } else {
-      router.push("/");
+      // router.push("/");
     }
   }, [session, pathname, router, dispatch]);
 

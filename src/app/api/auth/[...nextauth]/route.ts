@@ -4,8 +4,8 @@ import GithubProvider from "next-auth/providers/github";
 export const authOptions = {
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID!,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+      clientId: process.env.GITHUB_CLIENT_ID! as string,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET! as string,
     }),
   ],
   callbacks: {
@@ -17,6 +17,7 @@ export const authOptions = {
     },
     async session({ session, token }: { session: any; token: any }) {
       session.accessToken = token.accessToken;
+      console.log("session access token: ", session.accessToken);
       return session;
     },
   },
