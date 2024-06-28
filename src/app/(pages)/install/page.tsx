@@ -30,8 +30,7 @@ const Install = () => {
 
   const handleInstall = () => {
     const clientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID ?? "";
-    const redirectUri =
-      process.env.NEXT_PUBLIC_GITHUB_APP_INSTALLATION_CALLBACK_URL ?? "";
+    const redirectUri = process.env.NEXT_PUBLIC_GITHUB_APP_INSTALLATION_CALLBACK_URL ?? "";
     const state = uuidv4(); // Generate a unique state string
     cookie.set("oauth_state", state, {
       secure: process.env.NODE_ENV === "production",

@@ -3,9 +3,32 @@ import { NextRequest, NextResponse } from 'next/server';
 export function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const installationId = searchParams.get('installation_id');
-
-  // You can save this installation ID in your database or perform other actions
   console.log('Installation ID:', installationId);
-  // return NextResponse.json({ installationId });
-  return NextResponse.redirect(new URL('/dashboard', req.url));
+  // if (!installationId) {
+  //   return NextResponse.json({ error: 'Missing installation ID' }, { status: 400 });
+  // }
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Setting Installation ID</title>
+        <script type="text/javascript">
+          localStorage.setItem('installationId', '${installationId}');
+          window.location.href = '/dashboard';
+        </script>
+      </head>
+      <body>
+      </body>
+    </html>
+  `;
+  if (!installationId) {
+    console.log('No installation ID');
+    return;
+  }
+  return new NextResponse(html, {
+    headers: {
+      'Content-Type': 'text/html',
+    },
+  });
 }
