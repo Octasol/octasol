@@ -3,7 +3,7 @@ import React from "react";
 import { SparklesCore } from "../ui/sparkles";
 import Text from "./Text";
 
-export default function Landing() {
+export default function LandingPage() {
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center overflow-hidden gap-8">
       <article className="container">
