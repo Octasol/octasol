@@ -1,27 +1,41 @@
 "use client";
-import { useSession, signIn, signOut } from "next-auth/react";
+import React, { useEffect } from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { v4 as uuidv4 } from "uuid";
+import cookie from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
-import { useLayoutEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "@/app/Redux/Features/user/userSlice";
+import ImportButton from "./ImportButton";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import ProfileImage from "../ProfileImage";
-import { ChevronDown, LogOut } from "lucide-react";
-import { setUser } from "@/app/Redux/user/userSlice";
+import {
+  ChevronDown,
+  GitBranchPlus,
+  Home,
+  LogOut,
+  GitCommitVertical,
+  GitMerge,
+} from "lucide-react";
+import BottomGradient from "../ui/BottomGradient";
+import { setInstallations } from "@/app/Redux/Features/git/githubInstallation";
+import { clearError, setError } from "@/app/Redux/Features/error/error";
 
-export default function Login() {
+const Login = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const pathname = usePathname();
   const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.user);
+  const installations = useSelector((state: any) => state.git);
+  const error = useSelector((state: any) => state.error);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (session) {
       const array = session?.user?.image?.split("/");
       if (array && array.length > 0) {
@@ -35,60 +49,169 @@ export default function Login() {
           })
         );
       }
-      // router.push("/dashboard");
+      if (pathname === "/") {
+        router.push("/dashboard");
+      } else {
+        router.push(pathname);
+      }
     } else {
-      // router.push("/");
+      router.push("/");
     }
-  }, [session, pathname, router, dispatch]);
+  }, [session, user, pathname]);
+
+  const logout = () => {
+    signOut();
+    dispatch(
+      setUser({
+        name: "",
+        email: "",
+        photo: "",
+        githubId: "",
+      })
+    );
+    router.push("/");
+  };
+
+  const fetchInstallations = async () => {
+    try {
+      dispatch(clearError());
+      const response = await fetch("/api/github-installations");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      dispatch(setInstallations(data.installations));
+    } catch (err: any) {
+      dispatch(setError(err.message));
+    }
+  };
+
+  useEffect(() => {
+    fetchInstallations();
+  }, []);
+
+  useEffect(() => {
+    console.log("error", error);
+  }, [error]);
+
+  const handleInstall = () => {
+    const clientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID ?? "";
+    const redirectUri =
+      process.env.NEXT_PUBLIC_GITHUB_APP_INSTALLATION_CALLBACK_URL ?? "";
+    const state = uuidv4();
+    cookie.set("oauth_state", state, {
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+    const installUrl = `https://github.com/apps/Octasol-DEV-app/installations/new?state=${state}&client_id=${clientId}&redirect_uri=${encodeURIComponent(
+      redirectUri
+    )}`;
+    window.location.href = installUrl;
+  };
 
   return (
     <>
-      {session ? (
+      {!session ? (
+        <ImportButton>
+          <button onClick={() => signIn("github")} className="py-2">
+            <span className="text-sm md:text-base ">
+              Sign in with GitHub&nbsp;
+            </span>
+            <span className="pt-[2px]">&gt;</span>
+          </button>
+        </ImportButton>
+      ) : (
         <>
           <DropdownMenu>
             <DropdownMenuTrigger className="!outline-none">
-              <div className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block">
-                <span className="absolute inset-0 overflow-hidden rounded-full">
-                  <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
-                </span>
-                <div className="relative flex space-x-2 justify-between items-center z-10 rounded-full bg-zinc-950 py-2 px-4 ring-1 ring-white/10 ">
-                  <div className="flex gap-4 items-center">
-                    <ProfileImage />
-                    <span className="text-sm md:text-base">
-                      {session.user?.name || ""}
-                    </span>
-                    <ChevronDown size={20} />
-                  </div>
+              <ImportButton>
+                <div className="flex gap-4 items-center">
+                  <ProfileImage />
+                  <span className="text-sm md:text-base">
+                    {session.user?.name || ""}
+                  </span>
+                  <ChevronDown size={20} />
                 </div>
-                <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40"></span>
-              </div>
+              </ImportButton>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-black text-white border-2  border-t-green-500/20 border-b-indigo-500/20 border-r-green-500/40 border-l-indigo-500/40 ">
-              <DropdownMenuLabel onClick={() => signOut()}>
-                <div className="flex items-center gap-4">
+            <DropdownMenuContent className="bg-black text-white border-2  border-t-green-500/20 border-b-indigo-500/20 border-r-green-500/40 border-l-indigo-500/40 flex flex-col gap-2">
+              <DropdownMenuLabel
+                className="cursor-pointer  flex md:hidden"
+                onClick={() => router.push("/dashboard")}
+              >
+                <div className="flex items-center gap-4 justify-between w-full">
+                  <span>Dashboard</span>
+                  <Home size={20} />
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuLabel
+                className="cursor-pointer  flex md:hidden"
+                onClick={() => router.push("/repoinitialize")}
+              >
+                <div className="flex items-center gap-4 justify-between w-full">
+                  <span>Repo Initialize</span>
+                  <GitBranchPlus size={20} />
+                </div>
+              </DropdownMenuLabel>
+
+              <DropdownMenuLabel
+                onClick={handleInstall}
+                className="cursor-pointer  flex  flex-col"
+              >
+                <div className="flex items-center gap-4 justify-between w-full ">
+                  <span>Install GitHub App</span>
+                  <GitCommitVertical size={20} />
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuLabel
+                onClick={fetchInstallations}
+                className="cursor-pointer  flex  flex-col"
+              >
+                <div className="flex items-center gap-4 justify-between w-full ">
+                  <span>Fetch Installations</span>
+                  <GitMerge size={20} />
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuLabel>
+                <ul>
+                  {installations.map((installation: any) => (
+                    <li key={installation.id}>
+                      ID: {installation.id}, Account:{" "}
+                      {installation.account.login}
+                    </li>
+                  ))}
+                </ul>
+              </DropdownMenuLabel>
+              <DropdownMenuLabel
+                onClick={logout}
+                className="cursor-pointer  flex  flex-col"
+              >
+                <div className="relative flex">
+                  <BottomGradient />
+                </div>
+                <div className="flex items-center gap-4 justify-between w-full pt-3 ">
                   <span>Sign Out</span>
                   <LogOut size={20} />
                 </div>
               </DropdownMenuLabel>
             </DropdownMenuContent>
           </DropdownMenu>
+          {/* <div>
+            <button onClick={handleInstall}>Install GitHub App</button>
+            <button onClick={fetchInstallations}>Fetch Installations</button>
+            {error && <p>Error: {error}</p>}
+            <ul>
+              {installations.map((installation) => (
+                <li key={installation.id}>
+                  ID: {installation.id}, Account: {installation.account.login}
+                </li>
+              ))}
+            </ul>
+          </div> */}
         </>
-      ) : (
-        <div className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block">
-          <span className="absolute inset-0 overflow-hidden rounded-full">
-            <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
-          </span>
-          <div className="relative flex space-x-2 justify-between items-center z-10 rounded-full bg-zinc-950 py-2 px-4 ring-1 ring-white/10 ">
-            <button onClick={() => signIn("github")}>
-              <span className="text-sm md:text-base">
-                Connect with us&nbsp;
-              </span>
-              <span className="pt-[2px]">&gt;</span>
-            </button>
-          </div>
-          <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40"></span>
-        </div>
       )}
     </>
   );
-}
+};
+
+export default Login;
