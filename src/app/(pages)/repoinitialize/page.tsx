@@ -1,7 +1,7 @@
 import React from "react";
 import { RepoInitializeForm } from "@/components/RepoInitializeForm";
-import RepoInitializeModel from "@/components/RepoInitializeModel";
 import { Meteors } from "@/components/ui/metors";
+import { astronautIcon } from "@/components/Svg/svg";
 
 const Repoinitialize = () => {
   return (
@@ -11,9 +11,7 @@ const Repoinitialize = () => {
         <div className="w-full lg:w-1/2 justify-center items-center z-20">
           <RepoInitializeForm />
         </div>
-        <div className="w-full lg:w-1/2 hidden lg:flex">
-          <RepoInitializeModel />
-        </div>
+        <div className="w-full lg:w-1/2 hidden lg:flex">{astronautIcon()}</div>
       </div>
     </div>
   );

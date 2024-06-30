@@ -1,26 +1,11 @@
 import { cn } from "@/lib/utils";
 import React from "react";
-import { useRouter } from "next/navigation";
 
-type Props = { children: React.ReactNode; privateFlag?: boolean; data: any };
+type Props = { children: React.ReactNode };
 
-const ImportButton = ({ children, privateFlag, data }: Props) => {
-  const router = useRouter();
-  const handleImport = () => {
-    console.log(data);
-    router.push(`/repoinitialize/${data.name}`);
-  };
-
+const LoginButton = ({ children }: Props) => {
   return (
-    <div
-      onClick={handleImport}
-      className={cn(
-        "bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block",
-        {
-          "opacity-40 cursor-not-allowed": privateFlag,
-        }
-      )}
-    >
+    <div className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block">
       <span className="absolute inset-0 overflow-hidden rounded-full">
         <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
       </span>
@@ -32,4 +17,4 @@ const ImportButton = ({ children, privateFlag, data }: Props) => {
   );
 };
 
-export default ImportButton;
+export default LoginButton;

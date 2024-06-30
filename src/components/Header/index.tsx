@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import Login from "../Button/Login";
+import Login from "../Login/Login";
 
 type Props = {};
 

@@ -3,7 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Session } from "next-auth";
-import SessionProviderWrapper from "@/components/SessionProviderWrapper"; // Adjust the path as necessary
+import SessionProviderWrapper from "@/providers/session-provider"; // Adjust the path as necessary
 import Header from "@/components/Header";
 import { Providers } from "./Redux/provider";
 import { ThemeProvider } from "@/providers/theme-provider";
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children, session }: Props) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning={true}>
       <body
         className={cn(
           "min-h-screen h-full bg-black text-white",

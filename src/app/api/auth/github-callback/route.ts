@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 export function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const installationId = searchParams.get('installation_id');
-  console.log('Installation ID:', installationId);
+  const installationId = searchParams.get("installation_id");
+  console.log("Installation ID:", installationId);
   // if (!installationId) {
   //   return NextResponse.json({ error: 'Missing installation ID' }, { status: 400 });
   // }
@@ -15,7 +15,7 @@ export function GET(req: NextRequest) {
         <title>Setting Installation ID</title>
         <script type="text/javascript">
           localStorage.setItem('installationId', '${installationId}');
-          window.location.href = '/dashboard';
+          window.location.href = '/repoinitialize';
         </script>
       </head>
       <body>
@@ -23,12 +23,12 @@ export function GET(req: NextRequest) {
     </html>
   `;
   if (!installationId) {
-    console.log('No installation ID');
+    console.log("No installation ID");
     return;
   }
   return new NextResponse(html, {
     headers: {
-      'Content-Type': 'text/html',
+      "Content-Type": "text/html",
     },
   });
 }
