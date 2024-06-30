@@ -119,7 +119,7 @@ const Login = () => {
                 <div className="flex gap-4 items-center">
                   <ProfileImage />
                   <span className="text-sm md:text-base">
-                    {session.user?.name || ""}
+                    {user?.name || ""}
                   </span>
                   <ChevronDown size={20} />
                 </div>

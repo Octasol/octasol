@@ -1,12 +1,18 @@
 import { cn } from "@/lib/utils";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setRepoData } from "@/app/Redux/Features/git/repoInitialize";
 
 type Props = { children: React.ReactNode; privateFlag?: boolean; data: any };
 
 const ImportButton = ({ children, privateFlag, data }: Props) => {
+  const dispatch = useDispatch();
   const router = useRouter();
+
   const handleImport = () => {
+    console.log(data);
+    // dispatch(setRepoData(data));
     router.push(`/repoinitialize/${data.name}`);
   };
 

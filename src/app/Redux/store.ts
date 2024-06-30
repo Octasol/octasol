@@ -16,6 +16,7 @@ export const store = configureStore({
     repo: repoReducer,
     installationId: installationIdReducer,
     search: searchReducer,
+    repoData: repoReducer,
   },
 });
 

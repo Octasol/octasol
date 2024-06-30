@@ -14,13 +14,12 @@ import ImportButton from "../Button/ImportButton";
 import SelectUser from "../Input/SelectUser";
 import RepoSearch from "../Input/RepoSearch";
 import { useSelector } from "react-redux";
-import { cn, openInNewWindow } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { setRepositories } from "@/app/Redux/Features/git/repoInitialize";
 import { useDispatch } from "react-redux";
 import { setInstallationId } from "@/app/Redux/Features/git/githubInstallation";
 import { clearError, setError } from "@/app/Redux/Features/error/error";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { githubIcon } from "@/components/Svg/svg";
 import { Lock } from "lucide-react";
 
@@ -129,7 +128,7 @@ export function RepoInitializeForm() {
                   <TableCell className="1-9/12 flex items-center gap-2">
                     <span>{repo.full_name.split("/")[1]}</span>
                     {repo.private && (
-                      <Lock size={12} className="text-red-400" />
+                      <Lock size={12} className="text-green-400" />
                     )}
                   </TableCell>
                   <TableCell className="text-right">
