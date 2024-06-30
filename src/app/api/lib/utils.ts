@@ -1,5 +1,6 @@
 import { sign } from "jsonwebtoken";
 import { readFileSync } from "fs";
+import axios from "axios";
 
 export function getToken() {
   const basedir = process.cwd();
@@ -20,4 +21,21 @@ export function getToken() {
   });
 
   return token;
+}
+
+export async function getAccessToken(installationId: number) {
+  const token = getToken();
+  const tokenResponse = await axios.post(
+    `https://api.github.com/app/installations/${installationId}/access_tokens`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github.v3+json",
+      },
+    }
+  );
+
+  const accessToken = tokenResponse.data.token;
+  return accessToken;
 }
