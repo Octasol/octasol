@@ -14,7 +14,11 @@ const RepoName = () => {
 
   const getData = async () => {
     try {
-      const data = await POST(getRepo, pathname.split("/")[2]);
+      const paylaod = {
+        repo: pathname.split("/")[2],
+        installationId: localStorage.getItem("installationId"),
+      };
+      const data = await POST(getRepo, paylaod);
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -22,7 +26,6 @@ const RepoName = () => {
   };
 
   useEffect(() => {
-    console.log(pathname.split("/")[2]);
     getData();
   }, [pathname]);
 
