@@ -1,12 +1,9 @@
 "use client";
 import React, { useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { v4 as uuidv4 } from "uuid";
-import cookie from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/app/Redux/Features/user/userSlice";
-import ImportButton from "./ImportButton";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,17 +11,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import ProfileImage from "../ProfileImage";
-import {
-  ChevronDown,
-  GitBranchPlus,
-  Home,
-  LogOut,
-  GitCommitVertical,
-  GitMerge,
-} from "lucide-react";
+import { ChevronDown, GitBranchPlus, Home, LogOut } from "lucide-react";
 import BottomGradient from "../ui/BottomGradient";
 import { setInstallations } from "@/app/Redux/Features/git/githubInstallation";
 import { clearError, setError } from "@/app/Redux/Features/error/error";
+import LoginButton from "../Button/LoginButton";
 
 const Login = () => {
   const { data: session } = useSession();
@@ -94,37 +85,37 @@ const Login = () => {
     console.log("error", error);
   }, [error]);
 
-  const handleInstall = () => {
-    const clientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID ?? "";
-    const redirectUri =
-      process.env.NEXT_PUBLIC_GITHUB_APP_INSTALLATION_CALLBACK_URL ?? "";
-    const state = uuidv4();
-    cookie.set("oauth_state", state, {
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-    });
-    const installUrl = `https://github.com/apps/Octasol-DEV-app/installations/new?state=${state}&client_id=${clientId}&redirect_uri=${encodeURIComponent(
-      redirectUri
-    )}`;
-    window.location.href = installUrl;
-  };
+  // const handleInstall = () => {
+  //   const clientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID ?? "";
+  //   const redirectUri =
+  //     process.env.NEXT_PUBLIC_GITHUB_APP_INSTALLATION_CALLBACK_URL ?? "";
+  //   const state = uuidv4();
+  //   cookie.set("oauth_state", state, {
+  //     secure: process.env.NODE_ENV === "production",
+  //     sameSite: "strict",
+  //   });
+  //   const installUrl = `https://github.com/apps/Octasol-DEV-app/installations/new?state=${state}&client_id=${clientId}&redirect_uri=${encodeURIComponent(
+  //     redirectUri
+  //   )}`;
+  //   window.location.href = installUrl;
+  // };
 
   return (
     <>
       {!session ? (
-        <ImportButton>
+        <LoginButton>
           <button onClick={() => signIn("github")} className="py-2">
             <span className="text-sm md:text-base ">
               Sign in with GitHub&nbsp;
             </span>
             <span className="pt-[2px]">&gt;</span>
           </button>
-        </ImportButton>
+        </LoginButton>
       ) : (
         <>
           <DropdownMenu>
             <DropdownMenuTrigger className="!outline-none">
-              <ImportButton>
+              <LoginButton>
                 <div className="flex gap-4 items-center">
                   <ProfileImage />
                   <span className="text-sm md:text-base">
@@ -132,7 +123,7 @@ const Login = () => {
                   </span>
                   <ChevronDown size={20} />
                 </div>
-              </ImportButton>
+              </LoginButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-black text-white border-2  border-t-green-500/20 border-b-indigo-500/20 border-r-green-500/40 border-l-indigo-500/40 flex flex-col gap-2">
               <DropdownMenuLabel
@@ -154,7 +145,7 @@ const Login = () => {
                 </div>
               </DropdownMenuLabel>
 
-              <DropdownMenuLabel
+              {/* <DropdownMenuLabel
                 onClick={handleInstall}
                 className="cursor-pointer  flex  flex-col"
               >
@@ -162,8 +153,8 @@ const Login = () => {
                   <span>Install GitHub App</span>
                   <GitCommitVertical size={20} />
                 </div>
-              </DropdownMenuLabel>
-              <DropdownMenuLabel
+              </DropdownMenuLabel> */}
+              {/* <DropdownMenuLabel
                 onClick={fetchInstallations}
                 className="cursor-pointer  flex  flex-col"
               >
@@ -171,8 +162,8 @@ const Login = () => {
                   <span>Fetch Installations</span>
                   <GitMerge size={20} />
                 </div>
-              </DropdownMenuLabel>
-              <DropdownMenuLabel>
+              </DropdownMenuLabel> */}
+              {/* <DropdownMenuLabel>
                 <ul>
                   {installations.map((installation: any) => (
                     <li key={installation.id}>
@@ -181,15 +172,15 @@ const Login = () => {
                     </li>
                   ))}
                 </ul>
-              </DropdownMenuLabel>
+              </DropdownMenuLabel> */}
               <DropdownMenuLabel
                 onClick={logout}
                 className="cursor-pointer  flex  flex-col"
               >
-                <div className="relative flex">
+                <div className="relative flex md:hidden">
                   <BottomGradient />
                 </div>
-                <div className="flex items-center gap-4 justify-between w-full pt-3 ">
+                <div className="flex items-center gap-4 justify-between w-full pt-3 md:pt-0 ">
                   <span>Sign Out</span>
                   <LogOut size={20} />
                 </div>

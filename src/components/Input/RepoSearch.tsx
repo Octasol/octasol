@@ -17,7 +17,6 @@ export default function RepoSearch() {
 
   const Submitform = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(searchRepo);
   };
   return (
     <form onSubmit={Submitform}>
