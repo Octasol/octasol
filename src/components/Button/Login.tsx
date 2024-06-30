@@ -6,15 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import ProfileImage from "../ProfileImage";
-import { ChevronDown, LogOut } from "lucide-react";
+import { ChevronDown, GitBranchPlus, Home, LogOut } from "lucide-react";
 import { setUser } from "@/app/Redux/user/userSlice";
 import ImportButton from "./ImportButton";
+import BottomGradient from "../ui/BottomGradient";
 
 export default function Login() {
   const { data: session } = useSession();
@@ -80,9 +79,34 @@ export default function Login() {
                 </div>
               </ImportButton>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-black text-white border-2  border-t-green-500/20 border-b-indigo-500/20 border-r-green-500/40 border-l-indigo-500/40 ">
-              <DropdownMenuLabel onClick={logout} className="cursor-pointer">
-                <div className="flex items-center gap-4">
+            <DropdownMenuContent className="bg-black text-white border-2  border-t-green-500/20 border-b-indigo-500/20 border-r-green-500/40 border-l-indigo-500/40 flex flex-col gap-2">
+              <DropdownMenuLabel
+                className="cursor-pointer  flex md:hidden"
+                onClick={() => router.push("/dashboard")}
+              >
+                <div className="flex items-center gap-4 justify-between w-full">
+                  <span>Dashboard</span>
+                  <Home size={20} />
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuLabel
+                className="cursor-pointer  flex md:hidden"
+                onClick={() => router.push("/repoinitialize")}
+              >
+                <div className="flex items-center gap-4 justify-between w-full">
+                  <span>Repo Initialize</span>
+                  <GitBranchPlus size={20} />
+                </div>
+              </DropdownMenuLabel>
+
+              <DropdownMenuLabel
+                onClick={logout}
+                className="cursor-pointer  flex  flex-col"
+              >
+                <div className="relative flex md:hidden">
+                  <BottomGradient />
+                </div>
+                <div className="flex items-center gap-4 justify-between w-full pt-3 md:pt-0">
                   <span>Sign Out</span>
                   <LogOut size={20} />
                 </div>

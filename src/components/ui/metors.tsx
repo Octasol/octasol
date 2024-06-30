@@ -1,5 +1,5 @@
 import React from "react";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 export const Meteors = ({
   number = 20,
@@ -15,7 +15,7 @@ export const Meteors = ({
       {meteors.map((_, idx) => (
         <span
           key={"meteor" + idx}
-          className={clsx(
+          className={cn(
             "absolute h-0.5 w-0.5 rounded-full bg-slate-500 shadow-[0_0_0_1px_#ffffff10] rotate-[215deg] animate-meteor-effect",
             "before:content-[''] before:absolute before:w-[50px] before:h-[1px] before:bg-gradient-to-r before:from-[#64748b] before:to-transparent",
             className
