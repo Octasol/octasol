@@ -12,7 +12,7 @@ export const GET = async (url: string) => {
 export const POST = async (url: string, data: any) => {
   try {
     const response = await axiosInstance.post(url, data);
-    return response.data;
+    return response;
   } catch (error) {
     throw error;
   }

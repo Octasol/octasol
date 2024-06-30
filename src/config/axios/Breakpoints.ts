@@ -1,1 +1,1 @@
-export const gitInstall = "/gitInstall";
+export const getRepo = "/get-repo/";
