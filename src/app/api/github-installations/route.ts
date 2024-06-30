@@ -4,7 +4,9 @@ import { sign } from 'jsonwebtoken';
 import axios from 'axios';
 
 export async function GET(req: NextRequest) {
-  const privateKey = readFileSync(process.env.GITHUB_PRIVATE_KEY_PATH as string);
+  const basedir = process.cwd();
+  const privateKeyFile = process.env.GITHUB_PRIVATE_KEY_FILE_NAME;
+  const privateKey = readFileSync(`${basedir}/keys/${privateKeyFile}` as string);
   const appId = process.env.GITHUB_APP_ID as string;
 
   const payload = { iss: appId };
