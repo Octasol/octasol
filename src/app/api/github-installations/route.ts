@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
-import { getToken } from "../lib/utils";
+import { getToken } from "@/lib/apiUtils";
 
 export async function GET(req: NextRequest) {
   const token = getToken();

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
-import { getAccessToken } from "../lib/utils";
+import { getAccessToken } from "@/lib/apiUtils";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);

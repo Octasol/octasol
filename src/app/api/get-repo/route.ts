@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAccessToken, getToken } from "../lib/utils";
+import { getAccessToken } from "@/lib/apiUtils";
 import axios from "axios";
 
 interface RequestData {
