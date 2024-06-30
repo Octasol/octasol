@@ -20,14 +20,14 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/": ["./src/"]
     }
   },
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
+    "/*.ts",
+    "/*.tsx",
+    ".next/types//*.ts",
     "src/config/middleware.ts"  
   ],
   "exclude": ["node_modules"]
