@@ -1,25 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readFileSync } from "fs";
-import { sign } from "jsonwebtoken";
 import axios from "axios";
+import { getToken } from "../lib/utils";
 
 export async function GET(req: NextRequest) {
-  const basedir = process.cwd();
-  const privateKeyFile = process.env.GITHUB_PRIVATE_KEY_FILE_NAME;
-  var privateKeyPath;
-  if (process.platform == "win32") {
-    privateKeyPath = `${basedir}\\keys\\${privateKeyFile}`;
-  } else {
-    privateKeyPath = `${basedir}/keys/${privateKeyFile}`;
-  }
-  const privateKey = readFileSync(privateKeyPath as string);
-  const appId = process.env.GITHUB_APP_ID as string;
-
-  const payload = { iss: appId };
-  const token = sign(payload, privateKey, {
-    algorithm: "RS256",
-    expiresIn: "9m",
-  });
+  const token = getToken();
 
   try {
     const response = await axios.get(
