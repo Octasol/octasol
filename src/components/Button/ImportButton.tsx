@@ -7,7 +7,6 @@ type Props = { children: React.ReactNode; privateFlag?: boolean; data: any };
 const ImportButton = ({ children, privateFlag, data }: Props) => {
   const router = useRouter();
   const handleImport = () => {
-    console.log(data);
     router.push(`/repoinitialize/${data.name}`);
   };
 

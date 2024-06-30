@@ -17,18 +17,18 @@ const axiosInstance: AxiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-    console.log(config.url);
+    // console.log(config.url);
     return config;
   },
   (error: any): Promise<any> => {
-    console.log(error);
+    // console.log(error);
     return Promise.reject(error);
   }
 );
 
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse): AxiosResponse => {
-    console.log(response.config);
+    // console.log(response.config);
     return response;
   },
   (error: any): Promise<any> => {

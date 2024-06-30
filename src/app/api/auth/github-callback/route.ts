@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 export function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const installationId = searchParams.get("installation_id");
-  console.log("Installation ID:", installationId);
+  // console.log("Installation ID:", installationId);
   // if (!installationId) {
   //   return NextResponse.json({ error: 'Missing installation ID' }, { status: 400 });
   // }
@@ -23,7 +23,7 @@ export function GET(req: NextRequest) {
     </html>
   `;
   if (!installationId) {
-    console.log("No installation ID");
+    // console.log("No installation ID");
     return;
   }
   return new NextResponse(html, {

@@ -52,7 +52,6 @@ export function RepoInitializeForm() {
         `/api/github-repos?installationId=${installationId}`
       );
       const data = await response.json();
-      console.log(data.repositories);
       dispatch(setRepositories(data.repositories));
     } catch (err: any) {
       dispatch(setError(err.message));
