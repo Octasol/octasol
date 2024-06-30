@@ -12,6 +12,20 @@ export async function POST(req: NextRequest) {
   const repoName: String = data.repo;
   const installationId: number = data.installationId;
 
+  if (!repoName) {
+    return NextResponse.json(
+      { error: "Repository name is required" },
+      { status: 400 }
+    );
+  }
+
+  if (!installationId) {
+    return NextResponse.json(
+      { error: "Installation ID is required" },
+      { status: 400 }
+    );
+  }
+
   const accessToken = await getAccessToken(installationId);
 
   const reposResponse = await axios.get(
@@ -50,5 +64,5 @@ export async function POST(req: NextRequest) {
       },
     }
   );
-  return NextResponse.json(issuesResponse.data);
+  return NextResponse.json(issuesResponse.data || []);
 }
