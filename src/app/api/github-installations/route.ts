@@ -6,7 +6,14 @@ import axios from 'axios';
 export async function GET(req: NextRequest) {
   const basedir = process.cwd();
   const privateKeyFile = process.env.GITHUB_PRIVATE_KEY_FILE_NAME;
-  const privateKey = readFileSync(`${basedir}/keys/${privateKeyFile}` as string);
+  var privateKeyPath;
+  if(process.platform == 'win32'){
+    privateKeyPath = `${basedir}\\keys\\${privateKeyFile}`;
+  }
+  else{
+    privateKeyPath = `${basedir}/keys/${privateKeyFile}`;
+  }
+  const privateKey = readFileSync(privateKeyPath as string);
   const appId = process.env.GITHUB_APP_ID as string;
 
   const payload = { iss: appId };
@@ -19,7 +26,7 @@ export async function GET(req: NextRequest) {
         Accept: 'application/vnd.github.v3+json',
       },
     });
-    console.log(response.data);
+    // console.log(response.data);
     return NextResponse.json({ installations: response.data });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

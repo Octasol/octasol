@@ -14,7 +14,7 @@ const RepoInitializeModel = (props: Props) => {
         xmlns="http://www.w3.org/2000/svg"
         className="repo-model animate__animated animate__floating"
       >
-        <g clip-path="url(#clip0_110_3490)">
+        <g clipPath="url(#clip0_110_3490)">
           <path
             style={{ mixBlendMode: "screen" }}
             fill-rule="evenodd"
@@ -855,7 +855,7 @@ const RepoInitializeModel = (props: Props) => {
           d="M362.711 164.869L351.667 163.562L350.767 175.529L361.289 175.874L362.711 164.869Z"
           fill="white"
         />
-        <g clip-path="url(#clip1_110_3490)">
+        <g clipPath="url(#clip1_110_3490)">
           <path
             style={{ mixBlendMode: "screen" }}
             d="M624.797 111.23L664.56 131.181L671.863 114.231L634.457 93.6686C634.457 93.6686 626.525 105.997 624.797 111.23Z"
@@ -1517,7 +1517,7 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(276.007 275.972) scale(276.007 275.972)"
           >
-            <stop offset="0.81" stop-color="#008BC4" />
+            <stop offset="0.81" stopColor="#008BC4" />
             <stop offset="0.979167" stop-opacity="0" />
           </radialGradient>
           <radialGradient
@@ -1528,10 +1528,10 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(221.372 192.218) scale(352.047 352.003)"
           >
-            <stop stop-color="#7C83FF" />
-            <stop offset="0.84" stop-color="#482088" />
-            <stop offset="0.95" stop-color="#403B77" />
-            <stop offset="1" stop-color="#4D79D1" />
+            <stop stopColor="#7C83FF" />
+            <stop offset="0.84" stopColor="#482088" />
+            <stop offset="0.95" stopColor="#403B77" />
+            <stop offset="1" stopColor="#4D79D1" />
           </radialGradient>
           <radialGradient
             id="paint2_radial_110_3490"
@@ -1541,7 +1541,7 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(425.22 481.752) rotate(-32.6268) scale(126.439 60.6876)"
           >
-            <stop stop-color="#2C6AFF" />
+            <stop stopColor="#2C6AFF" />
             <stop offset="1" stop-opacity="0" />
           </radialGradient>
           <radialGradient
@@ -1552,8 +1552,8 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(269.268 332.713) rotate(151.643) scale(52.3805)"
           >
-            <stop stop-color="#F4DBEE" />
-            <stop offset="1" stop-color="#D1BDE5" />
+            <stop stopColor="#F4DBEE" />
+            <stop offset="1" stopColor="#D1BDE5" />
           </radialGradient>
           <linearGradient
             id="paint4_linear_110_3490"
@@ -1563,8 +1563,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="343.2"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#AA367C" />
-            <stop offset="1" stop-color="#4A2FBD" />
+            <stop stopColor="#AA367C" />
+            <stop offset="1" stopColor="#4A2FBD" />
           </linearGradient>
           <linearGradient
             id="paint5_linear_110_3490"
@@ -1574,8 +1574,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="346.197"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#9579A7" />
-            <stop offset="1" stop-color="white" />
+            <stop stopColor="#9579A7" />
+            <stop offset="1" stopColor="white" />
           </linearGradient>
           <radialGradient
             id="paint6_radial_110_3490"
@@ -1585,8 +1585,8 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(335.19 504.066) rotate(151.643) scale(55.8371)"
           >
-            <stop stop-color="#F4F1FF" />
-            <stop offset="1" stop-color="#D1BDE5" />
+            <stop stopColor="#F4F1FF" />
+            <stop offset="1" stopColor="#D1BDE5" />
           </radialGradient>
           <radialGradient
             id="paint7_radial_110_3490"
@@ -1596,8 +1596,8 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(429.565 303.374) rotate(151.643) scale(57.1759)"
           >
-            <stop stop-color="#F4DBEE" />
-            <stop offset="1" stop-color="#D1BDE5" />
+            <stop stopColor="#F4DBEE" />
+            <stop offset="1" stopColor="#D1BDE5" />
           </radialGradient>
           <radialGradient
             id="paint8_radial_110_3490"
@@ -1607,8 +1607,8 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(462.568 446.789) rotate(151.643) scale(67.3269)"
           >
-            <stop stop-color="#F4F1FF" />
-            <stop offset="1" stop-color="#D1BDE5" />
+            <stop stopColor="#F4F1FF" />
+            <stop offset="1" stopColor="#D1BDE5" />
           </radialGradient>
           <linearGradient
             id="paint9_linear_110_3490"
@@ -1618,8 +1618,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="470.638"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#AA367C" />
-            <stop offset="1" stop-color="#4A2FBD" />
+            <stop stopColor="#AA367C" />
+            <stop offset="1" stopColor="#4A2FBD" />
           </linearGradient>
           <linearGradient
             id="paint10_linear_110_3490"
@@ -1629,8 +1629,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="520.482"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#AA367C" />
-            <stop offset="1" stop-color="#4A2FBD" />
+            <stop stopColor="#AA367C" />
+            <stop offset="1" stopColor="#4A2FBD" />
           </linearGradient>
           <linearGradient
             id="paint11_linear_110_3490"
@@ -1640,8 +1640,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="321.181"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#AA367C" />
-            <stop offset="1" stop-color="#4A2FBD" />
+            <stop stopColor="#AA367C" />
+            <stop offset="1" stopColor="#4A2FBD" />
           </linearGradient>
           <linearGradient
             id="paint12_linear_110_3490"
@@ -1651,8 +1651,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="447.833"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="white" />
-            <stop offset="1" stop-color="#9579A7" />
+            <stop stopColor="white" />
+            <stop offset="1" stopColor="#9579A7" />
           </linearGradient>
           <linearGradient
             id="paint13_linear_110_3490"
@@ -1662,8 +1662,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="103.285"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#D1BDE5" />
-            <stop offset="1" stop-color="white" />
+            <stop stopColor="#D1BDE5" />
+            <stop offset="1" stopColor="white" />
           </linearGradient>
           <linearGradient
             id="paint14_linear_110_3490"
@@ -1673,8 +1673,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="196.392"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#AA367C" />
-            <stop offset="1" stop-color="#4A2FBD" />
+            <stop stopColor="#AA367C" />
+            <stop offset="1" stopColor="#4A2FBD" />
           </linearGradient>
           <linearGradient
             id="paint15_linear_110_3490"
@@ -1684,8 +1684,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="272.921"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="white" />
-            <stop offset="1" stop-color="#9579A7" />
+            <stop stopColor="white" />
+            <stop offset="1" stopColor="#9579A7" />
           </linearGradient>
           <linearGradient
             id="paint16_linear_110_3490"
@@ -1695,8 +1695,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="148.685"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#D1BDE5" />
-            <stop offset="1" stop-color="#F4DBEE" />
+            <stop stopColor="#D1BDE5" />
+            <stop offset="1" stopColor="#F4DBEE" />
           </linearGradient>
           <linearGradient
             id="paint17_linear_110_3490"
@@ -1706,8 +1706,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="564.825"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="white" />
-            <stop offset="1" stop-color="#9579A7" />
+            <stop stopColor="white" />
+            <stop offset="1" stopColor="#9579A7" />
           </linearGradient>
           <linearGradient
             id="paint18_linear_110_3490"
@@ -1717,8 +1717,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="510.584"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="white" />
-            <stop offset="1" stop-color="#9579A7" />
+            <stop stopColor="white" />
+            <stop offset="1" stopColor="#9579A7" />
           </linearGradient>
           <linearGradient
             id="paint19_linear_110_3490"
@@ -1728,9 +1728,9 @@ const RepoInitializeModel = (props: Props) => {
             y2="227.008"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#5A30B2" />
-            <stop offset="1" stop-color="#AA367C" />
-            <stop offset="1" stop-color="#4A2FBD" />
+            <stop stopColor="#5A30B2" />
+            <stop offset="1" stopColor="#AA367C" />
+            <stop offset="1" stopColor="#4A2FBD" />
           </linearGradient>
           <linearGradient
             id="paint20_linear_110_3490"
@@ -1740,8 +1740,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="300.184"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="white" />
-            <stop offset="1" stop-color="#9579A7" />
+            <stop stopColor="white" />
+            <stop offset="1" stopColor="#9579A7" />
           </linearGradient>
           <linearGradient
             id="paint21_linear_110_3490"
@@ -1751,8 +1751,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="338.333"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#9579A7" />
-            <stop offset="1" stop-color="white" />
+            <stop stopColor="#9579A7" />
+            <stop offset="1" stopColor="white" />
           </linearGradient>
           <linearGradient
             id="paint22_linear_110_3490"
@@ -1762,8 +1762,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="328.801"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#AA367C" />
-            <stop offset="1" stop-color="#4A2FBD" />
+            <stop stopColor="#AA367C" />
+            <stop offset="1" stopColor="#4A2FBD" />
           </linearGradient>
           <linearGradient
             id="paint23_linear_110_3490"
@@ -1774,7 +1774,7 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
           >
             <stop stop-opacity="0" />
-            <stop offset="1" stop-color="#106D90" />
+            <stop offset="1" stopColor="#106D90" />
           </linearGradient>
           <linearGradient
             id="paint24_linear_110_3490"
@@ -1784,8 +1784,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="73.2136"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#A43440" />
-            <stop offset="1" stop-color="#C73634" />
+            <stop stopColor="#A43440" />
+            <stop offset="1" stopColor="#C73634" />
           </linearGradient>
           <linearGradient
             id="paint25_linear_110_3490"
@@ -1795,8 +1795,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="109.437"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#A43440" />
-            <stop offset="1" stop-color="#C73634" />
+            <stop stopColor="#A43440" />
+            <stop offset="1" stopColor="#C73634" />
           </linearGradient>
           <radialGradient
             id="paint26_radial_110_3490"
@@ -1806,9 +1806,9 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(564.324 61.5728) rotate(-61.702) scale(34.063 61.4731)"
           >
-            <stop stop-color="#F4BAB3" />
-            <stop offset="0.77" stop-color="#8D6FC7" />
-            <stop offset="0.96" stop-color="#B695E5" />
+            <stop stopColor="#F4BAB3" />
+            <stop offset="0.77" stopColor="#8D6FC7" />
+            <stop offset="0.96" stopColor="#B695E5" />
           </radialGradient>
           <radialGradient
             id="paint27_radial_110_3490"
@@ -1818,10 +1818,10 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(535.84 52.3714) rotate(-61.702) scale(9.15601 8.1686)"
           >
-            <stop offset="0.02" stop-color="#AB5E75" />
-            <stop offset="0.25" stop-color="#9F577B" />
-            <stop offset="0.67" stop-color="#7F458C" />
-            <stop offset="0.99" stop-color="#61349C" />
+            <stop offset="0.02" stopColor="#AB5E75" />
+            <stop offset="0.25" stopColor="#9F577B" />
+            <stop offset="0.67" stopColor="#7F458C" />
+            <stop offset="0.99" stopColor="#61349C" />
           </radialGradient>
           <linearGradient
             id="paint28_linear_110_3490"
@@ -1831,8 +1831,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="51.5598"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#FFFF18" />
-            <stop offset="1" stop-color="#FF7400" />
+            <stop stopColor="#FFFF18" />
+            <stop offset="1" stopColor="#FF7400" />
           </linearGradient>
           <radialGradient
             id="paint29_radial_110_3490"
@@ -1842,10 +1842,10 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(607.061 91.0251) rotate(-61.702) scale(16.1744 29.336)"
           >
-            <stop offset="0.02" stop-color="#8881BC" />
-            <stop offset="0.29" stop-color="#8375B7" />
-            <stop offset="0.77" stop-color="#7555AA" />
-            <stop offset="0.99" stop-color="#6D43A3" />
+            <stop offset="0.02" stopColor="#8881BC" />
+            <stop offset="0.29" stopColor="#8375B7" />
+            <stop offset="0.77" stopColor="#7555AA" />
+            <stop offset="0.99" stopColor="#6D43A3" />
           </radialGradient>
           <radialGradient
             id="paint30_radial_110_3490"
@@ -1855,10 +1855,10 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(567.39 69.5773) rotate(-61.702) scale(17.199 17.0304)"
           >
-            <stop offset="0.02" stop-color="#8881BC" />
-            <stop offset="0.29" stop-color="#8375B7" />
-            <stop offset="0.77" stop-color="#7555AA" />
-            <stop offset="0.99" stop-color="#6D43A3" />
+            <stop offset="0.02" stopColor="#8881BC" />
+            <stop offset="0.29" stopColor="#8375B7" />
+            <stop offset="0.77" stopColor="#7555AA" />
+            <stop offset="0.99" stopColor="#6D43A3" />
           </radialGradient>
           <radialGradient
             id="paint31_radial_110_3490"
@@ -1868,9 +1868,9 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(552.714 62.4888) rotate(-61.702) scale(21.3977 35.3445)"
           >
-            <stop offset="0.02" stop-color="#725EB0" />
-            <stop offset="0.38" stop-color="#6D52AA" />
-            <stop offset="0.99" stop-color="#61349C" />
+            <stop offset="0.02" stopColor="#725EB0" />
+            <stop offset="0.38" stopColor="#6D52AA" />
+            <stop offset="0.99" stopColor="#61349C" />
           </radialGradient>
           <linearGradient
             id="paint32_linear_110_3490"
@@ -1880,8 +1880,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="61.4604"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#FFFF29" />
-            <stop offset="1" stop-color="#FF7E59" />
+            <stop stopColor="#FFFF29" />
+            <stop offset="1" stopColor="#FF7E59" />
           </linearGradient>
           <radialGradient
             id="paint33_radial_110_3490"
@@ -1891,9 +1891,9 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(628.83 102.43) rotate(-61.702) scale(6.35389 11.5242)"
           >
-            <stop offset="0.02" stop-color="#725EB0" />
-            <stop offset="0.38" stop-color="#6D52AA" />
-            <stop offset="0.99" stop-color="#61349C" />
+            <stop offset="0.02" stopColor="#725EB0" />
+            <stop offset="0.38" stopColor="#6D52AA" />
+            <stop offset="0.99" stopColor="#61349C" />
           </radialGradient>
           <radialGradient
             id="paint34_radial_110_3490"
@@ -1903,10 +1903,10 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(548.011 58.98) rotate(-61.702) scale(11.7094 11.5945)"
           >
-            <stop offset="0.02" stop-color="#8881BC" />
-            <stop offset="0.29" stop-color="#8375B7" />
-            <stop offset="0.77" stop-color="#7555AA" />
-            <stop offset="0.99" stop-color="#6D43A3" />
+            <stop offset="0.02" stopColor="#8881BC" />
+            <stop offset="0.29" stopColor="#8375B7" />
+            <stop offset="0.77" stopColor="#7555AA" />
+            <stop offset="0.99" stopColor="#6D43A3" />
           </radialGradient>
           <linearGradient
             id="paint35_linear_110_3490"
@@ -1916,8 +1916,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="84.8619"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#8DC7FF" />
-            <stop offset="0.32" stop-color="#5C4D86" />
+            <stop stopColor="#8DC7FF" />
+            <stop offset="0.32" stopColor="#5C4D86" />
           </linearGradient>
           <radialGradient
             id="paint36_radial_110_3490"
@@ -1927,10 +1927,10 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(595.853 85.627) rotate(-61.702) scale(0.631788 0.625595)"
           >
-            <stop offset="0.02" stop-color="#8881BC" />
-            <stop offset="0.29" stop-color="#8375B7" />
-            <stop offset="0.77" stop-color="#7555AA" />
-            <stop offset="1" stop-color="#6D43A3" />
+            <stop offset="0.02" stopColor="#8881BC" />
+            <stop offset="0.29" stopColor="#8375B7" />
+            <stop offset="0.77" stopColor="#7555AA" />
+            <stop offset="1" stopColor="#6D43A3" />
           </radialGradient>
           <linearGradient
             id="paint37_linear_110_3490"
@@ -1940,8 +1940,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="83.0134"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#8DC7FF" />
-            <stop offset="0.32" stop-color="#5C4D86" />
+            <stop stopColor="#8DC7FF" />
+            <stop offset="0.32" stopColor="#5C4D86" />
           </linearGradient>
           <radialGradient
             id="paint38_radial_110_3490"
@@ -1951,10 +1951,10 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(592.409 83.7722) rotate(-61.702) scale(0.631788 0.625593)"
           >
-            <stop offset="0.02" stop-color="#8881BC" />
-            <stop offset="0.29" stop-color="#8375B7" />
-            <stop offset="0.77" stop-color="#7555AA" />
-            <stop offset="1" stop-color="#6D43A3" />
+            <stop offset="0.02" stopColor="#8881BC" />
+            <stop offset="0.29" stopColor="#8375B7" />
+            <stop offset="0.77" stopColor="#7555AA" />
+            <stop offset="1" stopColor="#6D43A3" />
           </radialGradient>
           <radialGradient
             id="paint39_radial_110_3490"
@@ -1964,8 +1964,8 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(562.695 82.7423) rotate(-61.702) scale(0.631788 0.625593)"
           >
-            <stop stop-color="#F4BAB3" />
-            <stop offset="1" stop-color="#8D6FC7" />
+            <stop stopColor="#F4BAB3" />
+            <stop offset="1" stopColor="#8D6FC7" />
           </radialGradient>
           <radialGradient
             id="paint40_radial_110_3490"
@@ -1975,8 +1975,8 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(553.483 76.1876) rotate(-61.702) scale(0.631788 0.625595)"
           >
-            <stop stop-color="#F4BAB3" />
-            <stop offset="1" stop-color="#8D6FC7" />
+            <stop stopColor="#F4BAB3" />
+            <stop offset="1" stopColor="#8D6FC7" />
           </radialGradient>
           <radialGradient
             id="paint41_radial_110_3490"
@@ -1986,8 +1986,8 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(574.047 80.3443) rotate(-61.702) scale(0.631788 0.625595)"
           >
-            <stop stop-color="#F4BAB3" />
-            <stop offset="1" stop-color="#8D6FC7" />
+            <stop stopColor="#F4BAB3" />
+            <stop offset="1" stopColor="#8D6FC7" />
           </radialGradient>
           <radialGradient
             id="paint42_radial_110_3490"
@@ -1997,8 +1997,8 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(580.766 69.8823) rotate(-61.702) scale(0.631788 0.625593)"
           >
-            <stop stop-color="#F4BAB3" />
-            <stop offset="1" stop-color="#8D6FC7" />
+            <stop stopColor="#F4BAB3" />
+            <stop offset="1" stopColor="#8D6FC7" />
           </radialGradient>
           <radialGradient
             id="paint43_radial_110_3490"
@@ -2008,8 +2008,8 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(578.232 58.9855) rotate(-61.702) scale(0.631788 0.625595)"
           >
-            <stop stop-color="#F4BAB3" />
-            <stop offset="1" stop-color="#8D6FC7" />
+            <stop stopColor="#F4BAB3" />
+            <stop offset="1" stopColor="#8D6FC7" />
           </radialGradient>
           <radialGradient
             id="paint44_radial_110_3490"
@@ -2019,8 +2019,8 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(565.253 53.4585) rotate(-61.702) scale(0.631788 0.625595)"
           >
-            <stop stop-color="#F4BAB3" />
-            <stop offset="1" stop-color="#8D6FC7" />
+            <stop stopColor="#F4BAB3" />
+            <stop offset="1" stopColor="#8D6FC7" />
           </radialGradient>
           <radialGradient
             id="paint45_radial_110_3490"
@@ -2030,8 +2030,8 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(555.886 55.5799) rotate(-61.702) scale(0.631788 0.625595)"
           >
-            <stop stop-color="#F4BAB3" />
-            <stop offset="1" stop-color="#8D6FC7" />
+            <stop stopColor="#F4BAB3" />
+            <stop offset="1" stopColor="#8D6FC7" />
           </radialGradient>
           <radialGradient
             id="paint46_radial_110_3490"
@@ -2041,8 +2041,8 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(549.85 64.3909) rotate(-61.702) scale(0.631788 0.625593)"
           >
-            <stop stop-color="#F4BAB3" />
-            <stop offset="1" stop-color="#8D6FC7" />
+            <stop stopColor="#F4BAB3" />
+            <stop offset="1" stopColor="#8D6FC7" />
           </radialGradient>
           <linearGradient
             id="paint47_linear_110_3490"
@@ -2052,8 +2052,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="84.4889"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#A43411" />
-            <stop offset="1" stop-color="#C73634" />
+            <stop stopColor="#A43411" />
+            <stop offset="1" stopColor="#C73634" />
           </linearGradient>
           <linearGradient
             id="paint48_linear_110_3490"
@@ -2063,8 +2063,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="45.648"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#FFFF18" />
-            <stop offset="1" stop-color="#FF7400" />
+            <stop stopColor="#FFFF18" />
+            <stop offset="1" stopColor="#FF7400" />
           </linearGradient>
           <linearGradient
             id="paint49_linear_110_3490"
@@ -2074,8 +2074,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="85.2898"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#FFFF18" />
-            <stop offset="1" stop-color="#FF7400" />
+            <stop stopColor="#FFFF18" />
+            <stop offset="1" stopColor="#FF7400" />
           </linearGradient>
           <linearGradient
             id="paint50_linear_110_3490"
@@ -2085,8 +2085,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="101.011"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#8DC7FF" />
-            <stop offset="0.32" stop-color="#5C4D86" />
+            <stop stopColor="#8DC7FF" />
+            <stop offset="0.32" stopColor="#5C4D86" />
           </linearGradient>
           <linearGradient
             id="paint51_linear_110_3490"
@@ -2096,8 +2096,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="76.679"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#8DC7FF" />
-            <stop offset="0.32" stop-color="#5C4D86" />
+            <stop stopColor="#8DC7FF" />
+            <stop offset="0.32" stopColor="#5C4D86" />
           </linearGradient>
           <linearGradient
             id="paint52_linear_110_3490"
@@ -2107,8 +2107,8 @@ const RepoInitializeModel = (props: Props) => {
             y2="87.7598"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#8DC7FF" />
-            <stop offset="0.32" stop-color="#5C4D86" />
+            <stop stopColor="#8DC7FF" />
+            <stop offset="0.32" stopColor="#5C4D86" />
           </linearGradient>
           <radialGradient
             id="paint53_radial_110_3490"
@@ -2118,14 +2118,14 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(604.135 88.0346) rotate(-82.7944) scale(5.38395 5.317)"
           >
-            <stop stop-color="#003CEE" />
-            <stop offset="0.06" stop-color="#0036D6" />
-            <stop offset="0.2" stop-color="#00289E" />
-            <stop offset="0.34" stop-color="#001C6D" />
-            <stop offset="0.48" stop-color="#001246" />
-            <stop offset="0.62" stop-color="#000A27" />
-            <stop offset="0.75" stop-color="#000412" />
-            <stop offset="0.88" stop-color="#000104" />
+            <stop stopColor="#003CEE" />
+            <stop offset="0.06" stopColor="#0036D6" />
+            <stop offset="0.2" stopColor="#00289E" />
+            <stop offset="0.34" stopColor="#001C6D" />
+            <stop offset="0.48" stopColor="#001246" />
+            <stop offset="0.62" stopColor="#000A27" />
+            <stop offset="0.75" stopColor="#000412" />
+            <stop offset="0.88" stopColor="#000104" />
             <stop offset="1" />
           </radialGradient>
           <radialGradient
@@ -2136,14 +2136,14 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(572.812 46.3761) rotate(-82.7943) scale(4.29561 4.24218)"
           >
-            <stop stop-color="#FF9A00" />
-            <stop offset="0.09" stop-color="#D68100" />
-            <stop offset="0.23" stop-color="#9E5F00" />
-            <stop offset="0.36" stop-color="#6E4200" />
-            <stop offset="0.5" stop-color="#462A00" />
-            <stop offset="0.63" stop-color="#271800" />
-            <stop offset="0.76" stop-color="#120B00" />
-            <stop offset="0.89" stop-color="#040300" />
+            <stop stopColor="#FF9A00" />
+            <stop offset="0.09" stopColor="#D68100" />
+            <stop offset="0.23" stopColor="#9E5F00" />
+            <stop offset="0.36" stopColor="#6E4200" />
+            <stop offset="0.5" stopColor="#462A00" />
+            <stop offset="0.63" stopColor="#271800" />
+            <stop offset="0.76" stopColor="#120B00" />
+            <stop offset="0.89" stopColor="#040300" />
             <stop offset="1" />
           </radialGradient>
           <radialGradient
@@ -2154,14 +2154,14 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(536.693 52.9221) rotate(-82.7943) scale(4.29561 4.24218)"
           >
-            <stop stop-color="#FF9A00" />
-            <stop offset="0.09" stop-color="#D68100" />
-            <stop offset="0.23" stop-color="#9E5F00" />
-            <stop offset="0.36" stop-color="#6E4200" />
-            <stop offset="0.5" stop-color="#462A00" />
-            <stop offset="0.63" stop-color="#271800" />
-            <stop offset="0.76" stop-color="#120B00" />
-            <stop offset="0.89" stop-color="#040300" />
+            <stop stopColor="#FF9A00" />
+            <stop offset="0.09" stopColor="#D68100" />
+            <stop offset="0.23" stopColor="#9E5F00" />
+            <stop offset="0.36" stopColor="#6E4200" />
+            <stop offset="0.5" stopColor="#462A00" />
+            <stop offset="0.63" stopColor="#271800" />
+            <stop offset="0.76" stopColor="#120B00" />
+            <stop offset="0.89" stopColor="#040300" />
             <stop offset="1" />
           </radialGradient>
           <radialGradient
@@ -2172,14 +2172,14 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(551.257 86.0537) rotate(-82.7944) scale(2.22003 2.19243)"
           >
-            <stop stop-color="#FF9A00" />
-            <stop offset="0.09" stop-color="#D68100" />
-            <stop offset="0.23" stop-color="#9E5F00" />
-            <stop offset="0.36" stop-color="#6E4200" />
-            <stop offset="0.5" stop-color="#462A00" />
-            <stop offset="0.63" stop-color="#271800" />
-            <stop offset="0.76" stop-color="#120B00" />
-            <stop offset="0.89" stop-color="#040300" />
+            <stop stopColor="#FF9A00" />
+            <stop offset="0.09" stopColor="#D68100" />
+            <stop offset="0.23" stopColor="#9E5F00" />
+            <stop offset="0.36" stopColor="#6E4200" />
+            <stop offset="0.5" stopColor="#462A00" />
+            <stop offset="0.63" stopColor="#271800" />
+            <stop offset="0.76" stopColor="#120B00" />
+            <stop offset="0.89" stopColor="#040300" />
             <stop offset="1" />
           </radialGradient>
           <radialGradient
@@ -2190,14 +2190,14 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(609.889 77.5569) rotate(-82.7944) scale(2.07556 2.04976)"
           >
-            <stop stop-color="#003CEE" />
-            <stop offset="0.06" stop-color="#0036D6" />
-            <stop offset="0.2" stop-color="#00289E" />
-            <stop offset="0.34" stop-color="#001C6D" />
-            <stop offset="0.48" stop-color="#001246" />
-            <stop offset="0.62" stop-color="#000A27" />
-            <stop offset="0.75" stop-color="#000412" />
-            <stop offset="0.88" stop-color="#000104" />
+            <stop stopColor="#003CEE" />
+            <stop offset="0.06" stopColor="#0036D6" />
+            <stop offset="0.2" stopColor="#00289E" />
+            <stop offset="0.34" stopColor="#001C6D" />
+            <stop offset="0.48" stopColor="#001246" />
+            <stop offset="0.62" stopColor="#000A27" />
+            <stop offset="0.75" stopColor="#000412" />
+            <stop offset="0.88" stopColor="#000104" />
             <stop offset="1" />
           </radialGradient>
           <radialGradient
@@ -2208,14 +2208,14 @@ const RepoInitializeModel = (props: Props) => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(599.009 101.965) rotate(-82.7944) scale(2.07556 2.04975)"
           >
-            <stop stop-color="#003CEE" />
-            <stop offset="0.06" stop-color="#0036D6" />
-            <stop offset="0.2" stop-color="#00289E" />
-            <stop offset="0.34" stop-color="#001C6D" />
-            <stop offset="0.48" stop-color="#001246" />
-            <stop offset="0.62" stop-color="#000A27" />
-            <stop offset="0.75" stop-color="#000412" />
-            <stop offset="0.88" stop-color="#000104" />
+            <stop stopColor="#003CEE" />
+            <stop offset="0.06" stopColor="#0036D6" />
+            <stop offset="0.2" stopColor="#00289E" />
+            <stop offset="0.34" stopColor="#001C6D" />
+            <stop offset="0.48" stopColor="#001246" />
+            <stop offset="0.62" stopColor="#000A27" />
+            <stop offset="0.75" stopColor="#000412" />
+            <stop offset="0.88" stopColor="#000104" />
             <stop offset="1" />
           </radialGradient>
           <clipPath id="clip0_110_3490">
