@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
   const payload = { iss: appId };
   const token = sign(payload, privateKey, {
     algorithm: "RS256",
-    expiresIn: "10m",
+    expiresIn: "9m",
   });
 
   try {
