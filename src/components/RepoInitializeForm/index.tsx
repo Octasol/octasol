@@ -144,6 +144,15 @@ export function RepoInitializeForm() {
               ))}
             </TableBody>
           </Table>
+          <p className="text-sm py-2">
+            Missing Git Repository ?
+            <span
+              className="text-blue-500 cursor-pointer"
+              onClick={handleInstall}
+            >
+              &nbsp;Adjust Github Permission !
+            </span>
+          </p>
         </div>
       )}
     </div>
