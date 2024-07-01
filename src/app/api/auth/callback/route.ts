@@ -24,7 +24,7 @@ export function GET(req: NextRequest) {
   `;
   if (!installationId) {
     // console.log("No installation ID");
-    return;
+    return NextResponse.redirect("/dashboard");
   }
   return new NextResponse(html, {
     headers: {
