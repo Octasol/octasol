@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableRow,
 } from "@/components/ui/table";
@@ -22,8 +21,8 @@ import { clearError, setError } from "@/app/Redux/Features/error/error";
 import { useRouter } from "next/navigation";
 import { githubIcon } from "@/components/Svg/svg";
 import { Lock } from "lucide-react";
-import { getUser } from "@/utils/dbUtils";
 import { POST } from "@/config/axios/requests";
+import { githubInstallations } from "@/config/axios/Breakpoints";
 
 export function RepoInitializeForm() {
   const { data: session } = useSession();
@@ -42,13 +41,17 @@ export function RepoInitializeForm() {
       if (array && array.length > 0) {
         id = array[array.length - 1];
         id = id.split("?")[0];
-        console.log("id: ", id);
       }
-      const storedInstallationId: any = (await POST( "/github-installation-id", { githubId: id })).data?.installationId;
-        dispatch(setInstallationId(storedInstallationId ?? ""));
-        if (storedInstallationId) {
-          fetchRepositories(storedInstallationId);
-        // }
+      const {response , error } = (await POST( githubInstallations, { githubId: id }))
+      if(response){
+        dispatch(setInstallationId(response?.data?.installationId ?? ""));
+        if (response?.data?.installationId) {
+          fetchRepositories(response?.data?.installationId);
+        }
+      }
+      else{
+        console.log(error);
+        // dispatch(setError(error));
       }
     }
   }

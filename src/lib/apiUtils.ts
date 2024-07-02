@@ -1,7 +1,7 @@
 import { sign } from "jsonwebtoken";
 import { readFileSync } from "fs";
 import axios from "axios";
-import { setUser } from "@/utils/dbUtils";
+import { getInstallationId, setUser } from "@/utils/dbUtils";
 
 export function getToken() {
   const basedir = process.cwd();
@@ -102,9 +102,10 @@ export async function getGithubIdbyInstallationId(installationId: number) {
 
 export async function setUserbyInstallationId(installationId: number) {
   const githubId = await getGithubIdbyInstallationId(installationId);
-  if (githubId === 0) {
+  const installationIdInDB = await getInstallationId(githubId);
+  if (githubId === 0 || installationIdInDB === 0) {
     return false;
   }
-  setUser(githubId, installationId);
+  await setUser(githubId, installationId);
   return true;
 }
