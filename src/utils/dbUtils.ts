@@ -5,15 +5,20 @@ export const setUser = async (
   installationId: any
 ): Promise<boolean> => {
   try {
+    const iId = await getInstallationId(githubId);
+    if (iId !== BigInt(0)) {
+      return false;
+    }
     await db.user.upsert({
       where: { githubId: githubId },
       update: {
-        // installationId: installationId
+        installationId: installationId,
       },
       create: { githubId: githubId, installationId: installationId },
     });
     return true;
   } catch (err) {
+    console.error(err);
     return false;
   }
 };
