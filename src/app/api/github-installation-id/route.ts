@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getInstallationId, getUser } from "@/utils/dbUtils";
+import { getInstallationId } from "@/utils/dbUtils";
 
 interface RequestData {
   githubId: number;

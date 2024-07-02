@@ -41,7 +41,7 @@ const Login = () => {
         );
       }
       if (pathname === "/") {
-        router.push("/dashboard");
+        router.push("/repoinitialize");
       } else {
         router.push(pathname);
       }
@@ -63,23 +63,23 @@ const Login = () => {
     router.push("/");
   };
 
-  const fetchInstallations = async () => {
-    try {
-      dispatch(clearError());
-      const response = await fetch("/api/github-installations");
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      dispatch(setInstallations(data.installations));
-    } catch (err: any) {
-      dispatch(setError(err.message));
-    }
-  };
+  // const fetchInstallations = async () => {
+  //   try {
+  //     dispatch(clearError());
+  //     const response = await fetch("/api/github-installations");
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! status: ${response.status}`);
+  //     }
+  //     const data = await response.json();
+  //     dispatch(setInstallations(data.installations));
+  //   } catch (err: any) {
+  //     dispatch(setError(err.message));
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchInstallations();
-  }, []);
+  // useEffect(() => {
+  //   fetchInstallations();
+  // }, []);
 
   useEffect(() => {
     console.log("error", error);
@@ -163,7 +163,7 @@ const Login = () => {
                   <GitMerge size={20} />
                 </div>
               </DropdownMenuLabel> */}
-              <DropdownMenuLabel>
+              {/* <DropdownMenuLabel>
                 <ul>
                   {installations.map((installation: any) => (
                     <li key={installation.id}>
@@ -172,7 +172,7 @@ const Login = () => {
                     </li>
                   ))}
                 </ul>
-              </DropdownMenuLabel>
+              </DropdownMenuLabel> */}
               <DropdownMenuLabel
                 onClick={logout}
                 className="cursor-pointer  flex  flex-col"

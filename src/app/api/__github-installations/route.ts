@@ -15,7 +15,6 @@ export async function GET(req: NextRequest) {
         },
       }
     );
-    // console.log(response.data);
     return NextResponse.json({ installations: response.data });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
