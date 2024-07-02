@@ -22,6 +22,8 @@ import { clearError, setError } from "@/app/Redux/Features/error/error";
 import { useRouter } from "next/navigation";
 import { githubIcon } from "@/components/Svg/svg";
 import { Lock } from "lucide-react";
+import { getUser } from "@/utils/dbUtils";
+import { POST } from "@/config/axios/requests";
 
 export function RepoInitializeForm() {
   const { data: session } = useSession();
@@ -33,14 +35,27 @@ export function RepoInitializeForm() {
   const searchTerm = useSelector((state: any) => state.search.query);
   const router = useRouter();
 
-  useEffect(() => {
+  const dispatchInstallationId = async()=>{
     if (session) {
-      const storedInstallationId = localStorage.getItem("installationId");
-      dispatch(setInstallationId(storedInstallationId ?? ""));
-      if (storedInstallationId) {
-        fetchRepositories(storedInstallationId);
+      var id;
+      const array = session?.user?.image?.split("/");
+      if (array && array.length > 0) {
+        id = array[array.length - 1];
+        id = id.split("?")[0];
+        console.log("id: ", id);
+      }
+      const storedInstallationId: any = (await POST( "/github-installation-id", { githubId: id })).data?.installationId;
+        dispatch(setInstallationId(storedInstallationId ?? ""));
+        if (storedInstallationId) {
+          fetchRepositories(storedInstallationId);
+        // }
       }
     }
+  }
+
+  useEffect(() => {
+    dispatchInstallationId();
+   
   }, [session]);
 
   const fetchRepositories = async (installationId: string) => {

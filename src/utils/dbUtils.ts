@@ -6,7 +6,7 @@ export const setUser = async (
 ): Promise<boolean> => {
   try {
     const iId = await getInstallationId(githubId);
-    if (iId !== BigInt(0)) {
+    if (iId !== 0) {
       return false;
     }
     await db.user.upsert({
@@ -33,5 +33,5 @@ export const getUser = async (githubId: any) => {
 
 export const getInstallationId = async (githubId: any) => {
   const user = await getUser(githubId);
-  return user?.installationId || null;
+  return user?.installationId || 0;
 };

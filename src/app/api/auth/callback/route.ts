@@ -1,3 +1,4 @@
+import { getGithubIdbyInstallationId, getInstallationIdbyGithubId, setUserbyInstallationId } from "@/lib/apiUtils";
 import { NextRequest, NextResponse } from "next/server";
 
 export function GET(req: NextRequest) {
@@ -10,13 +11,8 @@ export function GET(req: NextRequest) {
   //   }
   // }
   const { searchParams } = new URL(req.url);
-  console.log("Search Params:", searchParams);
   const installationId = searchParams.get("installation_id");
-
-  // console.log("Installation ID:", installationId);
-  // if (!installationId) {
-  //   return NextResponse.json({ error: 'Missing installation ID' }, { status: 400 });
-  // }
+  setUserbyInstallationId(Number(installationId));
 
   const html = `
     <!DOCTYPE html>

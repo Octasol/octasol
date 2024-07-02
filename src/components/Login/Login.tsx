@@ -163,7 +163,7 @@ const Login = () => {
                   <GitMerge size={20} />
                 </div>
               </DropdownMenuLabel> */}
-              {/* <DropdownMenuLabel>
+              <DropdownMenuLabel>
                 <ul>
                   {installations.map((installation: any) => (
                     <li key={installation.id}>
@@ -172,7 +172,7 @@ const Login = () => {
                     </li>
                   ))}
                 </ul>
-              </DropdownMenuLabel> */}
+              </DropdownMenuLabel>
               <DropdownMenuLabel
                 onClick={logout}
                 className="cursor-pointer  flex  flex-col"
