@@ -46,6 +46,7 @@ export function RepoInitializeForm() {
       if(response){
         dispatch(setInstallationId(response?.data?.installationId ?? ""));
         if (response?.data?.installationId) {
+          localStorage.setItem("installationId", response?.data?.installationId);
           fetchRepositories(response?.data?.installationId);
         }
       }
