@@ -1,11 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { v4 as uuidv4 } from "uuid";
 import cookie from "js-cookie";
 import { useSession } from "next-auth/react";
@@ -34,7 +29,7 @@ export function RepoInitializeForm() {
   const searchTerm = useSelector((state: any) => state.search.query);
   const router = useRouter();
 
-  const dispatchInstallationId = async()=>{
+  const dispatchInstallationId = async () => {
     if (session) {
       var id;
       const array = session?.user?.image?.split("/");
@@ -42,24 +37,24 @@ export function RepoInitializeForm() {
         id = array[array.length - 1];
         id = id.split("?")[0];
       }
-      const {response , error } = (await POST( githubInstallations, { githubId: id }))
-      if(response){
+      const { response, error } = await POST(githubInstallations, {
+        githubId: id,
+      });
+      if (response) {
         dispatch(setInstallationId(response?.data?.installationId ?? ""));
         if (response?.data?.installationId) {
-          localStorage.setItem("installationId", response?.data?.installationId);
+          // localStorage.setItem("installationId", response?.data?.installationId);
           fetchRepositories(response?.data?.installationId);
         }
-      }
-      else{
+      } else {
         console.log(error);
         // dispatch(setError(error));
       }
     }
-  }
+  };
 
   useEffect(() => {
     dispatchInstallationId();
-   
   }, [session]);
 
   const fetchRepositories = async (installationId: string) => {
