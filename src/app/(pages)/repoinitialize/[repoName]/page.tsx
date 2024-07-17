@@ -22,7 +22,7 @@ const RepoName = () => {
       console.log(data);
     } catch (error) {
       console.log(error);
-    }
+    } 
   };
 
   useEffect(() => {
