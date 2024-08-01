@@ -161,7 +161,7 @@ export function RepoInitializeForm() {
               ))}
             </TableBody>
           </Table>
-          <p className="text-sm py-2">
+          <p className="text-sm py-2 w-full flex justify-center">
             Missing Git Repository ?
             <span
               className="text-blue-500 cursor-pointer"

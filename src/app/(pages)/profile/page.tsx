@@ -11,6 +11,7 @@ import {
 import { Code, Code2, CodeSquare, CodeSquareIcon } from "lucide-react";
 import ImportButton from "@/components/Button/ImportButton";
 import { useSelector } from "react-redux";
+import Image from "next/image";
 
 export default function BentoGridDemo() {
   const user = useSelector((state: any) => state.user);
@@ -39,14 +40,23 @@ const items = [
   {
     title: "Github",
     description: "",
-    header: <IconBrandGithub size={200} className=" text-neutral-300" />,
-    // icon: <IconBrandGithub className="h-4 w-4 text-neutral-500" />,
+    header: (
+      <>
+        <Image
+          src="/github.webp"
+          alt="github"
+          width={200}
+          height={200}
+          className="invert"
+        />
+      </>
+    ),
   },
   {
     title: (
       <>
         <div className="flex justify-between items-ceter">
-          <span>Superteam earn</span>
+          <span>Superteam Earn</span>
           <ImportButton>
             <span className="text-sm md:text-base">Connect&nbsp;</span>
           </ImportButton>
@@ -54,8 +64,17 @@ const items = [
       </>
     ),
     description: <></>,
-    header: <IconCurrencySolana size={200} className=" text-neutral-300" />,
-    // icon: <IconCurrencySolana className="h-4 w-4 text-neutral-500" />,
+    header: (
+      <>
+        <Image
+          src="/superteam.jpeg"
+          alt="leetcode"
+          width={150}
+          height={200}
+          className="rounded-full"
+        />
+      </>
+    ),
   },
 
   {
@@ -70,8 +89,17 @@ const items = [
       </>
     ),
     description: "",
-    header: <IconBrandLeetcode size={200} className=" text-neutral-300" />,
-    // icon: <IconBrandLeetcode className="h-4 w-4 text-neutral-500" />,
+    header: (
+      <>
+        <Image
+          src="/leetcode.webp"
+          alt="leetcode"
+          width={150}
+          height={200}
+          className="rounded-full"
+        />
+      </>
+    ),
   },
   {
     title: (
@@ -85,8 +113,17 @@ const items = [
       </>
     ),
     description: "",
-    header: <Code size={200} className=" text-neutral-300" />,
-    // icon: <Code className="h-4 w-4 text-neutral-500" />,
+    header: (
+      <>
+        <Image
+          src="/codeforces.jpeg"
+          alt="leetcode"
+          width={150}
+          height={200}
+          className="rounded-full aspect-square "
+        />
+      </>
+    ),
   },
   {
     title: (
@@ -100,15 +137,23 @@ const items = [
       </>
     ),
     description: "",
-    header: <CodeSquare size={200} className=" text-neutral-300" />,
-
-    // icon: <CodeSquare className="h-4 w-4 text-neutral-500" />,
+    header: (
+      <>
+        <Image
+          src="/hackerrank.webp"
+          alt="leetcode"
+          width={150}
+          height={200}
+          className="rounded-full"
+        />
+      </>
+    ),
   },
   {
     title: (
       <>
         <div className="flex justify-between items-ceter">
-          <span>codechef</span>
+          <span>Codechef</span>
           <ImportButton>
             <span className="text-sm md:text-base">Connect&nbsp;</span>
           </ImportButton>
@@ -116,9 +161,17 @@ const items = [
       </>
     ),
     description: "",
-    header: <Code2 size={200} className=" text-neutral-300" />,
-
-    // icon: <Code2 className="h-4 w-4 text-neutral-500" />,
+    header: (
+      <>
+        <Image
+          src="/codechef.png"
+          alt="leetcode"
+          width={150}
+          height={200}
+          className="rounded-full aspect-square "
+        />
+      </>
+    ),
   },
   {
     title: (
@@ -132,9 +185,17 @@ const items = [
       </>
     ),
     description: "",
-    header: <CodeSquareIcon size={200} className=" text-neutral-300" />,
-
-    // icon: <CodeSquareIcon className="h-4 w-4 text-neutral-500" />,
+    header: (
+      <>
+        <Image
+          src="/gfg.png"
+          alt="leetcode"
+          width={150}
+          height={100}
+          className="rounded-full"
+        />
+      </>
+    ),
   },
   {
     title: (
@@ -148,7 +209,14 @@ const items = [
       </>
     ),
     description: "",
-    header: <IconBrandGitlab size={200} className=" text-neutral-300" />,
-    // icon: <IconBrandGitlab className="h-4 w-4 text-neutral-500" />,
+    header: (
+      <Image
+        src="/gitlab.png"
+        alt="leetcode"
+        width={150}
+        height={200}
+        className="rounded-full "
+      />
+    ),
   },
 ];
