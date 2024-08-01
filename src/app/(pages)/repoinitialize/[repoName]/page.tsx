@@ -19,8 +19,10 @@ const RepoName = () => {
     try {
       const paylaod = {
         repo: pathname.split("/")[2],
-        installationId: installationId,
+        installationId: localStorage.getItem("installationId"),
       };
+      console.log(localStorage.getItem("installationId"));
+
       const data = await POST(getRepo, paylaod);
       console.log(data?.response?.data);
       setData(data?.response?.data);
@@ -34,12 +36,10 @@ const RepoName = () => {
   }, [pathname]);
 
   return (
-    <div className="flex flex-col gap-4 pt-24 min-h-screen w-full justify-center items-center relative z-10">
+    <div className="flex flex-col gap-4 pt-24 h-fit w-full justify-center items-center relative z-10">
       <div className=" pb-14 lg:pb-8 px-8 py-8 w-full flex flex-col lg:flex-row">
         {/* {astronautIcon()} */}
-        <div className="w-full">
-          <HoverEffect items={data} />
-        </div>
+        <div className="w-full">{!!data && <HoverEffect items={data} />}</div>
       </div>
     </div>
   );

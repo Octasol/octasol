@@ -12,12 +12,8 @@ const Layout = ({ children }: Props) => {
           <div className="relative rotate-180 h-screen w-px">
             <div className="w-full h-full bg-gradient-to-b from-transparent via-[#39628b] to-transparent"></div>
           </div>
-
-          {/* <div className="relative rotate-180 h-screen w-px">
-            <div className="w-full h-full bg-gradient-to-b from-transparent via-green-500 to-transparent"></div>
-          </div> */}
         </div>
-        <div className="w-full ">{children}</div>
+        <div className="w-full  pt-24">{children}</div>
       </div>
     </>
   );
