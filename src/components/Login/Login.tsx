@@ -18,7 +18,7 @@ import { clearError, setError } from "@/app/Redux/Features/error/error";
 import LoginButton from "../Button/LoginButton";
 
 const Login = () => {
-  const { data: session } = useSession();
+  const { data: session } = useSession() as any;
   const router = useRouter();
   const pathname = usePathname();
   const dispatch = useDispatch();
@@ -26,20 +26,86 @@ const Login = () => {
   const installations = useSelector((state: any) => state.git);
   const error = useSelector((state: any) => state.error);
 
+  interface SessionUser {
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+    login?: string | null;
+    id?: string | null;
+    node_id?: string | null;
+    avatar_url?: string | null;
+    gravatar_id?: string | null;
+    url?: string | null;
+    html_url?: string | null;
+    followers_url?: string | null;
+    following_url?: string | null;
+    gists_url?: string | null;
+    starred_url?: string | null;
+    subscriptions_url?: string | null;
+    organizations_url?: string | null;
+    repos_url?: string | null;
+    events_url?: string | null;
+    received_events_url?: string | null;
+    type?: string | null;
+    site_admin?: boolean | null;
+    company?: string | null;
+    blog?: string | null;
+    location?: string | null;
+    hireable?: boolean | null;
+    bio?: string | null;
+    twitter_username?: string | null;
+    public_repos?: number | null;
+    public_gists?: number | null;
+    followers?: number | null;
+    following?: number | null;
+    created_at?: string | null;
+    updated_at?: string | null;
+  }
+
   useEffect(() => {
     if (session) {
-      const array = session?.user?.image?.split("/");
-      if (array && array.length > 0) {
-        const id = array[array.length - 1];
-        dispatch(
-          setUser({
-            name: session.user?.name || "",
-            email: session.user?.email || "",
-            photo: session.user?.image || "",
-            githubId: id || "",
-          })
-        );
-      }
+      const user = session.user as SessionUser;
+      dispatch(
+        setUser({
+          name: user?.name || "",
+          email: user?.email || "",
+          photo: user?.image || "",
+          githubId: user?.id || "",
+          image: user?.image || "",
+          login: user?.login || "",
+          node_id: user?.node_id || "",
+          avatar_url: user?.avatar_url || "",
+          gravatar_id: user?.gravatar_id || "",
+          url: user?.url || "",
+          html_url: user?.html_url || "",
+          followers_url: user?.followers_url || "",
+          following_url: user?.following_url || "",
+          gists_url: user?.gists_url || "",
+          starred_url: user?.starred_url || "",
+          subscriptions_url: user?.subscriptions_url || "",
+          organizations_url: user?.organizations_url || "",
+          repos_url: user?.repos_url || "",
+          events_url: user?.events_url || "",
+          received_events_url: user?.received_events_url || "",
+          type: user?.type || "",
+          site_admin: user?.site_admin || false,
+          company: user?.company || "",
+          blog: user?.blog || "",
+          location: user?.location || "",
+          hireable: user?.hireable || false,
+          bio: user?.bio || "",
+          twitter_username: user?.twitter_username || "",
+          public_repos: user?.public_repos || 0,
+          public_gists: user?.public_gists || 0,
+          followers: user?.followers || 0,
+          following: user?.following || 0,
+          created_at: user?.created_at || "",
+          updated_at: user?.updated_at || "",
+          accessToken: session.accessToken as string,
+          expires: session.expires as string,
+        })
+      );
+
       if (pathname === "/") {
         router.push("/repoinitialize");
       } else {
@@ -58,6 +124,38 @@ const Login = () => {
         email: "",
         photo: "",
         githubId: "",
+        image: "",
+        login: "",
+        node_id: "",
+        avatar_url: "",
+        gravatar_id: "",
+        url: "",
+        html_url: "",
+        followers_url: "",
+        following_url: "",
+        gists_url: "",
+        starred_url: "",
+        subscriptions_url: "",
+        organizations_url: "",
+        repos_url: "",
+        events_url: "",
+        received_events_url: "",
+        type: "",
+        site_admin: false,
+        company: "",
+        blog: "",
+        location: "",
+        hireable: false,
+        bio: "",
+        twitter_username: "",
+        public_repos: 0,
+        public_gists: 0,
+        followers: 0,
+        following: 0,
+        created_at: "",
+        updated_at: "",
+        accessToken: "",
+        expires: "",
       })
     );
     router.push("/");
