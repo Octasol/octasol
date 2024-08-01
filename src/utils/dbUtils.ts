@@ -50,3 +50,46 @@ export const setUsername = async (id: any, username: object) => {
     return false;
   }
 };
+interface GithubDevProfile {
+  stars: number;
+  forkedRepos: number;
+  originalRepos: number;
+  forks: number;
+  followers: number;
+  totalCommits: number;
+  repositoriesContributedTo: number;
+  pullRequests: number;
+  mergedPullRequests: number;
+  totalIssues: number;
+}
+
+export const setGithubDevProfile = async (
+  id: any,
+  profile: GithubDevProfile
+) => {
+  try {
+    await db.githubDevProfile.upsert({
+      where: { githubId: id },
+      update: {
+        ...profile,
+      },
+      create: {
+        githubId: id,
+        stars: profile.stars,
+        forkedRepos: profile.forkedRepos,
+        originalRepos: profile.originalRepos,
+        forks: profile.forks,
+        followers: profile.followers,
+        totalCommits: profile.totalCommits,
+        repositoriesContributedTo: profile.repositoriesContributedTo,
+        pullRequests: profile.pullRequests,
+        mergedPullRequests: profile.mergedPullRequests,
+        totalIssues: profile.totalIssues,
+      },
+    });
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import { GRAPHQL_STATS_QUERY } from "./queries";
+import { setGithubDevProfile, setUsername } from "@/utils/dbUtils";
 
 export async function GET(req: NextRequest) {
   try {
@@ -45,6 +46,19 @@ export async function GET(req: NextRequest) {
     const mergedPullRequests = user.mergedPullRequests.totalCount;
     const totalIssues =
       user.openIssues.totalCount + user.closedIssues.totalCount;
+    await setUsername(id, { githubUsername: login });
+    await setGithubDevProfile(id, {
+      stars: stars,
+      forkedRepos: forked_repos,
+      originalRepos: original_repos,
+      forks: forks,
+      followers: followers,
+      totalCommits: totalCommits,
+      repositoriesContributedTo: repositoriesContributedTo,
+      pullRequests: pullRequests,
+      mergedPullRequests: mergedPullRequests,
+      totalIssues: totalIssues,
+    });
     return NextResponse.json({
       stars,
       forked_repos,

@@ -8,15 +8,28 @@ datasource db {
 }
 
 model User {
-    githubId        BigInt  @unique
-    installationId  BigInt 
-    githubUsername     String? @unique
-    superteamUsername  String? @unique
-    leetcodeUsername   String? @unique
-    codeforcesUsername String? @unique
-    hackerrankUsername String? @unique
-    codechefUsername   String? @unique
-    gfgUsername        String? @unique
-    gitlabUsername     String? @unique
+  githubId           BigInt  @unique
+  installationId     BigInt
+  githubUsername     String? @unique
+  superteamUsername  String? @unique
+  leetcodeUsername   String? @unique
+  codeforcesUsername String? @unique
+  hackerrankUsername String? @unique
+  codechefUsername   String? @unique
+  gfgUsername        String? @unique
+  gitlabUsername     String? @unique
 }
 
+model GithubDevProfile {
+  githubId                  BigInt @unique
+  stars                     Int
+  forks                     Int
+  forkedRepos               Int
+  originalRepos             Int
+  followers                 Int
+  totalCommits              Int
+  repositoriesContributedTo Int
+  pullRequests              Int
+  mergedPullRequests        Int
+  totalIssues               Int
+}
