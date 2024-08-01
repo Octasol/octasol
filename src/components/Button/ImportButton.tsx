@@ -1,10 +1,11 @@
+"use client";
 import { cn } from "@/lib/utils";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setRepoData } from "@/app/Redux/Features/git/repoInitialize";
 
-type Props = { children: React.ReactNode; privateFlag?: boolean; data: any };
+type Props = { children: React.ReactNode; privateFlag?: boolean; data?: any };
 
 const ImportButton = ({ children, privateFlag, data }: Props) => {
   const dispatch = useDispatch();
@@ -12,8 +13,12 @@ const ImportButton = ({ children, privateFlag, data }: Props) => {
 
   const handleImport = () => {
     console.log(data);
+    if (data) {
+      router.push(`/repoinitialize/${data.name}`);
+    } else {
+      window.alert("No data found");
+    }
     // dispatch(setRepoData(data));
-    router.push(`/repoinitialize/${data.name}`);
   };
 
   return (
