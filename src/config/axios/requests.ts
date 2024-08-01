@@ -1,20 +1,35 @@
 import axiosInstance from "./axiosInterceptor";
 
-export const GET = async (url: string) => {
+export const GET = async (
+  url: string,
+  additionalHeaders?: Record<string, string>
+) => {
   try {
-    const response = await axiosInstance.get(url);
+    const response = await axiosInstance.get(url, {
+      headers: {
+        ...additionalHeaders,
+      },
+    });
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const POST = async (url: string, data: any) => {
+export const POST = async (
+  url: string,
+  data: any,
+  additionalHeaders?: Record<string, string>
+) => {
   try {
-    const response = await axiosInstance.post(url, data);
-    return {response: response, error: null };
+    const response = await axiosInstance.post(url, data, {
+      headers: {
+        ...additionalHeaders,
+      },
+    });
+    return { response: response, error: null };
   } catch (error) {
-    return {response: null, error: error };
+    return { response: null, error: error };
   }
 };
 
