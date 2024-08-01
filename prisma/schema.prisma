@@ -10,4 +10,13 @@ datasource db {
 model User {
     githubId        BigInt  @unique
     installationId  BigInt 
+    githubUsername     String? @unique
+    superteamUsername  String? @unique
+    leetcodeUsername   String? @unique
+    codeforcesUsername String? @unique
+    hackerrankUsername String? @unique
+    codechefUsername   String? @unique
+    gfgUsername        String? @unique
+    gitlabUsername     String? @unique
 }
+
