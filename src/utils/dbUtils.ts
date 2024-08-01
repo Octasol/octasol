@@ -36,12 +36,12 @@ export const getInstallationId = async (githubId: any) => {
   return user?.installationId || 0;
 };
 
-export const setGithubUsername = async (id: any, username: any) => {
+export const setUsername = async (id: any, username: object) => {
   try {
     await db.user.update({
       where: { githubId: id },
       data: {
-        githubUsername: username,
+        ...username,
       },
     });
     return true;
