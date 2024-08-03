@@ -1,4 +1,19 @@
 import { db } from "@/lib/db";
+import { GithubDevProfile, UserDB } from "@/lib/types";
+
+export const initializeUser = async (githubId: any) => {
+  try {
+    await db.user.upsert({
+      where: { githubId: githubId },
+      update: {},
+      create: { githubId: githubId, installationId: 0 },
+    });
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
 
 export const setUser = async (
   githubId: any,
@@ -23,7 +38,7 @@ export const setUser = async (
   }
 };
 
-export const getUser = async (githubId: any) => {
+export const getDbUser = async (githubId: any) => {
   return db.user.findUnique({
     where: {
       githubId: githubId,
@@ -31,12 +46,20 @@ export const getUser = async (githubId: any) => {
   });
 };
 
+export const getUserByUsername = async (githubUsername: any) => {
+  return db.user.findUnique({
+    where: {
+      githubUsername: githubUsername,
+    },
+  });
+};
+
 export const getInstallationId = async (githubId: any) => {
-  const user = await getUser(githubId);
+  const user = await getDbUser(githubId);
   return user?.installationId || 0;
 };
 
-export const setUsername = async (id: any, username: object) => {
+export const setUsername = async (id: any, username: UserDB) => {
   try {
     await db.user.update({
       where: { githubId: id },
@@ -50,18 +73,6 @@ export const setUsername = async (id: any, username: object) => {
     return false;
   }
 };
-interface GithubDevProfile {
-  stars: number;
-  forkedRepos: number;
-  originalRepos: number;
-  forks: number;
-  followers: number;
-  totalCommits: number;
-  repositoriesContributedTo: number;
-  pullRequests: number;
-  mergedPullRequests: number;
-  totalIssues: number;
-}
 
 export const setGithubDevProfile = async (
   id: any,
@@ -125,7 +136,7 @@ export const getAllGithubDevProfiles = async () => {
   }
 };
 export const getGithubUsername = async (id: any) => {
-  const user = await getUser(id);
+  const user = await getDbUser(id);
   return user?.githubUsername || "";
 };
 
@@ -160,7 +171,7 @@ export const getHackerrankProfile = async (id: any) => {
 export const updateTotalPoints = async (id: any) => {
   const hackerrankProfile = await getHackerrankProfile(id);
   const githubDevProfile = await getGithubDevProfile(id);
-  const user = await getUser(id);
+  const user = await getDbUser(id);
   let totalPoints = 0;
 
   if (hackerrankProfile) {

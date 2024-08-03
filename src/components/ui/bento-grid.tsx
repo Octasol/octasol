@@ -1,7 +1,4 @@
 import { cn } from "@/lib/utils";
-import { IconBrandGithub, IconBrandGithubCopilot } from "@tabler/icons-react";
-import { Github } from "lucide-react";
-import Image from "next/image";
 import { useSelector } from "react-redux";
 
 export const BentoGrid = ({
@@ -37,7 +34,6 @@ export const BentoGridItem = ({
   icon?: React.ReactNode;
 }) => {
   const user = useSelector((state: any) => state.user);
-  console.log(user);
 
   return (
     <div

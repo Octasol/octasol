@@ -46,18 +46,3 @@ const RepoName = () => {
 };
 
 export default RepoName;
-
-export const projects = [
-  {
-    title: "profile",
-    description: "profile description ",
-  },
-  {
-    title: "wallet",
-    description: "view tokens and transactions description by wallet address",
-  },
-  {
-    title: "transactions",
-    description: "view your tokens and transactions description",
-  },
-];

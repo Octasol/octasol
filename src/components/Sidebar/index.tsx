@@ -7,14 +7,14 @@ type Props = {};
 
 const Sidebar = (props: Props) => {
   return (
-    <div className="min-w pt-24 pb-4 h-screen overflow-auto  flex flex-col items-center gap-8 px-5">
+    <div className="min-w pt-24 pb-4 min-h-screen z-50 overflow-hidden fixed flex flex-col items-center gap-8 px-5">
       <Link href="/dashboard">
         <HomeIcon size={32} />
       </Link>
       <Link href="/repoinitialize">
         <CopyPlus size={32} />
       </Link>
-      <Link href="/profile">
+      <Link href="/connect">
         <Blocks size={32} />
       </Link>
       <Link href="/leaderboard">

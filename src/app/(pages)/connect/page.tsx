@@ -1,21 +1,10 @@
 "use client";
-import { cn } from "@/lib/utils";
 import React from "react";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
-import {
-  IconBrandGithub,
-  IconBrandGitlab,
-  IconBrandLeetcode,
-  IconCurrencySolana,
-} from "@tabler/icons-react";
-import { Code, Code2, CodeSquare, CodeSquareIcon } from "lucide-react";
-import ImportButton from "@/components/Button/ImportButton";
-import { useSelector } from "react-redux";
 import Image from "next/image";
+import ConnectButton from "@/components/Button/ConnectButton";
 
-export default function BentoGridDemo() {
-  const user = useSelector((state: any) => state.user);
-
+export default function Connect() {
   return (
     <div className="w-full h-full flex justify-center items-center">
       <BentoGrid className="max-w-8xl mx-auto">
@@ -32,9 +21,6 @@ export default function BentoGridDemo() {
     </div>
   );
 }
-const Skeleton = () => (
-  <div className="flex flex-1 w-full h-[12rem] rounded-xl "></div>
-);
 
 const items = [
   {
@@ -57,9 +43,9 @@ const items = [
       <>
         <div className="flex justify-between items-ceter">
           <span>Superteam Earn</span>
-          <ImportButton>
+          <ConnectButton type="superteamearn">
             <span className="text-sm md:text-base">Connect&nbsp;</span>
-          </ImportButton>
+          </ConnectButton>
         </div>
       </>
     ),
@@ -68,7 +54,7 @@ const items = [
       <>
         <Image
           src="/superteam.jpeg"
-          alt="leetcode"
+          alt="superteam"
           width={150}
           height={200}
           className="rounded-full"
@@ -82,9 +68,9 @@ const items = [
       <>
         <div className="flex justify-between items-ceter">
           <span>Leetcode</span>
-          <ImportButton>
+          <ConnectButton type="leetcode">
             <span className="text-sm md:text-base">Connect&nbsp;</span>
-          </ImportButton>
+          </ConnectButton>
         </div>
       </>
     ),
@@ -106,9 +92,9 @@ const items = [
       <>
         <div className="flex justify-between items-ceter">
           <span>Codeforces</span>
-          <ImportButton>
+          <ConnectButton type="superteamearn">
             <span className="text-sm md:text-base">Connect&nbsp;</span>
-          </ImportButton>
+          </ConnectButton>
         </div>
       </>
     ),
@@ -130,9 +116,9 @@ const items = [
       <>
         <div className="flex justify-between items-ceter">
           <span>Hackerrank</span>
-          <ImportButton>
+          <ConnectButton type="superteamearn">
             <span className="text-sm md:text-base">Connect&nbsp;</span>
-          </ImportButton>
+          </ConnectButton>
         </div>
       </>
     ),
@@ -154,9 +140,9 @@ const items = [
       <>
         <div className="flex justify-between items-ceter">
           <span>Codechef</span>
-          <ImportButton>
+          <ConnectButton type="superteamearn">
             <span className="text-sm md:text-base">Connect&nbsp;</span>
-          </ImportButton>
+          </ConnectButton>
         </div>
       </>
     ),
@@ -178,9 +164,9 @@ const items = [
       <>
         <div className="flex justify-between items-ceter">
           <span>Geeksforgeeks</span>
-          <ImportButton>
+          <ConnectButton type="superteamearn">
             <span className="text-sm md:text-base">Connect&nbsp;</span>
-          </ImportButton>
+          </ConnectButton>
         </div>
       </>
     ),
@@ -202,9 +188,9 @@ const items = [
       <>
         <div className="flex justify-between items-ceter">
           <span>Gitlab</span>
-          <ImportButton>
+          <ConnectButton type="superteamearn">
             <span className="text-sm md:text-base">Connect&nbsp;</span>
-          </ImportButton>
+          </ConnectButton>
         </div>
       </>
     ),

@@ -1,4 +1,4 @@
-import { getUser, setUser } from "@/utils/dbUtils";
+import { initializeUser } from "@/utils/dbUtils";
 import { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 
@@ -30,11 +30,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }: { session: any; token: any }) {
       session.accessToken = token.accessToken;
       session.user = { ...session.user, ...token.profile };
-      // const array = session?.user?.image?.split("/");
-      // if (array && array.length > 0) {
-      //   const id = array[array.length - 1];
-      // }
-      // console.log("Session: ", session);
+      await initializeUser(session.user.id);
       return session;
     },
   },

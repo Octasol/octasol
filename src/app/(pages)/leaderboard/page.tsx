@@ -11,13 +11,13 @@ import {
 import { GET } from "@/config/axios/requests";
 import RankCard from "@/components/RankCard";
 import { Profile } from "@/lib/types";
+import { githubDevProfile } from "@/config/axios/Breakpoints";
 
 const Leaderboard = () => {
   const [profile, setProfile] = useState<Profile[]>();
 
   const response = async () => {
-    const res = await GET("/devprofile/github/");
-    console.log(res);
+    const res = await GET(githubDevProfile);
     setProfile(res);
   };
 

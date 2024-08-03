@@ -3,26 +3,11 @@ import axios from "axios";
 import { GRAPHQL_STATS_QUERY } from "./queries";
 import {
   getAllGithubDevProfiles,
-  getGithubUsername,
+  getDbUser,
   setGithubDevProfile,
   setUsername,
 } from "@/utils/dbUtils";
-import { get } from "http";
-import { getGithubProfileWithGithubID } from "@/lib/apiUtils";
-
-function bigintToString(obj: any): any {
-  if (obj === null || obj === undefined) return obj;
-  if (typeof obj === "bigint") {
-    return obj.toString();
-  } else if (Array.isArray(obj)) {
-    return obj.map(bigintToString);
-  } else if (typeof obj === "object") {
-    return Object.fromEntries(
-      Object.entries(obj).map(([key, value]) => [key, bigintToString(value)])
-    );
-  }
-  return obj;
-}
+import { bigintToString } from "@/lib/utils";
 
 export async function GET() {
   try {
@@ -90,7 +75,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const { login, id, followers } = await getUser(
+    const { email, login, id, followers } = await getUserByAuthHeader(
       `${req.headers.get("Authorization")}`
     );
 
@@ -108,7 +93,17 @@ export async function POST(req: NextRequest) {
     const mergedPullRequests = user.mergedPullRequests.totalCount;
     const totalIssues =
       user.openIssues.totalCount + user.closedIssues.totalCount;
-    await setUsername(id, { githubUsername: login });
+    const userDB = await getDbUser(id);
+
+    if (!userDB?.emails)
+      await setUsername(id, { githubUsername: login, emails: [email] });
+    else if (!userDB?.emails.includes(email) && email)
+      await setUsername(id, {
+        githubUsername: login,
+        emails: [...userDB.emails, email],
+      });
+    else if (!userDB?.githubUsername)
+      await setUsername(id, { githubUsername: login });
     await setGithubDevProfile(id, {
       stars: stars,
       forkedRepos: forked_repos,
@@ -151,7 +146,7 @@ async function getRepos(page: number, authHeader: string) {
   return res.data;
 }
 
-async function getUser(authHeader: string) {
+async function getUserByAuthHeader(authHeader: string) {
   const url = `https://api.github.com/user`;
   const res = await axios.get(url, {
     headers: {

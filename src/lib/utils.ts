@@ -17,3 +17,17 @@ export function openInNewWindow(url: string) {
     "toolbar=yes,scrollbars=yes,resizable=yes,width=1000,height=1000, left=500, top=500"
   );
 }
+
+export function bigintToString(obj: any): any {
+  if (obj === null || obj === undefined) return obj;
+  if (typeof obj === "bigint") {
+    return obj.toString();
+  } else if (Array.isArray(obj)) {
+    return obj.map(bigintToString);
+  } else if (typeof obj === "object") {
+    return Object.fromEntries(
+      Object.entries(obj).map(([key, value]) => [key, bigintToString(value)])
+    );
+  }
+  return obj;
+}

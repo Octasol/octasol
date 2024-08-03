@@ -1,3 +1,4 @@
+import { githubAvatar } from "@/config/axios/Breakpoints";
 import { Profile } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -9,8 +10,6 @@ type Props = {
 };
 
 const RankCard = (props: Props) => {
-  console.log(props);
-
   return (
     <>
       {props.profile && (
@@ -27,10 +26,7 @@ const RankCard = (props: Props) => {
             <div className="px-4 py-3 flex flex-col justify-center items-center w-full">
               <div className="w-20 h-20 bg-gray-600 rounded-full">
                 <Image
-                  src={
-                    "https://avatars.githubusercontent.com/" +
-                    props?.profile?.User?.githubUsername
-                  }
+                  src={githubAvatar + props?.profile?.User?.githubUsername}
                   alt="profile"
                   width={100}
                   height={100}
