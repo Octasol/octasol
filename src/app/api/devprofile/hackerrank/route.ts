@@ -1,37 +1,24 @@
-import axios from "axios";
-import { NextRequest, NextResponse } from "next/server";
+import axios from 'axios';
+import { NextRequest, NextResponse } from 'next/server';
+import { signWithProviderID } from '@/config/reclaim/reclaimService';
+import { getHackerrankStats } from '@/config/reclaim/hackerrank/service';
 
 export async function GET(req: NextRequest) {
-  const data = await getHackerrankStats("Q_2022_23_26");
+  const data = await getHackerrankStats('Q_2022_23_26');
   return NextResponse.json(data);
 }
 
 export async function POST(req: NextRequest) {
-  return NextResponse.json({ message: "Hello World" });
-}
+  const { userId, providerId } = await req.json();
 
-async function getHackerrankProfile(username: string) {
-  const response = await axios.get(
-    `https://www.hackerrank.com/rest/hackers/${username}/badges`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "*/*",
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
-      },
+  try {
+    const signedUrl = await signWithProviderID(userId, providerId, 'hackerrank');
+    return NextResponse.json({ success: true, url: signedUrl });
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+    } else {
+      return NextResponse.json({ success: false, message: 'An unknown error occurred' }, { status: 500 });
     }
-  );
-  return response.data;
-}
-
-async function getHackerrankStats(username: string) {
-  const data = await getHackerrankProfile(username);
-  let stars = 0;
-  let currentPoints = 0;
-  data.models.forEach((model: any) => {
-    currentPoints += model.current_points;
-    stars += model.stars;
-  });
-  return { currentPoints, stars };
+  }
 }
