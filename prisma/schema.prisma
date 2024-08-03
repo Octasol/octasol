@@ -8,21 +8,23 @@ datasource db {
 }
 
 model User {
-  githubId           BigInt  @unique
+  githubId           BigInt            @id @unique
   installationId     BigInt
-  githubUsername     String? @unique
-  superteamUsername  String? @unique
-  leetcodeUsername   String? @unique
-  codeforcesUsername String? @unique
-  hackerrankUsername String? @unique
-  codechefUsername   String? @unique
-  gfgUsername        String? @unique
-  gitlabUsername     String? @unique
-  email              String? @unique
+  githubUsername     String?           @unique
+  superteamUsername  String?           @unique
+  leetcodeUsername   String?           @unique
+  codeforcesUsername String?           @unique
+  hackerrankUsername String?           @unique
+  codechefUsername   String?           @unique
+  gfgUsername        String?           @unique
+  gitlabUsername     String?           @unique
+  email              String?           @unique
+  GithubDevProfile   GithubDevProfile?
 }
 
 model GithubDevProfile {
-  githubId                  BigInt @unique
+  User                      User?  @relation(fields: [githubId], references: [githubId])
+  githubId                  BigInt @id @unique
   stars                     Int
   forks                     Int
   forkedRepos               Int

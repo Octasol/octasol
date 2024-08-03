@@ -93,3 +93,38 @@ export const setGithubDevProfile = async (
     return false;
   }
 };
+
+// export const getAllGithubDevProfiles = async () => {
+//   // return the list of all github dev profiles and using the User relation to get the github username
+//   return db.githubDevProfile.findMany({
+//     include: {
+//       User: true,
+//     },
+//   });
+// };
+
+export const getAllGithubDevProfiles = async () => {
+  try {
+    const profiles = await db.githubDevProfile.findMany({
+      include: {
+        User: {
+          select: {
+            githubUsername: true,
+          },
+        },
+      },
+    });
+
+    return profiles.map((profile) => ({
+      ...profile,
+      githubUsername: profile.User?.githubUsername || null,
+    }));
+  } catch (error) {
+    console.error("Error fetching GitHub dev profiles:", error);
+    throw error;
+  }
+};
+export const getGithubUsername = async (id: any) => {
+  const user = await getUser(id);
+  return user?.githubUsername || "";
+};

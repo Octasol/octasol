@@ -1,9 +1,71 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import { GRAPHQL_STATS_QUERY } from "./queries";
-import { setGithubDevProfile, setUsername } from "@/utils/dbUtils";
+import {
+  getAllGithubDevProfiles,
+  getGithubUsername,
+  setGithubDevProfile,
+  setUsername,
+} from "@/utils/dbUtils";
+import { get } from "http";
+import { getGithubProfileWithGithubID } from "@/lib/apiUtils";
 
-export async function GET(req: NextRequest) {
+function bigintToString(obj: any): any {
+  if (obj === null || obj === undefined) return obj;
+  if (typeof obj === "bigint") {
+    return obj.toString();
+  } else if (Array.isArray(obj)) {
+    return obj.map(bigintToString);
+  } else if (typeof obj === "object") {
+    return Object.fromEntries(
+      Object.entries(obj).map(([key, value]) => [key, bigintToString(value)])
+    );
+  }
+  return obj;
+}
+
+export async function GET() {
+  try {
+    const githubDevProfile = await getAllGithubDevProfiles();
+    console.log(githubDevProfile);
+    if (!githubDevProfile) {
+      return NextResponse.json(
+        { error: "Github Dev Profile not found" },
+        { status: 404 }
+      );
+    }
+
+    const serializedProfile = bigintToString(githubDevProfile).sort(
+      (prev: any, next: any) =>
+        next.followers +
+        next.forkedRepos +
+        next.forks +
+        next.mergedPullRequests +
+        next.originalRepos +
+        next.repositoriesContributedTo +
+        next.pullRequests +
+        next.stars +
+        next.totalCommits +
+        next.totalIssues -
+        (prev.followers +
+          prev.forkedRepos +
+          prev.forks +
+          prev.mergedPullRequests +
+          prev.originalRepos +
+          prev.repositoriesContributedTo +
+          prev.pullRequests +
+          prev.stars +
+          prev.totalCommits +
+          prev.totalIssues)
+    );
+
+    return NextResponse.json(serializedProfile);
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+export async function POST(req: NextRequest) {
   try {
     let page = 1;
     let stars = 0;
