@@ -2,6 +2,7 @@ import { sign } from "jsonwebtoken";
 import { readFileSync } from "fs";
 import axios from "axios";
 import { getInstallationId, setUser } from "@/utils/dbUtils";
+import { getCache, setCache } from "./cache";
 
 export function getToken() {
   const basedir = process.cwd();
@@ -108,4 +109,27 @@ export async function setUserbyInstallationId(installationId: number) {
   }
   await setUser(githubId, installationId);
   return true;
+}
+
+export async function getGithubIdbyAuthHeader(authHeader: string) {
+  try {
+    if(!authHeader) {
+      return 0;
+    }
+    const cacheKey = `githubUserId:${authHeader}`;
+    const githubId = getCache(cacheKey);
+    if (githubId) {
+      return githubId;
+    }
+    const response = await axios.get("https://api.github.com/user", {
+      headers: {
+        Authorization: `${authHeader}`,
+        Accept: "application/vnd.github.v3+json",
+      },
+    });
+    setCache(cacheKey, response.data.id);
+    return response.data.id;
+  } catch (error: any) {
+    return 0;
+  }
 }
