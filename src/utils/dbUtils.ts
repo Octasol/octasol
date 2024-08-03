@@ -32,6 +32,14 @@ export const getUser = async (githubId: any) => {
   });
 };
 
+export const getUserByUsername = async (githubUsername: any) => {
+  return db.user.findUnique({
+    where: {
+      githubUsername: githubUsername,
+    },
+  });
+};
+
 export const getInstallationId = async (githubId: any) => {
   const user = await getUser(githubId);
   return user?.installationId || 0;

@@ -6,20 +6,7 @@ import {
   setGithubDevProfile,
   setUsername,
 } from "@/utils/dbUtils";
-
-function bigintToString(obj: any): any {
-  if (obj === null || obj === undefined) return obj;
-  if (typeof obj === "bigint") {
-    return obj.toString();
-  } else if (Array.isArray(obj)) {
-    return obj.map(bigintToString);
-  } else if (typeof obj === "object") {
-    return Object.fromEntries(
-      Object.entries(obj).map(([key, value]) => [key, bigintToString(value)])
-    );
-  }
-  return obj;
-}
+import { bigintToString } from "@/lib/utils";
 
 export async function GET() {
   try {
