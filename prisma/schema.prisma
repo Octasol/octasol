@@ -8,18 +8,20 @@ datasource db {
 }
 
 model User {
-  githubId           BigInt            @id @unique
+  githubId           BigInt             @id @unique
   installationId     BigInt
-  githubUsername     String?           @unique
-  superteamUsername  String?           @unique
-  leetcodeUsername   String?           @unique
-  codeforcesUsername String?           @unique
-  hackerrankUsername String?           @unique
-  codechefUsername   String?           @unique
-  gfgUsername        String?           @unique
-  gitlabUsername     String?           @unique
-  email              String?           @unique
+  githubUsername     String?            @unique
+  superteamUsername  String?            @unique
+  leetcodeUsername   String?            @unique
+  codeforcesUsername String?            @unique
+  hackerrankUsername String?            @unique
+  codechefUsername   String?            @unique
+  gfgUsername        String?            @unique
+  gitlabUsername     String?            @unique
+  email              String?            @unique
   GithubDevProfile   GithubDevProfile?
+  HackerrankProfile  HackerrankProfile?
+  totalPoints        Int?
 }
 
 model GithubDevProfile {
@@ -35,4 +37,11 @@ model GithubDevProfile {
   pullRequests              Int
   mergedPullRequests        Int
   totalIssues               Int
+}
+
+model HackerrankProfile {
+  User          User?  @relation(fields: [githubId], references: [githubId])
+  githubId      BigInt @id @unique
+  currentPoints Int
+  stars         Int
 }

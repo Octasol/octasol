@@ -87,6 +87,7 @@ export const setGithubDevProfile = async (
         totalIssues: profile.totalIssues,
       },
     });
+    updateTotalPoints(id);
     return true;
   } catch (err) {
     console.error(err);
@@ -94,14 +95,13 @@ export const setGithubDevProfile = async (
   }
 };
 
-// export const getAllGithubDevProfiles = async () => {
-//   // return the list of all github dev profiles and using the User relation to get the github username
-//   return db.githubDevProfile.findMany({
-//     include: {
-//       User: true,
-//     },
-//   });
-// };
+export const getGithubDevProfile = async (id: any) => {
+  return db.githubDevProfile.findUnique({
+    where: {
+      githubId: id,
+    },
+  });
+};
 
 export const getAllGithubDevProfiles = async () => {
   try {
@@ -127,4 +127,67 @@ export const getAllGithubDevProfiles = async () => {
 export const getGithubUsername = async (id: any) => {
   const user = await getUser(id);
   return user?.githubUsername || "";
+};
+
+export const setHackerrankProfile = async (id: any, profile: any) => {
+  try {
+    await db.hackerrankProfile.upsert({
+      where: { githubId: id },
+      update: {
+        ...profile,
+      },
+      create: {
+        githubId: id,
+        ...profile,
+      },
+    });
+    updateTotalPoints(id);
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
+export const getHackerrankProfile = async (id: any) => {
+  return db.hackerrankProfile.findUnique({
+    where: {
+      githubId: id,
+    },
+  });
+};
+
+export const updateTotalPoints = async (id: any) => {
+  const hackerrankProfile = await getHackerrankProfile(id);
+  const githubDevProfile = await getGithubDevProfile(id);
+  const user = await getUser(id);
+  let totalPoints = 0;
+
+  if (hackerrankProfile) {
+    totalPoints += hackerrankProfile.currentPoints;
+    totalPoints += hackerrankProfile.stars * 100;
+  }
+
+  if (githubDevProfile) {
+    totalPoints += githubDevProfile.stars * 100;
+    totalPoints += githubDevProfile.forks * 50;
+    totalPoints += githubDevProfile.originalRepos * 50;
+    totalPoints += githubDevProfile.followers * 50;
+    totalPoints += githubDevProfile.totalCommits * 10;
+    totalPoints += githubDevProfile.repositoriesContributedTo * 20;
+    totalPoints += githubDevProfile.pullRequests * 20;
+    totalPoints += githubDevProfile.mergedPullRequests * 50;
+    totalPoints += githubDevProfile.totalIssues * 10;
+  }
+
+  if (user?.totalPoints && totalPoints == user.totalPoints) {
+    return false;
+  }
+
+  await db.user.update({
+    where: { githubId: id },
+    data: {
+      totalPoints: totalPoints,
+    },
+  });
 };
