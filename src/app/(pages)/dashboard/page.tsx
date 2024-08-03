@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { POST } from "@/config/axios/requests";
 import { useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
 
 const Dashboard = () => {
   const [email, setEmail] = useState("");
@@ -10,13 +11,19 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+  const { data: session } = useSession() as any;
   const sendEmail = async () => {
     setLoading(true);
     setError("");
     setSuccess("");
     try {
-      const response = await POST("/send-email", { email });
+      const response = await POST(
+        "/auth/send-otp",
+        { email },
+        {
+          Authorization: `Bearer ${session.accessToken as string}`,
+        }
+      );
       setSuccess(
         "Email sent successfully. Please check your inbox for the OTP."
       );
@@ -32,7 +39,13 @@ const Dashboard = () => {
     setError("");
     setSuccess("");
     try {
-      const response = await POST("/verify-otp", { email, otp });
+      const response = await POST(
+        "/auth/verify-otp",
+        { email, otp },
+        {
+          Authorization: `Bearer ${session.accessToken as string}`,
+        }
+      );
       setSuccess("OTP verified successfully!");
     } catch (err) {
       setError("Failed to verify OTP. Please try again.");
