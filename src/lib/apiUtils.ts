@@ -113,7 +113,7 @@ export async function setUserbyInstallationId(installationId: number) {
 
 export async function getGithubIdbyAuthHeader(authHeader: string) {
   try {
-    if(!authHeader) {
+    if (!authHeader) {
       return 0;
     }
     const cacheKey = `githubUserId:${authHeader}`;
@@ -131,5 +131,23 @@ export async function getGithubIdbyAuthHeader(authHeader: string) {
     return response.data.id;
   } catch (error: any) {
     return 0;
+  }
+}
+
+export async function getGithubProfileWithGithubID(githubId: number) {
+  try {
+    if (!githubId) {
+      return null;
+    }
+    const cacheKey = `githubProfile:${githubId}`;
+    const githubProfile = getCache(cacheKey);
+    if (githubProfile) {
+      return githubProfile;
+    }
+    const response = await axios.get(`https://api.github.com/user/${githubId}`);
+    setCache(cacheKey, response.data);
+    return response.data;
+  } catch (error: any) {
+    return null;
   }
 }
