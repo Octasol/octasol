@@ -15,14 +15,11 @@ import {
   Blocks,
   ChevronDown,
   CopyPlus,
-  GitBranchPlus,
   Home,
   LogOut,
   SquareUser,
 } from "lucide-react";
 import BottomGradient from "../ui/BottomGradient";
-import { setInstallations } from "@/app/Redux/Features/git/githubInstallation";
-import { clearError, setError } from "@/app/Redux/Features/error/error";
 import LoginButton from "../Button/LoginButton";
 import { POST } from "@/config/axios/requests";
 import { IconChartHistogram } from "@tabler/icons-react";
@@ -33,7 +30,6 @@ const Login = () => {
   const pathname = usePathname();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
-  const installations = useSelector((state: any) => state.git);
   const error = useSelector((state: any) => state.error);
   const [hasPosted, setHasPosted] = useState(false);
 
