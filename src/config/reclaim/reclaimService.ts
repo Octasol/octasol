@@ -1,9 +1,10 @@
+// src/config/reclaim/reclaimService.ts
 import { Reclaim } from '@reclaimprotocol/js-sdk';
 import { processHackerRankData } from './hackerrank/service';
 
 export async function signWithProviderID(userId: string, providerId: string, providerName: string) {
-  const reclaimAppID = "0xf19F6eB61a9fcE88f1A9008d018884B10D9b8319";
-  const reclaimAppSecret = "0x9ad895ba1dc1ef750d5418341b2225686ab87ece2e375d608a4915e011b1cf97";
+  const reclaimAppID = process.env.HACKERRANK_RECLAIM_APP_ID!;
+  const reclaimAppSecret = process.env.HACKERRANK_RECLAIM_APP_SECRET!;
 
   const reclaimClient = new Reclaim.ProofRequest(reclaimAppID);
   await reclaimClient.buildProofRequest(providerId);
@@ -19,7 +20,7 @@ async function handleReclaimSession(userId: string, reclaimClient: any, provider
   reclaimClient.startSession({
     onSuccessCallback: async (proof: any) => {
       try {
-        const processedData = await processHackerRankData(proof, providerName);
+        const processedData = await processHackerRankData(proof, providerName, userId);
         console.log('Proof is: ', proof);
         console.log(`Processed data: ${JSON.stringify(processedData)}`);
       } catch (error) {

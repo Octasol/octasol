@@ -1,13 +1,14 @@
+// src/config/reclaim/hackerrank/service.ts
 import axios from 'axios';
 import { ReclaimServiceResponse } from '../../../utils/reclaimServiceResponse';
 
-export async function processHackerRankData(proof: any, providerName: string) {
+export async function processHackerRankData(proof: any, providerName: string, userId: string) {
   const username = JSON.parse(proof[0].claimData.context).extractedParameters.userName;
   const lastUpdateTimeStamp = proof[0].claimData.timestampS;
 
   const { currentPoints, stars } = await getHackerrankStats(username);
 
-  return new ReclaimServiceResponse(providerName, lastUpdateTimeStamp, username, { currentPoints, stars }, proof[0]);
+  return new ReclaimServiceResponse(providerName, lastUpdateTimeStamp, username, { currentPoints, stars }, proof[0], userId);
 }
 
 export async function getHackerrankProfile(username: string) {
