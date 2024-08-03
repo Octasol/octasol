@@ -8,6 +8,11 @@ import {
   setUsername,
 } from "@/utils/dbUtils";
 import { bigintToString } from "@/lib/utils";
+import {
+  getGithubIdbyAuthHeader,
+  getGithubProfileWithGithubID,
+  getUserByAuthHeader,
+} from "@/lib/apiUtils";
 
 export async function GET() {
   try {
@@ -137,17 +142,6 @@ export async function POST(req: NextRequest) {
 
 async function getRepos(page: number, authHeader: string) {
   const url = `https://api.github.com/user/repos?per_page=100&page=${page}&affiliation=owner,collaborator`;
-  const res = await axios.get(url, {
-    headers: {
-      Authorization: `${authHeader}`,
-      Accept: "application/vnd.github.v3+json",
-    },
-  });
-  return res.data;
-}
-
-async function getUserByAuthHeader(authHeader: string) {
-  const url = `https://api.github.com/user`;
   const res = await axios.get(url, {
     headers: {
       Authorization: `${authHeader}`,
