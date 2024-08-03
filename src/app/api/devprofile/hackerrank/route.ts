@@ -4,7 +4,9 @@ import { signWithProviderID } from '@/config/reclaim/reclaimService';
 import { getHackerrankStats } from '@/config/reclaim/hackerrank/service';
 
 export async function GET(req: NextRequest) {
-  const data = await getHackerrankStats('Q_2022_23_26');
+  const provider = req.nextUrl.searchParams.get('provider');
+  const username = req.nextUrl.searchParams.get('username') || '';
+  let data = await getHackerrankStats(username);
   return NextResponse.json(data);
 }
 
