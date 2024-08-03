@@ -1,5 +1,19 @@
 import { db } from "@/lib/db";
-import { GithubDevProfile } from "@/lib/types";
+import { GithubDevProfile, UserDB } from "@/lib/types";
+
+export const initializeUser = async (githubId: any) => {
+  try {
+    await db.user.upsert({
+      where: { githubId: githubId },
+      update: {},
+      create: { githubId: githubId, installationId: 0 },
+    });
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
 
 export const setUser = async (
   githubId: any,
@@ -45,7 +59,7 @@ export const getInstallationId = async (githubId: any) => {
   return user?.installationId || 0;
 };
 
-export const setUsername = async (id: any, username: object) => {
+export const setUsername = async (id: any, username: UserDB) => {
   try {
     await db.user.update({
       where: { githubId: id },

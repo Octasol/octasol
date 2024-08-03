@@ -19,9 +19,11 @@ model User {
   gfgUsername        String?            @unique
   gitlabUsername     String?            @unique
   email              String?            @unique
+  emails             String[]           @default([])
+  verifiedEmail      Boolean            @default(false)
   GithubDevProfile   GithubDevProfile?
   HackerrankProfile  HackerrankProfile?
-  totalPoints        Int?
+  totalPoints        Int                @default(0)
 }
 
 model GithubDevProfile {

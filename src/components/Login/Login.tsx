@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,6 +35,7 @@ const Login = () => {
   const user = useSelector((state: any) => state.user);
   const installations = useSelector((state: any) => state.git);
   const error = useSelector((state: any) => state.error);
+  const [hasPosted, setHasPosted] = useState(false);
 
   interface SessionUser {
     name?: string | null;
@@ -72,9 +73,10 @@ const Login = () => {
     updated_at?: string | null;
   }
   useEffect(() => {
-    if (session) {
+    if (session && !hasPosted) {
       const runPostRequest = async () => {
         try {
+          console.log("session.accessToken", session.accessToken);
           await POST(
             "/devprofile/github/",
             {},
@@ -82,6 +84,7 @@ const Login = () => {
               Authorization: `Bearer ${session.accessToken as string}`,
             }
           );
+          setHasPosted(true);
         } catch (err) {
           console.error("Failed to run POST request:", err);
         }
@@ -89,7 +92,7 @@ const Login = () => {
 
       runPostRequest();
     }
-  }, [session]);
+  }, [session, hasPosted]);
 
   useEffect(() => {
     if (session) {

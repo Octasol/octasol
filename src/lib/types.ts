@@ -27,3 +27,20 @@ export interface GithubDevProfile {
   mergedPullRequests: number;
   totalIssues: number;
 }
+
+export interface UserDB {
+  githubId?: number;
+  installationId?: number;
+  githubUsername?: string;
+  superteamUsername?: string;
+  leetcodeUsername?: string;
+  codeforcesUsername?: string;
+  hackerrankUsername?: string;
+  codechefUsername?: string;
+  gfgUsername?: string;
+  gitlabUsername?: string;
+  email?: string;
+  emails?: string[];
+  verifiedEmail?: boolean;
+  totalPoints?: number;
+}
