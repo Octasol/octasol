@@ -1,4 +1,3 @@
-// src/config/reclaim/hackerrank/service.ts
 import axios from 'axios';
 import { ReclaimServiceResponse } from '../../../utils/reclaimServiceResponse';
 
