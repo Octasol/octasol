@@ -16,6 +16,7 @@ import BottomGradient from "../ui/BottomGradient";
 import { setInstallations } from "@/app/Redux/Features/git/githubInstallation";
 import { clearError, setError } from "@/app/Redux/Features/error/error";
 import LoginButton from "../Button/LoginButton";
+import { POST } from "@/config/axios/requests";
 
 const Login = () => {
   const { data: session } = useSession() as any;
@@ -61,7 +62,25 @@ const Login = () => {
     created_at?: string | null;
     updated_at?: string | null;
   }
+  useEffect(() => {
+    if (session) {
+      const runPostRequest = async () => {
+        try {
+          await POST(
+            "/devprofile/github/",
+            {},
+            {
+              Authorization: `Bearer ${session.accessToken as string}`,
+            }
+          );
+        } catch (err) {
+          console.error("Failed to run POST request:", err);
+        }
+      };
 
+      runPostRequest();
+    }
+  }, [session]);
   useEffect(() => {
     if (session) {
       const user = session.user as SessionUser;
