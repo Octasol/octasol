@@ -18,6 +18,7 @@ model User {
   codechefUsername   String? @unique
   gfgUsername        String? @unique
   gitlabUsername     String? @unique
+  email              String? @unique
 }
 
 model GithubDevProfile {
