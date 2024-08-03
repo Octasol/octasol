@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { GithubDevProfile } from "@/lib/types";
 
 export const setUser = async (
   githubId: any,
@@ -50,18 +51,6 @@ export const setUsername = async (id: any, username: object) => {
     return false;
   }
 };
-interface GithubDevProfile {
-  stars: number;
-  forkedRepos: number;
-  originalRepos: number;
-  forks: number;
-  followers: number;
-  totalCommits: number;
-  repositoriesContributedTo: number;
-  pullRequests: number;
-  mergedPullRequests: number;
-  totalIssues: number;
-}
 
 export const setGithubDevProfile = async (
   id: any,

@@ -1,10 +1,21 @@
+"use client";
+import { cn } from "@/lib/utils";
 import React from "react";
 
-type Props = { children: React.ReactNode };
+type Props = { children: React.ReactNode; type: any };
 
-const LoginButton = ({ children }: Props) => {
+const ConnectButton = ({ children, type }: Props) => {
+  const handleConnect = (type: any) => {
+    console.log(type);
+  };
+
   return (
-    <div className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block">
+    <div
+      onClick={() => handleConnect(type)}
+      className={cn(
+        "bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block"
+      )}
+    >
       <span className="absolute inset-0 overflow-hidden rounded-full">
         <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
       </span>
@@ -16,4 +27,4 @@ const LoginButton = ({ children }: Props) => {
   );
 };
 
-export default LoginButton;
+export default ConnectButton;

@@ -14,7 +14,7 @@ const Sidebar = (props: Props) => {
       <Link href="/repoinitialize">
         <CopyPlus size={32} />
       </Link>
-      <Link href="/profile">
+      <Link href="/connect">
         <Blocks size={32} />
       </Link>
       <Link href="/leaderboard">

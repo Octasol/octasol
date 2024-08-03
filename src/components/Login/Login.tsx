@@ -11,12 +11,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import ProfileImage from "../ProfileImage";
-import { ChevronDown, GitBranchPlus, Home, LogOut } from "lucide-react";
+import {
+  Blocks,
+  ChevronDown,
+  CopyPlus,
+  GitBranchPlus,
+  Home,
+  LogOut,
+  SquareUser,
+} from "lucide-react";
 import BottomGradient from "../ui/BottomGradient";
 import { setInstallations } from "@/app/Redux/Features/git/githubInstallation";
 import { clearError, setError } from "@/app/Redux/Features/error/error";
 import LoginButton from "../Button/LoginButton";
 import { POST } from "@/config/axios/requests";
+import { IconChartHistogram } from "@tabler/icons-react";
 
 const Login = () => {
   const { data: session } = useSession() as any;
@@ -81,6 +90,7 @@ const Login = () => {
       runPostRequest();
     }
   }, [session]);
+
   useEffect(() => {
     if (session) {
       const user = session.user as SessionUser;
@@ -126,7 +136,7 @@ const Login = () => {
       );
 
       if (pathname === "/") {
-        router.push("/repoinitialize");
+        router.push("/dashboard");
       } else {
         router.push(pathname);
       }
@@ -180,42 +190,14 @@ const Login = () => {
     router.push("/");
   };
 
-  // const fetchInstallations = async () => {
-  //   try {
-  //     dispatch(clearError());
-  //     const response = await fetch("/api/github-installations");
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! status: ${response.status}`);
-  //     }
-  //     const data = await response.json();
-  //     dispatch(setInstallations(data.installations));
-  //   } catch (err: any) {
-  //     dispatch(setError(err.message));
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchInstallations();
-  // }, []);
-
   useEffect(() => {
     console.log("error", error);
   }, [error]);
 
-  // const handleInstall = () => {
-  //   const clientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID ?? "";
-  //   const redirectUri =
-  //     process.env.NEXT_PUBLIC_GITHUB_APP_INSTALLATION_CALLBACK_URL ?? "";
-  //   const state = uuidv4();
-  //   cookie.set("oauth_state", state, {
-  //     secure: process.env.NODE_ENV === "production",
-  //     sameSite: "strict",
-  //   });
-  //   const installUrl = `https://github.com/apps/Octasol-DEV-app/installations/new?state=${state}&client_id=${clientId}&redirect_uri=${encodeURIComponent(
-  //     redirectUri
-  //   )}`;
-  //   window.location.href = installUrl;
-  // };
+  const handleProfile = (user: string) => {
+    console.log(user);
+    router.push(`p/${user}`);
+  };
 
   return (
     <>
@@ -258,64 +240,51 @@ const Login = () => {
               >
                 <div className="flex items-center gap-4 justify-between w-full">
                   <span>Repo Initialize</span>
-                  <GitBranchPlus size={20} />
+                  <CopyPlus size={20} />
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuLabel
+                className="cursor-pointer  flex md:hidden"
+                onClick={() => router.push("/connect")}
+              >
+                <div className="flex items-center gap-4 justify-between w-full">
+                  <span>Connect</span>
+                  <Blocks size={20} />
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuLabel
+                className="cursor-pointer  flex md:hidden"
+                onClick={() => router.push("/leaderboard")}
+              >
+                <div className="flex items-center gap-4 justify-between w-full">
+                  <span>Leaderboard</span>
+                  <IconChartHistogram size={20} />
                 </div>
               </DropdownMenuLabel>
 
-              {/* <DropdownMenuLabel
-                onClick={handleInstall}
-                className="cursor-pointer  flex  flex-col"
-              >
-                <div className="flex items-center gap-4 justify-between w-full ">
-                  <span>Install GitHub App</span>
-                  <GitCommitVertical size={20} />
-                </div>
-              </DropdownMenuLabel> */}
-              {/* <DropdownMenuLabel
-                onClick={fetchInstallations}
-                className="cursor-pointer  flex  flex-col"
-              >
-                <div className="flex items-center gap-4 justify-between w-full ">
-                  <span>Fetch Installations</span>
-                  <GitMerge size={20} />
-                </div>
-              </DropdownMenuLabel> */}
-              {/* <DropdownMenuLabel>
-                <ul>
-                  {installations.map((installation: any) => (
-                    <li key={installation.id}>
-                      ID: {installation.id}, Account:{" "}
-                      {installation.account.login}
-                    </li>
-                  ))}
-                </ul>
-              </DropdownMenuLabel> */}
               <DropdownMenuLabel
-                onClick={logout}
+                onClick={() => handleProfile(user?.login)}
                 className="cursor-pointer  flex  flex-col"
               >
                 <div className="relative flex md:hidden">
                   <BottomGradient />
                 </div>
                 <div className="flex items-center gap-4 justify-between w-full pt-3 md:pt-0 ">
+                  <span>Profile</span>
+                  <SquareUser size={20} />
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuLabel
+                onClick={logout}
+                className="cursor-pointer  flex  flex-col"
+              >
+                <div className="flex items-center gap-4 justify-between w-full  ">
                   <span>Sign Out</span>
                   <LogOut size={20} />
                 </div>
               </DropdownMenuLabel>
             </DropdownMenuContent>
           </DropdownMenu>
-          {/* <div>
-            <button onClick={handleInstall}>Install GitHub App</button>
-            <button onClick={fetchInstallations}>Fetch Installations</button>
-            {error && <p>Error: {error}</p>}
-            <ul>
-              {installations.map((installation) => (
-                <li key={installation.id}>
-                  ID: {installation.id}, Account: {installation.account.login}
-                </li>
-              ))}
-            </ul>
-          </div> */}
         </>
       )}
     </>

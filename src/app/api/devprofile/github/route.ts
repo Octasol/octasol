@@ -3,12 +3,9 @@ import axios from "axios";
 import { GRAPHQL_STATS_QUERY } from "./queries";
 import {
   getAllGithubDevProfiles,
-  getGithubUsername,
   setGithubDevProfile,
   setUsername,
 } from "@/utils/dbUtils";
-import { get } from "http";
-import { getGithubProfileWithGithubID } from "@/lib/apiUtils";
 
 function bigintToString(obj: any): any {
   if (obj === null || obj === undefined) return obj;
