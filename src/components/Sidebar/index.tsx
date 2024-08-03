@@ -1,5 +1,5 @@
-import { GitBranchPlusIcon, HomeIcon, UserRound } from "lucide-react";
-import Image from "next/image";
+import { IconChartHistogram } from "@tabler/icons-react";
+import { Blocks, CopyPlus, HomeIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -12,10 +12,13 @@ const Sidebar = (props: Props) => {
         <HomeIcon size={32} />
       </Link>
       <Link href="/repoinitialize">
-        <GitBranchPlusIcon size={32} />
+        <CopyPlus size={32} />
       </Link>
       <Link href="/profile">
-        <UserRound size={32} />
+        <Blocks size={32} />
+      </Link>
+      <Link href="/leaderboard">
+        <IconChartHistogram size={32} />
       </Link>
     </div>
   );
