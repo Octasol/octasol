@@ -24,7 +24,7 @@ export const setUser = async (
   }
 };
 
-export const getUser = async (githubId: any) => {
+export const getDbUser = async (githubId: any) => {
   return db.user.findUnique({
     where: {
       githubId: githubId,
@@ -41,7 +41,7 @@ export const getUserByUsername = async (githubUsername: any) => {
 };
 
 export const getInstallationId = async (githubId: any) => {
-  const user = await getUser(githubId);
+  const user = await getDbUser(githubId);
   return user?.installationId || 0;
 };
 
@@ -122,7 +122,7 @@ export const getAllGithubDevProfiles = async () => {
   }
 };
 export const getGithubUsername = async (id: any) => {
-  const user = await getUser(id);
+  const user = await getDbUser(id);
   return user?.githubUsername || "";
 };
 
@@ -157,7 +157,7 @@ export const getHackerrankProfile = async (id: any) => {
 export const updateTotalPoints = async (id: any) => {
   const hackerrankProfile = await getHackerrankProfile(id);
   const githubDevProfile = await getGithubDevProfile(id);
-  const user = await getUser(id);
+  const user = await getDbUser(id);
   let totalPoints = 0;
 
   if (hackerrankProfile) {
