@@ -102,7 +102,7 @@ export function RepoInitializeForm() {
   return (
     <div className="max-w-xl min-h-[500px] w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <div className=" relative group/btn block w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]">
-        <p className="font-bold text-2xl text-neutral-800 dark:text-neutral-200 text-center">
+        <p className="font-bold text-base md:text-2xl text-neutral-800 dark:text-neutral-200 text-center">
           Select Github Repository
         </p>
         <BottomGradient />
@@ -161,7 +161,7 @@ export function RepoInitializeForm() {
               ))}
             </TableBody>
           </Table>
-          <p className="text-sm py-2 w-full flex justify-center">
+          <p className="text-sm py-2 w-full flex flex-col md:flex-row items-center justify-center">
             Missing Git Repository ?
             <span
               className="text-blue-500 cursor-pointer"
