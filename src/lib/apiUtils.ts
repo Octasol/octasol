@@ -151,3 +151,9 @@ export async function getGithubProfileWithGithubID(githubId: number) {
     return null;
   }
 }
+
+export async function getUserByAuthHeader(authHeader: string) {
+  return await getGithubProfileWithGithubID(
+    await getGithubIdbyAuthHeader(authHeader)
+  );
+}
