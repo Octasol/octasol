@@ -196,7 +196,7 @@ const Login = () => {
 
   const handleProfile = (user: string) => {
     console.log(user);
-    router.push(`p/${user}`);
+    router.replace(`/p/${user}`);
   };
 
   return (
