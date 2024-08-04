@@ -1,32 +1,52 @@
-type OtpEntry = {
-  otp: string;
-  timeoutId: NodeJS.Timeout;
+import { db } from "./db";
+
+export const setOtp = async (email: string, otp: string) => {
+  const expiresAtNs = Date.now() + 5 * 60 * 1000 * 1_000_000; // Set expiration time to 5 minutes from now in nanoseconds
+
+  const emailOtp = `${otp}-${expiresAtNs}`;
+
+  await db.user.update({
+    where: { email },
+    data: { emailOtp },
+  });
+
+  //   console.log(
+  //     `OTP for ${email} set successfully. Expires at ${new Date(
+  //       expiresAtNs / 1_000_000
+  //     ).toISOString()}`
+  //   );
 };
 
-const otps: { [key: string]: OtpEntry } = {};
+export const getOtp = async (email: string): Promise<string | null> => {
+  const user = await db.user.findUnique({ where: { email } });
 
-export const setOtp = (email: string, otp: string) => {
-  // Clear any existing timeout for this email
-  if (otps[email]) {
-    clearTimeout(otps[email].timeoutId);
+  if (!user || !user.emailOtp) {
+    // console.log(`No OTP found for ${email}`);
+    return null;
   }
 
-  // Set a new timeout to delete the OTP after 5 minutes (300,000 ms)
-  const timeoutId = setTimeout(() => {
-    delete otps[email];
-    console.log(`OTP for ${email} has expired and been deleted.`);
-  }, 3 * 60 * 1000); // 5 minutes
+  const [otp, expiresAtNs] = user.emailOtp.split("-");
+  const expiresAt = Number(expiresAtNs);
 
-  otps[email] = { otp, timeoutId };
-};
-
-export const getOtp = (email: string) => {
-  return otps[email]?.otp;
-};
-
-export const deleteOtp = (email: string) => {
-  if (otps[email]) {
-    clearTimeout(otps[email].timeoutId);
-    delete otps[email];
+  // Check if the OTP has expired
+  if (Date.now() > expiresAt) {
+    await db.user.update({
+      where: { email },
+      data: { emailOtp: null },
+    });
+    // console.log(`OTP for ${email} has expired and been deleted.`);
+    return null;
   }
+
+  //   console.log(`Retrieved OTP for ${email}: ${otp}`);
+  return otp;
+};
+
+export const deleteOtp = async (email: string) => {
+  await db.user.update({
+    where: { email },
+    data: { emailOtp: null },
+  });
+
+  //   console.log(`OTP for ${email} deleted successfully.`);
 };

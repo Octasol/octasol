@@ -202,3 +202,11 @@ export const updateTotalPoints = async (id: any) => {
     },
   });
 };
+
+export async function getUserByEmail(email: any) {
+  return db.user.findFirst({
+    where: {
+      email: email,
+    },
+  });
+}

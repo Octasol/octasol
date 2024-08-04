@@ -8,14 +8,12 @@ import { useSession } from "next-auth/react";
 const Dashboard = () => {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState("");
+  // const [success, setSuccess] = useState("");
   const { data: session } = useSession() as any;
   const sendEmail = async () => {
-    setLoading(true);
-    setError("");
-    setSuccess("");
+   
     try {
       const response = await POST(
         "/auth/send-otp",
@@ -24,20 +22,18 @@ const Dashboard = () => {
           Authorization: `Bearer ${session.accessToken as string}`,
         }
       );
-      setSuccess(
-        "Email sent successfully. Please check your inbox for the OTP."
-      );
+      // setSuccess(
+      //   "Email sent successfully. Please check your inbox for the OTP."
+      // );
     } catch (err) {
-      setError("Failed to send email. Please try again.");
+      // setError("Failed to send email. Please try again.");
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
   const verifyOtp = async () => {
-    setLoading(true);
-    setError("");
-    setSuccess("");
+   
     try {
       const response = await POST(
         "/auth/verify-otp",
@@ -46,11 +42,11 @@ const Dashboard = () => {
           Authorization: `Bearer ${session.accessToken as string}`,
         }
       );
-      setSuccess("OTP verified successfully!");
+      // setSuccess("OTP verified successfully!");
     } catch (err) {
-      setError("Failed to verify OTP. Please try again.");
+      // setError("Failed to verify OTP. Please try again.");
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -65,11 +61,10 @@ const Dashboard = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <button
-          onClick={sendEmail}
-          disabled={loading}
+          onClick={()=>sendEmail()}
           className="btn-primary mt-4"
         >
-          {loading ? "Sending..." : "Send Otp"}
+          {/* {loading ? "Sending..." : ""} */}Send Otp
         </button>
         <Input
           type="text"
@@ -79,14 +74,14 @@ const Dashboard = () => {
           className="mt-4"
         />
         <button
-          onClick={verifyOtp}
-          disabled={loading}
+          onClick={()=>verifyOtp()}
+          // disabled={loading}
           className="btn-primary mt-4"
         >
-          {loading ? "Verifying..." : "Verify OTP"}
+          {/* {loading ? "Verifying..." : ""} */}Verify OTP
         </button>
-        {error && <div className="text-red-500 mt-4">{error}</div>}
-        {success && <div className="text-green-500 mt-4">{success}</div>}
+        {/* {error && <div className="text-red-500 mt-4">{error}</div>}
+        {success && <div className="text-green-500 mt-4">{success}</div>} */}
       </div>
     </div>
   );
