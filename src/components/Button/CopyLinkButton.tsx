@@ -2,16 +2,17 @@
 import { cn } from "@/lib/utils";
 import React from "react";
 
-type Props = { children: React.ReactNode; type: any };
+type Props = { children: React.ReactNode; data: any };
 
-const ConnectButton = ({ children, type }: Props) => {
-  const handleConnect = (type: any) => {
-    console.log(type);
+const CopyLinkButton = ({ children, data }: Props) => {
+  const handleConnect = async (data: any) => {
+    console.log(data);
+    navigator.clipboard.writeText(data);
   };
 
   return (
     <div
-      onClick={() => handleConnect(type)}
+      onClick={() => handleConnect(data)}
       className={cn(
         "bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block"
       )}
@@ -27,4 +28,4 @@ const ConnectButton = ({ children, type }: Props) => {
   );
 };
 
-export default ConnectButton;
+export default CopyLinkButton;

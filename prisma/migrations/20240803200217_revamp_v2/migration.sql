@@ -11,6 +11,9 @@ CREATE TABLE "User" (
     "gfgUsername" TEXT,
     "gitlabUsername" TEXT,
     "email" TEXT,
+    "emails" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "verifiedEmail" BOOLEAN NOT NULL DEFAULT false,
+    "totalPoints" INTEGER NOT NULL DEFAULT 0,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("githubId")
 );
@@ -30,6 +33,15 @@ CREATE TABLE "GithubDevProfile" (
     "totalIssues" INTEGER NOT NULL,
 
     CONSTRAINT "GithubDevProfile_pkey" PRIMARY KEY ("githubId")
+);
+
+-- CreateTable
+CREATE TABLE "HackerrankProfile" (
+    "githubId" BIGINT NOT NULL,
+    "currentPoints" INTEGER NOT NULL,
+    "stars" INTEGER NOT NULL,
+
+    CONSTRAINT "HackerrankProfile_pkey" PRIMARY KEY ("githubId")
 );
 
 -- CreateIndex
@@ -65,5 +77,11 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 -- CreateIndex
 CREATE UNIQUE INDEX "GithubDevProfile_githubId_key" ON "GithubDevProfile"("githubId");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "HackerrankProfile_githubId_key" ON "HackerrankProfile"("githubId");
+
 -- AddForeignKey
 ALTER TABLE "GithubDevProfile" ADD CONSTRAINT "GithubDevProfile_githubId_fkey" FOREIGN KEY ("githubId") REFERENCES "User"("githubId") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "HackerrankProfile" ADD CONSTRAINT "HackerrankProfile_githubId_fkey" FOREIGN KEY ("githubId") REFERENCES "User"("githubId") ON DELETE RESTRICT ON UPDATE CASCADE;
