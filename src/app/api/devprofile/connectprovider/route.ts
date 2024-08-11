@@ -11,13 +11,12 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const { userId, providerId } = await req.json();
-
+  const { userId, providerId, providerName } = await req.json();
   try {
     const signedUrl = await signWithProviderID(
       userId,
       providerId,
-      "hackerrank"
+      providerName
     );
     const qrCode = await QRCode.toDataURL(signedUrl);
     return NextResponse.json({ success: true, url: signedUrl, qr: qrCode });

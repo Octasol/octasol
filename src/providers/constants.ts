@@ -3,7 +3,7 @@ const Leetcode = "";
 const Codechef = "";
 const Codeforces = "";
 const Gitlab = "";
-const hackerrank = "";
+const Hackerrank = "fcc70360-aa2c-48c2-ae5a-6285481f1a42";
 const Geeksforgeeks = "";
 
 export const providers: any = {
@@ -11,7 +11,7 @@ export const providers: any = {
   Leetcode,
   Codechef,
   Codeforces,
-  hackerrank,
+  Hackerrank,
   Geeksforgeeks,
   Gitlab,
 };

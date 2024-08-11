@@ -10,7 +10,7 @@ const Layout = ({ children }: Props) => {
         <div className="w-fit hidden md:flex">
           <Sidebar />
         </div>
-        <div className="w-full pt-24 md:ms-20">{children}</div>
+        <div className="w-full min-h-screen pt-24 md:ms-20">{children}</div>
       </div>
     </>
   );

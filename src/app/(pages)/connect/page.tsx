@@ -21,7 +21,6 @@ export default function Connect() {
   const user = useSelector((state: any) => state.user);
   const [qrCodeData, setQrCodeData] = useState<string>("");
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>("");
-  const [open, setOpen] = useState(false);
 
   const userId = session?.accessToken;
 
@@ -31,9 +30,10 @@ export default function Connect() {
       console.log(data);
 
       if (data) {
-        const { response } = await POST("/devprofile/hackerrank", {
+        const { response } = await POST("/devprofile/connectprovider", {
           userId: userId,
           providerId: providers[data],
+          providerName: data,
         });
         console.log(response);
 
