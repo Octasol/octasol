@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { signWithProviderID } from "@/config/reclaim/reclaimService";
 import { getHackerrankStats } from "@/config/reclaim/hackerrank/service";
 import QRCode from "qrcode";
+import { providers } from "@/providers/constants";
 
 export async function GET(req: NextRequest) {
   const provider = req.nextUrl.searchParams.get("provider");
@@ -11,7 +12,8 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const { userId, providerId, providerName } = await req.json();
+  const { userId, providerName } = await req.json();
+  const providerId = providers[providerName];
   try {
     const signedUrl = await signWithProviderID(
       userId,

@@ -29,6 +29,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/config/middleware/middleware.ts"  
-  ],
+, "src/app/api/socket/io.js"  ],
   "exclude": ["node_modules"]
 }

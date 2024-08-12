@@ -15,6 +15,7 @@ import {
 import { items } from "@/components/ui/ConnectCard";
 import CopyLinkButton from "@/components/Button/CopyLinkButton";
 import { providers } from "@/providers/constants";
+import { connectProvider } from "@/config/axios/Breakpoints";
 
 export default function Connect() {
   const { data: session } = useSession() as any;
@@ -28,15 +29,13 @@ export default function Connect() {
     try {
       const data = type.props.children.props.children.props.children;
       console.log(data);
-
+      setQrCodeData("");
+      setQrCodeDataUrl("");
       if (data) {
-        const { response } = await POST("/devprofile/connectprovider", {
+        const { response } = await POST(connectProvider, {
           userId: userId,
-          providerId: providers[data],
           providerName: data,
         });
-        console.log(response);
-
         const qr = response?.data?.qr;
         if (qr) {
           setQrCodeData(qr);

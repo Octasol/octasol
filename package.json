@@ -39,6 +39,8 @@
     "next-auth": "^4.24.7",
     "next-themes": "^0.3.0",
     "nodemailer": "^6.9.14",
+    "pusher": "^5.2.0",
+    "pusher-js": "^8.4.0-rc2",
     "qrcode": "^1.5.4",
     "qrcode.react": "^3.1.0",
     "react": "^18",
