@@ -14,6 +14,7 @@ CREATE TABLE "User" (
     "emails" TEXT[] DEFAULT ARRAY[]::TEXT[],
     "verifiedEmail" BOOLEAN NOT NULL DEFAULT false,
     "totalPoints" INTEGER NOT NULL DEFAULT 0,
+    "emailOtp" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("githubId")
 );
