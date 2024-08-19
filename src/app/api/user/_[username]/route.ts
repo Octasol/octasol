@@ -5,6 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     const username = req.url.split("/api/user/")[1];
+    console.log(username);
+
     const userDbData = bigintToString(await getUserByUsername(username));
     if (!userDbData) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });

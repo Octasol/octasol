@@ -1,9 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
-import { POST } from "@/config/axios/requests";
+import { GET, POST } from "@/config/axios/requests";
 import {
   Dialog,
   DialogContent,
@@ -16,6 +16,7 @@ import { items } from "@/components/ui/ConnectCard";
 import CopyLinkButton from "@/components/Button/CopyLinkButton";
 import { providers } from "@/providers/constants";
 import { connectProvider } from "@/config/axios/Breakpoints";
+import { getDbUser } from "@/utils/dbUtils";
 
 export default function Connect() {
   const { data: session } = useSession() as any;
@@ -24,6 +25,21 @@ export default function Connect() {
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>("");
 
   const userId = session?.accessToken;
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await GET(`/user/${user?.githubId}`);
+        console.log(response);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    if (userId) {
+      fetchUserData();
+    }
+  }, [user]);
 
   const handleConnect = async (type: any) => {
     try {
