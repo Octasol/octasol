@@ -14,13 +14,24 @@ import {
 } from "@/components/ui/dialog";
 import { items } from "@/components/ui/ConnectCard";
 import CopyLinkButton from "@/components/Button/CopyLinkButton";
-import { providers } from "@/providers/constants";
 import { connectProvider } from "@/config/axios/Breakpoints";
-import { getDbUser } from "@/utils/dbUtils";
 
 export default function Connect() {
   const { data: session } = useSession() as any;
   const user = useSelector((state: any) => state.user);
+
+  const [userdata, setUserData] = useState({
+    githubId: user?.githubId,
+    githubUsername: "",
+    superteamUsername: "",
+    leetcodeUsername: "",
+    codeforcesUsername: "",
+    hackerrankUsername: "",
+    codechefUsername: "",
+    gfgUsername: "",
+    gitlabUsername: "",
+  });
+
   const [qrCodeData, setQrCodeData] = useState<string>("");
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>("");
 
@@ -31,6 +42,7 @@ export default function Connect() {
       try {
         const response = await GET(`/user/${user?.githubId}`);
         console.log(response);
+        setUserData(response);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -73,9 +85,25 @@ export default function Connect() {
     <div className="w-full h-full flex justify-center items-center py-8">
       <div className="grid md:auto-rows-[20rem] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 max-w-9xl px-6 py-4 max-w-8xl mx-auto">
         {items.map((item, i) => {
-          if (item.title === "Github") {
-            item.description = user?.login;
-          }
+          const username =
+            item.title === "Github"
+              ? userdata.githubUsername
+              : item.title === "Superteam"
+              ? userdata.superteamUsername
+              : item.title === "LeetCode"
+              ? userdata.leetcodeUsername
+              : item.title === "Codeforces"
+              ? userdata.codeforcesUsername
+              : item.title === "Hackerrank"
+              ? userdata.hackerrankUsername
+              : item.title === "CodeChef"
+              ? userdata.codechefUsername
+              : item.title === "GeeksForGeeks"
+              ? userdata.gfgUsername
+              : item.title === "GitLab"
+              ? userdata.gitlabUsername
+              : null;
+
           return (
             <div
               className="row-span-1 rounded-xl group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none p-4 dark:bg-black dark:border-white/[0.2] bg-white border border-transparent justify-between flex flex-col space-y-4 w-72"
@@ -90,7 +118,7 @@ export default function Connect() {
                   <div className="font-sans font-bold text-neutral-600 dark:text-neutral-200 mb-2 mt-2">
                     {item.title}
                   </div>
-                  {!item.description && (
+                  {!username && (
                     <Dialog>
                       <DialogTrigger asChild>
                         <div
@@ -142,9 +170,7 @@ export default function Connect() {
                   )}
                 </div>
                 <div className="font-sans font-normal text-neutral-600 text-xs dark:text-neutral-300">
-                  {item.title === "Github"
-                    ? `${user?.login}`
-                    : item.description}
+                  {username ? username : "Not connected"}
                 </div>
               </div>
             </div>

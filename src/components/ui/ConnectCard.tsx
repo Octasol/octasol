@@ -3,7 +3,7 @@ import Image from "next/image";
 export const items = [
   {
     title: "Github",
-    description: "",
+    description: "Github",
     header: (
       <>
         <Image
@@ -24,7 +24,7 @@ export const items = [
         </div>
       </>
     ),
-    description: "",
+    description: "Superteam",
     header: (
       <>
         <Image
@@ -81,14 +81,8 @@ export const items = [
     ),
   },
   {
-    title: (
-      <>
-        <div className="flex justify-between items-ceter">
-          <span>Hackerrank</span>
-        </div>
-      </>
-    ),
-    description: "",
+    title: "Hackerrank",
+    description: "Hackerrank",
     header: (
       <>
         <Image
