@@ -37,7 +37,6 @@ async function handleReclaimSession(
         let processedData;
         let username;
 
-        // Process data based on the provider name
         switch (providerName) {
           case "Hackerrank":
             processedData = await processHackerRankData(
