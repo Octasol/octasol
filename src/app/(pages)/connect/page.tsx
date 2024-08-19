@@ -41,7 +41,6 @@ export default function Connect() {
     const fetchUserData = async () => {
       try {
         const response = await GET(`/user/${user?.githubId}`);
-        console.log(response);
         setUserData(response);
       } catch (error) {
         console.error("Error fetching user data:", error);
