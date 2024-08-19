@@ -24,7 +24,7 @@ model User {
   GithubDevProfile   GithubDevProfile?
   HackerrankProfile  HackerrankProfile?
   totalPoints        Int                @default(0)
-  emailOtp          String?
+  emailOtp           String?
 }
 
 model GithubDevProfile {

@@ -34,8 +34,10 @@ export default function Connect() {
       if (data) {
         const { response } = await POST(connectProvider, {
           userId: userId,
+          githubId: user?.githubId,
           providerName: data,
         });
+
         const qr = response?.data?.qr;
         if (qr) {
           setQrCodeData(qr);
@@ -56,7 +58,7 @@ export default function Connect() {
       <div className="grid md:auto-rows-[20rem] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 max-w-9xl px-6 py-4 max-w-8xl mx-auto">
         {items.map((item, i) => {
           if (item.title === "Github") {
-            item.description = user?.name;
+            item.description = user?.login;
           }
           return (
             <div
@@ -124,7 +126,9 @@ export default function Connect() {
                   )}
                 </div>
                 <div className="font-sans font-normal text-neutral-600 text-xs dark:text-neutral-300">
-                  {item.title === "Github" ? `${user?.name}` : item.description}
+                  {item.title === "Github"
+                    ? `${user?.login}`
+                    : item.description}
                 </div>
               </div>
             </div>

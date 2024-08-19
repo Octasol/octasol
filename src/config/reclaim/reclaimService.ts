@@ -1,12 +1,14 @@
 import { Reclaim } from "@reclaimprotocol/js-sdk";
 import { processHackerRankData } from "./hackerrank/service";
 import { processSuperteamEarnData } from "./superteamearn/service";
+import { setUsername } from "@/utils/dbUtils";
 
 const reclaimAppID = process.env.RECLAIM_APP_ID!;
 const reclaimAppSecret = process.env.RECLAIM_APP_SECRET!;
 
 export async function signWithProviderID(
   userId: string,
+  githubId: any,
   providerId: string,
   providerName: string
 ) {
@@ -19,12 +21,13 @@ export async function signWithProviderID(
   const { requestUrl: signedUrl } =
     await reclaimClient.createVerificationRequest();
 
-  await handleReclaimSession(userId, reclaimClient, providerName);
+  await handleReclaimSession(userId, githubId, reclaimClient, providerName);
   return signedUrl;
 }
 
 async function handleReclaimSession(
   userId: string,
+  githubId: any,
   reclaimClient: any,
   providerName: string
 ) {
@@ -32,21 +35,39 @@ async function handleReclaimSession(
     onSuccessCallback: async (proof: any) => {
       try {
         let processedData;
-        if (providerName === "Hackerrank") {
-          processedData = await processHackerRankData(
-            proof,
-            providerName,
-            userId
-          );
-        } else if (providerName === "SuperteamEarn") {
-          processedData = await processSuperteamEarnData(
-            proof,
-            providerName,
-            userId
-          );
+        let username;
+
+        // Process data based on the provider name
+        switch (providerName) {
+          case "Hackerrank":
+            processedData = await processHackerRankData(
+              proof,
+              providerName,
+              userId
+            );
+            username = JSON.parse(proof[0].claimData.parameters).paramValues
+              .username;
+            await setUsername(githubId, {
+              hackerrankUsername: username,
+            });
+            break;
+
+          case "SuperteamEarn":
+            processedData = await processSuperteamEarnData(
+              proof,
+              providerName,
+              userId
+            );
+            username = JSON.parse(proof[0].claimData.parameters).paramValues
+              .username;
+            await setUsername(githubId, { superteamUsername: username });
+            break;
+
+          default:
+            throw new Error(`Unsupported provider: ${providerName}`);
         }
+
         console.log("Proof is: ", proof);
-        console.log(`Processed data: ${JSON.stringify(processedData)}`);
       } catch (error) {
         console.error(
           `Failed to process Reclaim proof for userId: ${userId}`,

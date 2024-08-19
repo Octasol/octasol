@@ -12,11 +12,12 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const { userId, providerName } = await req.json();
+  const { userId, githubId, providerName } = await req.json();
   const providerId = providers[providerName];
   try {
     const signedUrl = await signWithProviderID(
       userId,
+      githubId,
       providerId,
       providerName
     );
