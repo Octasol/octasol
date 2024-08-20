@@ -1,20 +1,20 @@
 import { bigintToString } from "@/lib/utils";
 import { getDbUser } from "@/utils/dbUtils";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET({ params }: { params: { id: string } }) {
   try {
-    const username = req.url.split("/api/user/")[1];
+    const { id } = params;
 
-    const userDbData = bigintToString(await getDbUser(username));
+    const userDbData = bigintToString(await getDbUser(id));
     if (!userDbData) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
-    console.log(userDbData);
 
+    console.log(userDbData);
     return NextResponse.json(userDbData);
   } catch (error: any) {
-    console.log(error);
+    console.error(error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
