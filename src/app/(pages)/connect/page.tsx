@@ -54,7 +54,7 @@ export default function Connect() {
 
   const handleConnect = async (type: any) => {
     try {
-      const data = type.props.children.props.children.props.children;
+      const data = type;
       console.log(data);
       setQrCodeData("");
       setQrCodeDataUrl("");
@@ -74,6 +74,8 @@ export default function Connect() {
           setQrCodeDataUrl("");
           console.error("QR code data is undefined");
         }
+        const updatedUserData = await GET(`/user/${user?.githubId}`);
+        setUserData(updatedUserData.data);
       }
     } catch (error) {
       console.error("Error during connection:", error);

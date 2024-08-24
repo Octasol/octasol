@@ -17,13 +17,7 @@ export const items = [
     ),
   },
   {
-    title: (
-      <>
-        <div className="flex justify-between items-ceter">
-          <span>SuperteamEarn</span>
-        </div>
-      </>
-    ),
+    title: "SuperteamEarn",
     description: "Superteam",
     header: (
       <>
@@ -39,13 +33,7 @@ export const items = [
   },
 
   {
-    title: (
-      <>
-        <div className="flex justify-between items-ceter">
-          <span>Leetcode</span>
-        </div>
-      </>
-    ),
+    title: "Leetcode",
     description: "",
     header: (
       <>
@@ -60,13 +48,7 @@ export const items = [
     ),
   },
   {
-    title: (
-      <>
-        <div className="flex justify-between items-ceter">
-          <span>Codeforces</span>
-        </div>
-      </>
-    ),
+    title: "Codeforces",
     description: "",
     header: (
       <>
@@ -96,13 +78,7 @@ export const items = [
     ),
   },
   {
-    title: (
-      <>
-        <div className="flex justify-between items-ceter">
-          <span>Codechef</span>
-        </div>
-      </>
-    ),
+    title: "Codechef",
     description: "",
     header: (
       <>
@@ -117,13 +93,7 @@ export const items = [
     ),
   },
   {
-    title: (
-      <>
-        <div className="flex justify-between items-ceter">
-          <span>Geeksforgeeks</span>
-        </div>
-      </>
-    ),
+    title: "Geeksforgeeks",
     description: "",
     header: (
       <>
@@ -138,13 +108,7 @@ export const items = [
     ),
   },
   {
-    title: (
-      <>
-        <div className="flex justify-between items-ceter">
-          <span>Gitlab</span>
-        </div>
-      </>
-    ),
+    title: "Gitlab",
     description: "",
     header: (
       <Image
