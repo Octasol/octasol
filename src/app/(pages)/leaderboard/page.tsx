@@ -35,7 +35,7 @@ const Leaderboard = () => {
           <div className="mb-8 md:mb-0 z-20">
             <RankCard profile={profile && profile[0]} rank={1} />
           </div>
-          <div className="flex flex-col md:flex-row justify-evenly items-center gap-4 md:gap-32 container place-items-center">
+          <div className="flex flex-col md:flex-row justify-evenly items-center gap-4 md:gap-32 container place-items-center mt-5">
             <div>
               <RankCard profile={profile && profile[1]} rank={2} />
             </div>
