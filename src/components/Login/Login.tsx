@@ -91,56 +91,58 @@ const Login = () => {
   }, [session, hasPosted]);
 
   useEffect(() => {
-    if (session) {
-      const user = session.user as SessionUser;
-      dispatch(
-        setUser({
-          name: user?.name || "",
-          email: user?.email || "",
-          photo: user?.image || "",
-          githubId: user?.id || "",
-          image: user?.image || "",
-          login: user?.login || "",
-          node_id: user?.node_id || "",
-          avatar_url: user?.avatar_url || "",
-          gravatar_id: user?.gravatar_id || "",
-          url: user?.url || "",
-          html_url: user?.html_url || "",
-          followers_url: user?.followers_url || "",
-          following_url: user?.following_url || "",
-          gists_url: user?.gists_url || "",
-          starred_url: user?.starred_url || "",
-          subscriptions_url: user?.subscriptions_url || "",
-          organizations_url: user?.organizations_url || "",
-          repos_url: user?.repos_url || "",
-          events_url: user?.events_url || "",
-          received_events_url: user?.received_events_url || "",
-          type: user?.type || "",
-          site_admin: user?.site_admin || false,
-          company: user?.company || "",
-          blog: user?.blog || "",
-          location: user?.location || "",
-          hireable: user?.hireable || false,
-          bio: user?.bio || "",
-          twitter_username: user?.twitter_username || "",
-          public_repos: user?.public_repos || 0,
-          public_gists: user?.public_gists || 0,
-          followers: user?.followers || 0,
-          following: user?.following || 0,
-          created_at: user?.created_at || "",
-          updated_at: user?.updated_at || "",
-          accessToken: session.accessToken as string,
-          expires: session.expires as string,
-        })
-      );
+    if (session !== undefined) {
+      if (session) {
+        const user = session.user as SessionUser;
+        dispatch(
+          setUser({
+            name: user?.name || "",
+            email: user?.email || "",
+            photo: user?.image || "",
+            githubId: user?.id || "",
+            image: user?.image || "",
+            login: user?.login || "",
+            node_id: user?.node_id || "",
+            avatar_url: user?.avatar_url || "",
+            gravatar_id: user?.gravatar_id || "",
+            url: user?.url || "",
+            html_url: user?.html_url || "",
+            followers_url: user?.followers_url || "",
+            following_url: user?.following_url || "",
+            gists_url: user?.gists_url || "",
+            starred_url: user?.starred_url || "",
+            subscriptions_url: user?.subscriptions_url || "",
+            organizations_url: user?.organizations_url || "",
+            repos_url: user?.repos_url || "",
+            events_url: user?.events_url || "",
+            received_events_url: user?.received_events_url || "",
+            type: user?.type || "",
+            site_admin: user?.site_admin || false,
+            company: user?.company || "",
+            blog: user?.blog || "",
+            location: user?.location || "",
+            hireable: user?.hireable || false,
+            bio: user?.bio || "",
+            twitter_username: user?.twitter_username || "",
+            public_repos: user?.public_repos || 0,
+            public_gists: user?.public_gists || 0,
+            followers: user?.followers || 0,
+            following: user?.following || 0,
+            created_at: user?.created_at || "",
+            updated_at: user?.updated_at || "",
+            accessToken: session.accessToken as string,
+            expires: session.expires as string,
+          })
+        );
 
-      if (pathname === "/") {
-        router.push("/dashboard");
+        if (pathname === "/") {
+          router.push("/dashboard");
+        } else {
+          router.push(pathname);
+        }
       } else {
-        router.push(pathname);
+        router.push("/");
       }
-    } else {
-      router.push("/");
     }
   }, [session, user, pathname]);
 
