@@ -11,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from "@/components/ui/dialog";
 import { items } from "@/components/ui/ConnectCard";
 import CopyLinkButton from "@/components/Button/CopyLinkButton";
@@ -34,19 +35,20 @@ export default function Connect() {
 
   const [qrCodeData, setQrCodeData] = useState<string>("");
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>("");
+  const [modalOpen, setModalOpen] = useState(false);
 
   const userId = session?.accessToken;
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await GET(`/user/${user?.githubId}`);
-        setUserData(response);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
+  const fetchUserData = async () => {
+    try {
+      const response = await GET(`/user/${user?.githubId}`);
+      setUserData(response);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
 
+  useEffect(() => {
     if (userId) {
       fetchUserData();
     }
@@ -55,6 +57,7 @@ export default function Connect() {
   const handleConnect = async (type: any) => {
     try {
       const data = type;
+      console.log(data);
       setQrCodeData("");
       setQrCodeDataUrl("");
       if (data) {
@@ -68,17 +71,21 @@ export default function Connect() {
         if (qr) {
           setQrCodeData(qr);
           setQrCodeDataUrl(response?.data?.url);
+          setModalOpen(true); // Open the modal
         } else {
           setQrCodeData("");
           setQrCodeDataUrl("");
           console.error("QR code data is undefined");
         }
-        const updatedUserData = await GET(`/user/${user?.githubId}`);
-        setUserData(updatedUserData);
       }
     } catch (error) {
       console.error("Error during connection:", error);
     }
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+    fetchUserData(); // Fetch updated user data when the modal closes
   };
 
   return (
@@ -119,7 +126,7 @@ export default function Connect() {
                     {item.title}
                   </div>
                   {!username && (
-                    <Dialog>
+                    <Dialog open={modalOpen} onOpenChange={handleModalClose}>
                       <DialogTrigger asChild>
                         <div
                           onClick={() => handleConnect(item.title)}
@@ -166,6 +173,7 @@ export default function Connect() {
                           </DialogFooter>
                         </DialogContent>
                       )}
+                      <DialogClose onClick={handleModalClose} />
                     </Dialog>
                   )}
                 </div>
