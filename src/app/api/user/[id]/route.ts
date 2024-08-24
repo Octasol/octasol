@@ -9,7 +9,7 @@ export async function GET(
   try {
     const { id } = params;
 
-    const userDbData = bigintToString(await getDbUser(id));
+    const userDbData = bigintToString(await getDbUser(BigInt(id)));
     console.log(userDbData);
 
     if (!userDbData) {
