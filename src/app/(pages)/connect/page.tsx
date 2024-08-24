@@ -75,7 +75,7 @@ export default function Connect() {
           console.error("QR code data is undefined");
         }
         const updatedUserData = await GET(`/user/${user?.githubId}`);
-        setUserData(updatedUserData.data);
+        setUserData(updatedUserData);
       }
     } catch (error) {
       console.error("Error during connection:", error);
