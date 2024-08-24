@@ -2,11 +2,16 @@ import { bigintToString } from "@/lib/utils";
 import { getDbUser } from "@/utils/dbUtils";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   try {
     const { id } = params;
 
     const userDbData = bigintToString(await getDbUser(id));
+    console.log(userDbData);
+
     if (!userDbData) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
