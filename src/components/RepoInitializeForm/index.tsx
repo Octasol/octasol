@@ -50,7 +50,7 @@ export function RepoInitializeForm() {
           fetchRepositories(response?.data?.installationId);
         }
       } else {
-        console.log(error);
+        console.error(error);
         // dispatch(setError(error));
       }
     }

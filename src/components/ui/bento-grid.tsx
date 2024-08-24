@@ -42,12 +42,10 @@ export const BentoGridItem = ({
 
     switch (data) {
       case "Hackerrank":
-        console.log("Hackerrank");
         const response = await POST("/devprofile/hackerrank", {
           userId: "rbcrocks",
           providerId: "173b32e0-a611-42ad-9cb7-ab4029c0a72a",
         });
-        console.log(response);
         break;
       default:
         break;

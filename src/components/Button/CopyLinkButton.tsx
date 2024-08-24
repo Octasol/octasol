@@ -6,7 +6,6 @@ type Props = { children: React.ReactNode; data: any };
 
 const CopyLinkButton = ({ children, data }: Props) => {
   const handleConnect = async (data: any) => {
-    console.log(data);
     navigator.clipboard.writeText(data);
   };
 

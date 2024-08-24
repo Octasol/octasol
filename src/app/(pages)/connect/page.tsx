@@ -55,7 +55,6 @@ export default function Connect() {
   const handleConnect = async (type: any) => {
     try {
       const data = type;
-      console.log(data);
       setQrCodeData("");
       setQrCodeDataUrl("");
       if (data) {

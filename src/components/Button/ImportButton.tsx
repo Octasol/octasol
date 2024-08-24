@@ -12,7 +12,6 @@ const ImportButton = ({ children, privateFlag, data }: Props) => {
   const router = useRouter();
 
   const handleImport = () => {
-    console.log(data);
     if (data) {
       router.push(`/repoinitialize/${data.name}`);
     } else {

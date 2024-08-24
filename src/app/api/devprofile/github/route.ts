@@ -17,7 +17,6 @@ import {
 export async function GET() {
   try {
     const githubDevProfile = await getAllGithubDevProfiles();
-    console.log(githubDevProfile);
     if (!githubDevProfile) {
       return NextResponse.json(
         { error: "Github Dev Profile not found" },

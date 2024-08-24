@@ -72,7 +72,6 @@ const Login = () => {
     if (session && !hasPosted) {
       const runPostRequest = async () => {
         try {
-          console.log("session.accessToken", session.accessToken);
           await POST(
             "/devprofile/github/",
             {},
@@ -192,11 +191,9 @@ const Login = () => {
   };
 
   useEffect(() => {
-    console.log("error", error);
   }, [error]);
 
   const handleProfile = (user: string) => {
-    console.log(user);
     router.replace(`/p/${user}`);
   };
 

@@ -65,8 +65,6 @@ async function handleReclaimSession(
           default:
             throw new Error(`Unsupported provider: ${providerName}`);
         }
-
-        console.log("Proof is: ", proof);
       } catch (error) {
         console.error(
           `Failed to process Reclaim proof for userId: ${userId}`,

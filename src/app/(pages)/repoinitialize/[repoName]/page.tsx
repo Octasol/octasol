@@ -21,13 +21,10 @@ const RepoName = () => {
         repo: pathname.split("/")[2],
         installationId: localStorage.getItem("installationId"),
       };
-      console.log(localStorage.getItem("installationId"));
-
       const data = await POST(getRepo, paylaod);
-      console.log(data?.response?.data);
       setData(data?.response?.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
