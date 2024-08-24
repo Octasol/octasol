@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
     const mergedPullRequests = user.mergedPullRequests.totalCount;
     const totalIssues =
       user.openIssues.totalCount + user.closedIssues.totalCount;
-    const userDB = await getDbUser(id);
+    const userDB = await getDbUser(BigInt(id));
 
     if (!userDB?.emails)
       await setUsername(id, { githubUsername: login, emails: [email] });

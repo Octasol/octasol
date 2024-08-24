@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Github ID not found" }, { status: 404 });
   }
 
-  const userDB = await getDbUser(id);
+  const userDB = await getDbUser(BigInt(id));
   if (!userDB) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   }

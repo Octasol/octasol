@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const userDB = await getDbUser(id);
+    const userDB = await getDbUser(BigInt(id));
 
     if (!userDB?.emails) {
       await setUsername(id, { emails: [email], email: email });

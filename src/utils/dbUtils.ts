@@ -38,7 +38,7 @@ export const setUser = async (
   }
 };
 
-export const getDbUser = async (githubId: any) => {
+export const getDbUser = async (githubId: bigint) => {
   return db.user.findUnique({
     where: {
       githubId: githubId,
@@ -136,7 +136,7 @@ export const getAllGithubDevProfiles = async () => {
   }
 };
 export const getGithubUsername = async (id: any) => {
-  const user = await getDbUser(id);
+  const user = await getDbUser(BigInt(id));
   return user?.githubUsername || "";
 };
 
@@ -171,7 +171,7 @@ export const getHackerrankProfile = async (id: any) => {
 export const updateTotalPoints = async (id: any) => {
   const hackerrankProfile = await getHackerrankProfile(id);
   const githubDevProfile = await getGithubDevProfile(id);
-  const user = await getDbUser(id);
+  const user = await getDbUser(BigInt(id));
   let totalPoints = 0;
 
   if (hackerrankProfile) {
