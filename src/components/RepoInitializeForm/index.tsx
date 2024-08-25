@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { v4 as uuidv4 } from "uuid";
 import cookie from "js-cookie";
-import { useSession } from "next-auth/react";
 import ImportButton from "../Button/ImportButton";
 import SelectUser from "../Input/SelectUser";
 import RepoSearch from "../Input/RepoSearch";
@@ -20,7 +19,6 @@ import { POST } from "@/config/axios/requests";
 import { githubInstallations } from "@/config/axios/Breakpoints";
 
 export function RepoInitializeForm() {
-  const { data: session } = useSession();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
   const repositories = useSelector((state: any) => state.repo);
@@ -30,15 +28,9 @@ export function RepoInitializeForm() {
   const router = useRouter();
 
   const dispatchInstallationId = async () => {
-    if (session) {
-      var id;
-      const array = session?.user?.image?.split("/");
-      if (array && array.length > 0) {
-        id = array[array.length - 1];
-        id = id.split("?")[0];
-      }
+    if (user) {
       const { response, error } = await POST(githubInstallations, {
-        githubId: id,
+        githubId: user?.githubId,
       });
       if (response) {
         dispatch(setInstallationId(response?.data?.installationId ?? ""));
@@ -58,7 +50,7 @@ export function RepoInitializeForm() {
 
   useEffect(() => {
     dispatchInstallationId();
-  }, [session]);
+  }, [user]);
 
   const fetchRepositories = async (installationId: string) => {
     try {
