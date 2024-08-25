@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
 import { GET, POST } from "@/config/axios/requests";
 import {

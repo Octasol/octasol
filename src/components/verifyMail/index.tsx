@@ -15,11 +15,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { POST } from "@/config/axios/requests";
-import { useSession } from "next-auth/react";
 import { sendOtp, verifyOtp } from "@/config/axios/Breakpoints";
 
 type Props = {
   verify: () => void;
+  session: any;
 };
 
 const FormSchema = z.object({
@@ -29,8 +29,7 @@ const FormSchema = z.object({
   otp: z.string().optional(),
 });
 
-const VerifyMail = ({ verify }: Props) => {
-  const { data: session } = useSession() as any;
+const VerifyMail = ({ verify, session }: Props) => {
   const [otpSent, setOtpSent] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({

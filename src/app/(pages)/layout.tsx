@@ -2,20 +2,20 @@
 import Sidebar from "@/components/Sidebar";
 import VerifyMail from "@/components/verifyMail";
 import { GET } from "@/config/axios/requests";
-import { useSession } from "next-auth/react";
 import React, { ReactNode, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 type Props = { children: ReactNode };
 
 const Layout = ({ children }: Props) => {
-  const { data: session } = useSession() as any;
+  const Session = useSelector((state: any) => state.user);
   const [verifiedEmail, setVerifiedEmail] = useState(false);
 
   const verified = async () => {
-    if (session) {
+    if (Session) {
       try {
         const response = await GET("/user", {
-          Authorization: `Bearer ${session.accessToken as string}`,
+          Authorization: `Bearer ${Session.accessToken as string}`,
         });
         setVerifiedEmail(response?.verifiedEmail);
       } catch (err) {
@@ -28,7 +28,7 @@ const Layout = ({ children }: Props) => {
 
   useEffect(() => {
     verified();
-  }, [session]);
+  }, [Session]);
 
   return (
     <>
@@ -40,7 +40,7 @@ const Layout = ({ children }: Props) => {
           <div className="w-full min-h-screen pt-24 md:ms-20">{children}</div>
         ) : (
           <div className="w-full min-h-screen pt-24 md:ms-20 flex justify-center items-center">
-            <VerifyMail verify={verified} />
+            <VerifyMail verify={verified} session={Session} />
           </div>
         )}
       </div>
