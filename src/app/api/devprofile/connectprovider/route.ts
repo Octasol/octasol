@@ -3,20 +3,21 @@ import { signWithProviderID } from "@/config/reclaim/reclaimService";
 import { getHackerrankStats } from "@/config/reclaim/hackerrank/service";
 import QRCode from "qrcode";
 import { providers } from "@/providers/constants";
+import { getGithubIdbyAccessToken } from "@/lib/apiUtils";
 
 export async function GET(req: NextRequest) {
-  const provider = req.nextUrl.searchParams.get("provider");
+  // const provider = req.nextUrl.searchParams.get("provider");
   const username = req.nextUrl.searchParams.get("username") || "";
   let data = await getHackerrankStats(username);
   return NextResponse.json(data);
 }
 
 export async function POST(req: NextRequest) {
-  const { userId, githubId, providerName } = await req.json();
+  const { userId, providerName } = await req.json();
+  const githubId = await getGithubIdbyAccessToken(userId);
   const providerId = providers[providerName];
   try {
     const signedUrl = await signWithProviderID(
-      userId,
       githubId,
       providerId,
       providerName

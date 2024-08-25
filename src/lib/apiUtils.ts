@@ -116,19 +116,8 @@ export async function getGithubIdbyAuthHeader(authHeader: string) {
     if (!authHeader) {
       return 0;
     }
-    const cacheKey = `githubUserId:${authHeader}`;
-    const githubId = getCache(cacheKey);
-    if (githubId) {
-      return githubId;
-    }
-    const response = await axios.get("https://api.github.com/user", {
-      headers: {
-        Authorization: `${authHeader}`,
-        Accept: "application/vnd.github.v3+json",
-      },
-    });
-    setCache(cacheKey, response.data.id);
-    return response.data.id;
+    const accessToken = authHeader.split(" ")[1];
+    return await getGithubIdbyAccessToken(accessToken);
   } catch (error: any) {
     return 0;
   }
@@ -156,4 +145,48 @@ export async function getUserByAuthHeader(authHeader: string) {
   return await getGithubProfileWithGithubID(
     await getGithubIdbyAuthHeader(authHeader)
   );
+}
+
+export async function getGithubIdbyAccessToken(accessToken: string) {
+  try {
+    const cacheKey = `githubUserId:${accessToken}`;
+    const githubId = getCache(cacheKey);
+    if (githubId) {
+      return githubId;
+    }
+    const response = await axios.get("https://api.github.com/user", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: "application/vnd.github.v3+json",
+      },
+    });
+    setCache(cacheKey, response.data.id);
+    return response.data.id;
+  } catch (error: any) {
+    console.error("Failed to fetch Github ID", error);
+    return 0;
+  }
+}
+
+export async function getHackerrankProfileByApi(username: string) {
+  try {
+    const response = await axios.get(
+      `https://www.hackerrank.com/rest/hackers/${username}/badges`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "*/*",
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Failed to fetch HackerRank profile for username: ${username}`,
+      error
+    );
+    throw new Error("Error fetching HackerRank profile");
+  }
 }

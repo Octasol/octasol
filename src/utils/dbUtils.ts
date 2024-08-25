@@ -210,3 +210,29 @@ export async function getUserByEmail(email: string) {
     },
   });
 }
+
+export async function setHackerrankDatabyGithubId(
+  githubId: any,
+  currentPoints: number,
+  stars: number
+) {
+  try {
+    await db.hackerrankProfile.upsert({
+      where: { githubId: githubId },
+      update: {
+        currentPoints: currentPoints,
+        stars: stars,
+      },
+      create: {
+        githubId: githubId,
+        currentPoints: currentPoints,
+        stars: stars,
+      },
+    });
+    updateTotalPoints(githubId);
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}

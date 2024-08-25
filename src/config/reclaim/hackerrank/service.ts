@@ -1,37 +1,34 @@
-import axios from 'axios';
-import { ReclaimServiceResponse } from '../../../utils/reclaimServiceResponse';
+import axios from "axios";
+import { ReclaimServiceResponse } from "../../../utils/reclaimServiceResponse";
+import { getHackerrankProfileByApi } from "@/lib/apiUtils";
+import { setHackerrankDatabyGithubId, setUsername } from "@/utils/dbUtils";
 
-export async function processHackerRankData(proof: any, providerName: string, userId: string) {
-  const username = JSON.parse(proof[0].claimData.context).extractedParameters.userName;
+export async function processHackerRankData(
+  githubId: any,
+  proof: any,
+  providerName: string
+) {
+  const username = JSON.parse(proof[0].claimData.context).extractedParameters
+    .username;
   const lastUpdateTimeStamp = proof[0].claimData.timestampS;
-
+  await setUsername(githubId, {
+    hackerrankUsername: username,
+  });
   const { currentPoints, stars } = await getHackerrankStats(username);
-
-  return new ReclaimServiceResponse(providerName, lastUpdateTimeStamp, username, { currentPoints, stars }, proof[0], userId);
-}
-
-export async function getHackerrankProfile(username: string) {
-  try {
-    const response = await axios.get(
-      `https://www.hackerrank.com/rest/hackers/${username}/badges`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "*/*",
-          "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error(`Failed to fetch HackerRank profile for username: ${username}`, error);
-    throw new Error('Error fetching HackerRank profile');
-  }
+  await setHackerrankDatabyGithubId(BigInt(githubId), currentPoints, stars);
+  return true;
+  // return new ReclaimServiceResponse(
+  //   providerName,
+  //   lastUpdateTimeStamp,
+  //   username,
+  //   { currentPoints, stars },
+  //   proof[0],
+  //   userId
+  // );
 }
 
 export async function getHackerrankStats(username: string) {
-  const data = await getHackerrankProfile(username);
+  const data = await getHackerrankProfileByApi(username);
   let stars = 0;
   let currentPoints = 0;
   data.models.forEach((model: any) => {

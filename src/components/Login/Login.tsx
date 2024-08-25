@@ -23,6 +23,7 @@ import BottomGradient from "../ui/BottomGradient";
 import LoginButton from "../Button/LoginButton";
 import { POST } from "@/config/axios/requests";
 import { IconChartHistogram } from "@tabler/icons-react";
+import { githubDevProfile } from "@/config/axios/Breakpoints";
 
 const Login = () => {
   const { data: session } = useSession() as any;
@@ -73,7 +74,7 @@ const Login = () => {
       const runPostRequest = async () => {
         try {
           await POST(
-            "/devprofile/github/",
+            githubDevProfile,
             {},
             {
               Authorization: `Bearer ${session.accessToken as string}`,

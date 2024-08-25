@@ -7,7 +7,6 @@ const reclaimAppID = process.env.RECLAIM_APP_ID!;
 const reclaimAppSecret = process.env.RECLAIM_APP_SECRET!;
 
 export async function signWithProviderID(
-  userId: string,
   githubId: any,
   providerId: string,
   providerName: string
@@ -21,12 +20,11 @@ export async function signWithProviderID(
   const { requestUrl: signedUrl } =
     await reclaimClient.createVerificationRequest();
 
-  await handleReclaimSession(userId, githubId, reclaimClient, providerName);
+  await handleReclaimSession(githubId, reclaimClient, providerName);
   return signedUrl;
 }
 
 async function handleReclaimSession(
-  userId: string,
   githubId: any,
   reclaimClient: any,
   providerName: string
@@ -35,29 +33,29 @@ async function handleReclaimSession(
     onSuccessCallback: async (proof: any) => {
       try {
         let processedData;
-        let username;
+        // let username;
 
         switch (providerName) {
           case "Hackerrank":
             processedData = await processHackerRankData(
+              githubId,
               proof,
-              providerName,
-              userId
+              providerName
             );
-            username = JSON.parse(proof[0].claimData.parameters).paramValues
-              .username;
-            await setUsername(githubId, {
-              hackerrankUsername: username,
-            });
+            // username = JSON.parse(proof[0].claimData.parameters).paramValues
+            //   .username;
+            // await setUsername(githubId, {
+            //   hackerrankUsername: username,
+            // });
             break;
 
           case "SuperteamEarn":
             processedData = await processSuperteamEarnData(
+              githubId,
               proof,
-              providerName,
-              userId
+              providerName
             );
-            username = JSON.parse(proof[0].claimData.parameters).paramValues
+            let username = JSON.parse(proof[0].claimData.parameters).paramValues
               .username;
             await setUsername(githubId, { superteamUsername: username });
             break;
@@ -67,13 +65,13 @@ async function handleReclaimSession(
         }
       } catch (error) {
         console.error(
-          `Failed to process Reclaim proof for userId: ${userId}`,
+          `Failed to process Reclaim proof for githubId: ${githubId}`,
           error
         );
       }
     },
     onFailureCallback: (error: any) => {
-      console.error(`Verification failed for userId: ${userId}`, error);
+      console.error(`Verification failed for githubId: ${githubId}`, error);
     },
   });
 }
