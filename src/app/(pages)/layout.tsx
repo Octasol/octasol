@@ -8,27 +8,27 @@ import { useSelector } from "react-redux";
 type Props = { children: ReactNode };
 
 const Layout = ({ children }: Props) => {
-  const Session = useSelector((state: any) => state.user);
+  const session = useSelector((state: any) => state.user);
   const [verifiedEmail, setVerifiedEmail] = useState(false);
 
   const verified = async () => {
-    if (Session) {
+    if (session) {
       try {
         const response = await GET("/user", {
-          Authorization: `Bearer ${Session.accessToken as string}`,
+          Authorization: `Bearer ${session.accessToken as string}`,
         });
         setVerifiedEmail(response?.verifiedEmail);
       } catch (err) {
         console.error("Failed to run POST request:", err);
       }
     } else {
-      console.log("No session found");
+      setVerifiedEmail(false);
     }
   };
 
   useEffect(() => {
     verified();
-  }, [Session]);
+  }, [session]);
 
   return (
     <>
@@ -40,7 +40,7 @@ const Layout = ({ children }: Props) => {
           <div className="w-full min-h-screen pt-24 md:ms-20">{children}</div>
         ) : (
           <div className="w-full min-h-screen pt-24 md:ms-20 flex justify-center items-center">
-            <VerifyMail verify={verified} session={Session} />
+            <VerifyMail verify={verified} session={session} />
           </div>
         )}
       </div>

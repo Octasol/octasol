@@ -50,7 +50,6 @@ const VerifyMail = ({ verify, session }: Props) => {
             Authorization: `Bearer ${session.accessToken as string}`,
           }
         );
-        console.log(response);
         if (response?.status === 200) {
           verify(); // Call verify function from props
         }
@@ -62,7 +61,6 @@ const VerifyMail = ({ verify, session }: Props) => {
             Authorization: `Bearer ${session.accessToken as string}`,
           }
         );
-        console.log(response);
         if (response?.status === 200) {
           setOtpSent(true);
         }
