@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   try {
     const data: RequestData = await req.json();
     const githubId: number = data.githubId;
-    const installationId = await getInstallationId(Number(githubId));
+    const installationId = await getInstallationId(BigInt(githubId));
     return NextResponse.json({ installationId: Number(installationId) });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
