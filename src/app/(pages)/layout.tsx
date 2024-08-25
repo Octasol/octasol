@@ -12,7 +12,7 @@ const Layout = ({ children }: Props) => {
   const [verifiedEmail, setVerifiedEmail] = useState(false);
 
   const verified = async () => {
-    if (session !== undefined) {
+    if (session) {
       try {
         const response = await GET("/user", {
           Authorization: `Bearer ${session.accessToken as string}`,

@@ -44,3 +44,14 @@ export interface UserDB {
   verifiedEmail?: boolean;
   totalPoints?: number;
 }
+
+export interface userNames {
+  githubUsername: string;
+  superteamUsername: string;
+  leetcodeUsername: string;
+  codeforcesUsername: string;
+  hackerrankUsername: string;
+  codechefUsername: string;
+  gfgUsername: string;
+  gitlabUsername: string;
+}

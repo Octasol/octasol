@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use, useEffect, useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -7,8 +7,52 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { usePathname } from "next/navigation";
+import { POST } from "@/config/axios/requests";
+import { userNames } from "@/lib/types";
+import Image from "next/image";
 
 export default function BentoGridDemo() {
+  const pathname = usePathname();
+  const [userName, setUserName] = useState<userNames>({
+    githubUsername: "",
+    superteamUsername: "",
+    leetcodeUsername: "",
+    codeforcesUsername: "",
+    hackerrankUsername: "",
+    codechefUsername: "",
+    gfgUsername: "",
+    gitlabUsername: "",
+  });
+  const userData = async (name: string) => {
+    try {
+      const { response } = await POST("/user", { username: name });
+      setUserName((prev) => ({
+        ...prev,
+        githubUsername: response?.data?.githubUsername || "",
+        superteamUsername: response?.data?.superteamUsername || "",
+        leetcodeUsername: response?.data?.leetcodeUsername || "",
+        codeforcesUsername: response?.data?.codeforcesUsername || "",
+        hackerrankUsername: response?.data?.hackerrankUsername || "",
+        codechefUsername: response?.data?.codechefUsername || "",
+        gfgUsername: response?.data?.gfgUsername || "",
+        gitlabUsername: response?.data?.gitlabUsername || "",
+      }));
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  useEffect(() => {
+    const name = pathname.split("/p/").pop();
+    console.log(name);
+    if (name) userData(name);
+  }, [pathname]);
+
+  useEffect(() => {
+    console.log(userName);
+  }, [userName]);
+
   return (
     <>
       <div className="w-full flex flex-col md:flex-row justify-center items-center px-4">
@@ -16,86 +60,104 @@ export default function BentoGridDemo() {
 
         <ScrollArea className="w-full md:w-5/12 md:h-[80vh] overflow-scroll px-4 md:px-8">
           <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
-              <AccordionTrigger>Is it accessible?</AccordionTrigger>
-              <AccordionContent>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non
-                deserunt ratione, repellendus omnis earum qui nesciunt quisquam
-                neque laudantium nulla numquam modi odit veniam est maxime
-                magni. Minima perspiciatis officia vitae cupiditate! Porro
-                voluptates molestias corrupti veritatis cupiditate quod
-                blanditiis nostrum exercitationem qui possimus ratione quos
-                harum eum, non dolorum in quisquam. Nisi tenetur nesciunt dolore
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non
-                deserunt ratione, repellendus omnis earum qui nesciunt quisquam
-                neque laudantium nulla numquam modi odit veniam est maxime
-                magni. Minima perspiciatis officia vitae cupiditate! Porro
-                voluptates molestias corrupti veritatis cupiditate quod
-                blanditiis nostrum exercitationem qui possimus ratione quos
-                harum eum, non dolorum in quisquam. Nisi tenetur nesciunt dolore
-                impedit quae voluptatum iusto id voluptatem, voluptas libero,
-                facere deserunt assumenda perspiciatis. Suscipit sint fuga
-                molestiae similique delectus a consequatur, dolorem praesentium
-                non blanditiis. Ipsam similique non fugiat, dicta harum
-                exercitationem enim, pariatur distinctio corporis blanditiis
-                repellat quod necessitatibus qui, optio in impedit. Provident
-                molestiae iusto ullam, assumenda illum, quibusdam rem cum et
-                nobis, optio sunt possimus veniam nisi impedit a! Quia ad iste
-                sunt aperiam accusantium, rem minus, non laborum cupiditate,
-                ipsam perspiciatis beatae veniam! Eveniet nemo earum esse autem
-                vitae omnis ex. Voluptate quisquam voluptatibus officiis itaque
-                iusto perferendis molestias sit vitae aliquam repellendus natus
-                fuga id nihil fugiat corrupti, praesentium voluptatum quia dicta
-                laboriosam eos ex. Eum aspernatur nobis velit id harum eaque, et
-                perspiciatis assumenda nam, dignissimos qui unde cupiditate
-                suscipit optio perferendis similique sint, ex laborum ratione
-                iste quasi officiis tempora? Similique esse expedita harum
-                ducimus autem aut voluptas? Yes. It adheres to the WAI-ARIA
-                design pattern.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
-              <AccordionTrigger>Is it accessible?</AccordionTrigger>
-              <AccordionContent>
-                Yes. It adheres to the WAI-ARIA design pattern.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2">
-              <AccordionTrigger>Is it accessible?</AccordionTrigger>
-              <AccordionContent>
-                Yes. It adheres to the WAI-ARIA design pattern.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-4">
-              <AccordionTrigger>Is it accessible?</AccordionTrigger>
-              <AccordionContent>
-                Yes. It adheres to the WAI-ARIA design pattern.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-6">
-              <AccordionTrigger>Is it accessible?</AccordionTrigger>
-              <AccordionContent>
-                Yes. It adheres to the WAI-ARIA design pattern.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-7">
-              <AccordionTrigger>Is it accessible?</AccordionTrigger>
-              <AccordionContent>
-                Yes. It adheres to the WAI-ARIA design pattern.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-9">
-              <AccordionTrigger>Is it accessible?</AccordionTrigger>
-              <AccordionContent>
-                Yes. It adheres to the WAI-ARIA design pattern.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-8">
-              <AccordionTrigger>Is it accessible?</AccordionTrigger>
-              <AccordionContent>
-                Yes. It adheres to the WAI-ARIA design pattern.
-              </AccordionContent>
-            </AccordionItem>
+            {userName.githubUsername && (
+              <AccordionItem value="github">
+                <AccordionTrigger>
+                  <div className="w-full flex justify-start items-center gap-6">
+                    <Image
+                      src="/github.webp"
+                      alt="github"
+                      className="invert"
+                      width={40}
+                      height={40}
+                    />
+                    <span className="text-base font-semibold ">
+                      {userName.githubUsername}
+                    </span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  Username: {userName.githubUsername}
+                </AccordionContent>
+              </AccordionItem>
+            )}
+
+            {userName.superteamUsername && (
+              <AccordionItem value="superteam">
+                <AccordionTrigger>Superteam</AccordionTrigger>
+                <AccordionContent>
+                  Username: {userName.superteamUsername}
+                </AccordionContent>
+              </AccordionItem>
+            )}
+
+            {userName.leetcodeUsername && (
+              <AccordionItem value="leetcode">
+                <AccordionTrigger>LeetCode</AccordionTrigger>
+                <AccordionContent>
+                  Username: {userName.leetcodeUsername}
+                </AccordionContent>
+              </AccordionItem>
+            )}
+
+            {userName.codeforcesUsername && (
+              <AccordionItem value="codeforces">
+                <AccordionTrigger>Codeforces</AccordionTrigger>
+                <AccordionContent>
+                  Username: {userName.codeforcesUsername}
+                </AccordionContent>
+              </AccordionItem>
+            )}
+
+            {userName.hackerrankUsername && (
+              <AccordionItem value="hackerrank">
+                <AccordionTrigger>
+                  {" "}
+                  <div className="w-full flex justify-start items-center gap-6">
+                    <Image
+                      src="/hackerrank.webp"
+                      alt="hackerrank"
+                      className="rounded-full"
+                      width={40}
+                      height={40}
+                    />
+                    <span className="text-base font-semibold ">
+                      {userName.hackerrankUsername}
+                    </span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  Username: {userName.hackerrankUsername}
+                </AccordionContent>
+              </AccordionItem>
+            )}
+
+            {userName.codechefUsername && (
+              <AccordionItem value="codechef">
+                <AccordionTrigger>CodeChef</AccordionTrigger>
+                <AccordionContent>
+                  Username: {userName.codechefUsername}
+                </AccordionContent>
+              </AccordionItem>
+            )}
+
+            {userName.gfgUsername && (
+              <AccordionItem value="gfg">
+                <AccordionTrigger>GeeksforGeeks</AccordionTrigger>
+                <AccordionContent>
+                  Username: {userName.gfgUsername}
+                </AccordionContent>
+              </AccordionItem>
+            )}
+
+            {userName.gitlabUsername && (
+              <AccordionItem value="gitlab">
+                <AccordionTrigger>GitLab</AccordionTrigger>
+                <AccordionContent>
+                  Username: {userName.gitlabUsername}
+                </AccordionContent>
+              </AccordionItem>
+            )}
           </Accordion>
         </ScrollArea>
       </div>

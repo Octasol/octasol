@@ -1,6 +1,6 @@
 import { getGithubIdbyAuthHeader } from "@/lib/apiUtils";
 import { bigintToString } from "@/lib/utils";
-import { getDbUser } from "@/utils/dbUtils";
+import { getDbUser, getUserByUsername } from "@/utils/dbUtils";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -27,6 +27,20 @@ export async function GET(req: NextRequest) {
       verifiedEmail: userDbData.verifiedEmail,
       githubId: userDbData.githubId,
     });
+  } catch (error: any) {
+    console.error(error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const { username } = await req.json();
+    const userDbData = bigintToString(await getUserByUsername(username));
+    if (!userDbData) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+    return NextResponse.json(userDbData);
   } catch (error: any) {
     console.error(error);
     return NextResponse.json({ error: error.message }, { status: 500 });
