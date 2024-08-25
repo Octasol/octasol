@@ -45,13 +45,8 @@ export default function BentoGridDemo() {
 
   useEffect(() => {
     const name = pathname.split("/p/").pop();
-    console.log(name);
     if (name) userData(name);
   }, [pathname]);
-
-  useEffect(() => {
-    console.log(userName);
-  }, [userName]);
 
   return (
     <>
