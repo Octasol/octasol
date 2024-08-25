@@ -12,14 +12,15 @@ const Layout = ({ children }: Props) => {
   const [verifiedEmail, setVerifiedEmail] = useState(false);
 
   const verified = async () => {
-    if (session) {
+    if (session && session.accessToken) {
       try {
         const response = await GET("/user", {
           Authorization: `Bearer ${session.accessToken as string}`,
         });
         setVerifiedEmail(response?.verifiedEmail);
       } catch (err) {
-        console.error("Failed to run POST request:", err);
+        // console.error("Failed to run POST request:", err);
+        setVerifiedEmail(false);
       }
     } else {
       setVerifiedEmail(false);
