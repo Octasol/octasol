@@ -13,6 +13,7 @@ const Header = (props: Props) => {
           alt="logo"
           width={80}
           height={80}
+          loading="lazy"
         />
         <div className="flex items-center gap-6">
           <Login />
