@@ -18,7 +18,6 @@ import CopyLinkButton from "@/components/Button/CopyLinkButton";
 import { connectProvider } from "@/config/axios/Breakpoints";
 
 export default function Connect() {
-  const { data: session } = useSession() as any;
   const user = useSelector((state: any) => state.user);
 
   const [userdata, setUserData] = useState({
@@ -37,7 +36,7 @@ export default function Connect() {
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
 
-  const userId = session?.accessToken;
+  const userId = user?.accessToken;
 
   const fetchUserData = async () => {
     try {
