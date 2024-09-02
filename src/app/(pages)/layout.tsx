@@ -4,6 +4,7 @@ import VerifyMail from "@/components/verifyMail";
 import { GET } from "@/config/axios/requests";
 import React, { ReactNode, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { signOut } from "next-auth/react";
 
 type Props = { children: ReactNode };
 
@@ -19,7 +20,7 @@ const Layout = ({ children }: Props) => {
         });
         setVerifiedEmail(response?.verifiedEmail);
       } catch (err) {
-        // console.error("Failed to run POST request:", err);
+        signOut();
         setVerifiedEmail(false);
       }
     } else {
