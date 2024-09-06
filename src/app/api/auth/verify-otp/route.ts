@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     deleteOtp(email);
 
     try {
-      await setUsername(id, { verifiedEmail: true });
+      await setUsername(id, { verifiedEmail: true, email: email });
     } catch (error: any) {
       return NextResponse.json(
         { error: "Failed to update user status." },
