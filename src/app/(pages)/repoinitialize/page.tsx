@@ -14,7 +14,7 @@ const Repoinitialize = () => {
           <div className="w-full lg:w-1/2 justify-center items-center z-20">
             <RepoInitializeForm />
           </div>
-          <div className="w-full lg:w-1/2 hidden lg:flex">
+          <div className="w-full lg:w-1/2 hidden lg:flex opacity-40">
             {astronautIcon()}
           </div>
         </div>
