@@ -9,23 +9,23 @@
 }
 
 .path {
-  stroke-dasharray: 100000;
+  stroke-dasharray: 12;
   fill: none;
-  stroke: #000;
-  stroke-width: 50px;
+  stroke: #fff;
+  stroke-width: 0.5px;
   animation: dash 2s linear alternate infinite;
 }
 
 @keyframes dash {
   0% {
-    stroke-dashoffset: 100000;
+    stroke-dashoffset: 10;
     stroke-opacity: 1;
   }
   50% {
-    stroke-dashoffset: 50000;
+    stroke-dashoffset: 50;
   }
   100% {
-    stroke-dashoffset: 0;
+    stroke-dashoffset: 10;
     stroke-opacity: 1;
   }
 }
