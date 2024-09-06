@@ -29,14 +29,14 @@ export default function BentoGridDemo() {
       const { response } = await POST("/user", { username: name });
       setUserName((prev) => ({
         ...prev,
-        githubUsername: response?.data?.githubUsername || "",
-        superteamUsername: response?.data?.superteamUsername || "",
-        leetcodeUsername: response?.data?.leetcodeUsername || "",
-        codeforcesUsername: response?.data?.codeforcesUsername || "",
-        hackerrankUsername: response?.data?.hackerrankUsername || "",
-        codechefUsername: response?.data?.codechefUsername || "",
-        gfgUsername: response?.data?.gfgUsername || "",
-        gitlabUsername: response?.data?.gitlabUsername || "",
+        githubUsername: response?.data.user?.githubUsername || "",
+        superteamUsername: response?.data.user?.superteamUsername || "",
+        leetcodeUsername: response?.data.user?.leetcodeUsername || "",
+        codeforcesUsername: response?.data.user?.codeforcesUsername || "",
+        hackerrankUsername: response?.data.user?.hackerrankUsername || "",
+        codechefUsername: response?.data.user?.codechefUsername || "",
+        gfgUsername: response?.data.user?.gfgUsername || "",
+        gitlabUsername: response?.data.user?.gitlabUsername || "",
       }));
     } catch (error) {
       console.error("Error fetching user data:", error);

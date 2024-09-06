@@ -1,6 +1,11 @@
+import { getHackerrankStats } from "@/config/reclaim/hackerrank/service";
 import { getGithubIdbyAuthHeader } from "@/lib/apiUtils";
 import { bigintToString } from "@/lib/utils";
-import { getDbUser, getUserByUsername } from "@/utils/dbUtils";
+import {
+  getDbUser,
+  getGithubDevProfile,
+  getUserByUsername,
+} from "@/utils/dbUtils";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -40,7 +45,18 @@ export async function POST(req: NextRequest) {
     if (!userDbData) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
-    return NextResponse.json(userDbData);
+    const githubDevProfile = await getGithubDevProfile(
+      BigInt(userDbData.githubId)
+    );
+    const hackerrankProfile = await getHackerrankStats(
+      userDbData.hackerrankUsername
+    );
+    const data = {
+      user: userDbData,
+      github: githubDevProfile,
+      hackerrank: hackerrankProfile,
+    };
+    return NextResponse.json(data);
   } catch (error: any) {
     console.error(error);
     return NextResponse.json({ error: error.message }, { status: 500 });

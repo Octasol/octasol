@@ -28,12 +28,17 @@ export async function processHackerRankData(
 }
 
 export async function getHackerrankStats(username: string) {
-  const data = await getHackerrankProfileByApi(username);
-  let stars = 0;
-  let currentPoints = 0;
-  data.models.forEach((model: any) => {
-    currentPoints += model.current_points;
-    stars += model.stars;
-  });
-  return { currentPoints, stars };
+  try {
+    const data = await getHackerrankProfileByApi(username);
+    let stars = 0;
+    let currentPoints = 0;
+    data.models.forEach((model: any) => {
+      currentPoints += model.current_points;
+      stars += model.stars;
+    });
+    return { currentPoints, stars };
+  } catch (error) {
+    console.error("Error fetching Hackerrank stats:", error);
+    return { currentPoints: 0, stars: 0 };
+  }
 }
