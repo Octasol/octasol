@@ -5,6 +5,9 @@ import { GET } from "@/config/axios/requests";
 import React, { ReactNode, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { signOut } from "next-auth/react";
+import Loader from "@/components/Loader";
+import { store } from "../Redux/store";
+import { decrement } from "../Redux/Features/loader/loaderSlice";
 
 type Props = { children: ReactNode };
 
@@ -22,6 +25,8 @@ const Layout = ({ children }: Props) => {
       } catch (err) {
         signOut();
         setVerifiedEmail(false);
+      } finally {
+        store.dispatch(decrement());
       }
     } else {
       setVerifiedEmail(false);
@@ -35,6 +40,7 @@ const Layout = ({ children }: Props) => {
   return (
     <>
       <div className="flex w-full h-full">
+        <Loader />
         <div className="w-fit hidden md:flex">
           <Sidebar />
         </div>
