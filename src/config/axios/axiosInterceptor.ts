@@ -1,3 +1,7 @@
+"use client";
+
+import { decrement, increment } from "@/app/Redux/Features/loader/loaderSlice";
+import { store } from "@/app/Redux/store";
 import axios, {
   AxiosInstance,
   InternalAxiosRequestConfig,
@@ -12,27 +16,27 @@ const axiosInstance: AxiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
-    
   },
 });
 
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-    // console.log(config.url);
+    store.dispatch(increment());
     return config;
   },
   (error: any): Promise<any> => {
-    // console.error(error);
+    store.dispatch(decrement());
     return Promise.reject(error);
   }
 );
 
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse): AxiosResponse => {
-    // console.log(response.config);
+    store.dispatch(decrement());
     return response;
   },
   (error: any): Promise<any> => {
+    store.dispatch(decrement());
     return Promise.reject(error);
   }
 );

@@ -3,7 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Session } from "next-auth";
-import SessionProviderWrapper from "@/providers/session-provider"; // Adjust the path as necessary
+import SessionProviderWrapper from "@/providers/session-provider";
 import Header from "@/components/Header";
 import { Providers } from "./Redux/provider";
 import { ThemeProvider } from "@/providers/theme-provider";
