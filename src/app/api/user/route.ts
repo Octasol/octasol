@@ -45,9 +45,9 @@ export async function POST(req: NextRequest) {
     if (!userDbData) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
-    const githubDevProfile = await getGithubDevProfile(
+    const githubDevProfile = bigintToString(await getGithubDevProfile(
       BigInt(userDbData.githubId)
-    );
+    ));
     const hackerrankProfile = await getHackerrankStats(
       userDbData.hackerrankUsername
     );
