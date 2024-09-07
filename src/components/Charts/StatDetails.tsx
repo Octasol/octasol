@@ -97,12 +97,11 @@ export function StatDetails(props: Props) {
                 tickLine={false}
                 axisLine={false}
                 tickMargin={5}
-                width={60} // Adjust width to fit content
-                tickFormatter={
-                  (value) =>
-                    value.length > 8 ? `${value.slice(0, 8)}...` : value // Truncate labels if too long
+                width={70}
+                tickFormatter={(value) =>
+                  value.length > 8 ? `${value.slice(0, 8)}...` : value
                 }
-                style={{ fontSize: "10px", overflow: "hidden" }} // Smaller font size for better fit
+                style={{ fontSize: "10px", overflow: "hidden" }}
               />
               <XAxis type="number" />
               <ChartTooltip
