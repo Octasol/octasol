@@ -11,6 +11,25 @@ import { usePathname } from "next/navigation";
 import { POST } from "@/config/axios/requests";
 import { userNames } from "@/lib/types";
 import Image from "next/image";
+import { RadialChart } from "@/components/Charts/RadialChart";
+import ProfileDetail from "@/components/Card/ProfileDetail";
+import { StatDetails } from "@/components/Charts/StatDetails";
+import { set } from "react-hook-form";
+
+interface DataObject {
+  githubId?: string;
+  stars?: number;
+  forks?: number;
+  forkedRepos?: number;
+  originalRepos?: number;
+  followers?: number;
+  totalCommits?: number;
+  repositoriesContributedTo?: number;
+  pullRequests?: number;
+  mergedPullRequests?: number;
+  totalIssues?: number;
+  currentPoints?: number;
+}
 
 export default function BentoGridDemo() {
   const pathname = usePathname();
@@ -24,9 +43,17 @@ export default function BentoGridDemo() {
     gfgUsername: "",
     gitlabUsername: "",
   });
+  const [githubData, setGithubData] = useState<DataObject>({});
+  const [hackerrankData, setHackerrankData] = useState<DataObject>({});
+
   const userData = async (name: string) => {
     try {
       const { response } = await POST("/user", { username: name });
+      console.log(response?.data);
+
+      setGithubData(response?.data?.github);
+      setHackerrankData(response?.data?.hackerrank);
+
       setUserName((prev) => ({
         ...prev,
         githubUsername: response?.data.user?.githubUsername || "",
@@ -48,12 +75,18 @@ export default function BentoGridDemo() {
     if (name) userData(name);
   }, [pathname]);
 
+  useEffect(() => {
+    console.log(githubData);
+  }, [githubData]);
+
   return (
     <>
       <div className="w-full flex flex-col md:flex-row justify-center items-center px-4">
-        <div className="w-full md:w-7/12 "></div>
+        <div className="w-full md:w-6/12 ">
+          <RadialChart />
+        </div>
 
-        <ScrollArea className="w-full md:w-5/12 md:h-[80vh] overflow-scroll px-4 md:px-8">
+        <ScrollArea className="w-full md:w-6/12 md:h-[80vh] overflow-scroll px-4 ">
           <Accordion type="single" collapsible>
             {userName.githubUsername && (
               <AccordionItem value="github">
@@ -72,7 +105,7 @@ export default function BentoGridDemo() {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  Username: {userName.githubUsername}
+                  <StatDetails stats={githubData} />
                 </AccordionContent>
               </AccordionItem>
             )}
@@ -122,7 +155,7 @@ export default function BentoGridDemo() {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  Username: {userName.hackerrankUsername}
+                  <StatDetails stats={hackerrankData} />
                 </AccordionContent>
               </AccordionItem>
             )}

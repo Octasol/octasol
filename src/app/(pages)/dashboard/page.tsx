@@ -1,7 +1,7 @@
 import { Cards } from "@/components/Card";
+import StatusChart from "@/components/Charts/StatusChart";
 import CoverUpPage from "@/components/CoverUpPage/Index";
 import Notification from "@/components/Notification";
-import StatusChart from "@/components/StatusChart";
 import React from "react";
 
 const Dashboard = () => {

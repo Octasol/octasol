@@ -34,6 +34,7 @@ export default function Connect() {
   const [qrCodeData, setQrCodeData] = useState<string>("");
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
+  const [activeItemTitle, setActiveItemTitle] = useState<string | null>(null);
 
   const userId = user?.accessToken;
 
@@ -57,6 +58,7 @@ export default function Connect() {
       const data = type;
       setQrCodeData("");
       setQrCodeDataUrl("");
+      setActiveItemTitle(type);
       if (data) {
         const { response } = await POST(connectProvider, {
           userId: userId,
@@ -68,7 +70,7 @@ export default function Connect() {
         if (qr) {
           setQrCodeData(qr);
           setQrCodeDataUrl(response?.data?.url);
-          setModalOpen(true); // Open the modal
+          setModalOpen(true);
         } else {
           setQrCodeData("");
           setQrCodeDataUrl("");
@@ -82,7 +84,7 @@ export default function Connect() {
 
   const handleModalClose = () => {
     setModalOpen(false);
-    fetchUserData(); // Fetch updated user data when the modal closes
+    fetchUserData();
   };
 
   return (
@@ -140,36 +142,32 @@ export default function Connect() {
                           <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40"></span>
                         </div>
                       </DialogTrigger>
-                      {qrCodeData && (
-                        <DialogContent className="sm:max-w-[700px]">
-                          <DialogHeader>
-                            <DialogTitle>
-                              <span className="w-full flex">
-                                Connect&nbsp;to&nbsp;{item.title}
+                      <DialogContent className="sm:max-w-[700px]">
+                        <DialogHeader>
+                          <DialogTitle>
+                            Connect to {activeItemTitle}
+                          </DialogTitle>{" "}
+                        </DialogHeader>
+                        <div className="w-full h-full flex justify-center items-center">
+                          {qrCodeData && (
+                            <Image
+                              src={qrCodeData}
+                              alt="QR Code"
+                              height={300}
+                              width={300}
+                            />
+                          )}
+                        </div>
+                        <DialogFooter>
+                          <div className="w-full flex justify-center items-center">
+                            <CopyLinkButton data={qrCodeDataUrl}>
+                              <span className="text-sm md:text-base">
+                                Copy&nbsp;url
                               </span>
-                            </DialogTitle>
-                          </DialogHeader>
-                          <div className="w-full h-full flex justify-center items-center">
-                            {qrCodeData && (
-                              <Image
-                                src={qrCodeData}
-                                alt="QR Code"
-                                height={300}
-                                width={300}
-                              />
-                            )}
+                            </CopyLinkButton>
                           </div>
-                          <DialogFooter>
-                            <div className="w-full flex justify-center items-center">
-                              <CopyLinkButton data={qrCodeDataUrl}>
-                                <span className="text-sm md:text-base">
-                                  Copy&nbsp;url
-                                </span>
-                              </CopyLinkButton>
-                            </div>
-                          </DialogFooter>
-                        </DialogContent>
-                      )}
+                        </DialogFooter>
+                      </DialogContent>
                       <DialogClose onClick={handleModalClose} />
                     </Dialog>
                   )}
