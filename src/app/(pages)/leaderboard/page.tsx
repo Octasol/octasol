@@ -12,8 +12,10 @@ import { GET } from "@/config/axios/requests";
 import RankCard from "@/components/RankCard";
 import { Profile } from "@/lib/types";
 import { githubDevProfile } from "@/config/axios/Breakpoints";
+import { useRouter } from "next/navigation";
 
 const Leaderboard = () => {
+  const router = useRouter();
   const [profile, setProfile] = useState<Profile[]>();
 
   const response = async () => {
@@ -24,6 +26,10 @@ const Leaderboard = () => {
   useEffect(() => {
     response();
   }, []);
+
+  const userProfile = (item: string) => {
+    router.push(`/p/${item}`);
+  };
 
   return (
     <>
@@ -57,7 +63,11 @@ const Leaderboard = () => {
           <TableBody>
             {profile &&
               profile.map((item: any, index: number) => (
-                <TableRow key={index}>
+                <TableRow
+                  key={index}
+                  onClick={() => userProfile(item?.User?.githubUsername)}
+                  className="cursor-pointer "
+                >
                   <TableCell className="font-medium">{index + 1}</TableCell>
                   <TableCell>{item.User.githubUsername}</TableCell>
                   <TableCell className="text-right">
