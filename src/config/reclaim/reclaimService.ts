@@ -2,6 +2,7 @@ import { Reclaim } from "@reclaimprotocol/js-sdk";
 import { processHackerRankData } from "./hackerrank/service";
 import { processSuperteamEarnData } from "./superteamearn/service";
 import { setUsername } from "@/utils/dbUtils";
+import { processLeetcodeData } from "./leetcode/service";
 
 const reclaimAppID = process.env.RECLAIM_APP_ID!;
 const reclaimAppSecret = process.env.RECLAIM_APP_SECRET!;
@@ -58,6 +59,14 @@ async function handleReclaimSession(
             // let username = JSON.parse(proof[0].claimData.parameters).paramValues
             //   .username;
             // await setUsername(githubId, { superteamUsername: username });
+            break;
+
+          case "Leetcode":
+            processedData = await processLeetcodeData(
+              githubId,
+              proof,
+              providerName
+            );
             break;
 
           default:

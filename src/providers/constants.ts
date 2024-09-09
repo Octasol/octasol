@@ -1,5 +1,5 @@
 const SuperteamEarn = "173b32e0-a611-42ad-9cb7-ab4029c0a72a";
-const Leetcode = "";
+const Leetcode = "ee7d77c4-61da-4b87-b9d3-7ebb7560d264";
 const Codechef = "";
 const Codeforces = "";
 const Gitlab = "";
