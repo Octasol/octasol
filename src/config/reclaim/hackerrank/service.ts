@@ -1,5 +1,3 @@
-import axios from "axios";
-import { ReclaimServiceResponse } from "../../../utils/reclaimServiceResponse";
 import { getHackerrankProfileByApi } from "@/lib/apiUtils";
 import { setHackerrankDatabyGithubId, setUsername } from "@/utils/dbUtils";
 
