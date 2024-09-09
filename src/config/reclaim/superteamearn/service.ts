@@ -1,10 +1,15 @@
-import axios from 'axios';
-import { ReclaimServiceResponse } from '../../../utils/reclaimServiceResponse';
+import axios from "axios";
+import { ReclaimServiceResponse } from "../../../utils/reclaimServiceResponse";
 
-export async function processSuperteamEarnData(githubId: string, proof: any, providerName: string) {
-  const username = JSON.parse(proof[0].claimData.context).extractedParameters.userName;
+export async function processSuperteamEarnData(
+  githubId: string,
+  proof: any,
+  providerName: string
+) {
+  const username = JSON.parse(proof[0].claimData.context).extractedParameters
+    .username;
+  console.log(username)
   const lastUpdateTimeStamp = proof[0].claimData.timestampS;
-
-  return new ReclaimServiceResponse(providerName, lastUpdateTimeStamp, username, username, proof[0], githubId);
+  console.log("proof is:", proof[0])
+  return true;
 }
-

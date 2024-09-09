@@ -55,9 +55,9 @@ async function handleReclaimSession(
               proof,
               providerName
             );
-            let username = JSON.parse(proof[0].claimData.parameters).paramValues
-              .username;
-            await setUsername(githubId, { superteamUsername: username });
+            // let username = JSON.parse(proof[0].claimData.parameters).paramValues
+            //   .username;
+            // await setUsername(githubId, { superteamUsername: username });
             break;
 
           default:
