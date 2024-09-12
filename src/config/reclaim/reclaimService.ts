@@ -14,7 +14,10 @@ export async function signWithProviderID(
   providerName: string
 ) {
   const reclaimClient = new Reclaim.ProofRequest(reclaimAppID);
-  await reclaimClient.buildProofRequest(providerId);
+  await reclaimClient.buildProofRequest(providerId, true, 'V2Linking');
+
+  await reclaimClient.setRedirectUrl('https://www.reclaimprotocol.org')
+
   reclaimClient.setSignature(
     await reclaimClient.generateSignature(reclaimAppSecret)
   );
