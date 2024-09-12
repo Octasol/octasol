@@ -3,6 +3,7 @@ import { processHackerRankData } from "./hackerrank/service";
 import { processSuperteamEarnData } from "./superteamearn/service";
 import { setUsername } from "@/utils/dbUtils";
 import { processLeetcodeData } from "./leetcode/service";
+import { processGeeksForGeeksData } from "./geeksforgeeks/service";
 
 const reclaimAppID = process.env.RECLAIM_APP_ID!;
 const reclaimAppSecret = process.env.RECLAIM_APP_SECRET!;
@@ -63,6 +64,14 @@ async function handleReclaimSession(
 
           case "Leetcode":
             processedData = await processLeetcodeData(
+              githubId,
+              proof,
+              providerName
+            );
+            break;
+
+          case "Geeksforgeeks":
+            processedData = await processGeeksForGeeksData(
               githubId,
               proof,
               providerName

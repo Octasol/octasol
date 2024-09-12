@@ -4,7 +4,7 @@ const Codechef = "";
 const Codeforces = "";
 const Gitlab = "";
 const Hackerrank = "fcc70360-aa2c-48c2-ae5a-6285481f1a42";
-const Geeksforgeeks = "";
+const Geeksforgeeks = "5db5923f-83bb-407d-85a2-1e626e4cb8a3";
 
 export const providers: any = {
   SuperteamEarn,
