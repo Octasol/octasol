@@ -35,6 +35,7 @@ export default function Connect() {
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
   const [activeItemTitle, setActiveItemTitle] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const userId = user?.accessToken;
 
@@ -59,26 +60,35 @@ export default function Connect() {
       setQrCodeData("");
       setQrCodeDataUrl("");
       setActiveItemTitle(type);
+      setErrorMessage(null);
       if (data) {
-        const { response } = await POST(connectProvider, {
+        const { response, error } = await POST(connectProvider, {
           userId: userId,
           githubId: user?.githubId,
           providerName: data,
         });
 
-        const qr = response?.data?.qr;
-        if (qr) {
-          setQrCodeData(qr);
-          setQrCodeDataUrl(response?.data?.url);
-          setModalOpen(true);
+        if (error) {
+          setErrorMessage(
+            "Provider currently not available. Please try again later."
+          );
         } else {
-          setQrCodeData("");
-          setQrCodeDataUrl("");
-          console.error("QR code data is undefined");
+          const qr = response?.data?.qr;
+          if (qr) {
+            setQrCodeData(qr);
+            setQrCodeDataUrl(response?.data?.url);
+          } else {
+            setQrCodeData("");
+            setQrCodeDataUrl("");
+          }
         }
+
+        setModalOpen(true);
       }
     } catch (error) {
-      console.error("Error during connection:", error);
+      setErrorMessage("An unexpected error occurred. Please try again.");
+
+      setModalOpen(true);
     }
   };
 
@@ -146,27 +156,31 @@ export default function Connect() {
                         <DialogHeader>
                           <DialogTitle>
                             Connect to {activeItemTitle}
-                          </DialogTitle>{" "}
+                          </DialogTitle>
                         </DialogHeader>
                         <div className="w-full h-full flex justify-center items-center">
-                          {qrCodeData && (
+                          {errorMessage ? (
+                            <p className="text-red-500">{errorMessage}</p>
+                          ) : qrCodeData ? (
                             <Image
                               src={qrCodeData}
                               alt="QR Code"
                               height={300}
                               width={300}
                             />
-                          )}
+                          ) : null}
                         </div>
-                        <DialogFooter>
-                          <div className="w-full flex justify-center items-center">
-                            <CopyLinkButton data={qrCodeDataUrl}>
-                              <span className="text-sm md:text-base">
-                                Copy&nbsp;url
-                              </span>
-                            </CopyLinkButton>
-                          </div>
-                        </DialogFooter>
+                        {!errorMessage && qrCodeDataUrl && (
+                          <DialogFooter>
+                            <div className="w-full flex justify-center items-center">
+                              <CopyLinkButton data={qrCodeDataUrl}>
+                                <span className="text-sm md:text-base">
+                                  Copy&nbsp;url
+                                </span>
+                              </CopyLinkButton>
+                            </div>
+                          </DialogFooter>
+                        )}
                       </DialogContent>
                       <DialogClose onClick={handleModalClose} />
                     </Dialog>

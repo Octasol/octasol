@@ -5,11 +5,8 @@ import { useSelector } from "react-redux";
 
 const Loader = () => {
   const counter = useSelector((state: any) => state.counter.value);
-  console.log(counter);
 
   useLayoutEffect(() => {
-    console.log(counter);
-
     if (counter > 0) {
       document.body.style.overflow = "hidden";
     } else {
