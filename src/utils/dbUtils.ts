@@ -168,9 +168,18 @@ export const getHackerrankProfile = async (id: bigint) => {
   });
 };
 
+export const getGFGProfile = async (id: bigint) => {
+  return db.gFGProfile.findUnique({
+    where: {
+      githubId: id,
+    },
+  });
+};
+
 export const updateTotalPoints = async (id: bigint) => {
   const hackerrankProfile = await getHackerrankProfile(id);
   const githubDevProfile = await getGithubDevProfile(id);
+  const gfgProfile = await getGFGProfile(id);
   const user = await getDbUser(BigInt(id));
   let totalPoints = 0;
 
@@ -189,6 +198,11 @@ export const updateTotalPoints = async (id: bigint) => {
     totalPoints += githubDevProfile.pullRequests * 20;
     totalPoints += githubDevProfile.mergedPullRequests * 50;
     totalPoints += githubDevProfile.totalIssues * 10;
+  }
+
+  if (gfgProfile) {
+    totalPoints += gfgProfile.score;
+    totalPoints += gfgProfile.problemsSolved * 10;
   }
 
   if (user?.totalPoints && totalPoints == user.totalPoints) {
@@ -227,6 +241,32 @@ export async function setHackerrankDatabyGithubId(
         githubId: githubId,
         currentPoints: currentPoints,
         stars: stars,
+      },
+    });
+    updateTotalPoints(githubId);
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
+export async function setGFGDatabyGithubId(
+  githubId: any,
+  score: number,
+  problemsSolved: number
+) {
+  try {
+    await db.gFGProfile.upsert({
+      where: { githubId: githubId },
+      update: {
+        score: score,
+        problemsSolved: problemsSolved,
+      },
+      create: {
+        githubId: githubId,
+        score: score,
+        problemsSolved: problemsSolved,
       },
     });
     updateTotalPoints(githubId);

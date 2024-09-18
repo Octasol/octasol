@@ -3,6 +3,7 @@ import { getGithubIdbyAuthHeader } from "@/lib/apiUtils";
 import { bigintToString } from "@/lib/utils";
 import {
   getDbUser,
+  getGFGProfile,
   getGithubDevProfile,
   getUserByUsername,
 } from "@/utils/dbUtils";
@@ -45,16 +46,20 @@ export async function POST(req: NextRequest) {
     if (!userDbData) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
-    const githubDevProfile = bigintToString(await getGithubDevProfile(
-      BigInt(userDbData.githubId)
-    ));
+    const githubDevProfile = bigintToString(
+      await getGithubDevProfile(BigInt(userDbData.githubId))
+    );
     const hackerrankProfile = await getHackerrankStats(
       userDbData.hackerrankUsername
+    );
+    const gfgProfile = bigintToString(
+      await getGFGProfile(BigInt(userDbData.githubId))
     );
     const data = {
       user: userDbData,
       github: githubDevProfile,
       hackerrank: hackerrankProfile,
+      gfg: gfgProfile,
     };
     return NextResponse.json(data);
   } catch (error: any) {
