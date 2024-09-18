@@ -21,10 +21,12 @@ model User {
   email              String?            @unique
   emails             String[]           @default([])
   verifiedEmail      Boolean            @default(false)
-  GithubDevProfile   GithubDevProfile?
-  HackerrankProfile  HackerrankProfile?
   totalPoints        Int                @default(0)
   emailOtp           String?
+  GithubDevProfile   GithubDevProfile?
+  HackerrankProfile  HackerrankProfile?
+  GFGProfile         GFGProfile?
+  CodeChef           CodeChef?
 }
 
 model GithubDevProfile {
@@ -47,4 +49,17 @@ model HackerrankProfile {
   githubId      BigInt @id @unique
   currentPoints Int
   stars         Int
+}
+
+model GFGProfile {
+  User           User?  @relation(fields: [githubId], references: [githubId])
+  githubId       BigInt @id @unique
+  score          Int
+  problemsSolved Int
+}
+
+model CodeChef {
+  User          User?  @relation(fields: [githubId], references: [githubId])
+  githubId      BigInt @id @unique
+  currentRating Int
 }
