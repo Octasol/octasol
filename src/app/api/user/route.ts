@@ -2,6 +2,7 @@ import { getHackerrankStats } from "@/config/reclaim/hackerrank/service";
 import { getGithubIdbyAuthHeader } from "@/lib/apiUtils";
 import { bigintToString } from "@/lib/utils";
 import {
+  getCodeChefProfile,
   getDbUser,
   getGFGProfile,
   getGithubDevProfile,
@@ -55,11 +56,15 @@ export async function POST(req: NextRequest) {
     const gfgProfile = bigintToString(
       await getGFGProfile(BigInt(userDbData.githubId))
     );
+    const codechefProfile = bigintToString(
+      await getCodeChefProfile(BigInt(userDbData.githubId))
+    );
     const data = {
       user: userDbData,
       github: githubDevProfile,
       hackerrank: hackerrankProfile,
       gfg: gfgProfile,
+      codechef: codechefProfile,
     };
     return NextResponse.json(data);
   } catch (error: any) {

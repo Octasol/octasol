@@ -26,7 +26,7 @@ model User {
   GithubDevProfile   GithubDevProfile?
   HackerrankProfile  HackerrankProfile?
   GFGProfile         GFGProfile?
-  CodeChef           CodeChef?
+  CodeChefProfile    CodeChefProfile?
 }
 
 model GithubDevProfile {
@@ -58,7 +58,7 @@ model GFGProfile {
   problemsSolved Int
 }
 
-model CodeChef {
+model CodeChefProfile {
   User          User?  @relation(fields: [githubId], references: [githubId])
   githubId      BigInt @id @unique
   currentRating Int

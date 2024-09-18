@@ -1,3 +1,4 @@
+import { setCodeChefDatabyGithubId, setUsername } from "@/utils/dbUtils";
 import axios from "axios";
 
 export async function processCodechefData(
@@ -13,13 +14,26 @@ export async function processCodechefData(
   console.log("Proof is:", proof[0]);
 
   try {
-    const response = await axios.get(`https://codechef-api.vercel.app/handle/${username}`);
-    
+    const response = await axios.get(
+      `https://codechef-api.vercel.app/handle/${username}`
+    );
+
     console.log("CodeChef API Response:", response.data);
 
+    await setUsername(BigInt(githubId), {
+      codechefUsername: username,
+    });
+
+    await setCodeChefDatabyGithubId(
+      BigInt(githubId),
+      response.data.currentRating
+    );
     return true;
   } catch (error) {
-    console.error(`Failed to fetch CodeChef data for username: ${username}`, error);
+    console.error(
+      `Failed to fetch CodeChef data for username: ${username}`,
+      error
+    );
     throw new Error("Error fetching CodeChef data");
   }
 }
