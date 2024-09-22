@@ -45,7 +45,7 @@ const Layout = ({ children }: Props) => {
         <div className="w-fit hidden md:flex">
           <Sidebar />
         </div>
-        {!verifiedEmail ? (
+        {verifiedEmail ? (
           <div className="w-full min-h-screen pt-24 md:ms-20">{children}</div>
         ) : (
           <div className="w-full min-h-screen pt-16 md:ms-20 flex flex-col items-center">
