@@ -49,12 +49,13 @@ const Layout = ({ children }: Props) => {
           <div className="w-full min-h-screen pt-24 md:ms-20">{children}</div>
         ) : (
           <div className="w-full min-h-screen pt-16 md:ms-20 flex flex-col items-center">
-            <div className="flex justify-center gap-8 items-center">
+            <div className="grid grid-cols-3 place-items-center">
               <Image
                 src={"/verifyEmail.png"}
                 alt="verify "
                 width={250}
                 height={250}
+                className="w-9/12 md:w-10/12 lg:w-full"
               />
               <div className="text-sm flex justify-center items-center font-heading">
                 <svg
@@ -113,10 +114,10 @@ const Layout = ({ children }: Props) => {
               />
             </div>
             <div className="w-full justify-center items-center pb-12">
-              <p className="text-center text-4xl font-normal">
+              <p className="text-center text-2xl md:text-4xl font-normal">
                 Verify Your Email
               </p>
-              <p className="text-center w-full pt-6 text-base text-gray-400">
+              <p className="text-center w-full pt-6 text-sm md:text-base text-gray-400">
                 Enter your email and click on send OTP
               </p>
             </div>

@@ -72,7 +72,10 @@ const VerifyMail = ({ verify, session }: Props) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-1/3 space-y-6">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="md:w-1/3 space-y-6"
+      >
         <FormField
           control={form.control}
           name="email"
