@@ -135,6 +135,25 @@ export const getAllGithubDevProfiles = async () => {
     throw error;
   }
 };
+
+export const getAllProfiles = async () => {
+  try {
+    const profiles = await db.user.findMany({
+      select: {
+        githubUsername: true,
+        totalPoints: true,
+      },
+    });
+
+    return profiles.map((profile) => ({
+      ...profile,
+    }));
+  } catch (error) {
+    console.error("Error fetching profiles:", error);
+    throw error;
+  }
+};
+
 export const getGithubUsername = async (id: bigint) => {
   const user = await getDbUser(BigInt(id));
   return user?.githubUsername || "";
