@@ -331,3 +331,32 @@ export async function setCodeChefDatabyGithubId(
     return false;
   }
 }
+
+export async function setLeetCodeDatabyGithubId(
+  githubId: any,
+  easyQues: number,
+  mediumQues: number,
+  hardQues: number
+) {
+  try {
+    await db.leetcodeProfile.upsert({
+      where: { githubId: githubId },
+      update: {
+        easyQues: easyQues,
+        mediumQues: mediumQues,
+        hardQues: hardQues,
+      },
+      create: {
+        githubId: githubId,
+        easyQues: easyQues,
+        mediumQues: mediumQues,
+        hardQues: hardQues,
+      },
+    });
+    updateTotalPoints(githubId);
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
