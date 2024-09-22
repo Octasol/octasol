@@ -97,6 +97,26 @@ export default function Connect() {
     fetchUserData();
   };
 
+  useEffect(() => {
+    const hostname = window.location.hostname;
+    console.log("Connecting to websocket at:", hostname);
+    const ws = new WebSocket(`ws://${hostname}:8081`);
+
+    ws.onmessage = (event) => {
+      const { githubId, providerName, status } = JSON.parse(event.data);
+      console.log("Received message from websocket:", JSON.parse(event.data));
+      if (githubId === user?.githubId && status === "success") {
+        // Fetch updated user data when the proof verification succeeds
+        setModalOpen(false);
+        fetchUserData();
+      }
+    };
+
+    return () => {
+      ws.close();
+    };
+  }, [user]);
+
   return (
     <div className="w-full h-full flex justify-center items-center py-8">
       <div className="grid md:auto-rows-[20rem] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 max-w-9xl px-6 py-4 max-w-8xl mx-auto">

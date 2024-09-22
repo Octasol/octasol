@@ -5,9 +5,18 @@ import { setUsername } from "@/utils/dbUtils";
 import { processLeetcodeData } from "./leetcode/service";
 import { processGeeksForGeeksData } from "./geeksforgeeks/service";
 import { processCodechefData } from "./codechef/service";
+import { WebSocketServer } from "ws";
 
 const reclaimAppID = process.env.RECLAIM_APP_ID!;
 const reclaimAppSecret = process.env.RECLAIM_APP_SECRET!;
+
+const wss = new WebSocketServer({ port: 8081 });
+
+wss.on("connection", function connection(ws) {
+  ws.on("message", function incoming(message) {
+    console.log("received: %s", message);
+  });
+});
 
 export async function signWithProviderID(
   githubId: any,
@@ -96,6 +105,15 @@ async function handleReclaimSession(
           default:
             throw new Error(`Unsupported provider: ${providerName}`);
         }
+
+        // Notify all connected clients that the process was successful
+        wss.clients.forEach(function each(client) {
+          if (client.readyState === WebSocket.OPEN) {
+            client.send(
+              JSON.stringify({ githubId, providerName, status: "success" })
+            );
+          }
+        });
       } catch (error) {
         console.error(
           `Failed to process Reclaim proof for githubId: ${githubId}`,
