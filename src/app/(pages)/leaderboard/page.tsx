@@ -11,7 +11,7 @@ import {
 import { GET } from "@/config/axios/requests";
 import RankCard from "@/components/RankCard";
 import { Profile } from "@/lib/types";
-import { githubDevProfile } from "@/config/axios/Breakpoints";
+import { leaderboard } from "@/config/axios/Breakpoints";
 import { useRouter } from "next/navigation";
 
 const Leaderboard = () => {
@@ -19,7 +19,7 @@ const Leaderboard = () => {
   const [profile, setProfile] = useState<Profile[]>();
 
   const response = async () => {
-    const res = await GET(githubDevProfile);
+    const res = await GET(leaderboard);
     setProfile(res);
   };
 
@@ -27,8 +27,8 @@ const Leaderboard = () => {
     response();
   }, []);
 
-  const userProfile = (item: string) => {
-    router.push(`/p/${item}`);
+  const userProfile = (username: string) => {
+    router.push(`/p/${username}`);
   };
 
   return (
@@ -65,22 +65,13 @@ const Leaderboard = () => {
               profile.map((item: any, index: number) => (
                 <TableRow
                   key={index}
-                  onClick={() => userProfile(item?.User?.githubUsername)}
+                  onClick={() => userProfile(item.githubUsername)}
                   className="cursor-pointer "
                 >
                   <TableCell className="font-medium">{index + 1}</TableCell>
-                  <TableCell>{item.User.githubUsername}</TableCell>
+                  <TableCell>{item.githubUsername}</TableCell>
                   <TableCell className="text-right">
-                    {item.followers +
-                      item.forkedRepos +
-                      item.forks +
-                      item.mergedPullRequests +
-                      item.originalRepos +
-                      item.repositoriesContributedTo +
-                      item.pullRequests +
-                      item.stars +
-                      item.totalCommits +
-                      item.totalIssues}
+                    {item.totalPoints}
                   </TableCell>
                 </TableRow>
               ))}
