@@ -43,3 +43,8 @@ export interface userNames {
   gfgUsername: string;
   gitlabUsername: string;
 }
+
+export interface QuestionData {
+  count: number;
+  difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+}
