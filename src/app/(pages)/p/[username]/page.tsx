@@ -12,9 +12,7 @@ import { POST } from "@/config/axios/requests";
 import { userNames } from "@/lib/types";
 import Image from "next/image";
 import { RadialChart } from "@/components/Charts/RadialChart";
-import ProfileDetail from "@/components/Card/ProfileDetail";
 import { StatDetails } from "@/components/Charts/StatDetails";
-import { set } from "react-hook-form";
 
 interface DataObject {
   githubId?: string;
