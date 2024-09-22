@@ -29,6 +29,7 @@ interface DataObject {
   mergedPullRequests?: number;
   totalIssues?: number;
   currentPoints?: number;
+  currentRating?: number;
 }
 
 export default function BentoGridDemo() {
@@ -45,6 +46,7 @@ export default function BentoGridDemo() {
   });
   const [githubData, setGithubData] = useState<DataObject>({});
   const [hackerrankData, setHackerrankData] = useState<DataObject>({});
+  const [codechefData, setCodechefData] = useState<DataObject>({});
 
   const userData = async (name: string) => {
     try {
@@ -53,6 +55,7 @@ export default function BentoGridDemo() {
 
       setGithubData(response?.data?.github);
       setHackerrankData(response?.data?.hackerrank);
+      setCodechefData(response?.data?.codechef);
 
       setUserName((prev) => ({
         ...prev,
@@ -162,9 +165,23 @@ export default function BentoGridDemo() {
 
             {userName.codechefUsername && (
               <AccordionItem value="codechef">
-                <AccordionTrigger>CodeChef</AccordionTrigger>
+                <AccordionTrigger>
+                  <div className="w-full flex justify-start items-center gap-6">
+                    <Image
+                      src="/codechef.png"
+                      alt="codechef"
+                      className="rounded-full aspect-square"
+                      width={40}
+                      height={40}
+                    />
+                    <span className="text-base font-semibold ">
+                      {userName.codechefUsername}
+                    </span>
+                  </div>
+                </AccordionTrigger>
+
                 <AccordionContent>
-                  Username: {userName.codechefUsername}
+                  <StatDetails stats={codechefData} />
                 </AccordionContent>
               </AccordionItem>
             )}

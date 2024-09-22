@@ -26,7 +26,7 @@ const RankCard = (props: Props) => {
             <div className="px-4 py-3 flex flex-col justify-center items-center w-full">
               <div className="w-20 h-20 bg-gray-600 rounded-full">
                 <Image
-                  src={githubAvatar + props?.profile?.User?.githubUsername}
+                  src={githubAvatar + props?.profile?.githubUsername}
                   alt="profile"
                   width={100}
                   height={100}
@@ -34,7 +34,7 @@ const RankCard = (props: Props) => {
                 />
               </div>
               <div className="text-center text-lg mt-2 flex flex-col">
-                {props?.profile?.User?.githubUsername}
+                {props?.profile?.githubUsername}
                 <span>#{props?.rank}</span>
               </div>
             </div>
