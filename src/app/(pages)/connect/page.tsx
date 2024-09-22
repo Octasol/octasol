@@ -104,17 +104,17 @@ export default function Connect() {
           const username =
             item.title === "Github"
               ? userdata.githubUsername
-              : item.title === "Superteam"
+              : item.title === "SuperteamEarn"
               ? userdata.superteamUsername
-              : item.title === "LeetCode"
+              : item.title === "Leetcode"
               ? userdata.leetcodeUsername
               : item.title === "Codeforces"
               ? userdata.codeforcesUsername
               : item.title === "Hackerrank"
               ? userdata.hackerrankUsername
-              : item.title === "CodeChef"
+              : item.title === "Codechef"
               ? userdata.codechefUsername
-              : item.title === "GeeksForGeeks"
+              : item.title === "Geeksforgeeks"
               ? userdata.gfgUsername
               : item.title === "GitLab"
               ? userdata.gitlabUsername
