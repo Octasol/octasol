@@ -18,11 +18,6 @@ const Sidebar = (props: Props) => {
   const user = useSelector((state: any) => state.user);
   const pathname = usePathname();
 
-  useEffect(() => {
-    console.log(pathname);
-  }, [pathname]);
-
-  // Helper function to determine if a link is active
   const isActive = (linkPath: string) => pathname.includes(linkPath);
 
   return (
