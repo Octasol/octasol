@@ -10,7 +10,7 @@ const Dashboard = () => {
       <div className=" overflow-auto flex flex-col gap-4 h-full w-full items-center relative">
         <CoverUpPage />
         <h1 className="text-xl md:text-3xl px-8">Dashboard</h1>
-        <div className="pb-14 md:pb-8 px-8 py-10 w-full">
+        <div className="pb-10 md:pb-4 px-8  w-full">
           <div className="flex flex-wrap justify-evenly w-full gap-2">
             <Cards />
             <Cards />
