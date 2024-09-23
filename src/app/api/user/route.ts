@@ -6,6 +6,7 @@ import {
   getDbUser,
   getGFGProfile,
   getGithubDevProfile,
+  getLeetcodeProfile,
   getUserByUsername,
 } from "@/utils/dbUtils";
 import { NextResponse, NextRequest } from "next/server";
@@ -59,12 +60,16 @@ export async function POST(req: NextRequest) {
     const codechefProfile = bigintToString(
       await getCodeChefProfile(BigInt(userDbData.githubId))
     );
+    const leetcodeProfile = bigintToString(
+      await getLeetcodeProfile(BigInt(userDbData.githubId))
+    );
     const data = {
       user: userDbData,
       github: githubDevProfile,
       hackerrank: hackerrankProfile,
       gfg: gfgProfile,
       codechef: codechefProfile,
+      leetcodeProfile: leetcodeProfile,
     };
     return NextResponse.json(data);
   } catch (error: any) {

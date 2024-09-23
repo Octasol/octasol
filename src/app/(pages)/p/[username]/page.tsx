@@ -30,6 +30,9 @@ interface DataObject {
   currentRating?: number;
   problemsSolved?: number;
   score?: number;
+  easyQues?: number;
+  mediumQues?: number;
+  hardQues?: number;
 }
 
 export default function BentoGridDemo() {
@@ -48,6 +51,7 @@ export default function BentoGridDemo() {
   const [hackerrankData, setHackerrankData] = useState<DataObject>({});
   const [codechefData, setCodechefData] = useState<DataObject>({});
   const [gfgData, setGfgData] = useState<DataObject>({});
+  const [leetcodeData, setLeetcodeData] = useState<DataObject>({});
 
   const userData = async (name: string) => {
     try {
@@ -58,6 +62,7 @@ export default function BentoGridDemo() {
       setHackerrankData(response?.data?.hackerrank);
       setCodechefData(response?.data?.codechef);
       setGfgData(response?.data?.gfg);
+      setLeetcodeData(response?.data?.leetcodeProfile);
 
       setUserName((prev) => ({
         ...prev,
@@ -81,8 +86,8 @@ export default function BentoGridDemo() {
   }, [pathname]);
 
   useEffect(() => {
-    console.log(githubData);
-  }, [githubData]);
+    console.log(leetcodeData);
+  }, [leetcodeData]);
 
   return (
     <>
@@ -126,9 +131,23 @@ export default function BentoGridDemo() {
 
             {userName.leetcodeUsername && (
               <AccordionItem value="leetcode">
-                <AccordionTrigger>LeetCode</AccordionTrigger>
+                <AccordionTrigger>
+                  {" "}
+                  <div className="w-full flex justify-start items-center gap-6">
+                    <Image
+                      src="/leetcode.webp"
+                      alt="leetcode"
+                      className="rounded-full"
+                      width={40}
+                      height={40}
+                    />
+                    <span className="text-base font-semibold ">
+                      {userName.leetcodeUsername}
+                    </span>
+                  </div>
+                </AccordionTrigger>
                 <AccordionContent>
-                  Username: {userName.leetcodeUsername}
+                  <StatDetails stats={leetcodeData} />
                 </AccordionContent>
               </AccordionItem>
             )}

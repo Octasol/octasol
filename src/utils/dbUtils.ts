@@ -247,9 +247,9 @@ export const updateTotalPoints = async (id: bigint) => {
   }
 
   if (leetcodeProfile) {
-    totalPoints += leetcodeProfile.easyQues * 10;   
-    totalPoints += leetcodeProfile.mediumQues * 30; 
-    totalPoints += leetcodeProfile.hardQues * 50;   
+    totalPoints += leetcodeProfile.easyQues * 10;
+    totalPoints += leetcodeProfile.mediumQues * 30;
+    totalPoints += leetcodeProfile.hardQues * 50;
   }
 
   if (user?.totalPoints && totalPoints == user.totalPoints) {
