@@ -15,6 +15,7 @@ import {
 import { items } from "@/components/ui/ConnectCard";
 import CopyLinkButton from "@/components/Button/CopyLinkButton";
 import { connectProvider } from "@/config/axios/Breakpoints";
+import { cn } from "@/lib/utils";
 
 export default function Connect() {
   const user = useSelector((state: any) => state.user);
@@ -36,7 +37,14 @@ export default function Connect() {
   const [modalOpen, setModalOpen] = useState(false);
   const [activeItemTitle, setActiveItemTitle] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
+  const availableProviders = [
+    "Github",
+    "SuperteamEarn",
+    "Leetcode",
+    "Hackerrank",
+    "Codechef",
+    "Geeksforgeeks",
+  ];
   const userId = user?.accessToken;
 
   const fetchUserData = async () => {
@@ -122,8 +130,14 @@ export default function Connect() {
 
           return (
             <div
-              className="row-span-1 rounded-xl group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none p-4 dark:bg-black dark:border-white/[0.2] bg-white border border-transparent justify-between flex flex-col space-y-4 w-72"
+              className={cn(
+                "row-span-1 rounded-xl group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none p-4 dark:bg-black dark:border-white/[0.2] bg-white border border-transparent justify-between flex flex-col space-y-4 w-72",
+                availableProviders.includes(item.title)
+                  ? ""
+                  : "opacity-40 cursor-not-allowed"
+              )}
               key={i}
+              aria-disabled={!availableProviders.includes(item.title)}
             >
               <div className="flex w-full justify-center items-center h-full">
                 {item.header}
@@ -138,8 +152,17 @@ export default function Connect() {
                     <Dialog open={modalOpen} onOpenChange={handleModalClose}>
                       <DialogTrigger asChild>
                         <div
-                          onClick={() => handleConnect(item.title)}
-                          className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block"
+                          onClick={() =>
+                            availableProviders.includes(item.title)
+                              ? handleConnect(item.title)
+                              : null
+                          }
+                          className={cn(
+                            "bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block",
+                            availableProviders.includes(item.title)
+                              ? ""
+                              : "cursor-not-allowed"
+                          )}
                         >
                           <span className="absolute inset-0 overflow-hidden rounded-full">
                             <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>

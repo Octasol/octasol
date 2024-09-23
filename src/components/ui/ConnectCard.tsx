@@ -48,16 +48,16 @@ export const items = [
     ),
   },
   {
-    title: "Codeforces",
+    title: "Geeksforgeeks",
     description: "",
     header: (
       <>
         <Image
-          src="/codeforces.jpeg"
+          src="/gfg.png"
           alt="leetcode"
           width={150}
-          height={200}
-          className="rounded-full aspect-square "
+          height={100}
+          className="rounded-full"
         />
       </>
     ),
@@ -93,16 +93,16 @@ export const items = [
     ),
   },
   {
-    title: "Geeksforgeeks",
+    title: "Codeforces",
     description: "",
     header: (
       <>
         <Image
-          src="/gfg.png"
+          src="/codeforces.jpeg"
           alt="leetcode"
           width={150}
-          height={100}
-          className="rounded-full"
+          height={200}
+          className="rounded-full aspect-square "
         />
       </>
     ),
