@@ -1,24 +1,15 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
 import {
   Bar,
   BarChart,
   CartesianGrid,
-  LabelList,
   XAxis,
   YAxis,
   ResponsiveContainer,
 } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -26,22 +17,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { useEffect, useMemo } from "react";
-
-export const description = "A bar chart with a custom label";
-
-interface DataObject {
-  githubId?: string;
-  stars?: number;
-  forks?: number;
-  forkedRepos?: number;
-  originalRepos?: number;
-  followers?: number;
-  totalCommits?: number;
-  repositoriesContributedTo?: number;
-  pullRequests?: number;
-  mergedPullRequests?: number;
-  totalIssues?: number;
-}
+import { DataObject } from "@/lib/types";
 
 const chartConfig = {
   desktop: {
@@ -80,7 +56,6 @@ export function StatDetails(props: Props) {
     <Card className="bg-transparent !border-0 w-full">
       <CardHeader>
         <CardTitle>Statistics</CardTitle>
-        {/* <CardDescription>Data visualization for user statistics</CardDescription> */}
       </CardHeader>
       <CardContent className=" !p-0 flex w-full m-auto ">
         <ChartContainer config={chartConfig} className="w-full">
@@ -114,27 +89,11 @@ export function StatDetails(props: Props) {
                 layout="vertical"
                 fill="var(--color-desktop)"
                 radius={12}
-              >
-                {/* <LabelList
-                  dataKey="value"
-                  position="left"
-                  offset={-25}
-                  className="fill-foreground"
-                  fontSize={10} // Smaller label font size
-                /> */}
-              </Bar>
+              ></Bar>
             </BarChart>
           </ResponsiveContainer>
         </ChartContainer>
       </CardContent>
-      {/* <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing data insights for the provided statistics
-        </div>
-      </CardFooter> */}
     </Card>
   );
 }
