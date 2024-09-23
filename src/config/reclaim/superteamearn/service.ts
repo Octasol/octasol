@@ -1,4 +1,4 @@
-
+import { scrapeSuperteamStats } from './scraper';
 
 export async function processSuperteamEarnData(
   githubId: string,
@@ -7,8 +7,18 @@ export async function processSuperteamEarnData(
 ) {
   const username = JSON.parse(proof[0].claimData.context).extractedParameters
     .username;
-  console.log(username)
+  console.log('Username:', username);
+
+  const stats = await scrapeSuperteamStats(username);
+
+  if (stats) {
+    console.log('Superteam Stats:', stats);
+  } else {
+    console.log('Failed to fetch Superteam stats.');
+  }
+
   const lastUpdateTimeStamp = proof[0].claimData.timestampS;
-  console.log("proof is:", proof[0])
+  console.log('Proof is:', proof[0]);
+
   return true;
 }
