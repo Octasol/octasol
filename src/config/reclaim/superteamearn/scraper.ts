@@ -21,10 +21,9 @@ export async function scrapeSuperteamStats(username: string) {
       if (match && match[0]) {
         // Ensure match is not null
         const jsonString = match[0];
-        const statsJson = JSON.parse(jsonString); // Parse the JSON
-        console.log("stats >", statsJson.props.pageProps.stats);
+        const statsJson = JSON.parse(jsonString); 
 
-        return statsJson.props.pageProps.stats; // Return the parsed stats
+        return statsJson.props.pageProps.stats; 
       } else {
         console.log("No match found for the stats JSON.");
         return null;

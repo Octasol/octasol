@@ -211,6 +211,14 @@ export const getLeetcodeProfile = async (id: bigint) => {
   });
 };
 
+// export const getSuperteamEarnProfile = async (id: bigint) => {
+//   return db.superteamEarnProfile.findUnique({
+//     where: {
+//       githubId: id,
+//     },
+//   });
+// };
+
 export const updateTotalPoints = async (id: bigint) => {
   const hackerrankProfile = await getHackerrankProfile(id);
   const githubDevProfile = await getGithubDevProfile(id);
@@ -366,6 +374,35 @@ export async function setLeetCodeDatabyGithubId(
         easyQues: easyQues,
         mediumQues: mediumQues,
         hardQues: hardQues,
+      },
+    });
+    updateTotalPoints(githubId);
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
+export async function setSuperteamEarnDatabyGithubId(
+  githubId: any,
+  participations: number,
+  wins: number,
+  totalWinnings: number
+) {
+  try {
+    await db.superteamEarnProfile.upsert({
+      where: { githubId: githubId },
+      update: {
+        participations: participations,
+        wins: wins,
+        totalWinnings: totalWinnings,
+      },
+      create: {
+        githubId: githubId,
+        participations: participations,
+        wins: wins,
+        totalWinnings: totalWinnings,
       },
     });
     updateTotalPoints(githubId);

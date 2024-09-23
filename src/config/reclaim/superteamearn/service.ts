@@ -1,5 +1,6 @@
 import { scrapeSuperteamStats } from "./scraper";
 import { setUsername } from "@/utils/dbUtils";
+import { setSuperteamEarnDatabyGithubId } from "@/utils/dbUtils";
 
 export async function processSuperteamEarnData(
   githubId: any,
@@ -15,9 +16,14 @@ export async function processSuperteamEarnData(
   const stats = await scrapeSuperteamStats(username);
 
   if (stats) {
-    console.log("Participations:", stats.participations);
-    console.log("Wins:", stats.wins);
-    console.log("Total Winnings:", stats.totalWinnings);
+    
+    await setSuperteamEarnDatabyGithubId(
+      githubId,
+      stats.participations,
+      stats.wins,
+      stats.totalWinnings
+    );
+
   } else {
     console.log("Failed to fetch Superteam stats.");
   }
