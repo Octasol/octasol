@@ -33,6 +33,9 @@ interface DataObject {
   easyQues?: number;
   mediumQues?: number;
   hardQues?: number;
+  participations?: number;
+  totalWinnings?: number;
+  wins?: number;
 }
 
 export default function BentoGridDemo() {
@@ -52,6 +55,7 @@ export default function BentoGridDemo() {
   const [codechefData, setCodechefData] = useState<DataObject>({});
   const [gfgData, setGfgData] = useState<DataObject>({});
   const [leetcodeData, setLeetcodeData] = useState<DataObject>({});
+  const [superteamData, setSuperteamData] = useState<DataObject>({});
 
   const userData = async (name: string) => {
     try {
@@ -63,6 +67,7 @@ export default function BentoGridDemo() {
       setCodechefData(response?.data?.codechef);
       setGfgData(response?.data?.gfg);
       setLeetcodeData(response?.data?.leetcodeProfile);
+      setSuperteamData(response?.data?.superteamEarnProfile);
 
       setUserName((prev) => ({
         ...prev,
@@ -122,9 +127,22 @@ export default function BentoGridDemo() {
 
             {userName.superteamUsername && (
               <AccordionItem value="superteam">
-                <AccordionTrigger>Superteam</AccordionTrigger>
+                <AccordionTrigger>
+                  <div className="w-full flex justify-start items-center gap-6">
+                    <Image
+                      src="/superteam.jpeg"
+                      alt="superteam"
+                      className="rounded-full"
+                      width={40}
+                      height={40}
+                    />
+                    <span className="text-base font-semibold ">
+                      {userName.superteamUsername}
+                    </span>
+                  </div>
+                </AccordionTrigger>
                 <AccordionContent>
-                  Username: {userName.superteamUsername}
+                  <StatDetails stats={superteamData} />
                 </AccordionContent>
               </AccordionItem>
             )}

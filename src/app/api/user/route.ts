@@ -7,6 +7,7 @@ import {
   getGFGProfile,
   getGithubDevProfile,
   getLeetcodeProfile,
+  getSuperteamEarnProfile,
   getUserByUsername,
 } from "@/utils/dbUtils";
 import { NextResponse, NextRequest } from "next/server";
@@ -63,6 +64,9 @@ export async function POST(req: NextRequest) {
     const leetcodeProfile = bigintToString(
       await getLeetcodeProfile(BigInt(userDbData.githubId))
     );
+    const superteamEarnProfile = bigintToString(
+      await getSuperteamEarnProfile(BigInt(userDbData.githubId))
+    );
     const data = {
       user: userDbData,
       github: githubDevProfile,
@@ -70,6 +74,7 @@ export async function POST(req: NextRequest) {
       gfg: gfgProfile,
       codechef: codechefProfile,
       leetcodeProfile: leetcodeProfile,
+      superteamEarnProfile: superteamEarnProfile,
     };
     return NextResponse.json(data);
   } catch (error: any) {
