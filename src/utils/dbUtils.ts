@@ -428,3 +428,91 @@ export async function setSuperteamEarnDatabyGithubId(
     return false;
   }
 }
+
+export const getUserProfileForRadarChart = async (githubUsername: string) => {
+  try {
+    const user = await db.user.findUnique({
+      where: { githubUsername },
+      select: {
+        githubUsername: true,
+        GithubDevProfile: true,
+        HackerrankProfile: true,
+        GFGProfile: true,
+        CodeChefProfile: true,
+        LeetcodeProfile: true,
+        SuperteamEarnProfile: true,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    let githubPoints = 0;
+    let hackerrankPoints = 0;
+    let gfgPoints = 0;
+    let codechefPoints = 0;
+    let leetcodePoints = 0;
+    let superteamEarnPoints = 0;
+
+    const {
+      GithubDevProfile,
+      HackerrankProfile,
+      GFGProfile,
+      CodeChefProfile,
+      LeetcodeProfile,
+      SuperteamEarnProfile,
+    } = user;
+
+    if (HackerrankProfile) {
+      hackerrankPoints += HackerrankProfile.currentPoints;
+      hackerrankPoints += HackerrankProfile.stars * 100;
+    }
+
+    if (GithubDevProfile) {
+      githubPoints += GithubDevProfile.stars * 100;
+      githubPoints += GithubDevProfile.forks * 50;
+      githubPoints += GithubDevProfile.originalRepos * 50;
+      githubPoints += GithubDevProfile.followers * 50;
+      githubPoints += GithubDevProfile.totalCommits * 10;
+      githubPoints += GithubDevProfile.repositoriesContributedTo * 20;
+      githubPoints += GithubDevProfile.pullRequests * 20;
+      githubPoints += GithubDevProfile.mergedPullRequests * 50;
+      githubPoints += GithubDevProfile.totalIssues * 10;
+    }
+
+    if (GFGProfile) {
+      gfgPoints += GFGProfile.score;
+      gfgPoints += GFGProfile.problemsSolved * 10;
+    }
+
+    if (CodeChefProfile) {
+      codechefPoints += CodeChefProfile.currentRating;
+    }
+
+    if (LeetcodeProfile) {
+      leetcodePoints += LeetcodeProfile.easyQues * 10;
+      leetcodePoints += LeetcodeProfile.mediumQues * 30;
+      leetcodePoints += LeetcodeProfile.hardQues * 50;
+    }
+
+    if (SuperteamEarnProfile) {
+      superteamEarnPoints += SuperteamEarnProfile.participations * 10;
+      superteamEarnPoints += SuperteamEarnProfile.wins * 100;
+      superteamEarnPoints += SuperteamEarnProfile.totalWinnings * 2;
+    }
+
+    return {
+      githubUsername: user.githubUsername,
+      githubPoints,
+      hackerrankPoints,
+      gfgPoints,
+      codechefPoints,
+      leetcodePoints,
+      superteamEarnPoints,
+    };
+  } catch (error) {
+    console.error("Error fetching user profile for radar chart:", error);
+    throw error;
+  }
+};

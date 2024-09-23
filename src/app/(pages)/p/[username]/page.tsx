@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -8,34 +8,20 @@ import {
 } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { usePathname } from "next/navigation";
-import { POST } from "@/config/axios/requests";
-import { userNames } from "@/lib/types";
+import { GET, POST } from "@/config/axios/requests";
+import { DataObject, userNames } from "@/lib/types";
 import Image from "next/image";
 import { RadialChart } from "@/components/Charts/RadialChart";
 import { StatDetails } from "@/components/Charts/StatDetails";
 
-interface DataObject {
-  githubId?: string;
-  stars?: number;
-  forks?: number;
-  forkedRepos?: number;
-  originalRepos?: number;
-  followers?: number;
-  totalCommits?: number;
-  repositoriesContributedTo?: number;
-  pullRequests?: number;
-  mergedPullRequests?: number;
-  totalIssues?: number;
-  currentPoints?: number;
-  currentRating?: number;
-  problemsSolved?: number;
-  score?: number;
-  easyQues?: number;
-  mediumQues?: number;
-  hardQues?: number;
-  participations?: number;
-  totalWinnings?: number;
-  wins?: number;
+interface radarObject {
+  githubUsername?: string;
+  githubPoints?: number;
+  hackerrankPoints?: number;
+  gfgPoints?: number;
+  codechefPoints?: number;
+  leetcodePoints?: number;
+  superteamEarnPoints?: number;
 }
 
 export default function BentoGridDemo() {
@@ -56,6 +42,7 @@ export default function BentoGridDemo() {
   const [gfgData, setGfgData] = useState<DataObject>({});
   const [leetcodeData, setLeetcodeData] = useState<DataObject>({});
   const [superteamData, setSuperteamData] = useState<DataObject>({});
+  const [radarData, setRadarData] = useState<radarObject>({});
 
   const userData = async (name: string) => {
     try {
@@ -83,6 +70,13 @@ export default function BentoGridDemo() {
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
+
+    try {
+      const radarResponse = await GET(`/radar?username=${name}`);
+      setRadarData(radarResponse);
+    } catch (error) {
+      console.error("Error fetching radar chart data:", error);
+    }
   };
 
   useEffect(() => {
@@ -98,7 +92,7 @@ export default function BentoGridDemo() {
     <>
       <div className="w-full flex flex-col md:flex-row justify-center items-center px-4">
         <div className="w-full md:w-6/12 ">
-          <RadialChart />
+          <RadialChart stats={radarData} />
         </div>
 
         <ScrollArea className="w-full md:w-6/12 md:h-[80vh] overflow-scroll px-4 ">
@@ -120,6 +114,11 @@ export default function BentoGridDemo() {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
+                  <div className="flex justify-end px-4">
+                    <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
+                      Refresh
+                    </button>
+                  </div>
                   <StatDetails stats={githubData} />
                 </AccordionContent>
               </AccordionItem>
@@ -142,6 +141,12 @@ export default function BentoGridDemo() {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
+                  <div className="flex justify-end px-4">
+                    <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
+                      Refresh
+                    </button>
+                  </div>
+
                   <StatDetails stats={superteamData} />
                 </AccordionContent>
               </AccordionItem>
@@ -165,6 +170,11 @@ export default function BentoGridDemo() {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
+                  <div className="flex justify-end px-4">
+                    <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
+                      Refresh
+                    </button>
+                  </div>
                   <StatDetails stats={leetcodeData} />
                 </AccordionContent>
               </AccordionItem>
@@ -174,6 +184,11 @@ export default function BentoGridDemo() {
               <AccordionItem value="codeforces">
                 <AccordionTrigger>Codeforces</AccordionTrigger>
                 <AccordionContent>
+                  <div className="flex justify-end px-4">
+                    <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
+                      Refresh
+                    </button>
+                  </div>
                   Username: {userName.codeforcesUsername}
                 </AccordionContent>
               </AccordionItem>
@@ -197,6 +212,11 @@ export default function BentoGridDemo() {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
+                  <div className="flex justify-end px-4">
+                    <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
+                      Refresh
+                    </button>
+                  </div>
                   <StatDetails stats={hackerrankData} />
                 </AccordionContent>
               </AccordionItem>
@@ -220,6 +240,11 @@ export default function BentoGridDemo() {
                 </AccordionTrigger>
 
                 <AccordionContent>
+                  <div className="flex justify-end px-4">
+                    <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
+                      Refresh
+                    </button>
+                  </div>
                   <StatDetails stats={codechefData} />
                 </AccordionContent>
               </AccordionItem>
@@ -242,6 +267,11 @@ export default function BentoGridDemo() {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
+                  <div className="flex justify-end px-4">
+                    <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
+                      Refresh
+                    </button>
+                  </div>
                   <StatDetails stats={gfgData} />
                 </AccordionContent>
               </AccordionItem>
@@ -251,6 +281,11 @@ export default function BentoGridDemo() {
               <AccordionItem value="gitlab">
                 <AccordionTrigger>GitLab</AccordionTrigger>
                 <AccordionContent>
+                  <div className="flex justify-end px-4">
+                    <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
+                      Refresh
+                    </button>
+                  </div>
                   Username: {userName.gitlabUsername}
                 </AccordionContent>
               </AccordionItem>

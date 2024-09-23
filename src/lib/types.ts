@@ -46,5 +46,29 @@ export interface userNames {
 
 export interface QuestionData {
   count: number;
-  difficulty: 'EASY' | 'MEDIUM' | 'HARD';
+  difficulty: "EASY" | "MEDIUM" | "HARD";
+}
+
+export interface DataObject {
+  githubId?: string;
+  stars?: number;
+  forks?: number;
+  forkedRepos?: number;
+  originalRepos?: number;
+  followers?: number;
+  totalCommits?: number;
+  repositoriesContributedTo?: number;
+  pullRequests?: number;
+  mergedPullRequests?: number;
+  totalIssues?: number;
+  currentPoints?: number;
+  currentRating?: number;
+  problemsSolved?: number;
+  score?: number;
+  easyQues?: number;
+  mediumQues?: number;
+  hardQues?: number;
+  participations?: number;
+  totalWinnings?: number;
+  wins?: number;
 }
