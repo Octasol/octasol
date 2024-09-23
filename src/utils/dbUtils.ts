@@ -211,13 +211,13 @@ export const getLeetcodeProfile = async (id: bigint) => {
   });
 };
 
-// export const getSuperteamEarnProfile = async (id: bigint) => {
-//   return db.superteamEarnProfile.findUnique({
-//     where: {
-//       githubId: id,
-//     },
-//   });
-// };
+export const getSuperteamEarnProfile = async (id: bigint) => {
+  return db.superteamEarnProfile.findUnique({
+    where: {
+      githubId: id,
+    },
+  });
+};
 
 export const updateTotalPoints = async (id: bigint) => {
   const hackerrankProfile = await getHackerrankProfile(id);
@@ -225,6 +225,7 @@ export const updateTotalPoints = async (id: bigint) => {
   const gfgProfile = await getGFGProfile(id);
   const codeChefProfile = await getCodeChefProfile(id);
   const leetcodeProfile = await getLeetcodeProfile(id);
+  const superteamEarnProfile = await getSuperteamEarnProfile(id);
   const user = await getDbUser(BigInt(id));
   let totalPoints = 0;
 
@@ -258,6 +259,12 @@ export const updateTotalPoints = async (id: bigint) => {
     totalPoints += leetcodeProfile.easyQues * 10;
     totalPoints += leetcodeProfile.mediumQues * 30;
     totalPoints += leetcodeProfile.hardQues * 50;
+  }
+
+  if (superteamEarnProfile) {
+    totalPoints += superteamEarnProfile.participations * 10;
+    totalPoints += superteamEarnProfile.wins * 100;
+    totalPoints += superteamEarnProfile.totalWinnings * 2;
   }
 
   if (user?.totalPoints && totalPoints == user.totalPoints) {
