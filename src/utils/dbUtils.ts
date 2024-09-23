@@ -1,12 +1,21 @@
 import { db } from "@/lib/db";
 import { GithubDevProfile, UserDB } from "@/lib/types";
 
-export const initializeUser = async (githubId: bigint) => {
+export const initializeUser = async (
+  githubId: bigint,
+  email?: string | null
+) => {
   try {
     await db.user.upsert({
       where: { githubId: githubId },
       update: {},
-      create: { githubId: githubId, installationId: 0 },
+      create: {
+        githubId: githubId,
+        installationId: 0,
+        ...(email
+          ? { email: email, verifiedEmail: true, emails: [email] }
+          : {}),
+      },
     });
     return true;
   } catch (err) {
