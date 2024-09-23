@@ -12,7 +12,9 @@ export async function processSuperteamEarnData(
   const stats = await scrapeSuperteamStats(username);
 
   if (stats) {
-    console.log('Superteam Stats:', stats);
+    console.log('Participations:', stats.participations);
+    console.log('Wins:', stats.wins);
+    console.log('Total Winnings:', stats.totalWinnings);
   } else {
     console.log('Failed to fetch Superteam stats.');
   }

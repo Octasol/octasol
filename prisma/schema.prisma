@@ -28,6 +28,7 @@ model User {
   GFGProfile         GFGProfile?
   CodeChefProfile    CodeChefProfile?
   LeetcodeProfile    LeetcodeProfile?
+  SuperteamEarnProfile SuperteamEarnProfile?
 }
 
 model GithubDevProfile {
@@ -71,4 +72,12 @@ model LeetcodeProfile {
   easyQues       Int
   mediumQues     Int     
   hardQues       Int     
+}
+
+model SuperteamEarnProfile {
+  User          User?   @relation(fields: [githubId], references: [githubId])
+  githubId      BigInt  @id @unique
+  participations Int    
+  wins           Int    
+  totalWinnings  Int    
 }
