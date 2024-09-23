@@ -33,10 +33,8 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }: { session: any; token: any }) {
       session.accessToken = token.accessToken;
-      console.log(session.accessToken);
       session.user = { ...session.user, ...token.profile };
       await initializeUser(session.user.id, session.user.email);
-      console.log(session);
       return session;
     },
   },
