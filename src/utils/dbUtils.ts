@@ -203,11 +203,20 @@ export const getCodeChefProfile = async (id: bigint) => {
   });
 };
 
+export const getLeetcodeProfile = async (id: bigint) => {
+  return db.leetcodeProfile.findUnique({
+    where: {
+      githubId: id,
+    },
+  });
+};
+
 export const updateTotalPoints = async (id: bigint) => {
   const hackerrankProfile = await getHackerrankProfile(id);
   const githubDevProfile = await getGithubDevProfile(id);
   const gfgProfile = await getGFGProfile(id);
   const codeChefProfile = await getCodeChefProfile(id);
+  const leetcodeProfile = await getLeetcodeProfile(id);
   const user = await getDbUser(BigInt(id));
   let totalPoints = 0;
 
@@ -235,6 +244,12 @@ export const updateTotalPoints = async (id: bigint) => {
 
   if (codeChefProfile) {
     totalPoints += codeChefProfile.currentRating;
+  }
+
+  if (leetcodeProfile) {
+    totalPoints += leetcodeProfile.easyQues * 10;   
+    totalPoints += leetcodeProfile.mediumQues * 30; 
+    totalPoints += leetcodeProfile.hardQues * 50;   
   }
 
   if (user?.totalPoints && totalPoints == user.totalPoints) {

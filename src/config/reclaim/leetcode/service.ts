@@ -1,12 +1,15 @@
 import { QuestionData } from "@/lib/types";
+import { setUsername, setLeetCodeDatabyGithubId } from "@/utils/dbUtils";
 
 export async function processLeetcodeData(
-  githubId: string,
+  githubId: any,
   proof: any,
   providerName: string
 ) {
   const username = JSON.parse(proof[0].claimData.context).extractedParameters.username;
-  console.log(username);
+  await setUsername(githubId, {
+    leetcodeUsername: username,
+  });
 
   // Leetcode GraphQL query and variables
   const query = `
@@ -45,9 +48,7 @@ export async function processLeetcodeData(
     const mediumQues = questionData.find(q => q.difficulty === 'MEDIUM')?.count || 0;
     const hardQues = questionData.find(q => q.difficulty === 'HARD')?.count || 0;
 
-    console.log(`Easy Questions: ${easyQues}`);
-    console.log(`Medium Questions: ${mediumQues}`);
-    console.log(`Hard Questions: ${hardQues}`);
+    await setLeetCodeDatabyGithubId(githubId, easyQues, mediumQues, hardQues);
 
     return true;
   } catch (error) {
