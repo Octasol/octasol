@@ -1,14 +1,30 @@
 {
-  "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": {
-        "Cache-Control": "no-store, no-cache, must-revalidate",
-        "Pragma": "no-cache",
-        "Expires": "0",
-        "Access-Control-Allow-Origin": "*",
-        "s-maxage": 0
+    "headers": [
+      {
+        "source": "/api/(.*)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-store, no-cache, must-revalidate"
+          },
+          {
+            "key": "Pragma",
+            "value": "no-cache"
+          },
+          {
+            "key": "Expires",
+            "value": "0"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "s-maxage",
+            "value": "0"
+          }
+        ]
       }
-    }
-  ]
-}
+    ]
+  }
+  
