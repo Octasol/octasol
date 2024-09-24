@@ -1,19 +1,19 @@
 {
-  "headers": [
-    {
-      "source": "/*",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store, no-cache, must-revalidate, proxy-revalidate"
+    "routes": [
+      {
+        "src": "/api/(.*)",
+        "headers": {
+          "Cache-Control": "no-store, no-cache, must-revalidate",
+          "Pragma": "no-cache",
+          "Expires": "0",
+          "Access-Control-Allow-Origin": "*"
         },
-        { "key": "Expires", "value": "0" },
-        { "key": "Pragma", "value": "no-cache" },
-        {
-          "key": "Strict-Transport-Security",
-          "value": "max-age=0;"
-        }
-      ]
-    }
-  ]
-}
+        "dest": "/api/$1"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/$1"
+      }
+    ]
+  }
+  
