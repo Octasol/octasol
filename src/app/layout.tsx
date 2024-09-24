@@ -7,7 +7,8 @@ import SessionProviderWrapper from "@/providers/session-provider";
 import Header from "@/components/Header";
 import { Providers } from "./Redux/provider";
 import { ThemeProvider } from "@/providers/theme-provider";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 interface Props {
   session: Session | null;
   children: React.ReactNode;
@@ -36,6 +37,7 @@ export default function RootLayout({ children, session }: Props) {
           enableSystem
           disableTransitionOnChange
         >
+          <ToastContainer theme="dark" />
           <Providers>
             <SessionProviderWrapper session={session}>
               <div className="min-h-screen w-full flex flex-col bg-black">
