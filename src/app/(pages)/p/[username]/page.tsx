@@ -13,6 +13,7 @@ import { DataObject, userNames } from "@/lib/types";
 import Image from "next/image";
 import { RadialChart } from "@/components/Charts/RadialChart";
 import { StatDetails } from "@/components/Charts/StatDetails";
+import { useSelector } from "react-redux";
 
 interface radarObject {
   githubUsername?: string;
@@ -43,6 +44,8 @@ export default function BentoGridDemo() {
   const [leetcodeData, setLeetcodeData] = useState<DataObject>({});
   const [superteamData, setSuperteamData] = useState<DataObject>({});
   const [radarData, setRadarData] = useState<radarObject>({});
+  // const [view, setView] = useState();
+  // const user = useSelector((state: any) => state.user);
 
   const userData = async (name: string) => {
     try {
@@ -50,6 +53,7 @@ export default function BentoGridDemo() {
       console.log(response?.data);
 
       setGithubData(response?.data?.github);
+      // setView(response?.data?.github?.githubId);
       setHackerrankData(response?.data?.hackerrank);
       setCodechefData(response?.data?.codechef);
       setGfgData(response?.data?.gfg);
@@ -84,10 +88,6 @@ export default function BentoGridDemo() {
     if (name) userData(name);
   }, [pathname]);
 
-  useEffect(() => {
-    console.log(leetcodeData);
-  }, [leetcodeData]);
-
   return (
     <>
       <div className="w-full flex flex-col md:flex-row justify-center items-center px-4">
@@ -114,11 +114,13 @@ export default function BentoGridDemo() {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="flex justify-end px-4">
-                    <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
-                      Refresh
-                    </button>
-                  </div>
+                  {/* {user?.githubId == view && (
+                    <div className="flex justify-end px-4">
+                      <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
+                        Refresh
+                      </button>
+                    </div>
+                  )} */}
                   <StatDetails stats={githubData} />
                 </AccordionContent>
               </AccordionItem>
@@ -141,11 +143,13 @@ export default function BentoGridDemo() {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="flex justify-end px-4">
-                    <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
-                      Refresh
-                    </button>
-                  </div>
+                  {/* {user?.githubId == view && (
+                    <div className="flex justify-end px-4">
+                      <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
+                        Refresh
+                      </button>
+                    </div>
+                  )} */}
 
                   <StatDetails stats={superteamData} />
                 </AccordionContent>
@@ -170,11 +174,13 @@ export default function BentoGridDemo() {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="flex justify-end px-4">
-                    <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
-                      Refresh
-                    </button>
-                  </div>
+                  {/* {user?.githubId == view && (
+                    <div className="flex justify-end px-4">
+                      <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
+                        Refresh
+                      </button>
+                    </div>
+                  )} */}
                   <StatDetails stats={leetcodeData} />
                 </AccordionContent>
               </AccordionItem>
@@ -184,11 +190,13 @@ export default function BentoGridDemo() {
               <AccordionItem value="codeforces">
                 <AccordionTrigger>Codeforces</AccordionTrigger>
                 <AccordionContent>
-                  <div className="flex justify-end px-4">
-                    <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
-                      Refresh
-                    </button>
-                  </div>
+                  {/* {user?.githubId == view && (
+                    <div className="flex justify-end px-4">
+                      <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
+                        Refresh
+                      </button>
+                    </div>
+                  )} */}
                   Username: {userName.codeforcesUsername}
                 </AccordionContent>
               </AccordionItem>
@@ -212,11 +220,13 @@ export default function BentoGridDemo() {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="flex justify-end px-4">
-                    <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
-                      Refresh
-                    </button>
-                  </div>
+                  {/* {user?.githubId == view && (
+                    <div className="flex justify-end px-4">
+                      <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
+                        Refresh
+                      </button>
+                    </div>
+                  )} */}
                   <StatDetails stats={hackerrankData} />
                 </AccordionContent>
               </AccordionItem>
@@ -240,11 +250,13 @@ export default function BentoGridDemo() {
                 </AccordionTrigger>
 
                 <AccordionContent>
-                  <div className="flex justify-end px-4">
-                    <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
-                      Refresh
-                    </button>
-                  </div>
+                  {/* {user?.githubId == view && (
+                    <div className="flex justify-end px-4">
+                      <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
+                        Refresh
+                      </button>
+                    </div>
+                  )} */}
                   <StatDetails stats={codechefData} />
                 </AccordionContent>
               </AccordionItem>
@@ -267,11 +279,13 @@ export default function BentoGridDemo() {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="flex justify-end px-4">
-                    <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
-                      Refresh
-                    </button>
-                  </div>
+                  {/* {user?.githubId == view && (
+                    <div className="flex justify-end px-4">
+                      <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
+                        Refresh
+                      </button>
+                    </div>
+                  )} */}
                   <StatDetails stats={gfgData} />
                 </AccordionContent>
               </AccordionItem>
@@ -281,11 +295,13 @@ export default function BentoGridDemo() {
               <AccordionItem value="gitlab">
                 <AccordionTrigger>GitLab</AccordionTrigger>
                 <AccordionContent>
-                  <div className="flex justify-end px-4">
-                    <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
-                      Refresh
-                    </button>
-                  </div>
+                  {/* {user?.githubId == view && (
+                    <div className="flex justify-end px-4">
+                      <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
+                        Refresh
+                      </button>
+                    </div>
+                  )} */}
                   Username: {userName.gitlabUsername}
                 </AccordionContent>
               </AccordionItem>

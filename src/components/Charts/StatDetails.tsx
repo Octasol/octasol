@@ -47,11 +47,6 @@ export function StatDetails(props: Props) {
       }));
   }, [props.stats]);
 
-  useEffect(() => {
-    console.log("Transformed Data:", transformedData);
-    console.log(props);
-  }, [transformedData, props]);
-
   return (
     <Card className="bg-transparent !border-0 w-full">
       <CardHeader>

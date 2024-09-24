@@ -80,10 +80,6 @@ export function RadialChart(props: Props) {
     (props.stats.leetcodePoints ?? 0) === 0 &&
     (props.stats.superteamEarnPoints ?? 0) === 0;
 
-  useEffect(() => {
-    console.log("Chart Data:", shouldRenderBarChart ? barChartData : chartData);
-  }, [props]);
-
   return (
     <Card className="bg-transparent !border-0">
       <CardHeader className="items-center pb-4">
