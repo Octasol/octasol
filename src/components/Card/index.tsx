@@ -8,14 +8,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export function Cards() {
+type Props = {
+  name: string;
+  data: string;
+};
+
+export function Cards(props: Props) {
   return (
     <Card className="h-full bg-black w-[300px]">
       <CardHeader>
-        <CardTitle>Create project</CardTitle>
+        <CardTitle>{props.name}</CardTitle>
       </CardHeader>
       <CardContent></CardContent>
-      <CardFooter>$5000</CardFooter>
+      <CardFooter>{props.data}</CardFooter>
     </Card>
   );
 }

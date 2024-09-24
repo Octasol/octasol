@@ -42,7 +42,7 @@ export default function StatusChart() {
   return (
     <Card className="bg-black flex flex-col ">
       <CardHeader>
-        <CardTitle>Area Chart - Gradient</CardTitle>
+        <CardTitle>Bounty chart</CardTitle>
         <CardDescription>
           Showing total visitors for the last 6 months
         </CardDescription>

@@ -12,10 +12,10 @@ const Dashboard = () => {
         <h1 className="text-xl md:text-3xl px-8">Dashboard</h1>
         <div className="pb-10 md:pb-4 px-8  w-full">
           <div className="flex flex-wrap justify-evenly w-full gap-2">
-            <Cards />
-            <Cards />
-            <Cards />
-            <Cards />
+            <Cards name="Bounties" data="100" />
+            <Cards name="Participations" data="300" />
+            <Cards name="Wins" data="10" />
+            <Cards name="Earnings" data="5000" />
           </div>
         </div>
         <div className="w-full flex flex-col md:flex-row flex-wrap justify-evenly gap-8 -mx-12 px-4">
