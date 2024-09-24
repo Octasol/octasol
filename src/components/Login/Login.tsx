@@ -17,6 +17,7 @@ import {
   CopyPlus,
   Home,
   LogOut,
+  Menu,
   SquareUser,
 } from "lucide-react";
 import BottomGradient from "../ui/BottomGradient";
@@ -158,7 +159,8 @@ const Login = () => {
                   <span className="text-sm md:text-base">
                     {user?.name || ""}
                   </span>
-                  <ChevronDown size={20} />
+                  <ChevronDown size={20} className="hidden md:flex" />
+                  <Menu size={16} className="flex md:hidden" />
                 </div>
               </LoginButton>
             </DropdownMenuTrigger>
