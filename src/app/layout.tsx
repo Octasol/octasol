@@ -51,3 +51,5 @@ export default function RootLayout({ children, session }: Props) {
     </html>
   );
 }
+
+export const fetchCache = "force-no-store";
