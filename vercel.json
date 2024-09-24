@@ -1,0 +1,15 @@
+{
+  "headers": [
+    {
+      "source": "/api/leaderboard",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate, proxy-revalidate"
+        },
+        { "key": "Expires", "value": "0" },
+        { "key": "Pragma", "value": "no-cache" }
+      ]
+    }
+  ]
+}
