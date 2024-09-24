@@ -15,7 +15,6 @@ import { leaderboard } from "@/config/axios/Breakpoints";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useSelector } from "react-redux";
-import { revalidatePath } from 'next/cache'
 
 const Leaderboard = () => {
   const router = useRouter();
@@ -25,7 +24,6 @@ const Leaderboard = () => {
   const recordsPerPage = 10;
 
   const response = async () => {
-    revalidatePath(`/api${leaderboard}`)
     const res = await GET(leaderboard);
     setProfile(res);
   };
