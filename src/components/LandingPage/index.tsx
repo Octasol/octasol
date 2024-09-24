@@ -5,7 +5,7 @@ import Text from "./Text";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center overflow-hidden gap-8">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center overflow-hidden gap-12 md:gap-8 mt-16 md:mt-0">
       <article className="container">
         <Text />
       </article>
