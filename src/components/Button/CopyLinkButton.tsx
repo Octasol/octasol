@@ -1,12 +1,18 @@
 "use client";
 import { cn } from "@/lib/utils";
 import React from "react";
+import { toast } from "react-toastify";
 
 type Props = { children: React.ReactNode; data: any };
 
 const CopyLinkButton = ({ children, data }: Props) => {
+  const notify = (message: string) => {
+    toast.info(message);
+  };
+
   const handleConnect = async (data: any) => {
     navigator.clipboard.writeText(data);
+    notify("Link Copied");
   };
 
   return (
