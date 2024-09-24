@@ -25,11 +25,11 @@ export async function processSuperteamEarnData(
     );
 
   } else {
-    console.log("Failed to fetch Superteam stats.");
+
   }
 
   const lastUpdateTimeStamp = proof[0].claimData.timestampS;
-  console.log("Proof is:", proof[0]);
+
 
   return true;
 }

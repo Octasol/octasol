@@ -41,8 +41,8 @@ export async function processLeetcodeData(
     const data = await response.json();
     const questionData: QuestionData[] = data.data.userProfileUserQuestionProgressV2.numAcceptedQuestions;
 
-    console.log("data:", data);
-    console.log("Question Data:", questionData);
+
+
 
     const easyQues = questionData.find(q => q.difficulty === 'EASY')?.count || 0;
     const mediumQues = questionData.find(q => q.difficulty === 'MEDIUM')?.count || 0;

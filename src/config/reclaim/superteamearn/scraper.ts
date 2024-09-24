@@ -25,11 +25,11 @@ export async function scrapeSuperteamStats(username: string) {
 
         return statsJson.props.pageProps.stats; 
       } else {
-        console.log("No match found for the stats JSON.");
+
         return null;
       }
     } else {
-      console.log("No stats found in the script tags.");
+
       return null;
     }
   } catch (error) {

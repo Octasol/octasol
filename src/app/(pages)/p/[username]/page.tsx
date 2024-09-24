@@ -50,7 +50,7 @@ export default function BentoGridDemo() {
   const userData = async (name: string) => {
     try {
       const { response } = await POST("/user", { username: name });
-      console.log(response?.data);
+
 
       setGithubData(response?.data?.github);
       // setView(response?.data?.github?.githubId);
