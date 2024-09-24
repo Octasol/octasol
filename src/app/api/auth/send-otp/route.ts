@@ -46,11 +46,12 @@ export async function POST(req: NextRequest) {
 
     const otp = String(Math.floor(100000 + Math.random() * 900000));
     await setOtp(email, otp);
-    await sendMail(
-      email,
-      "Your Octasol OTP Code",
-      `Your OTP code is ${otp}\nValid for 15 minutes`
-    );
+    const otpPlaceholders = {
+      name: "Octopod 👋",
+      OTP: otp,
+    };
+
+    await sendMail(email, "Your Octasol OTP Code", otpPlaceholders);
 
     return NextResponse.json({ message: "OTP sent successfully" });
   } catch (error: any) {

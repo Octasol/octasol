@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Octasol OTP Verification</title>
+    <style>
+      body {
+        background-color: #0a0a0a;
+        font-family: "Arial", sans-serif;
+        color: #ffffff;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: #141414;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+      }
+
+      .logo {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .logo img {
+        width: 100px;
+        border-radius: 50%;
+      }
+
+      .banner img {
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #16adc7f1;
+        font-size: 28px;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 1.8;
+        margin-bottom: 20px;
+        color: #b3b3b3;
+      }
+
+      .otp-box {
+        margin: 0 auto;
+        display: inline-block;
+        text-align: center;
+      }
+
+      .otp-digit {
+        background-color: #1f1f1f;
+        padding: 15px 25px;
+        border-radius: 8px;
+        font-size: 32px;
+        letter-spacing: 5px;
+        color: #ffffff;
+        box-shadow: 0px 0px 10px rgba(255, 134, 94, 0.5);
+      }
+
+      .small-text {
+        color: #a6a6a6;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 12px;
+        color: #666666;
+      }
+
+      .footer a {
+        color: #ff865e;
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      .social-icons {
+        margin: 20px 0;
+        text-align: center;
+      }
+
+      .social-icons img {
+        width: 30px;
+        margin: 0 10px;
+      }
+
+      /* Responsive Design */
+      @media only screen and (max-width: 600px) {
+        .otp-digit {
+          font-size: 26px;
+          padding: 10px 20px;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <img
+          src="https://avatars.githubusercontent.com/u/173494276?s=400&u=55c3b9375fabec2a345c7b513bad5aaf6de5f4ba&v=4"
+          alt="Octasol Logo"
+        />
+      </div>
+      <!-- <div class="banner">
+        <img src="https://octasol.com/banner.png" alt="Banner Image" />
+      </div> -->
+      <h1>Hey {{name}}</h1>
+      <p>
+        Here is your One Time Password (OTP). Please enter this code to verify
+        your email for Octasol:
+      </p>
+      <table align="center" role="presentation" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="otp-box">
+            <div class="otp-digit">{{OTP}}</div>
+          </td>
+        </tr>
+      </table>
+      <p class="small-text">OTP will expire in <strong>15 minutes</strong>.</p>
+      <p>
+        Best regards, <br />
+        The Octasol Team
+      </p>
+
+      <div class="social-icons">
+        <a href="https://x.com/theoctasol" target="_blank"
+          ><img
+            src="https://img.icons8.com/?size=48&id=gjmKYK5jfSlU&format=png&color=ffffff"
+            alt="Twitter"
+        /></a>
+        <a href="https://discord.gg/zQGv8RD8cx" target="_blank"
+          ><img
+            src="https://img.icons8.com/?size=48&id=30998&format=png&color=000000"
+            alt="Discord"
+        /></a>
+      </div>
+
+      <div class="footer">
+        <p>© 2024 Octasol. All Rights Reserved.</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Help Center</a></p>
+      </div>
+    </div>
+  </body>
+</html>
