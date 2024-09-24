@@ -6,6 +6,7 @@ const nextConfig = {
       hostname:"avatars.githubusercontent.com"
     }],
   },
+  cacheMaxMemorySize: 0,
 };
 
 export default nextConfig;
