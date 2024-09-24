@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
     await sendMail(
       email,
       "Your Octasol OTP Code",
-      `Your OTP code is ${otp}\nValid for 5 minutes`
+      `Your OTP code is ${otp}\nValid for 15 minutes`
     );
 
     return NextResponse.json({ message: "OTP sent successfully" });

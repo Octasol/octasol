@@ -1,7 +1,7 @@
 import { db } from "./db";
 
 export const setOtp = async (email: string, otp: string) => {
-  const expiresAtNs = Date.now() + 5 * 60 * 1000 * 1_000_000; // Set expiration time to 5 minutes from now in nanoseconds
+  const expiresAtNs = Date.now() + 15 * 60 * 1000 * 1_000_000; // Set expiration time to 15 minutes from now in nanoseconds
 
   const emailOtp = `${otp}-${expiresAtNs}`;
 
