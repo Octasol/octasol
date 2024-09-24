@@ -12,7 +12,7 @@ const CoverUpPage = (props: Props) => {
           <p className="mt-8 text-center text-lg tracking-wide leading-8">
             The page will be available soon with more features. Stay tuned!
             <br />
-            Till then visit&nbsp;
+            Visit&nbsp;
             <Link
               href={"/leaderboard"}
               className="text-blue-500 hover:text-blue-400"
@@ -24,7 +24,7 @@ const CoverUpPage = (props: Props) => {
               href={"/connect"}
               className="text-blue-500 hover:text-blue-400"
             >
-              Connect Providers
+              Connect Profiles
             </Link>
             .
           </p>
