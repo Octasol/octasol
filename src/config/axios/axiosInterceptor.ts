@@ -21,7 +21,7 @@ const axiosInstance: AxiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-    if(config.url?.includes("api/user") || config.url?.includes("radar")) {
+    if(config.url?.includes("user") || config.url?.includes("radar")) {
       return config;
     }
     store.dispatch(increment());
