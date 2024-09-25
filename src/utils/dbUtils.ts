@@ -107,7 +107,7 @@ export const setGithubDevProfile = async (
         totalIssues: profile.totalIssues,
       },
     });
-    updateTotalPoints(id);
+    await updateTotalPoints(id);
     return true;
   } catch (err) {
     console.error(err);
@@ -180,7 +180,7 @@ export const setHackerrankProfile = async (id: bigint, profile: any) => {
         ...profile,
       },
     });
-    updateTotalPoints(id);
+    await updateTotalPoints(id);
     return true;
   } catch (err) {
     console.error(err);
@@ -314,7 +314,7 @@ export async function setHackerrankDatabyGithubId(
         stars: stars,
       },
     });
-    updateTotalPoints(githubId);
+    await updateTotalPoints(githubId);
     return true;
   } catch (err) {
     console.error(err);
@@ -340,7 +340,7 @@ export async function setGFGDatabyGithubId(
         problemsSolved: problemsSolved,
       },
     });
-    updateTotalPoints(githubId);
+    await updateTotalPoints(githubId);
     return true;
   } catch (err) {
     console.error(err);
@@ -363,7 +363,7 @@ export async function setCodeChefDatabyGithubId(
         currentRating: currentRating,
       },
     });
-    updateTotalPoints(githubId);
+    await updateTotalPoints(githubId);
     return true;
   } catch (err) {
     console.error(err);
@@ -392,7 +392,7 @@ export async function setLeetCodeDatabyGithubId(
         hardQues: hardQues,
       },
     });
-    updateTotalPoints(githubId);
+    await updateTotalPoints(githubId);
     return true;
   } catch (err) {
     console.error(err);
@@ -421,7 +421,7 @@ export async function setSuperteamEarnDatabyGithubId(
         totalWinnings: totalWinnings,
       },
     });
-    updateTotalPoints(githubId);
+    await updateTotalPoints(githubId);
     return true;
   } catch (err) {
     console.error(err);
