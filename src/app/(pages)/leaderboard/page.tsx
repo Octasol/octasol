@@ -21,7 +21,7 @@ const Leaderboard = () => {
   const [profile, setProfile] = useState<Profile[]>([]);
   const user = useSelector((state: any) => state.user);
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 10;
+  const recordsPerPage = 15;
 
   const response = async () => {
     const res = await GET(leaderboard);
