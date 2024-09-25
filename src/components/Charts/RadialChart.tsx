@@ -103,7 +103,8 @@ export function RadialChart(props: Props) {
                 name="Points"
                 dataKey="points"
                 fill="blue"
-                fillOpacity={0.6}
+                stroke="blue"
+                fillOpacity={6}
               />
             </RadarChart>
           )}
