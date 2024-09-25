@@ -13,9 +13,7 @@ import { DataObject, userNames } from "@/lib/types";
 import Image from "next/image";
 import { StatDetails } from "@/components/Charts/StatDetails";
 import ComponentLoader from "@/components/ComponentLoader";
-import { GET, POST } from "@/config/axios/requests";
 
-// Dynamically load ScrollArea
 const ScrollArea = dynamic(
   () => import("@/components/ui/scroll-area").then((mod) => mod.ScrollArea),
   {
@@ -66,7 +64,7 @@ export default function BentoGridDemo() {
   const userData = async (name: string) => {
     setIsUserLoading(true);
     try {
-      const { response } = await POST("/user", { username: name });
+      const response = await axios.post("/api/user", { username: name });
 
       setGithubData(response?.data?.github);
       setHackerrankData(response?.data?.hackerrank);
@@ -93,7 +91,8 @@ export default function BentoGridDemo() {
     }
 
     try {
-      const radarResponse = await GET(`/radar?username=${name}`);
+      const radarResponse = (await axios.get(`/api/radar?username=${name}`))
+        .data;
       setRadarData(radarResponse);
     } catch (error) {
       console.error("Error fetching radar chart data:", error);
