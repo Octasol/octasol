@@ -11,9 +11,19 @@ import { usePathname } from "next/navigation";
 import { GET, POST } from "@/config/axios/requests";
 import { DataObject, userNames } from "@/lib/types";
 import Image from "next/image";
-import { RadialChart } from "@/components/Charts/RadialChart";
+import dynamic from "next/dynamic"; // Import for dynamic loading
 import { StatDetails } from "@/components/Charts/StatDetails";
 import { useSelector } from "react-redux";
+import axios from "axios";
+
+// Dynamically import the RadialChart component with a fallback
+const RadialChart = dynamic(
+  () =>
+    import("@/components/Charts/RadialChart").then((mod) => mod.RadialChart),
+  {
+    loading: () => <p>Loading radar chart...</p>, // Fallback while the component is loading
+  }
+);
 
 interface radarObject {
   githubUsername?: string;
@@ -43,17 +53,13 @@ export default function BentoGridDemo() {
   const [gfgData, setGfgData] = useState<DataObject>({});
   const [leetcodeData, setLeetcodeData] = useState<DataObject>({});
   const [superteamData, setSuperteamData] = useState<DataObject>({});
-  const [radarData, setRadarData] = useState<radarObject>({});
-  // const [view, setView] = useState();
-  // const user = useSelector((state: any) => state.user);
+  const [radarData, setRadarData] = useState<radarObject | null>(null);
+  const [isRadarLoading, setIsRadarLoading] = useState<boolean>(true);
 
   const userData = async (name: string) => {
     try {
       const { response } = await POST("/user", { username: name });
-
-
       setGithubData(response?.data?.github);
-      // setView(response?.data?.github?.githubId);
       setHackerrankData(response?.data?.hackerrank);
       setCodechefData(response?.data?.codechef);
       setGfgData(response?.data?.gfg);
@@ -76,10 +82,13 @@ export default function BentoGridDemo() {
     }
 
     try {
-      const radarResponse = await GET(`/radar?username=${name}`);
+      const radarResponse = (await axios.get(`/api/radar?username=${name}`))
+        .data;
       setRadarData(radarResponse);
     } catch (error) {
       console.error("Error fetching radar chart data:", error);
+    } finally {
+      setIsRadarLoading(false);
     }
   };
 
@@ -92,7 +101,11 @@ export default function BentoGridDemo() {
     <>
       <div className="w-full flex flex-col md:flex-row justify-center items-center px-4">
         <div className="w-full md:w-6/12 ">
-          <RadialChart stats={radarData} />
+          {isRadarLoading ? (
+            <p>Loading radar chart...</p>
+          ) : (
+            radarData && <RadialChart stats={radarData} />
+          )}
         </div>
 
         <ScrollArea className="w-full md:w-6/12 md:h-[80vh] overflow-scroll px-4 ">
