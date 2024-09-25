@@ -1,11 +1,20 @@
 "use client";
 import React, { useEffect } from "react";
-import { SparklesCore } from "../ui/sparkles";
 import Text from "./Text";
 import { store } from "@/app/Redux/store";
 import { decrement, increment } from "@/app/Redux/Features/loader/loaderSlice";
+import dynamic from "next/dynamic";
 
 export default function LandingPage() {
+  const SparklesCore = dynamic(
+    () => import("../ui/sparkles").then((mod) => mod.SparklesCore),
+    {
+      ssr: false,
+      loading: () => (
+        <div className="absolute inset-0 w-full h-full bg-transparent"></div>
+      ),
+    }
+  );
   useEffect(() => {
     store.dispatch(decrement());
     return () => {
