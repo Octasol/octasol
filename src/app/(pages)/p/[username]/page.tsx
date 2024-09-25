@@ -12,12 +12,13 @@ import axios from "axios";
 import { DataObject, userNames } from "@/lib/types";
 import Image from "next/image";
 import { StatDetails } from "@/components/Charts/StatDetails";
-import ComponentLoader from "@/components/ComponentLoader";
+import RadarLoader from "@/components/ComponentLoader/RadarLoader";
+import { ProfileLoader } from "@/components/ComponentLoader/ProfileLoader";
 
 const ScrollArea = dynamic(
   () => import("@/components/ui/scroll-area").then((mod) => mod.ScrollArea),
   {
-    loading: () => <ComponentLoader />,
+    loading: () => <ProfileLoader />,
   }
 );
 
@@ -25,7 +26,7 @@ const RadialChart = dynamic(
   () =>
     import("@/components/Charts/RadialChart").then((mod) => mod.RadialChart),
   {
-    loading: () => <ComponentLoader />,
+    loading: () => <RadarLoader />,
   }
 );
 
@@ -111,13 +112,15 @@ export default function BentoGridDemo() {
       <div className="w-full flex flex-col md:flex-row justify-center items-center px-4">
         <div className="w-full md:w-6/12">
           {isRadarLoading ? (
-            <ComponentLoader />
+            <RadarLoader />
           ) : (
             radarData && <RadialChart stats={radarData} />
           )}
         </div>
         {isUserLoading ? (
-          <ComponentLoader />
+          <div className="w-full md:w-6/12 md:h-[80vh] overflow-scroll px-4 ">
+            <ProfileLoader />
+          </div>
         ) : (
           <ScrollArea className="w-full md:w-6/12 md:h-[80vh] overflow-scroll px-4 ">
             <Accordion type="single" collapsible>
