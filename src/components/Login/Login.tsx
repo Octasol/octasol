@@ -166,7 +166,7 @@ const Login = () => {
           <DropdownMenu>
             <DropdownMenuTrigger className="!outline-none">
               <LoginButton>
-                <div className="flex gap-4 items-center">
+                <div className="flex gap-2 md:gap-4 items-center">
                   <ProfileImage />
                   <span className="text-sm md:text-base">
                     {user?.name || ""}

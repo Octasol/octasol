@@ -8,20 +8,19 @@ import {
 } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { usePathname } from "next/navigation";
-import { GET, POST } from "@/config/axios/requests";
+import { POST } from "@/config/axios/requests";
 import { DataObject, userNames } from "@/lib/types";
 import Image from "next/image";
-import dynamic from "next/dynamic"; // Import for dynamic loading
+import dynamic from "next/dynamic";
 import { StatDetails } from "@/components/Charts/StatDetails";
-import { useSelector } from "react-redux";
 import axios from "axios";
+import ComponentLoader from "@/components/ComponentLoader";
 
-// Dynamically import the RadialChart component with a fallback
 const RadialChart = dynamic(
   () =>
     import("@/components/Charts/RadialChart").then((mod) => mod.RadialChart),
   {
-    loading: () => <p>Loading radar chart...</p>, // Fallback while the component is loading
+    loading: () => <ComponentLoader />,
   }
 );
 
@@ -102,7 +101,7 @@ export default function BentoGridDemo() {
       <div className="w-full flex flex-col md:flex-row justify-center items-center px-4">
         <div className="w-full md:w-6/12 ">
           {isRadarLoading ? (
-            <p>Loading radar chart...</p>
+            <ComponentLoader />
           ) : (
             radarData && <RadialChart stats={radarData} />
           )}
