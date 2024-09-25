@@ -24,7 +24,7 @@ const CoverUpPage = (props: Props) => {
               href={"/connect"}
               className="text-blue-500 hover:text-blue-400"
             >
-              Connect Profiles
+              Connect&nbsp;Profiles
             </Link>
             .
           </p>
