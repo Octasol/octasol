@@ -1,9 +1,17 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { SparklesCore } from "../ui/sparkles";
 import Text from "./Text";
+import { store } from "@/app/Redux/store";
+import { decrement, increment } from "@/app/Redux/Features/loader/loaderSlice";
 
 export default function LandingPage() {
+  useEffect(() => {
+    store.dispatch(decrement());
+    return () => {
+      store.dispatch(increment());
+    };
+  }, []);
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center overflow-hidden gap-12 md:gap-8 mt-16 md:mt-0">
       <article className="container">

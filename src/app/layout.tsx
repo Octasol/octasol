@@ -9,6 +9,7 @@ import { Providers } from "./Redux/provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "@/components/Loader";
 interface Props {
   session: Session | null;
   children: React.ReactNode;
@@ -40,6 +41,7 @@ export default function RootLayout({ children, session }: Props) {
           <ToastContainer theme="dark" />
           <Providers>
             <SessionProviderWrapper session={session}>
+              <Loader />
               <div className="min-h-screen w-full flex flex-col bg-black">
                 <Header />
                 {children}

@@ -25,6 +25,8 @@ import LoginButton from "../Button/LoginButton";
 import { POST } from "@/config/axios/requests";
 import { IconChartHistogram } from "@tabler/icons-react";
 import { githubDevProfile } from "@/config/axios/Breakpoints";
+import { store } from "@/app/Redux/store";
+import { increment } from "@/app/Redux/Features/loader/loaderSlice";
 
 const Login = () => {
   const { data: session } = useSession() as any;
@@ -32,6 +34,7 @@ const Login = () => {
   const pathname = usePathname();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
+  const counter = useSelector((state: any) => state.counter);
   const error = useSelector((state: any) => state.error);
   const [hasPosted, setHasPosted] = useState(false);
 
@@ -82,6 +85,7 @@ const Login = () => {
             }
           );
           setHasPosted(true);
+          // store.dispatch(decrement());
         } catch (err) {
           console.error("Failed to run POST request:", err);
         }
@@ -118,6 +122,7 @@ const Login = () => {
   }, [session, user, pathname]);
 
   const logout = () => {
+    store.dispatch(increment());
     signOut();
     dispatch(
       setUser({
@@ -132,17 +137,24 @@ const Login = () => {
     router.push("/");
   };
 
-  useEffect(() => {}, [error]);
+  useEffect(() => {
+    console.log(counter);
+  }, [counter]);
 
   const handleProfile = (user: string) => {
     router.replace(`/p/${user}`);
+  };
+
+  const userLogin = () => {
+    signIn("github");
+    store.dispatch(increment());
   };
 
   return (
     <>
       {!session ? (
         <LoginButton>
-          <button onClick={() => signIn("github")} className="py-2">
+          <button onClick={userLogin} className="py-2">
             <span className="text-sm md:text-base ">
               Sign in with GitHub&nbsp;
             </span>
