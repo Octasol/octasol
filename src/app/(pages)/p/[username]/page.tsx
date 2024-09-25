@@ -107,6 +107,8 @@ export default function BentoGridDemo() {
                       className="invert"
                       width={40}
                       height={40}
+                      loading="lazy"
+                      priority={false}
                     />
                     <span className="text-base font-semibold ">
                       {userName.githubUsername}
@@ -136,6 +138,8 @@ export default function BentoGridDemo() {
                       className="rounded-full"
                       width={40}
                       height={40}
+                      loading="lazy"
+                      priority={false}
                     />
                     <span className="text-base font-semibold ">
                       {userName.superteamUsername}
@@ -167,6 +171,8 @@ export default function BentoGridDemo() {
                       className="rounded-full"
                       width={40}
                       height={40}
+                      loading="lazy"
+                      priority={false}
                     />
                     <span className="text-base font-semibold ">
                       {userName.leetcodeUsername}
@@ -213,6 +219,8 @@ export default function BentoGridDemo() {
                       className="rounded-full"
                       width={40}
                       height={40}
+                      loading="lazy"
+                      priority={false}
                     />
                     <span className="text-base font-semibold ">
                       {userName.hackerrankUsername}
@@ -242,6 +250,8 @@ export default function BentoGridDemo() {
                       className="rounded-full aspect-square"
                       width={40}
                       height={40}
+                      loading="lazy"
+                      priority={false}
                     />
                     <span className="text-base font-semibold ">
                       {userName.codechefUsername}
@@ -272,6 +282,8 @@ export default function BentoGridDemo() {
                       className="rounded-full aspect-square"
                       width={40}
                       height={40}
+                      loading="lazy"
+                      priority={false}
                     />
                     <span className="text-base font-semibold ">
                       {userName.gfgUsername}
