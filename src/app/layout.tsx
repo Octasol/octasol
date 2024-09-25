@@ -10,6 +10,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "@/components/Loader";
+import { websiteMetadata } from "@/utils/data";
 interface Props {
   session: Session | null;
   children: React.ReactNode;
@@ -18,9 +19,31 @@ interface Props {
 const poppins = Poppins({ weight: ["200", "400"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Octasol",
-  icons: "/octasolLogo.jpg",
-  description: "Green Commits",
+  title: websiteMetadata.title,
+  icons: websiteMetadata.icons,
+  description: websiteMetadata.description,
+  // openGraph: {
+  //   type: "website",
+  //   url: websiteMetadata.url,
+  //   title: websiteMetadata.title,
+  //   description: websiteMetadata.description,
+  //   images: [
+  //     {
+  //       url: websiteMetadata.ogImage,
+  //       width: 1200,
+  //       height: 630,
+  //       alt: websiteMetadata.title,
+  //     },
+  //   ],
+  // },
+  // twitter: {
+  //   creator: "@theoctasol",
+  //   site: "@theoctasol",
+  //   card: "summary_large_image",
+  //   title: websiteMetadata.title,
+  //   description: websiteMetadata.description,
+  //   images: [{ url: websiteMetadata.ogImage, alt: websiteMetadata.title }],
+  // },
 };
 
 export default function RootLayout({ children, session }: Props) {
