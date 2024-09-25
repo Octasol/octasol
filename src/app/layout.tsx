@@ -44,6 +44,7 @@ export const metadata: Metadata = {
     description: websiteMetadata.description,
     images: [{ url: websiteMetadata.ogImage, alt: websiteMetadata.title }],
   },
+  metadataBase: new URL(websiteMetadata.url),
 };
 
 export default function RootLayout({ children, session }: Props) {
