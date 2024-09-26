@@ -17,6 +17,38 @@ import CopyLinkButton from "@/components/Button/CopyLinkButton";
 import { connectProvider } from "@/config/axios/Breakpoints";
 import { cn } from "@/lib/utils";
 
+const itemImages = {
+  Github: ["/images/github1.png", "/images/github2.png", "/images/github3.png"],
+  SuperteamEarn: ["/images/superteam1.png", "/images/superteam2.png"],
+  Leetcode: ["/leetcode.webp", "/leetcode.webp", "/leetcode.webp"],
+  Hackerrank: [
+    "/images/hackerrank1.png",
+    "/images/hackerrank2.png",
+    "/images/hackerrank3.png",
+  ],
+  Codechef: ["/images/codechef1.png", "/images/codechef2.png"],
+  Geeksforgeeks: ["/images/geeksforgeeks1.png", "/images/geeksforgeeks2.png"],
+  Codeforces: ["/images/codeforces1.png", "/images/codeforces2.png"],
+  Gitlab: [
+    "/leetcode.webp",
+    "/leetcode.webp",
+    "/leetcode.webp",
+    "/leetcode.webp",
+    "/leetcode.webp",
+    "/leetcode.webp",
+  ],
+};
+
+type ItemTitle =
+  | "Github"
+  | "SuperteamEarn"
+  | "Leetcode"
+  | "Hackerrank"
+  | "Codechef"
+  | "Geeksforgeeks"
+  | "Codeforces"
+  | "Gitlab";
+
 export default function Connect() {
   const user = useSelector((state: any) => state.user);
 
@@ -35,8 +67,12 @@ export default function Connect() {
   const [qrCodeData, setQrCodeData] = useState<string>("");
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
-  const [activeItemTitle, setActiveItemTitle] = useState<string | null>(null);
+  const [activeItemTitle, setActiveItemTitle] = useState<ItemTitle | null>(
+    null
+  );
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [secondModalOpen, setSecondModalOpen] = useState(false);
+  const [activeItemImages, setActiveItemImages] = useState<string[]>([]);
   const availableProviders = [
     "Github",
     "SuperteamEarn",
@@ -62,7 +98,7 @@ export default function Connect() {
     }
   }, [user]);
 
-  const handleConnect = async (type: any) => {
+  const handleConnect = async (type: ItemTitle) => {
     try {
       const data = type;
       setQrCodeData("");
@@ -95,7 +131,6 @@ export default function Connect() {
       }
     } catch (error) {
       setErrorMessage("An unexpected error occurred. Please try again.");
-
       setModalOpen(true);
     }
   };
@@ -103,6 +138,24 @@ export default function Connect() {
   const handleModalClose = () => {
     setModalOpen(false);
     fetchUserData();
+  };
+
+  const handleSecondModalOpen = (itemTitle: ItemTitle) => {
+    console.log("Opening second modal for", itemTitle);
+    console.log(itemImages[itemTitle]);
+
+    if (itemImages[itemTitle]) {
+      console.log("Setting active item images for", itemTitle);
+
+      setActiveItemImages(itemImages[itemTitle]);
+    }
+    setModalOpen(false);
+    setSecondModalOpen(true);
+  };
+
+  const handleSecondModalClose = () => {
+    setSecondModalOpen(false);
+    setModalOpen(true);
   };
 
   return (
@@ -154,7 +207,7 @@ export default function Connect() {
                         <div
                           onClick={() =>
                             availableProviders.includes(item.title)
-                              ? handleConnect(item.title)
+                              ? handleConnect(item.title as ItemTitle)
                               : null
                           }
                           className={cn(
@@ -204,6 +257,16 @@ export default function Connect() {
                             </div>
                           </DialogFooter>
                         )}
+                        <div className="flex justify-center mt-4">
+                          <button
+                            onClick={() =>
+                              handleSecondModalOpen(item.title as ItemTitle)
+                            }
+                            className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                          >
+                            Open Another Modal
+                          </button>
+                        </div>
                       </DialogContent>
                       <DialogClose onClick={handleModalClose} />
                     </Dialog>
@@ -217,6 +280,33 @@ export default function Connect() {
           );
         })}
       </div>
+
+      <Dialog open={secondModalOpen} onOpenChange={handleSecondModalClose}>
+        <DialogContent className="sm:max-w-[900px] ">
+          <DialogHeader>
+            <DialogTitle>{activeItemTitle} Images</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-wrap gap-4 items-center">
+            {activeItemImages.length > 0 ? (
+              activeItemImages.map((image, index) => (
+                <Image
+                  key={index}
+                  src={image}
+                  alt={`${activeItemTitle} image ${index + 1}`}
+                  height={200}
+                  width={200}
+                  className="rounded-lg mb-2"
+                />
+              ))
+            ) : (
+              <p>No images available for {activeItemTitle}</p>
+            )}
+          </div>
+          <DialogFooter>
+            <DialogClose onClick={handleSecondModalClose}>Close</DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
