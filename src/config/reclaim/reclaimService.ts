@@ -17,7 +17,7 @@ export async function signWithProviderID(
   const reclaimClient = new Reclaim.ProofRequest(reclaimAppID);
   await reclaimClient.buildProofRequest(providerId, true, "V2Linking");
 
-  await reclaimClient.setRedirectUrl("https://www.reclaimprotocol.org");
+  await reclaimClient.setRedirectUrl("https://octasol.io/connect");
 
   reclaimClient.setSignature(
     await reclaimClient.generateSignature(reclaimAppSecret)
