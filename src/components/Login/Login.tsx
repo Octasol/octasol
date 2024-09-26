@@ -174,7 +174,7 @@ const Login = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-black text-white border-2  border-t-green-500/20 border-b-indigo-500/20 border-r-green-500/40 border-l-indigo-500/40 flex flex-col gap-2">
               <DropdownMenuLabel className="cursor-pointer flex md:hidden">
-                <Link href="/dashboard">
+                <Link prefetch href="/dashboard">
                   <div className="flex items-center gap-4 justify-between w-full">
                     <span>Dashboard</span>
                     <Home size={20} />
@@ -183,7 +183,7 @@ const Login = () => {
               </DropdownMenuLabel>
 
               <DropdownMenuLabel className="cursor-pointer flex md:hidden">
-                <Link href="/repoinitialize">
+                <Link prefetch href="/repoinitialize">
                   <div className="flex items-center gap-4 justify-between w-full">
                     <span>Repo Initialize</span>
                     <CopyPlus size={20} />
@@ -192,7 +192,7 @@ const Login = () => {
               </DropdownMenuLabel>
 
               <DropdownMenuLabel className="cursor-pointer flex md:hidden">
-                <Link href="/connect">
+                <Link prefetch href="/connect">
                   <div className="flex items-center gap-4 justify-between w-full">
                     <span>Connect</span>
                     <Blocks size={20} />
@@ -201,7 +201,7 @@ const Login = () => {
               </DropdownMenuLabel>
 
               <DropdownMenuLabel className="cursor-pointer flex md:hidden">
-                <Link href="/leaderboard">
+                <Link prefetch href="/leaderboard">
                   <div className="flex items-center gap-4 justify-between w-full">
                     <span>Leaderboard</span>
                     <IconChartHistogram size={20} />
@@ -210,7 +210,7 @@ const Login = () => {
               </DropdownMenuLabel>
 
               <DropdownMenuLabel className="cursor-pointer flex flex-col">
-                <Link href={`/p/${user?.login}`}>
+                <Link prefetch href={`/p/${user?.login}`}>
                   <div className="relative flex md:hidden">
                     <BottomGradient />
                   </div>
