@@ -26,6 +26,7 @@ import LoginButton from "../Button/LoginButton";
 import { POST } from "@/config/axios/requests";
 import { IconChartHistogram } from "@tabler/icons-react";
 import { githubDevProfile } from "@/config/axios/Breakpoints";
+import { store } from "@/app/Redux/store";
 import { increment } from "@/app/Redux/Features/loader/loaderSlice";
 
 const Login = () => {
@@ -34,6 +35,7 @@ const Login = () => {
   const pathname = usePathname();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
+  const error = useSelector((state: any) => state.error);
   const counter = useSelector((state: any) => state.counter);
   const [hasPosted, setHasPosted] = useState(false);
 
@@ -43,7 +45,34 @@ const Login = () => {
     image?: string | null;
     login?: string | null;
     id?: string | null;
+    node_id?: string | null;
     avatar_url?: string | null;
+    gravatar_id?: string | null;
+    url?: string | null;
+    html_url?: string | null;
+    followers_url?: string | null;
+    following_url?: string | null;
+    gists_url?: string | null;
+    starred_url?: string | null;
+    subscriptions_url?: string | null;
+    organizations_url?: string | null;
+    repos_url?: string | null;
+    events_url?: string | null;
+    received_events_url?: string | null;
+    type?: string | null;
+    site_admin?: boolean | null;
+    company?: string | null;
+    blog?: string | null;
+    location?: string | null;
+    hireable?: boolean | null;
+    bio?: string | null;
+    twitter_username?: string | null;
+    public_repos?: number | null;
+    public_gists?: number | null;
+    followers?: number | null;
+    following?: number | null;
+    created_at?: string | null;
+    updated_at?: string | null;
   }
 
   useEffect(() => {
@@ -94,7 +123,7 @@ const Login = () => {
   }, [session, user, pathname]);
 
   const logout = () => {
-    dispatch(increment());
+    store.dispatch(increment());
     signOut();
     dispatch(
       setUser({
@@ -108,6 +137,9 @@ const Login = () => {
     );
     router.push("/");
   };
+  // useEffect(() => {
+  //   console.log(counter);
+  // }, [counter]);
 
   const userLogin = () => {
     dispatch(increment());
