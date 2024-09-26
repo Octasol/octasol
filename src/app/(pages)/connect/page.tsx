@@ -39,16 +39,6 @@ const itemImages = {
   ],
 };
 
-type ItemTitle =
-  | "Github"
-  | "SuperteamEarn"
-  | "Leetcode"
-  | "Hackerrank"
-  | "Codechef"
-  | "Geeksforgeeks"
-  | "Codeforces"
-  | "Gitlab";
-
 export default function Connect() {
   const user = useSelector((state: any) => state.user);
 
@@ -64,15 +54,18 @@ export default function Connect() {
     gitlabUsername: "",
   });
 
+  type ItemImagesKeys = keyof typeof itemImages;
+
   const [qrCodeData, setQrCodeData] = useState<string>("");
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
-  const [activeItemTitle, setActiveItemTitle] = useState<ItemTitle | null>(
+  const [activeItemTitle, setActiveItemTitle] = useState<ItemImagesKeys | null>(
     null
   );
+
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [secondModalOpen, setSecondModalOpen] = useState(false);
-  const [activeItemImages, setActiveItemImages] = useState<string[]>([]);
+
   const availableProviders = [
     "Github",
     "SuperteamEarn",
@@ -98,7 +91,7 @@ export default function Connect() {
     }
   }, [user]);
 
-  const handleConnect = async (type: ItemTitle) => {
+  const handleConnect = async (type: ItemImagesKeys) => {
     try {
       const data = type;
       setQrCodeData("");
@@ -140,17 +133,11 @@ export default function Connect() {
     fetchUserData();
   };
 
-  const handleSecondModalOpen = (itemTitle: ItemTitle) => {
-    console.log("Opening second modal for", itemTitle);
-    console.log(itemImages[itemTitle]);
-
-    if (itemImages[itemTitle]) {
-      console.log("Setting active item images for", itemTitle);
-
-      setActiveItemImages(itemImages[itemTitle]);
-    }
+  const handleSecondModalOpen = (item: any) => {
+    console.log(item);
     setModalOpen(false);
     setSecondModalOpen(true);
+    setActiveItemTitle(item);
   };
 
   const handleSecondModalClose = () => {
@@ -206,9 +193,7 @@ export default function Connect() {
                       <DialogTrigger asChild>
                         <div
                           onClick={() =>
-                            availableProviders.includes(item.title)
-                              ? handleConnect(item.title as ItemTitle)
-                              : null
+                            handleConnect(item.title as ItemImagesKeys)
                           }
                           className={cn(
                             "bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block",
@@ -260,7 +245,7 @@ export default function Connect() {
                         <div className="flex justify-center mt-4">
                           <button
                             onClick={() =>
-                              handleSecondModalOpen(item.title as ItemTitle)
+                              handleSecondModalOpen(activeItemTitle)
                             }
                             className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
                           >
@@ -287,8 +272,8 @@ export default function Connect() {
             <DialogTitle>{activeItemTitle} Images</DialogTitle>
           </DialogHeader>
           <div className="flex flex-wrap gap-4 items-center">
-            {activeItemImages.length > 0 ? (
-              activeItemImages.map((image, index) => (
+            {activeItemTitle && itemImages[activeItemTitle] ? (
+              itemImages[activeItemTitle].map((image, index) => (
                 <Image
                   key={index}
                   src={image}
@@ -299,7 +284,7 @@ export default function Connect() {
                 />
               ))
             ) : (
-              <p>No images available for {activeItemTitle}</p>
+              <p>No images available for this provider.</p> // Optional: Fallback message
             )}
           </div>
           <DialogFooter>
