@@ -20,7 +20,15 @@ import { cn } from "@/lib/utils";
 const itemImages = {
   Github: ["/images/github1.png", "/images/github2.png", "/images/github3.png"],
   SuperteamEarn: ["/images/superteam1.png", "/images/superteam2.png"],
-  Leetcode: ["/leetcode.webp", "/leetcode.webp", "/leetcode.webp"],
+  Leetcode: [
+    "/assets/leetcodeConnect/instruction1.jpg",
+    "/assets/leetcodeConnect/instruction2.jpg",
+    "/assets/leetcodeConnect/instruction3.jpg",
+    "/assets/leetcodeConnect/instruction4.jpg",
+    "/assets/leetcodeConnect/instruction5.jpg",
+    "/assets/leetcodeConnect/instruction6.jpg",
+    "/assets/leetcodeConnect/instruction7.jpg",
+  ],
   Hackerrank: [
     "/images/hackerrank1.png",
     "/images/hackerrank2.png",
@@ -29,14 +37,7 @@ const itemImages = {
   Codechef: ["/images/codechef1.png", "/images/codechef2.png"],
   Geeksforgeeks: ["/images/geeksforgeeks1.png", "/images/geeksforgeeks2.png"],
   Codeforces: ["/images/codeforces1.png", "/images/codeforces2.png"],
-  Gitlab: [
-    "/leetcode.webp",
-    "/leetcode.webp",
-    "/leetcode.webp",
-    "/leetcode.webp",
-    "/leetcode.webp",
-    "/leetcode.webp",
-  ],
+  Gitlab: [""],
 };
 
 export default function Connect() {
@@ -242,14 +243,14 @@ export default function Connect() {
                             </div>
                           </DialogFooter>
                         )}
-                        <div className="flex justify-center mt-4">
+                        <div className="flex justify-center mt-2">
                           <button
                             onClick={() =>
                               handleSecondModalOpen(activeItemTitle)
                             }
-                            className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                            className="text-gray-400 italic cursor-help"
                           >
-                            Open Another Modal
+                            How to connect?
                           </button>
                         </div>
                       </DialogContent>
@@ -267,11 +268,11 @@ export default function Connect() {
       </div>
 
       <Dialog open={secondModalOpen} onOpenChange={handleSecondModalClose}>
-        <DialogContent className="sm:max-w-[900px] ">
+        <DialogContent className="sm:max-w-[900px] max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{activeItemTitle} Images</DialogTitle>
+            <DialogTitle>Steps to connect with {activeItemTitle}</DialogTitle>
           </DialogHeader>
-          <div className="flex flex-wrap gap-4 items-center">
+          <div className="flex flex-wrap justify-center gap-4 items-center">
             {activeItemTitle && itemImages[activeItemTitle] ? (
               itemImages[activeItemTitle].map((image, index) => (
                 <Image
