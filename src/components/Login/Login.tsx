@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
+import Link from "next/link";
 import { setUser } from "@/app/Redux/Features/user/userSlice";
 import {
   DropdownMenu,
@@ -25,7 +26,6 @@ import LoginButton from "../Button/LoginButton";
 import { POST } from "@/config/axios/requests";
 import { IconChartHistogram } from "@tabler/icons-react";
 import { githubDevProfile } from "@/config/axios/Breakpoints";
-import { store } from "@/app/Redux/store";
 import { increment } from "@/app/Redux/Features/loader/loaderSlice";
 
 const Login = () => {
@@ -35,7 +35,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
   const counter = useSelector((state: any) => state.counter);
-  const error = useSelector((state: any) => state.error);
   const [hasPosted, setHasPosted] = useState(false);
 
   interface SessionUser {
@@ -44,35 +43,9 @@ const Login = () => {
     image?: string | null;
     login?: string | null;
     id?: string | null;
-    node_id?: string | null;
     avatar_url?: string | null;
-    gravatar_id?: string | null;
-    url?: string | null;
-    html_url?: string | null;
-    followers_url?: string | null;
-    following_url?: string | null;
-    gists_url?: string | null;
-    starred_url?: string | null;
-    subscriptions_url?: string | null;
-    organizations_url?: string | null;
-    repos_url?: string | null;
-    events_url?: string | null;
-    received_events_url?: string | null;
-    type?: string | null;
-    site_admin?: boolean | null;
-    company?: string | null;
-    blog?: string | null;
-    location?: string | null;
-    hireable?: boolean | null;
-    bio?: string | null;
-    twitter_username?: string | null;
-    public_repos?: number | null;
-    public_gists?: number | null;
-    followers?: number | null;
-    following?: number | null;
-    created_at?: string | null;
-    updated_at?: string | null;
   }
+
   useEffect(() => {
     if (session && !hasPosted) {
       const runPostRequest = async () => {
@@ -85,7 +58,6 @@ const Login = () => {
             }
           );
           setHasPosted(true);
-          // store.dispatch(decrement());
         } catch (err) {
           console.error("Failed to run POST request:", err);
         }
@@ -122,7 +94,7 @@ const Login = () => {
   }, [session, user, pathname]);
 
   const logout = () => {
-    store.dispatch(increment());
+    dispatch(increment());
     signOut();
     dispatch(
       setUser({
@@ -137,17 +109,9 @@ const Login = () => {
     router.push("/");
   };
 
-  useEffect(() => {
-    console.log(counter);
-  }, [counter]);
-
-  const handleProfile = (user: string) => {
-    router.replace(`/p/${user}`);
-  };
-
   const userLogin = () => {
+    dispatch(increment());
     signIn("github");
-    store.dispatch(increment());
   };
 
   return (
@@ -177,63 +141,64 @@ const Login = () => {
               </LoginButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-black text-white border-2  border-t-green-500/20 border-b-indigo-500/20 border-r-green-500/40 border-l-indigo-500/40 flex flex-col gap-2">
-              <DropdownMenuLabel
-                className="cursor-pointer  flex md:hidden"
-                onClick={() => router.push("/dashboard")}
-              >
-                <div className="flex items-center gap-4 justify-between w-full">
-                  <span>Dashboard</span>
-                  <Home size={20} />
-                </div>
-              </DropdownMenuLabel>
-              <DropdownMenuLabel
-                className="cursor-pointer  flex md:hidden"
-                onClick={() => router.push("/repoinitialize")}
-              >
-                <div className="flex items-center gap-4 justify-between w-full">
-                  <span>Repo Initialize</span>
-                  <CopyPlus size={20} />
-                </div>
-              </DropdownMenuLabel>
-              <DropdownMenuLabel
-                className="cursor-pointer  flex md:hidden"
-                onClick={() => router.push("/connect")}
-              >
-                <div className="flex items-center gap-4 justify-between w-full">
-                  <span>Connect</span>
-                  <Blocks size={20} />
-                </div>
-              </DropdownMenuLabel>
-              <DropdownMenuLabel
-                className="cursor-pointer  flex md:hidden"
-                onClick={() => router.push("/leaderboard")}
-              >
-                <div className="flex items-center gap-4 justify-between w-full">
-                  <span>Leaderboard</span>
-                  <IconChartHistogram size={20} />
-                </div>
+              <DropdownMenuLabel className="cursor-pointer flex md:hidden">
+                <Link href="/dashboard">
+                  <div className="flex items-center gap-4 justify-between w-full">
+                    <span>Dashboard</span>
+                    <Home size={20} />
+                  </div>
+                </Link>
               </DropdownMenuLabel>
 
-              <DropdownMenuLabel
-                onClick={() => handleProfile(user?.login)}
-                className="cursor-pointer  flex  flex-col"
-              >
-                <div className="relative flex md:hidden">
-                  <BottomGradient />
-                </div>
-                <div className="flex items-center gap-4 justify-between w-full pt-3 md:pt-0 ">
-                  <span>Profile</span>
-                  <SquareUser size={20} />
-                </div>
+              <DropdownMenuLabel className="cursor-pointer flex md:hidden">
+                <Link href="/repoinitialize">
+                  <div className="flex items-center gap-4 justify-between w-full">
+                    <span>Repo Initialize</span>
+                    <CopyPlus size={20} />
+                  </div>
+                </Link>
               </DropdownMenuLabel>
-              <DropdownMenuLabel
-                onClick={logout}
-                className="cursor-pointer  flex  flex-col"
-              >
-                <div className="flex items-center gap-4 justify-between w-full  ">
+
+              <DropdownMenuLabel className="cursor-pointer flex md:hidden">
+                <Link href="/connect">
+                  <div className="flex items-center gap-4 justify-between w-full">
+                    <span>Connect</span>
+                    <Blocks size={20} />
+                  </div>
+                </Link>
+              </DropdownMenuLabel>
+
+              <DropdownMenuLabel className="cursor-pointer flex md:hidden">
+                <Link href="/leaderboard">
+                  <div className="flex items-center gap-4 justify-between w-full">
+                    <span>Leaderboard</span>
+                    <IconChartHistogram size={20} />
+                  </div>
+                </Link>
+              </DropdownMenuLabel>
+
+              <DropdownMenuLabel className="cursor-pointer flex flex-col">
+                <Link href={`/p/${user?.login}`}>
+                  <div className="relative flex md:hidden">
+                    <BottomGradient />
+                  </div>
+                  <div className="flex items-center gap-4 justify-between w-full pt-3 md:pt-0">
+                    <span>Profile</span>
+                    <SquareUser size={20} />
+                  </div>
+                </Link>
+              </DropdownMenuLabel>
+
+              <DropdownMenuLabel className="cursor-pointer flex flex-col">
+                <button
+                  onClick={() => {
+                    logout();
+                  }}
+                  className="flex items-center gap-4 justify-between w-full"
+                >
                   <span>Sign Out</span>
                   <LogOut size={20} />
-                </div>
+                </button>
               </DropdownMenuLabel>
             </DropdownMenuContent>
           </DropdownMenu>
