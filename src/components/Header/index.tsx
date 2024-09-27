@@ -16,8 +16,9 @@ const Header = (props: Props) => {
               alt="logo"
               width={80}
               height={80}
-              loading="lazy"
-              priority={false}
+              placeholder="blur"
+              blurDataURL="data:image/png;base64,..."
+              priority={true}
             />
           </Link>
           <span className="text-sm font-bold tracking-widest">Beta</span>
