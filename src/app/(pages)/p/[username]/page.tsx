@@ -133,6 +133,7 @@ export default function BentoGridDemo() {
                         width={40}
                         height={40}
                         priority={false}
+                        loading="lazy"
                         placeholder="blur"
                         blurDataURL="data:image/png;base64,..."
                       />
@@ -165,6 +166,7 @@ export default function BentoGridDemo() {
                         width={40}
                         height={40}
                         priority={false}
+                        loading="lazy"
                         placeholder="blur"
                         blurDataURL="data:image/png;base64,..."
                       />
@@ -198,6 +200,7 @@ export default function BentoGridDemo() {
                         width={40}
                         height={40}
                         priority={false}
+                        loading="lazy"
                         placeholder="blur"
                         blurDataURL="data:image/png;base64,..."
                       />
@@ -246,6 +249,7 @@ export default function BentoGridDemo() {
                         width={40}
                         height={40}
                         priority={false}
+                        loading="lazy"
                         placeholder="blur"
                         blurDataURL="data:image/png;base64,..."
                       />
@@ -278,6 +282,7 @@ export default function BentoGridDemo() {
                         width={40}
                         height={40}
                         priority={false}
+                        loading="lazy"
                         placeholder="blur"
                         blurDataURL="data:image/png;base64,..."
                       />
@@ -311,6 +316,7 @@ export default function BentoGridDemo() {
                         width={40}
                         height={40}
                         priority={false}
+                        loading="lazy"
                         placeholder="blur"
                         blurDataURL="data:image/png;base64,..."
                       />

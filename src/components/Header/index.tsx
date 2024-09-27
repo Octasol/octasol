@@ -19,6 +19,7 @@ const Header = (props: Props) => {
               placeholder="blur"
               blurDataURL="data:image/png;base64,..."
               priority={false}
+              loading="lazy"
             />
           </Link>
           <span className="text-sm font-bold tracking-widest">Beta</span>

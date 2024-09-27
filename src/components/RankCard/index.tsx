@@ -32,6 +32,7 @@ const RankCard = (props: Props) => {
                   height={100}
                   className="rounded-full"
                   priority={false}
+                  loading="lazy"
                   placeholder="blur"
                   blurDataURL="data:image/png;base64,..."
                 />

@@ -7,6 +7,7 @@ export const items = [
       <>
         <Image
           priority={false}
+          loading="lazy"
           placeholder="blur"
           blurDataURL="data:image/png;base64,..."
           src="/github.webp"
@@ -25,6 +26,7 @@ export const items = [
       <>
         <Image
           priority={false}
+          loading="lazy"
           placeholder="blur"
           blurDataURL="data:image/png;base64,..."
           src="/superteam.jpeg"
@@ -44,6 +46,7 @@ export const items = [
       <>
         <Image
           priority={false}
+          loading="lazy"
           placeholder="blur"
           blurDataURL="data:image/png;base64,..."
           src="/leetcode.webp"
@@ -62,6 +65,7 @@ export const items = [
       <>
         <Image
           priority={false}
+          loading="lazy"
           placeholder="blur"
           blurDataURL="data:image/png;base64,..."
           src="/gfg.png"
@@ -80,6 +84,7 @@ export const items = [
       <>
         <Image
           priority={false}
+          loading="lazy"
           placeholder="blur"
           blurDataURL="data:image/png;base64,..."
           src="/hackerrank.webp"
@@ -98,6 +103,7 @@ export const items = [
       <>
         <Image
           priority={false}
+          loading="lazy"
           placeholder="blur"
           blurDataURL="data:image/png;base64,..."
           src="/codechef.png"
@@ -116,6 +122,7 @@ export const items = [
       <>
         <Image
           priority={false}
+          loading="lazy"
           placeholder="blur"
           blurDataURL="data:image/png;base64,..."
           src="/codeforces.jpeg"
@@ -133,6 +140,7 @@ export const items = [
     header: (
       <Image
         priority={false}
+        loading="lazy"
         placeholder="blur"
         blurDataURL="data:image/png;base64,..."
         src="/gitlab.png"
