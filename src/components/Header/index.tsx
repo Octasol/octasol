@@ -1,16 +1,30 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Login from "../Login/Login";
+import { Skeleton } from "../ui/skeleton";
 
 type Props = {};
 
 const Header = (props: Props) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    console.log(isLoading);
+  }, [isLoading]);
+
   return (
     <>
       <nav className="text-white fixed top-0 right-0 left-0 w-full h-20 flex justify-between items-center md:px-20 px-2 py-6 bg-black z-50 ">
         <div className="flex justify-center items-center">
           <Link href="/" passHref>
+            {isLoading && (
+              <div className="flex items-center space-x-4">
+                <Skeleton className="h-5 w-5 rounded-full" />
+              </div>
+            )}
+
             <Image
               src="/octasolLandingLogo.png"
               alt="logo"
@@ -19,6 +33,7 @@ const Header = (props: Props) => {
               placeholder="blur"
               blurDataURL="data:image/png;base64,..."
               priority={true}
+              onLoadingComplete={() => setIsLoading(false)}
             />
           </Link>
           <span className="text-sm font-bold tracking-widest">Beta</span>
