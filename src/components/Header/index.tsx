@@ -32,7 +32,7 @@ const Header = (props: Props) => {
               height={80}
               placeholder="blur"
               blurDataURL="data:image/png;base64,..."
-              priority={true}
+              priority={false}
               onLoadingComplete={() => setIsLoading(false)}
             />
           </Link>

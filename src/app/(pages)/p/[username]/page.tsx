@@ -132,7 +132,7 @@ export default function BentoGridDemo() {
                         className="invert"
                         width={40}
                         height={40}
-                        priority
+                        priority={false}
                         placeholder="blur"
                         blurDataURL="data:image/png;base64,..."
                       />
@@ -164,7 +164,7 @@ export default function BentoGridDemo() {
                         className="rounded-full"
                         width={40}
                         height={40}
-                        priority
+                        priority={false}
                         placeholder="blur"
                         blurDataURL="data:image/png;base64,..."
                       />
@@ -197,7 +197,7 @@ export default function BentoGridDemo() {
                         className="rounded-full"
                         width={40}
                         height={40}
-                        priority
+                        priority={false}
                         placeholder="blur"
                         blurDataURL="data:image/png;base64,..."
                       />
@@ -245,7 +245,7 @@ export default function BentoGridDemo() {
                         className="rounded-full"
                         width={40}
                         height={40}
-                        priority
+                        priority={false}
                         placeholder="blur"
                         blurDataURL="data:image/png;base64,..."
                       />
@@ -277,7 +277,7 @@ export default function BentoGridDemo() {
                         className="rounded-full aspect-square"
                         width={40}
                         height={40}
-                        priority
+                        priority={false}
                         placeholder="blur"
                         blurDataURL="data:image/png;base64,..."
                       />
@@ -310,7 +310,7 @@ export default function BentoGridDemo() {
                         className="rounded-full aspect-square"
                         width={40}
                         height={40}
-                        priority
+                        priority={false}
                         placeholder="blur"
                         blurDataURL="data:image/png;base64,..."
                       />
