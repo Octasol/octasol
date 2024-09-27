@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate && next-sitemap"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -39,6 +39,7 @@
     "lucide-react": "^0.396.0",
     "next": "14.2.4",
     "next-auth": "^4.24.7",
+    "next-sitemap": "^4.2.3",
     "next-themes": "^0.3.0",
     "nodemailer": "^6.9.14",
     "pusher": "^5.2.0",
