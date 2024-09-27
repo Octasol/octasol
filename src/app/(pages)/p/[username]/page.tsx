@@ -30,7 +30,7 @@ const RadialChart = dynamic(
   }
 );
 
-interface radarObject {
+interface RadarObject {
   githubUsername?: string;
   githubPoints?: number;
   hackerrankPoints?: number;
@@ -58,7 +58,7 @@ export default function BentoGridDemo() {
   const [gfgData, setGfgData] = useState<DataObject>({});
   const [leetcodeData, setLeetcodeData] = useState<DataObject>({});
   const [superteamData, setSuperteamData] = useState<DataObject>({});
-  const [radarData, setRadarData] = useState<radarObject | null>(null);
+  const [radarData, setRadarData] = useState<RadarObject | null>(null);
   const [isRadarLoading, setIsRadarLoading] = useState<boolean>(true);
   const [isUserLoading, setIsUserLoading] = useState<boolean>(true);
 
