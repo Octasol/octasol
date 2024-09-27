@@ -12,28 +12,13 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-
-interface RadarObject {
-  githubUsername?: string;
-  githubPoints?: number;
-  hackerrankPoints?: number;
-  gfgPoints?: number;
-  codechefPoints?: number;
-  leetcodePoints?: number;
-  superteamEarnPoints?: number;
-}
+import { RadarObject } from "@/lib/types";
 
 interface Props {
   stats: RadarObject;

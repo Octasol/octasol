@@ -51,6 +51,10 @@ const Layout = ({ children }: Props) => {
               <Image
                 src={"/verifyEmail.png"}
                 alt="verify "
+                priority={false}
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,..."
                 width={250}
                 height={250}
                 className="w-9/12 md:w-10/12 lg:w-full"
@@ -107,6 +111,10 @@ const Layout = ({ children }: Props) => {
               <Image
                 src={"/octasolLandingLogo.png"}
                 alt="octologo"
+                priority={false}
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,..."
                 width={250}
                 height={250}
               />

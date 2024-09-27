@@ -31,6 +31,10 @@ const RankCard = (props: Props) => {
                   width={100}
                   height={100}
                   className="rounded-full"
+                  priority={false}
+                  loading="lazy"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,..."
                 />
               </div>
               <div className="text-center text-lg mt-2 flex flex-col">
