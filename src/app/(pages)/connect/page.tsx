@@ -18,8 +18,17 @@ import { connectProvider } from "@/config/axios/Breakpoints";
 import { cn } from "@/lib/utils";
 
 const itemImages = {
-  Github: ["/images/github1.png", "/images/github2.png", "/images/github3.png"],
-  SuperteamEarn: ["/images/superteam1.png", "/images/superteam2.png"],
+  SuperteamEarn: [
+    "/assets/superteamEarnConnect/instruction1.jpg",
+    "/assets/superteamEarnConnect/instruction2.jpg",
+    "/assets/superteamEarnConnect/instruction3.jpg",
+    "/assets/superteamEarnConnect/instruction4.jpg",
+    "/assets/superteamEarnConnect/instruction5.jpg",
+    "/assets/superteamEarnConnect/instruction6.jpg",
+    "/assets/superteamEarnConnect/instruction7.jpg",
+    "/assets/superteamEarnConnect/instruction8.jpg",
+    "/assets/superteamEarnConnect/instruction9.jpg",
+  ],
   Leetcode: [
     "/assets/leetcodeConnect/instruction1.jpg",
     "/assets/leetcodeConnect/instruction2.jpg",
@@ -30,14 +39,22 @@ const itemImages = {
     "/assets/leetcodeConnect/instruction7.jpg",
   ],
   Hackerrank: [
-    "/images/hackerrank1.png",
-    "/images/hackerrank2.png",
-    "/images/hackerrank3.png",
+    "/assets/hackerrankConnect/instruction1.jpg",
+    "/assets/hackerrankConnect/instruction2.jpg",
+    "/assets/hackerrankConnect/instruction3.jpg",
+    "/assets/hackerrankConnect/instruction4.jpg",
+    "/assets/hackerrankConnect/instruction5.jpg",
+    "/assets/hackerrankConnect/instruction6.jpg",
   ],
   Codechef: ["/images/codechef1.png", "/images/codechef2.png"],
-  Geeksforgeeks: ["/images/geeksforgeeks1.png", "/images/geeksforgeeks2.png"],
-  Codeforces: ["/images/codeforces1.png", "/images/codeforces2.png"],
-  Gitlab: [""],
+  Geeksforgeeks: [
+    "/assets/geeksForGeeksConnect/instruction1.jpg",
+    "/assets/geeksForGeeksConnect/instruction2.jpg",
+    "/assets/geeksForGeeksConnect/instruction3.jpg",
+    "/assets/geeksForGeeksConnect/instruction4.jpg",
+    "/assets/geeksForGeeksConnect/instruction5.jpg",
+    "/assets/geeksForGeeksConnect/instruction6.jpg",
+  ],
 };
 
 export default function Connect() {
@@ -285,7 +302,7 @@ export default function Connect() {
                 />
               ))
             ) : (
-              <p>No images available for this provider.</p> // Optional: Fallback message
+              <p>No images available for this provider.</p>
             )}
           </div>
           <DialogFooter>
