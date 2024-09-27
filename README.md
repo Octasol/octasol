@@ -1,6 +1,6 @@
 # 🌟 Octasol
 
-Octasol is a cutting-edge, open-source bounty platform reimagining how open-source projects are managed on GitHub. It connects maintainers with skilled contributors worldwide, making collaboration more efficient and rewarding.
+[Octasol](https://octasol.io/) is a cutting-edge, open-source bounty platform reimagining how open-source projects are managed on GitHub. It connects maintainers with skilled contributors worldwide, making collaboration more efficient and rewarding.
 
 At the heart of Octasol is a **trustless bounty system** that enables maintainers to escrow funds for resolving GitHub issues, rewarding contributors securely and transparently. In addition to the bounty system, we have integrated a **Dev ID platform**, where developers can showcase their proof of work by connecting various coding profiles like GitHub, LeetCode, HackerRank, and more.
 
@@ -41,7 +41,7 @@ This unified profile serves as **proof of work**, which can be shared with maint
 - **Blockchain**: Solana
 - **Smart Contract**: Rust (Anchor)
 - **Additional Tools**: Shadcn, Acertinity UI
-- **Database**: Prisma + PostgreSQL 
+- **Database**: Prisma + PostgreSQL
 
 ## ✨ Features
 
