@@ -38,6 +38,9 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+  session: {
+    maxAge: 10 * 24 * 60 * 60,
+  },
 };
 
 async function getEmail(authToken: string) {
