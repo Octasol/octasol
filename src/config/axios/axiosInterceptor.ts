@@ -9,6 +9,7 @@ import axios, {
 } from "axios";
 
 export const url = "/api/";
+const counter = store.getState().counter.value;
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: url,

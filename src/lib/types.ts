@@ -72,3 +72,13 @@ export interface DataObject {
   totalWinnings?: number;
   wins?: number;
 }
+
+export interface RadarObject {
+  githubUsername?: string;
+  githubPoints?: number;
+  hackerrankPoints?: number;
+  gfgPoints?: number;
+  codechefPoints?: number;
+  leetcodePoints?: number;
+  superteamEarnPoints?: number;
+}

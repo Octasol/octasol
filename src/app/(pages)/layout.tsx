@@ -2,7 +2,7 @@
 import Sidebar from "@/components/Sidebar";
 import VerifyMail from "@/components/verifyMail";
 import { GET } from "@/config/axios/requests";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { signOut } from "next-auth/react";
 import { store } from "../Redux/store";
@@ -15,27 +15,29 @@ const Layout = ({ children }: Props) => {
   const session = useSelector((state: any) => state.user);
   const [verifiedEmail, setVerifiedEmail] = useState(false);
 
-  const verified = async () => {
-    if (session && session.accessToken) {
-      try {
-        const response = await GET("/user", {
-          Authorization: `Bearer ${session.accessToken as string}`,
-        });
-        setVerifiedEmail(response?.verifiedEmail);
-      } catch (err) {
-        signOut();
-        setVerifiedEmail(false);
-      } finally {
-        store.dispatch(decrement());
-      }
-    } else {
-      setVerifiedEmail(false);
+  const verified = useCallback(async () => {
+    if (!session?.accessToken) {
+      await signOut({ redirect: false });
+      store.dispatch(decrement());
+      return;
     }
-  };
+
+    try {
+      const response = await GET("/user", {
+        Authorization: `Bearer ${session.accessToken}`,
+      });
+      setVerifiedEmail(response?.verifiedEmail || false);
+    } catch (err) {
+      await signOut({ redirect: false });
+      setVerifiedEmail(false);
+    } finally {
+      store.dispatch(decrement());
+    }
+  }, [session]);
 
   useEffect(() => {
     verified();
-  }, [session]);
+  }, [verified]);
 
   return (
     <>
@@ -51,6 +53,10 @@ const Layout = ({ children }: Props) => {
               <Image
                 src={"/verifyEmail.png"}
                 alt="verify "
+                priority={false}
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,..."
                 width={250}
                 height={250}
                 className="w-9/12 md:w-10/12 lg:w-full"
@@ -107,6 +113,10 @@ const Layout = ({ children }: Props) => {
               <Image
                 src={"/octasolLandingLogo.png"}
                 alt="octologo"
+                priority={false}
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,..."
                 width={250}
                 height={250}
               />

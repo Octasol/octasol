@@ -17,6 +17,54 @@ import CopyLinkButton from "@/components/Button/CopyLinkButton";
 import { connectProvider } from "@/config/axios/Breakpoints";
 import { cn } from "@/lib/utils";
 
+const itemImages = {
+  SuperteamEarn: [
+    "/assets/reclaim/verifier.jpg",
+    "/assets/superteamEarnConnect/instruction1.jpg",
+    "/assets/superteamEarnConnect/instruction2.jpg",
+    "/assets/superteamEarnConnect/instruction3.jpg",
+    "/assets/superteamEarnConnect/instruction4.jpg",
+    "/assets/superteamEarnConnect/instruction5.jpg",
+    "/assets/superteamEarnConnect/instruction6.jpg",
+    "/assets/superteamEarnConnect/instruction7.jpg",
+    "/assets/superteamEarnConnect/instruction8.jpg",
+    "/assets/superteamEarnConnect/instruction9.jpg",
+  ],
+  Leetcode: [
+    "/assets/reclaim/verifier.jpg",
+    "/assets/leetcodeConnect/instruction1.jpg",
+    "/assets/leetcodeConnect/instruction2.jpg",
+    "/assets/leetcodeConnect/instruction3.jpg",
+    "/assets/leetcodeConnect/instruction4.jpg",
+    "/assets/leetcodeConnect/instruction5.jpg",
+    "/assets/leetcodeConnect/instruction6.jpg",
+    "/assets/leetcodeConnect/instruction7.jpg",
+  ],
+  Hackerrank: [
+    "/assets/reclaim/verifier.jpg",
+    "/assets/hackerrankConnect/instruction1.jpg",
+    "/assets/hackerrankConnect/instruction2.jpg",
+    "/assets/hackerrankConnect/instruction3.jpg",
+    "/assets/hackerrankConnect/instruction4.jpg",
+    "/assets/hackerrankConnect/instruction5.jpg",
+    "/assets/hackerrankConnect/instruction6.jpg",
+  ],
+  Codechef: [
+    "/assets/reclaim/verifier.jpg",
+    "/images/codechef1.png",
+    "/images/codechef2.png",
+  ],
+  Geeksforgeeks: [
+    "/assets/reclaim/verifier.jpg",
+    "/assets/geeksForGeeksConnect/instruction1.jpg",
+    "/assets/geeksForGeeksConnect/instruction2.jpg",
+    "/assets/geeksForGeeksConnect/instruction3.jpg",
+    "/assets/geeksForGeeksConnect/instruction4.jpg",
+    "/assets/geeksForGeeksConnect/instruction5.jpg",
+    "/assets/geeksForGeeksConnect/instruction6.jpg",
+  ],
+};
+
 export default function Connect() {
   const user = useSelector((state: any) => state.user);
 
@@ -32,11 +80,18 @@ export default function Connect() {
     gitlabUsername: "",
   });
 
+  type ItemImagesKeys = keyof typeof itemImages;
+
   const [qrCodeData, setQrCodeData] = useState<string>("");
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
-  const [activeItemTitle, setActiveItemTitle] = useState<string | null>(null);
+  const [activeItemTitle, setActiveItemTitle] = useState<ItemImagesKeys | null>(
+    null
+  );
+
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [secondModalOpen, setSecondModalOpen] = useState(false);
+
   const availableProviders = [
     "Github",
     "SuperteamEarn",
@@ -62,7 +117,7 @@ export default function Connect() {
     }
   }, [user]);
 
-  const handleConnect = async (type: any) => {
+  const handleConnect = async (type: ItemImagesKeys) => {
     try {
       const data = type;
       setQrCodeData("");
@@ -95,7 +150,6 @@ export default function Connect() {
       }
     } catch (error) {
       setErrorMessage("An unexpected error occurred. Please try again.");
-
       setModalOpen(true);
     }
   };
@@ -103,6 +157,18 @@ export default function Connect() {
   const handleModalClose = () => {
     setModalOpen(false);
     fetchUserData();
+  };
+
+  const handleSecondModalOpen = (item: any) => {
+    console.log(item);
+    setModalOpen(false);
+    setSecondModalOpen(true);
+    setActiveItemTitle(item);
+  };
+
+  const handleSecondModalClose = () => {
+    setSecondModalOpen(false);
+    setModalOpen(true);
   };
 
   return (
@@ -153,9 +219,7 @@ export default function Connect() {
                       <DialogTrigger asChild>
                         <div
                           onClick={() =>
-                            availableProviders.includes(item.title)
-                              ? handleConnect(item.title)
-                              : null
+                            handleConnect(item.title as ItemImagesKeys)
                           }
                           className={cn(
                             "bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block",
@@ -204,6 +268,16 @@ export default function Connect() {
                             </div>
                           </DialogFooter>
                         )}
+                        <div className="flex justify-center mt-2">
+                          <button
+                            onClick={() =>
+                              handleSecondModalOpen(activeItemTitle)
+                            }
+                            className="text-gray-400 italic cursor-help"
+                          >
+                            How to connect?
+                          </button>
+                        </div>
                       </DialogContent>
                       <DialogClose onClick={handleModalClose} />
                     </Dialog>
@@ -217,6 +291,33 @@ export default function Connect() {
           );
         })}
       </div>
+
+      <Dialog open={secondModalOpen} onOpenChange={handleSecondModalClose}>
+        <DialogContent className="sm:max-w-[900px] max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Steps to connect with {activeItemTitle}</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-wrap justify-center gap-4 items-center">
+            {activeItemTitle && itemImages[activeItemTitle] ? (
+              itemImages[activeItemTitle].map((image, index) => (
+                <Image
+                  key={index}
+                  src={image}
+                  alt={`${activeItemTitle} image ${index + 1}`}
+                  height={200}
+                  width={200}
+                  className="rounded-lg mb-2"
+                />
+              ))
+            ) : (
+              <p>No images available for this provider.</p>
+            )}
+          </div>
+          <DialogFooter>
+            <DialogClose onClick={handleSecondModalClose}>Close</DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

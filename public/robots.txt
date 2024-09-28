@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://octasol.io
+
+# Sitemaps
+Sitemap: https://octasol.io/sitemap.xml

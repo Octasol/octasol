@@ -1,5 +1,4 @@
 import Image from "next/image";
-
 export const items = [
   {
     title: "Github",
@@ -7,6 +6,10 @@ export const items = [
     header: (
       <>
         <Image
+          priority={false}
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,..."
           src="/github.webp"
           alt="github"
           width={200}
@@ -22,6 +25,10 @@ export const items = [
     header: (
       <>
         <Image
+          priority={false}
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,..."
           src="/superteam.jpeg"
           alt="superteam"
           width={150}
@@ -38,6 +45,10 @@ export const items = [
     header: (
       <>
         <Image
+          priority={false}
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,..."
           src="/leetcode.webp"
           alt="leetcode"
           width={150}
@@ -53,6 +64,10 @@ export const items = [
     header: (
       <>
         <Image
+          priority={false}
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,..."
           src="/gfg.png"
           alt="leetcode"
           width={150}
@@ -68,6 +83,10 @@ export const items = [
     header: (
       <>
         <Image
+          priority={false}
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,..."
           src="/hackerrank.webp"
           alt="leetcode"
           width={150}
@@ -83,6 +102,10 @@ export const items = [
     header: (
       <>
         <Image
+          priority={false}
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,..."
           src="/codechef.png"
           alt="leetcode"
           width={150}
@@ -98,6 +121,10 @@ export const items = [
     header: (
       <>
         <Image
+          priority={false}
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,..."
           src="/codeforces.jpeg"
           alt="leetcode"
           width={150}
@@ -112,6 +139,10 @@ export const items = [
     description: "",
     header: (
       <Image
+        priority={false}
+        loading="lazy"
+        placeholder="blur"
+        blurDataURL="data:image/png;base64,..."
         src="/gitlab.png"
         alt="leetcode"
         width={150}

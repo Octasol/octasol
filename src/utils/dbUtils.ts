@@ -276,7 +276,7 @@ export const updateTotalPoints = async (id: bigint) => {
     totalPoints += superteamEarnProfile.totalWinnings * 2;
   }
 
-  if (user?.totalPoints && totalPoints == user.totalPoints) {
+  if (totalPoints == user?.totalPoints) {
     return false;
   }
 

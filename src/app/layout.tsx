@@ -16,7 +16,11 @@ interface Props {
   children: React.ReactNode;
 }
 
-const poppins = Poppins({ weight: ["200", "400"], subsets: ["latin"] });
+const poppins = Poppins({
+  weight: ["200", "400"],
+  subsets: ["latin"],
+  preload: true,
+});
 
 export const metadata: Metadata = {
   title: websiteMetadata.title,

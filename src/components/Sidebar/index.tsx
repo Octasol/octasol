@@ -2,7 +2,7 @@
 import { IconChartHistogram } from "@tabler/icons-react";
 import { Blocks, CopyPlus, HomeIcon, User } from "lucide-react";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import {
   Tooltip,

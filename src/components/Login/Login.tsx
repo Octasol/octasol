@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +26,7 @@ import LoginButton from "../Button/LoginButton";
 import { POST } from "@/config/axios/requests";
 import { IconChartHistogram } from "@tabler/icons-react";
 import { githubDevProfile } from "@/config/axios/Breakpoints";
+import { store } from "@/app/Redux/store";
 import { increment } from "@/app/Redux/Features/loader/loaderSlice";
 
 const Login = () => {
@@ -34,7 +35,6 @@ const Login = () => {
   const pathname = usePathname();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
-  const counter = useSelector((state: any) => state.counter);
   const [hasPosted, setHasPosted] = useState(false);
 
   interface SessionUser {
@@ -43,59 +43,59 @@ const Login = () => {
     image?: string | null;
     login?: string | null;
     id?: string | null;
-    avatar_url?: string | null;
+    accessToken?: string | null;
   }
 
+  // Memoize session user data
+  const sessionUser = useMemo(
+    () => session?.user as SessionUser | null,
+    [session]
+  );
+
   useEffect(() => {
-    if (session && !hasPosted) {
-      const runPostRequest = async () => {
+    // Run API call only if session exists and hasn't posted yet
+    const runPostRequest = async () => {
+      if (sessionUser && !hasPosted) {
         try {
           await POST(
             githubDevProfile,
             {},
             {
-              Authorization: `Bearer ${session.accessToken as string}`,
+              Authorization: `Bearer ${session?.accessToken as string}`,
             }
           );
           setHasPosted(true);
         } catch (err) {
           console.error("Failed to run POST request:", err);
         }
-      };
+      }
+    };
 
-      runPostRequest();
-    }
-  }, [session, hasPosted]);
+    runPostRequest();
+  }, [sessionUser, hasPosted, session]);
 
   useEffect(() => {
-    if (session !== undefined) {
-      if (session) {
-        const user = session.user as SessionUser;
-        dispatch(
-          setUser({
-            name: user?.name || "",
-            email: user?.email || "",
-            photo: user?.image || "",
-            githubId: user?.id || "",
-            login: user?.login || "",
-            accessToken: session.accessToken as string,
-          })
-        );
+    if (sessionUser) {
+      dispatch(
+        setUser({
+          name: sessionUser?.name || "",
+          email: sessionUser?.email || "",
+          photo: sessionUser?.image || "",
+          githubId: sessionUser?.id || "",
+          login: sessionUser?.login || "",
+          accessToken: session?.accessToken || "",
+        })
+      );
 
-        if (pathname === "/") {
-          router.push("/dashboard");
-        } else {
-          router.push(pathname);
-        }
-      } else {
-        router.push("/");
+      if (pathname === "/") {
+        router.push("/dashboard");
       }
+    } else {
+      router.push("/");
     }
-  }, [session, user, pathname]);
+  }, [sessionUser, pathname, router, dispatch]);
 
-  const logout = () => {
-    dispatch(increment());
-    signOut();
+  const logout = async () => {
     dispatch(
       setUser({
         name: "",
@@ -106,7 +106,7 @@ const Login = () => {
         accessToken: "",
       })
     );
-    router.push("/");
+    await signOut({ redirect: false });
   };
 
   const userLogin = () => {
@@ -140,9 +140,9 @@ const Login = () => {
                 </div>
               </LoginButton>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-black text-white border-2  border-t-green-500/20 border-b-indigo-500/20 border-r-green-500/40 border-l-indigo-500/40 flex flex-col gap-2">
+            <DropdownMenuContent className="bg-black text-white border-2 border-t-green-500/20 border-b-indigo-500/20 border-r-green-500/40 border-l-indigo-500/40 flex flex-col gap-2">
               <DropdownMenuLabel className="cursor-pointer flex md:hidden">
-                <Link href="/dashboard">
+                <Link prefetch href="/dashboard">
                   <div className="flex items-center gap-4 justify-between w-full">
                     <span>Dashboard</span>
                     <Home size={20} />
@@ -151,7 +151,7 @@ const Login = () => {
               </DropdownMenuLabel>
 
               <DropdownMenuLabel className="cursor-pointer flex md:hidden">
-                <Link href="/repoinitialize">
+                <Link prefetch href="/repoinitialize">
                   <div className="flex items-center gap-4 justify-between w-full">
                     <span>Repo Initialize</span>
                     <CopyPlus size={20} />
@@ -160,7 +160,7 @@ const Login = () => {
               </DropdownMenuLabel>
 
               <DropdownMenuLabel className="cursor-pointer flex md:hidden">
-                <Link href="/connect">
+                <Link prefetch href="/connect">
                   <div className="flex items-center gap-4 justify-between w-full">
                     <span>Connect</span>
                     <Blocks size={20} />
@@ -169,7 +169,7 @@ const Login = () => {
               </DropdownMenuLabel>
 
               <DropdownMenuLabel className="cursor-pointer flex md:hidden">
-                <Link href="/leaderboard">
+                <Link prefetch href="/leaderboard">
                   <div className="flex items-center gap-4 justify-between w-full">
                     <span>Leaderboard</span>
                     <IconChartHistogram size={20} />
@@ -178,7 +178,7 @@ const Login = () => {
               </DropdownMenuLabel>
 
               <DropdownMenuLabel className="cursor-pointer flex flex-col">
-                <Link href={`/p/${user?.login}`}>
+                <Link prefetch href={`/p/${user?.login}`}>
                   <div className="relative flex md:hidden">
                     <BottomGradient />
                   </div>
@@ -191,9 +191,7 @@ const Login = () => {
 
               <DropdownMenuLabel className="cursor-pointer flex flex-col">
                 <button
-                  onClick={() => {
-                    logout();
-                  }}
+                  onClick={logout}
                   className="flex items-center gap-4 justify-between w-full"
                 >
                   <span>Sign Out</span>

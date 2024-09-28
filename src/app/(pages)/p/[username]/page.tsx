@@ -30,7 +30,7 @@ const RadialChart = dynamic(
   }
 );
 
-interface radarObject {
+interface RadarObject {
   githubUsername?: string;
   githubPoints?: number;
   hackerrankPoints?: number;
@@ -58,7 +58,7 @@ export default function BentoGridDemo() {
   const [gfgData, setGfgData] = useState<DataObject>({});
   const [leetcodeData, setLeetcodeData] = useState<DataObject>({});
   const [superteamData, setSuperteamData] = useState<DataObject>({});
-  const [radarData, setRadarData] = useState<radarObject | null>(null);
+  const [radarData, setRadarData] = useState<RadarObject | null>(null);
   const [isRadarLoading, setIsRadarLoading] = useState<boolean>(true);
   const [isUserLoading, setIsUserLoading] = useState<boolean>(true);
 
@@ -117,12 +117,10 @@ export default function BentoGridDemo() {
             radarData && <RadialChart stats={radarData} />
           )}
         </div>
-        {isUserLoading ? (
-          <div className="w-full md:w-6/12 md:h-[80vh] overflow-scroll px-4 ">
+        <ScrollArea className="w-full md:w-6/12 md:h-[80vh] overflow-scroll px-4 ">
+          {isUserLoading ? (
             <ProfileLoader />
-          </div>
-        ) : (
-          <ScrollArea className="w-full md:w-6/12 md:h-[80vh] overflow-scroll px-4 ">
+          ) : (
             <Accordion type="single" collapsible>
               {userName.githubUsername && (
                 <AccordionItem value="github">
@@ -134,8 +132,10 @@ export default function BentoGridDemo() {
                         className="invert"
                         width={40}
                         height={40}
-                        loading="lazy"
                         priority={false}
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,..."
                       />
                       <span className="text-base font-semibold ">
                         {userName.githubUsername}
@@ -165,8 +165,10 @@ export default function BentoGridDemo() {
                         className="rounded-full"
                         width={40}
                         height={40}
-                        loading="lazy"
                         priority={false}
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,..."
                       />
                       <span className="text-base font-semibold ">
                         {userName.superteamUsername}
@@ -190,7 +192,6 @@ export default function BentoGridDemo() {
               {userName.leetcodeUsername && (
                 <AccordionItem value="leetcode">
                   <AccordionTrigger>
-                    {" "}
                     <div className="w-full flex justify-start items-center gap-6">
                       <Image
                         src="/leetcode.webp"
@@ -198,8 +199,10 @@ export default function BentoGridDemo() {
                         className="rounded-full"
                         width={40}
                         height={40}
-                        loading="lazy"
                         priority={false}
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,..."
                       />
                       <span className="text-base font-semibold ">
                         {userName.leetcodeUsername}
@@ -238,7 +241,6 @@ export default function BentoGridDemo() {
               {userName.hackerrankUsername && (
                 <AccordionItem value="hackerrank">
                   <AccordionTrigger>
-                    {" "}
                     <div className="w-full flex justify-start items-center gap-6">
                       <Image
                         src="/hackerrank.webp"
@@ -246,8 +248,10 @@ export default function BentoGridDemo() {
                         className="rounded-full"
                         width={40}
                         height={40}
-                        loading="lazy"
                         priority={false}
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,..."
                       />
                       <span className="text-base font-semibold ">
                         {userName.hackerrankUsername}
@@ -277,8 +281,10 @@ export default function BentoGridDemo() {
                         className="rounded-full aspect-square"
                         width={40}
                         height={40}
-                        loading="lazy"
                         priority={false}
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,..."
                       />
                       <span className="text-base font-semibold ">
                         {userName.codechefUsername}
@@ -309,8 +315,10 @@ export default function BentoGridDemo() {
                         className="rounded-full aspect-square"
                         width={40}
                         height={40}
-                        loading="lazy"
                         priority={false}
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,..."
                       />
                       <span className="text-base font-semibold ">
                         {userName.gfgUsername}
@@ -346,8 +354,8 @@ export default function BentoGridDemo() {
                 </AccordionItem>
               )}
             </Accordion>
-          </ScrollArea>
-        )}
+          )}
+        </ScrollArea>
       </div>
     </>
   );
