@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 
 const itemImages = {
   SuperteamEarn: [
+    "/assets/reclaim/verifier.jpg",
     "/assets/superteamEarnConnect/instruction1.jpg",
     "/assets/superteamEarnConnect/instruction2.jpg",
     "/assets/superteamEarnConnect/instruction3.jpg",
@@ -30,6 +31,7 @@ const itemImages = {
     "/assets/superteamEarnConnect/instruction9.jpg",
   ],
   Leetcode: [
+    "/assets/reclaim/verifier.jpg",
     "/assets/leetcodeConnect/instruction1.jpg",
     "/assets/leetcodeConnect/instruction2.jpg",
     "/assets/leetcodeConnect/instruction3.jpg",
@@ -39,6 +41,7 @@ const itemImages = {
     "/assets/leetcodeConnect/instruction7.jpg",
   ],
   Hackerrank: [
+    "/assets/reclaim/verifier.jpg",
     "/assets/hackerrankConnect/instruction1.jpg",
     "/assets/hackerrankConnect/instruction2.jpg",
     "/assets/hackerrankConnect/instruction3.jpg",
@@ -46,8 +49,13 @@ const itemImages = {
     "/assets/hackerrankConnect/instruction5.jpg",
     "/assets/hackerrankConnect/instruction6.jpg",
   ],
-  Codechef: ["/images/codechef1.png", "/images/codechef2.png"],
+  Codechef: [
+    "/assets/reclaim/verifier.jpg",
+    "/images/codechef1.png",
+    "/images/codechef2.png",
+  ],
   Geeksforgeeks: [
+    "/assets/reclaim/verifier.jpg",
     "/assets/geeksForGeeksConnect/instruction1.jpg",
     "/assets/geeksForGeeksConnect/instruction2.jpg",
     "/assets/geeksForGeeksConnect/instruction3.jpg",
