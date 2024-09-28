@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,8 +35,6 @@ const Login = () => {
   const pathname = usePathname();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
-  const error = useSelector((state: any) => state.error);
-  const counter = useSelector((state: any) => state.counter);
   const [hasPosted, setHasPosted] = useState(false);
 
   interface SessionUser {
@@ -45,82 +43,57 @@ const Login = () => {
     image?: string | null;
     login?: string | null;
     id?: string | null;
-    node_id?: string | null;
-    avatar_url?: string | null;
-    gravatar_id?: string | null;
-    url?: string | null;
-    html_url?: string | null;
-    followers_url?: string | null;
-    following_url?: string | null;
-    gists_url?: string | null;
-    starred_url?: string | null;
-    subscriptions_url?: string | null;
-    organizations_url?: string | null;
-    repos_url?: string | null;
-    events_url?: string | null;
-    received_events_url?: string | null;
-    type?: string | null;
-    site_admin?: boolean | null;
-    company?: string | null;
-    blog?: string | null;
-    location?: string | null;
-    hireable?: boolean | null;
-    bio?: string | null;
-    twitter_username?: string | null;
-    public_repos?: number | null;
-    public_gists?: number | null;
-    followers?: number | null;
-    following?: number | null;
-    created_at?: string | null;
-    updated_at?: string | null;
+    accessToken?: string | null;
   }
 
+  // Memoize session user data
+  const sessionUser = useMemo(
+    () => session?.user as SessionUser | null,
+    [session]
+  );
+
   useEffect(() => {
-    if (session && !hasPosted) {
-      const runPostRequest = async () => {
+    // Run API call only if session exists and hasn't posted yet
+    const runPostRequest = async () => {
+      if (sessionUser && !hasPosted) {
         try {
           await POST(
             githubDevProfile,
             {},
             {
-              Authorization: `Bearer ${session.accessToken as string}`,
+              Authorization: `Bearer ${session?.accessToken as string}`,
             }
           );
           setHasPosted(true);
         } catch (err) {
           console.error("Failed to run POST request:", err);
         }
-      };
+      }
+    };
 
-      runPostRequest();
-    }
-  }, [session, hasPosted]);
+    runPostRequest();
+  }, [sessionUser, hasPosted, session]);
 
   useEffect(() => {
-    if (session !== undefined) {
-      if (session) {
-        const user = session.user as SessionUser;
-        dispatch(
-          setUser({
-            name: user?.name || "",
-            email: user?.email || "",
-            photo: user?.image || "",
-            githubId: user?.id || "",
-            login: user?.login || "",
-            accessToken: session.accessToken as string,
-          })
-        );
+    if (sessionUser) {
+      dispatch(
+        setUser({
+          name: sessionUser?.name || "",
+          email: sessionUser?.email || "",
+          photo: sessionUser?.image || "",
+          githubId: sessionUser?.id || "",
+          login: sessionUser?.login || "",
+          accessToken: session?.accessToken || "",
+        })
+      );
 
-        if (pathname === "/") {
-          router.push("/dashboard");
-        } else {
-          router.push(pathname);
-        }
-      } else {
-        router.push("/");
+      if (pathname === "/") {
+        router.push("/dashboard");
       }
+    } else {
+      router.push("/");
     }
-  }, [session, user, pathname]);
+  }, [sessionUser, pathname, router, dispatch]);
 
   const logout = () => {
     store.dispatch(increment());
@@ -137,9 +110,6 @@ const Login = () => {
     );
     router.push("/");
   };
-  // useEffect(() => {
-  //   console.log(counter);
-  // }, [counter]);
 
   const userLogin = () => {
     dispatch(increment());
@@ -172,7 +142,7 @@ const Login = () => {
                 </div>
               </LoginButton>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-black text-white border-2  border-t-green-500/20 border-b-indigo-500/20 border-r-green-500/40 border-l-indigo-500/40 flex flex-col gap-2">
+            <DropdownMenuContent className="bg-black text-white border-2 border-t-green-500/20 border-b-indigo-500/20 border-r-green-500/40 border-l-indigo-500/40 flex flex-col gap-2">
               <DropdownMenuLabel className="cursor-pointer flex md:hidden">
                 <Link prefetch href="/dashboard">
                   <div className="flex items-center gap-4 justify-between w-full">
@@ -223,9 +193,7 @@ const Login = () => {
 
               <DropdownMenuLabel className="cursor-pointer flex flex-col">
                 <button
-                  onClick={() => {
-                    logout();
-                  }}
+                  onClick={logout}
                   className="flex items-center gap-4 justify-between w-full"
                 >
                   <span>Sign Out</span>
