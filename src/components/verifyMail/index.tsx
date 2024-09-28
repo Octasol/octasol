@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -31,6 +31,9 @@ const FormSchema = z.object({
 
 const VerifyMail = ({ verify, session }: Props) => {
   const [otpSent, setOtpSent] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [timer, setTimer] = useState<number>(30);
+  const [canResend, setCanResend] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -39,6 +42,22 @@ const VerifyMail = ({ verify, session }: Props) => {
       otp: "",
     },
   });
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    if (timer > 0 && !canResend) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    } else if (timer === 0) {
+      setCanResend(true);
+      clearInterval(interval!);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [timer, canResend]);
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
@@ -52,6 +71,10 @@ const VerifyMail = ({ verify, session }: Props) => {
         );
         if (response?.status === 200) {
           verify(); // Call verify function from props
+        } else {
+          setErrorMessage("Invalid OTP. Please try again.");
+          setCanResend(false);
+          setTimer(30); // Reset timer on error
         }
       } else {
         const { response } = await POST(
@@ -63,12 +86,30 @@ const VerifyMail = ({ verify, session }: Props) => {
         );
         if (response?.status === 200) {
           setOtpSent(true);
+          setErrorMessage(null); // Clear error message
         }
       }
     } catch (err) {
       console.error(err);
+      setErrorMessage("An error occurred. Please try again.");
     }
   }
+
+  const handleResendOtp = async () => {
+    setCanResend(false);
+    setTimer(30); // Reset timer
+    setErrorMessage(null); // Clear error message
+    const { response } = await POST(
+      sendOtp,
+      { email: form.getValues("email") },
+      {
+        Authorization: `Bearer ${session.accessToken as string}`,
+      }
+    );
+    if (response?.status === 200) {
+      setOtpSent(true);
+    }
+  };
 
   return (
     <Form {...form}>
@@ -89,6 +130,8 @@ const VerifyMail = ({ verify, session }: Props) => {
             </FormItem>
           )}
         />
+        {errorMessage && <p className="text-red-600">{errorMessage}</p>}
+        
         {!otpSent && (
           <div className="w-full flex justify-center items-center">
             <Button type="submit">Send OTP</Button>
@@ -113,6 +156,16 @@ const VerifyMail = ({ verify, session }: Props) => {
             <div className="w-full flex justify-center items-center">
               <Button type="submit">Verify OTP</Button>
             </div>
+            {!canResend && (
+              <p className="text-gray-600">
+                Resend OTP in {timer} seconds.
+              </p>
+            )}
+            {canResend && (
+              <div className="w-full flex justify-center items-center">
+                <Button onClick={handleResendOtp}>Resend OTP</Button>
+              </div>
+            )}
           </>
         )}
       </form>
