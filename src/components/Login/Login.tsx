@@ -106,9 +106,7 @@ const Login = () => {
         accessToken: "",
       })
     );
-    store.dispatch(increment());
     await signOut({ redirect: false });
-    router.push("/");
   };
 
   const userLogin = () => {
