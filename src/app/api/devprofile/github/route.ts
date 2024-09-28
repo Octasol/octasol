@@ -140,7 +140,7 @@ export async function POST(req: NextRequest) {
 }
 
 async function getRepos(page: number, authHeader: string) {
-  const url = `https://api.github.com/user/repos?per_page=100&page=${page}&affiliation=owner,collaborator`;
+  const url = `https://api.github.com/user/repos?per_page=100&page=${page}&affiliation=owner`;
   const res = await axios.get(url, {
     headers: {
       Authorization: `${authHeader}`,
