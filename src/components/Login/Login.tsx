@@ -95,9 +95,7 @@ const Login = () => {
     }
   }, [sessionUser, pathname, router, dispatch]);
 
-  const logout = () => {
-    store.dispatch(increment());
-    signOut();
+  const logout = async () => {
     dispatch(
       setUser({
         name: "",
@@ -108,6 +106,8 @@ const Login = () => {
         accessToken: "",
       })
     );
+    store.dispatch(increment());
+    await signOut({ redirect: false });
     router.push("/");
   };
 
