@@ -1,4 +1,6 @@
-import { initializeUser } from "@/utils/dbUtils";
+import { bigintToString } from "@/lib/utils";
+import { getDbUser, initializeUser, setUsername } from "@/utils/dbUtils";
+import { updateGithubProfile } from "@/utils/githubStatsHelper";
 import axios from "axios";
 import { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
@@ -35,11 +37,24 @@ export const authOptions: NextAuthOptions = {
       session.accessToken = token.accessToken;
       session.user = { ...session.user, ...token.profile };
       await initializeUser(session.user.id, session.user.email);
+      const userDbData = bigintToString(
+        await getDbUser(BigInt(session.user.id))
+      );
+      if (!userDbData?.githubUsername) {
+        await setUsername(BigInt(session.user.id), {
+          githubUsername: session.user.login,
+        });
+        await updateGithubProfile(session.accessToken);
+      } else {
+        updateGithubProfile(session.accessToken);
+      }
+      session.user.isVerifiedEmail = userDbData.verifiedEmail;
       return session;
     },
   },
   session: {
     maxAge: 10 * 24 * 60 * 60,
+    updateAge: 24 * 60 * 60,
   },
 };
 

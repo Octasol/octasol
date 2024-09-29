@@ -8,6 +8,7 @@ type UserState = {
   githubId: string;
   login: string;
   accessToken: string;
+  isVerifiedEmail?: boolean;
 };
 
 const initialState: UserState = {
@@ -17,6 +18,7 @@ const initialState: UserState = {
   githubId: "",
   login: "",
   accessToken: "",
+  isVerifiedEmail: true,
 };
 
 export const userSlice = createSlice({
@@ -30,6 +32,7 @@ export const userSlice = createSlice({
       state.githubId = action.payload.githubId;
       state.login = action.payload.login;
       state.accessToken = action.payload.accessToken;
+      state.isVerifiedEmail = action.payload.isVerifiedEmail;
     },
   },
 });

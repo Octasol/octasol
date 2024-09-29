@@ -1,58 +1,51 @@
 import { NextRequest, NextResponse } from "next/server";
-import axios from "axios";
-import { GRAPHQL_STATS_QUERY } from "./queries";
+import { setGithubDevProfile } from "@/utils/dbUtils";
+import { getUserByAuthHeader } from "@/lib/apiUtils";
 import {
-  getAllGithubDevProfiles,
-  getDbUser,
-  setGithubDevProfile,
-  setUsername,
-} from "@/utils/dbUtils";
-import { bigintToString } from "@/lib/utils";
-import {
-  getGithubIdbyAuthHeader,
-  getGithubProfileWithGithubID,
-  getUserByAuthHeader,
-} from "@/lib/apiUtils";
+  getGithubGraphql,
+  getRepos,
+  getTotalCommits,
+} from "@/utils/githubStatsHelper";
 
-export async function GET() {
-  try {
-    const githubDevProfile = await getAllGithubDevProfiles();
-    if (!githubDevProfile) {
-      return NextResponse.json(
-        { error: "Github Dev Profile not found" },
-        { status: 404 }
-      );
-    }
+// export async function GET() {
+//   try {
+//     const githubDevProfile = await getAllGithubDevProfiles();
+//     if (!githubDevProfile) {
+//       return NextResponse.json(
+//         { error: "Github Dev Profile not found" },
+//         { status: 404 }
+//       );
+//     }
 
-    const serializedProfile = bigintToString(githubDevProfile).sort(
-      (prev: any, next: any) =>
-        next.followers +
-        next.forkedRepos +
-        next.forks +
-        next.mergedPullRequests +
-        next.originalRepos +
-        next.repositoriesContributedTo +
-        next.pullRequests +
-        next.stars +
-        next.totalCommits +
-        next.totalIssues -
-        (prev.followers +
-          prev.forkedRepos +
-          prev.forks +
-          prev.mergedPullRequests +
-          prev.originalRepos +
-          prev.repositoriesContributedTo +
-          prev.pullRequests +
-          prev.stars +
-          prev.totalCommits +
-          prev.totalIssues)
-    );
+//     const serializedProfile = bigintToString(githubDevProfile).sort(
+//       (prev: any, next: any) =>
+//         next.followers +
+//         next.forkedRepos +
+//         next.forks +
+//         next.mergedPullRequests +
+//         next.originalRepos +
+//         next.repositoriesContributedTo +
+//         next.pullRequests +
+//         next.stars +
+//         next.totalCommits +
+//         next.totalIssues -
+//         (prev.followers +
+//           prev.forkedRepos +
+//           prev.forks +
+//           prev.mergedPullRequests +
+//           prev.originalRepos +
+//           prev.repositoriesContributedTo +
+//           prev.pullRequests +
+//           prev.stars +
+//           prev.totalCommits +
+//           prev.totalIssues)
+//     );
 
-    return NextResponse.json(serializedProfile);
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-}
+//     return NextResponse.json(serializedProfile);
+//   } catch (error: any) {
+//     return NextResponse.json({ error: error.message }, { status: 500 });
+//   }
+// }
 
 export async function POST(req: NextRequest) {
   try {
@@ -79,7 +72,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const { email, login, id, followers } = await getUserByAuthHeader(
+    const { login, id, followers } = await getUserByAuthHeader(
       `${req.headers.get("Authorization")}`
     );
 
@@ -97,17 +90,7 @@ export async function POST(req: NextRequest) {
     const mergedPullRequests = user.mergedPullRequests.totalCount;
     const totalIssues =
       user.openIssues.totalCount + user.closedIssues.totalCount;
-    const userDB = await getDbUser(BigInt(id));
 
-    if (!userDB?.emails)
-      await setUsername(id, { githubUsername: login, emails: [email] });
-    else if (!userDB?.emails.includes(email) && email)
-      await setUsername(id, {
-        githubUsername: login,
-        emails: [...userDB.emails, email],
-      });
-    else if (!userDB?.githubUsername)
-      await setUsername(id, { githubUsername: login });
     await setGithubDevProfile(id, {
       stars: stars,
       forkedRepos: forked_repos,
@@ -135,50 +118,7 @@ export async function POST(req: NextRequest) {
       totalIssues,
     });
   } catch (error: any) {
+    console.error(error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-}
-
-async function getRepos(page: number, authHeader: string) {
-  const url = `https://api.github.com/user/repos?per_page=100&page=${page}&affiliation=owner`;
-  const res = await axios.get(url, {
-    headers: {
-      Authorization: `${authHeader}`,
-      Accept: "application/vnd.github.v3+json",
-    },
-  });
-  return res.data;
-}
-
-async function getTotalCommits(username: string, authHeader: string) {
-  const url = `https://api.github.com/search/commits?q=author:${username}`;
-  const res = await axios.get(url, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `${authHeader}`,
-      Accept: "application/vnd.github.cloak-preview",
-    },
-  });
-  return res.data.total_count;
-}
-
-async function getGithubGraphql(login: string, autHeader: string) {
-  const res = await axios({
-    url: "https://api.github.com/graphql",
-    method: "post",
-    headers: {
-      Authorization: `${autHeader}`,
-      Accept: "application/vnd.github.v3+json",
-    },
-    data: {
-      query: GRAPHQL_STATS_QUERY,
-      variables: {
-        login: login,
-        includeMergedPullRequests: true,
-        includeDiscussions: true,
-        includeDiscussionsAnswers: true,
-      },
-    },
-  });
-  return res.data.data;
 }

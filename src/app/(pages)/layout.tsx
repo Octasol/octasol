@@ -2,7 +2,7 @@
 import Sidebar from "@/components/Sidebar";
 import VerifyMail from "@/components/verifyMail";
 import { GET } from "@/config/axios/requests";
-import React, { ReactNode, useEffect, useState, useCallback } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { signOut } from "next-auth/react";
 import { store } from "../Redux/store";
@@ -10,34 +10,18 @@ import { decrement } from "../Redux/Features/loader/loaderSlice";
 import Image from "next/image";
 
 type Props = { children: ReactNode };
-
 const Layout = ({ children }: Props) => {
   const session = useSelector((state: any) => state.user);
-  const [verifiedEmail, setVerifiedEmail] = useState(false);
-
-  const verified = useCallback(async () => {
-    if (!session?.accessToken) {
-      await signOut({ redirect: false });
-      store.dispatch(decrement());
-      return;
+  const [verifiedEmail, setVerifiedEmail] = useState(true);
+  const verified = async (): Promise<void> => {
+    if (session && session.accessToken) {
+      setVerifiedEmail(session.isVerifiedEmail);
     }
-
-    try {
-      const response = await GET("/user", {
-        Authorization: `Bearer ${session.accessToken}`,
-      });
-      setVerifiedEmail(response?.verifiedEmail || false);
-    } catch (err) {
-      await signOut({ redirect: false });
-      setVerifiedEmail(false);
-    } finally {
-      store.dispatch(decrement());
-    }
-  }, [session]);
-
+    store.dispatch(decrement());
+  };
   useEffect(() => {
     verified();
-  }, [verified]);
+  }, [session, verifiedEmail]);
 
   return (
     <>
@@ -136,5 +120,4 @@ const Layout = ({ children }: Props) => {
     </>
   );
 };
-
 export default Layout;

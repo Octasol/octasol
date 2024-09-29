@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useLayoutEffect, useMemo } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,19 +23,16 @@ import {
 } from "lucide-react";
 import BottomGradient from "../ui/BottomGradient";
 import LoginButton from "../Button/LoginButton";
-import { POST } from "@/config/axios/requests";
 import { IconChartHistogram } from "@tabler/icons-react";
-import { githubDevProfile } from "@/config/axios/Breakpoints";
-import { store } from "@/app/Redux/store";
-import { increment } from "@/app/Redux/Features/loader/loaderSlice";
+import { decrement, increment } from "@/app/Redux/Features/loader/loaderSlice";
 
 const Login = () => {
-  const { data: session } = useSession() as any;
+  const { data: session, status } = useSession() as any;
   const router = useRouter();
   const pathname = usePathname();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
-  const [hasPosted, setHasPosted] = useState(false);
+  const counter = useSelector((state: any) => state.counter);
 
   interface SessionUser {
     name?: string | null;
@@ -44,6 +41,7 @@ const Login = () => {
     login?: string | null;
     id?: string | null;
     accessToken?: string | null;
+    isVerifiedEmail?: boolean | true;
   }
 
   // Memoize session user data
@@ -51,28 +49,6 @@ const Login = () => {
     () => session?.user as SessionUser | null,
     [session]
   );
-
-  useEffect(() => {
-    // Run API call only if session exists and hasn't posted yet
-    const runPostRequest = async () => {
-      if (sessionUser && !hasPosted) {
-        try {
-          await POST(
-            githubDevProfile,
-            {},
-            {
-              Authorization: `Bearer ${session?.accessToken as string}`,
-            }
-          );
-          setHasPosted(true);
-        } catch (err) {
-          console.error("Failed to run POST request:", err);
-        }
-      }
-    };
-
-    runPostRequest();
-  }, [sessionUser, hasPosted, session]);
 
   useEffect(() => {
     if (sessionUser) {
@@ -84,9 +60,10 @@ const Login = () => {
           githubId: sessionUser?.id || "",
           login: sessionUser?.login || "",
           accessToken: session?.accessToken || "",
+          isVerifiedEmail: sessionUser?.isVerifiedEmail || false,
         })
       );
-
+      console.log("sessionUser:", sessionUser);
       if (pathname === "/") {
         router.push("/dashboard");
       }
@@ -96,6 +73,7 @@ const Login = () => {
   }, [sessionUser, pathname, router, dispatch]);
 
   const logout = async () => {
+    await signOut({ redirect: false });
     dispatch(
       setUser({
         name: "",
@@ -104,15 +82,23 @@ const Login = () => {
         githubId: "",
         login: "",
         accessToken: "",
+        isVerifiedEmail: true,
       })
     );
-    await signOut({ redirect: false });
   };
 
   const userLogin = () => {
-    dispatch(increment());
     signIn("github");
   };
+
+  useLayoutEffect(() => {
+    if (status) {
+      if (status === "authenticated") {
+        dispatch(decrement());
+        router.push("/dashboard");
+      }
+    }
+  }, [status, counter]);
 
   return (
     <>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,6 +16,10 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { POST } from "@/config/axios/requests";
 import { sendOtp, verifyOtp } from "@/config/axios/Breakpoints";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { store } from "@/app/Redux/store";
+import { setUser } from "@/app/Redux/Features/user/userSlice";
 
 type Props = {
   verify: () => void;
@@ -34,7 +38,8 @@ const VerifyMail = ({ verify, session }: Props) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [timer, setTimer] = useState<number>(30);
   const [canResend, setCanResend] = useState(false);
-
+  const user = useSelector((state: any) => state.user);
+  const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -70,6 +75,13 @@ const VerifyMail = ({ verify, session }: Props) => {
           }
         );
         if (response?.status === 200) {
+          // update isVerifiedEmail in redux user
+          store.dispatch(
+            setUser({
+              ...user,
+              isVerifiedEmail: true,
+            })
+          );
           verify(); // Call verify function from props
         } else {
           setErrorMessage("Invalid OTP. Please try again.");
@@ -131,7 +143,7 @@ const VerifyMail = ({ verify, session }: Props) => {
           )}
         />
         {errorMessage && <p className="text-red-600">{errorMessage}</p>}
-        
+
         {!otpSent && (
           <div className="w-full flex justify-center items-center">
             <Button type="submit">Send OTP</Button>
@@ -157,9 +169,7 @@ const VerifyMail = ({ verify, session }: Props) => {
               <Button type="submit">Verify OTP</Button>
             </div>
             {!canResend && (
-              <p className="text-gray-600">
-                Resend OTP in {timer} seconds.
-              </p>
+              <p className="text-gray-600">Resend OTP in {timer} seconds.</p>
             )}
             {canResend && (
               <div className="w-full flex justify-center items-center">

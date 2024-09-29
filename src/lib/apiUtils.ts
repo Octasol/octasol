@@ -142,9 +142,24 @@ export async function getGithubProfileWithGithubID(githubId: number) {
 }
 
 export async function getUserByAuthHeader(authHeader: string) {
-  return await getGithubProfileWithGithubID(
-    await getGithubIdbyAuthHeader(authHeader)
-  );
+  try {
+    const cacheKey = `githubProfile:${authHeader}`;
+    const githubProfile = getCache(cacheKey);
+    if (githubProfile) {
+      return githubProfile;
+    }
+    const response = await axios.get("https://api.github.com/user", {
+      headers: {
+        Authorization: authHeader,
+        Accept: "application/vnd.github.v3+json",
+      },
+    });
+    setCache(cacheKey, response.data);
+    return response.data;
+  } catch (error: any) {
+    console.error("Failed to fetch Github ID", error);
+    return null;
+  }
 }
 
 export async function getGithubIdbyAccessToken(accessToken: string) {
