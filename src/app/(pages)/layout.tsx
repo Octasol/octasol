@@ -23,9 +23,7 @@ const Layout = ({ children }: Props) => {
 
   useEffect(() => {
     if (counter > 0) {
-      console.log("counter", counter);
       store.dispatch(decrement());
-      console.log("counter", counter);
     }
   }, [counter]);
 
