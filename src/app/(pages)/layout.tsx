@@ -21,12 +21,6 @@ const Layout = ({ children }: Props) => {
     verified();
   }, [session, verifiedEmail]);
 
-  useEffect(() => {
-    if (counter > 0) {
-      store.dispatch(decrement());
-    }
-  }, [counter]);
-
   return (
     <>
       <div className="flex w-full h-full">

@@ -1,3 +1,4 @@
+"use client";
 import { BellRing, Check } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -10,6 +11,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { decrement } from "@/app/Redux/Features/loader/loaderSlice";
+import { store } from "@/app/Redux/store";
 // import { Switch } from "@/components/ui/switch";
 
 const notifications = [
@@ -30,6 +35,13 @@ const notifications = [
 type CardProps = React.ComponentProps<typeof Card>;
 
 export default function Notification({ className, ...props }: CardProps) {
+  const counter = useSelector((state: any) => state.counter);
+
+  useEffect(() => {
+    if (counter.value > 0) {
+      store.dispatch(decrement());
+    }
+  }, [counter]);
   return (
     <Card className={cn("w-full bg-black h-full", className)} {...props}>
       <CardHeader>
