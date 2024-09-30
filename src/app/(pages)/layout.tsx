@@ -1,10 +1,8 @@
 "use client";
 import Sidebar from "@/components/Sidebar";
 import VerifyMail from "@/components/verifyMail";
-import { GET } from "@/config/axios/requests";
 import React, { ReactNode, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { signOut } from "next-auth/react";
 import { store } from "../Redux/store";
 import { decrement } from "../Redux/Features/loader/loaderSlice";
 import Image from "next/image";
@@ -12,16 +10,24 @@ import Image from "next/image";
 type Props = { children: ReactNode };
 const Layout = ({ children }: Props) => {
   const session = useSelector((state: any) => state.user);
+  const counter = useSelector((state: any) => state.counter);
   const [verifiedEmail, setVerifiedEmail] = useState(true);
   const verified = async (): Promise<void> => {
     if (session && session.accessToken) {
       setVerifiedEmail(session.isVerifiedEmail);
     }
-    store.dispatch(decrement());
   };
   useEffect(() => {
     verified();
   }, [session, verifiedEmail]);
+
+  useEffect(() => {
+    if (counter > 0) {
+      console.log("counter", counter);
+      store.dispatch(decrement());
+      console.log("counter", counter);
+    }
+  }, [counter]);
 
   return (
     <>

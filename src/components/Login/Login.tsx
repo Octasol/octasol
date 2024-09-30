@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useLayoutEffect, useMemo } from "react";
+import React, { useLayoutEffect, useMemo } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,14 +25,14 @@ import BottomGradient from "../ui/BottomGradient";
 import LoginButton from "../Button/LoginButton";
 import { IconChartHistogram } from "@tabler/icons-react";
 import { decrement, increment } from "@/app/Redux/Features/loader/loaderSlice";
+import { store } from "@/app/Redux/store";
 
 const Login = () => {
-  const { data: session, status } = useSession() as any;
+  const { data: session } = useSession() as any;
   const router = useRouter();
   const pathname = usePathname();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
-  const counter = useSelector((state: any) => state.counter);
 
   interface SessionUser {
     name?: string | null;
@@ -44,14 +44,14 @@ const Login = () => {
     isVerifiedEmail?: boolean | true;
   }
 
-  // Memoize session user data
   const sessionUser = useMemo(
     () => session?.user as SessionUser | null,
     [session]
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (sessionUser) {
+      store.dispatch(decrement());
       dispatch(
         setUser({
           name: sessionUser?.name || "",
@@ -90,15 +90,6 @@ const Login = () => {
   const userLogin = () => {
     signIn("github");
   };
-
-  useLayoutEffect(() => {
-    if (status) {
-      if (status === "authenticated") {
-        dispatch(decrement());
-        router.push("/dashboard");
-      }
-    }
-  }, [status, counter]);
 
   return (
     <>

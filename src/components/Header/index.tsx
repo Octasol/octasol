@@ -1,11 +1,18 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Login from "../Login/Login";
+import { useSelector } from "react-redux";
 
 type Props = {};
 
 const Header = (props: Props) => {
+  const counter = useSelector((state: any) => state.counter);
+
+  useEffect(() => {
+    console.log("counter", counter);
+  }, [counter]);
   return (
     <>
       <nav className="text-white fixed top-0 right-0 left-0 w-full h-20 flex justify-between items-center md:px-20 px-2 py-6 bg-black z-50 ">
