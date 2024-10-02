@@ -1,5 +1,5 @@
 "use client";
-import React, { useLayoutEffect, useMemo } from "react";
+import React, { useEffect, useLayoutEffect, useMemo } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,9 +26,10 @@ import LoginButton from "../Button/LoginButton";
 import { IconChartHistogram } from "@tabler/icons-react";
 import { decrement, increment } from "@/app/Redux/Features/loader/loaderSlice";
 import { store } from "@/app/Redux/store";
+import { Skeleton } from "../ui/skeleton";
 
 const Login = () => {
-  const { data: session } = useSession() as any;
+  const { data: session, status } = useSession() as any;
   const router = useRouter();
   const pathname = usePathname();
   const dispatch = useDispatch();
@@ -60,15 +61,16 @@ const Login = () => {
           githubId: sessionUser?.id || "",
           login: sessionUser?.login || "",
           accessToken: session?.accessToken || "",
+          status: status,
           isVerifiedEmail: sessionUser?.isVerifiedEmail || false,
         })
       );
       console.log("sessionUser:", sessionUser);
       if (pathname === "/") {
         router.push("/dashboard");
+      } else {
+        router.push(pathname);
       }
-    } else {
-      router.push("/");
     }
   }, [sessionUser, pathname, router, dispatch]);
 
@@ -82,25 +84,41 @@ const Login = () => {
         githubId: "",
         login: "",
         accessToken: "",
+        status: "unauthenticated",
         isVerifiedEmail: true,
       })
     );
+    router.push("/");
   };
 
   const userLogin = () => {
     signIn("github");
   };
 
+  useEffect(() => {
+    console.log(pathname);
+  }, [pathname]);
+
   return (
     <>
       {!session ? (
         <LoginButton>
-          <button onClick={userLogin} className="py-2">
-            <span className="text-sm md:text-base ">
-              Sign in with GitHub&nbsp;
-            </span>
-            <span className="pt-[2px]">&gt;</span>
-          </button>
+          {status === "loading" && (
+            <div className="flex items-center space-x-4 py-3">
+              <Skeleton className="h-5 w-5 rounded-full" />
+              <div className="space-y-2">
+                <Skeleton className="h-2 w-[100px]" />
+              </div>
+            </div>
+          )}
+          {status === "unauthenticated" && (
+            <button onClick={userLogin} className="py-2">
+              <span className="text-sm md:text-base ">
+                Sign in with GitHub&nbsp;
+              </span>
+              <span className="pt-[2px]">&gt;</span>
+            </button>
+          )}
         </LoginButton>
       ) : (
         <>

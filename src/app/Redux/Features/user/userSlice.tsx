@@ -20,7 +20,7 @@ const initialState: UserState = {
   login: "",
   accessToken: "",
   isVerifiedEmail: true,
-  status: "",
+  status: "unauthenticated",
 };
 
 export const userSlice = createSlice({
