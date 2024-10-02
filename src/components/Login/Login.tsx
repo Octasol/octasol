@@ -27,6 +27,7 @@ import { IconChartHistogram } from "@tabler/icons-react";
 import { decrement, increment } from "@/app/Redux/Features/loader/loaderSlice";
 import { store } from "@/app/Redux/store";
 import { Skeleton } from "../ui/skeleton";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const { data: session, status } = useSession() as any;
@@ -50,9 +51,37 @@ const Login = () => {
     [session]
   );
 
+  const handleSessionFromCookies = () => {
+    const cookieSession = Cookies.get("session");
+
+    if (cookieSession) {
+      const parsedSession = JSON.parse(cookieSession);
+
+      dispatch(
+        setUser({
+          name: parsedSession?.name || "",
+          email: parsedSession?.email || "",
+          photo: parsedSession?.image || "",
+          githubId: parsedSession?.id || "",
+          login: parsedSession?.login || "",
+          accessToken: parsedSession?.accessToken || "",
+          status: "authenticated",
+          isVerifiedEmail: parsedSession?.isVerifiedEmail || false,
+        })
+      );
+
+      if (pathname === "/") {
+        router.push("/dashboard");
+      } else {
+        router.push(pathname);
+      }
+    }
+  };
+
   useLayoutEffect(() => {
     if (sessionUser) {
       store.dispatch(decrement());
+      Cookies.set("session", JSON.stringify(sessionUser), { expires: 1 });
       dispatch(
         setUser({
           name: sessionUser?.name || "",
@@ -71,6 +100,8 @@ const Login = () => {
       } else {
         router.push(pathname);
       }
+    } else {
+      handleSessionFromCookies();
     }
   }, [sessionUser, pathname, router, dispatch]);
 
@@ -88,6 +119,7 @@ const Login = () => {
         isVerifiedEmail: true,
       })
     );
+    Cookies.remove("session");
     router.push("/");
   };
 
