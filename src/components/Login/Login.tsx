@@ -75,6 +75,8 @@ const Login = () => {
       } else {
         router.push(pathname);
       }
+    } else {
+      router.push("/");
     }
   };
 
@@ -105,6 +107,13 @@ const Login = () => {
     }
   }, [sessionUser, pathname, router, dispatch]);
 
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      Cookies.remove("session");
+      router.push("/");
+    }
+  }, [status, router]);
+
   const logout = async () => {
     await signOut({ redirect: false });
     dispatch(
@@ -127,9 +136,11 @@ const Login = () => {
     signIn("github");
   };
 
-  useEffect(() => {
-    console.log(pathname);
-  }, [pathname]);
+  // useEffect(() => {
+  //   if (status === "unauthenticated") {
+  //     logout();
+  //   }
+  // }, [status]);
 
   return (
     <>
