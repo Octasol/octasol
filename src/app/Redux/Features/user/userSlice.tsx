@@ -9,6 +9,7 @@ type UserState = {
   login: string;
   accessToken: string;
   isVerifiedEmail?: boolean;
+  status?: string;
 };
 
 const initialState: UserState = {
@@ -19,6 +20,7 @@ const initialState: UserState = {
   login: "",
   accessToken: "",
   isVerifiedEmail: true,
+  status: "",
 };
 
 export const userSlice = createSlice({
@@ -33,6 +35,7 @@ export const userSlice = createSlice({
       state.login = action.payload.login;
       state.accessToken = action.payload.accessToken;
       state.isVerifiedEmail = action.payload.isVerifiedEmail;
+      state.status = action.payload.status;
     },
   },
 });
