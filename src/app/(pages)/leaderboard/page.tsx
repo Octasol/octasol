@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { GET } from "@/config/axios/requests";
+import { POST } from "@/config/axios/requests";
 import RankCard from "@/components/RankCard";
 import { Profile } from "@/lib/types";
 import { leaderboard } from "@/config/axios/Breakpoints";
@@ -24,8 +24,8 @@ const Leaderboard = () => {
   const recordsPerPage = 15;
 
   const response = async () => {
-    const res = await GET(leaderboard);
-    setProfile(res);
+    const { response } = await POST(leaderboard, {});
+    setProfile(response?.data);
   };
 
   useEffect(() => {
@@ -129,9 +129,8 @@ const Leaderboard = () => {
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
-            className={`px-4 py-2 rounded ${
-              currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className={`px-4 py-2 rounded ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+              }`}
           >
             <ChevronLeft color="white" size={40} />
           </button>
@@ -143,9 +142,8 @@ const Leaderboard = () => {
           <button
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
-            className={`px-4 py-2 rounded ${
-              currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className={`px-4 py-2 rounded ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+              }`}
           >
             <ChevronRight color="white" size={40} />
           </button>
