@@ -54,7 +54,6 @@ export const authOptions: NextAuthOptions = {
   },
   session: {
     maxAge: 10 * 24 * 60 * 60,
-    updateAge: 24 * 60 * 60,
   },
 };
 
