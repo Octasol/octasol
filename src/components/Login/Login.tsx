@@ -55,25 +55,31 @@ const Login = () => {
     const cookieSession = Cookies.get("session");
 
     if (cookieSession) {
-      const parsedSession = JSON.parse(cookieSession);
+      try {
+        const parsedSession = JSON.parse(cookieSession);
 
-      dispatch(
-        setUser({
-          name: parsedSession?.name || "",
-          email: parsedSession?.email || "",
-          photo: parsedSession?.image || "",
-          githubId: parsedSession?.id || "",
-          login: parsedSession?.login || "",
-          accessToken: parsedSession?.accessToken || "",
-          status: "authenticated",
-          isVerifiedEmail: parsedSession?.isVerifiedEmail || false,
-        })
-      );
+        dispatch(
+          setUser({
+            name: parsedSession?.name || "",
+            email: parsedSession?.email || "",
+            photo: parsedSession?.image || "",
+            githubId: parsedSession?.id || "",
+            login: parsedSession?.login || "",
+            accessToken: parsedSession?.accessToken || "",
+            status: "authenticated",
+            isVerifiedEmail: parsedSession?.isVerifiedEmail || false,
+          })
+        );
 
-      if (pathname === "/") {
-        router.push("/dashboard");
-      } else {
-        router.push(pathname);
+        if (pathname === "/") {
+          router.push("/dashboard");
+        } else {
+          router.push(pathname);
+        }
+      } catch (error) {
+        console.error("Error parsing cookie session:", error);
+        Cookies.remove("session");
+        router.push("/");
       }
     } else {
       router.push("/");
