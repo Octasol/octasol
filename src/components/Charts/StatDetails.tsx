@@ -16,7 +16,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { DataObject } from "@/lib/types";
 
 const chartConfig = {
@@ -34,17 +34,21 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 interface Props {
-  stats: DataObject;
+  stats: DataObject | undefined; // Allow stats to be undefined
 }
 
 export function StatDetails(props: Props) {
   const transformedData = useMemo(() => {
-    return Object.entries(props.stats)
-      .filter(([key]) => key !== "githubId")
-      .map(([key, value]) => ({
-        label: key,
-        value: value || 0,
-      }));
+    // Ensure stats is an object before processing
+    if (props.stats && typeof props.stats === "object") {
+      return Object.entries(props.stats)
+        .filter(([key]) => key !== "githubId")
+        .map(([key, value]) => ({
+          label: key,
+          value: value || 0,
+        }));
+    }
+    return []; // Return an empty array if stats is undefined or not an object
   }, [props.stats]);
 
   return (
