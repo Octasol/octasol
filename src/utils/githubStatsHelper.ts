@@ -5,25 +5,45 @@ import { setGithubDevProfile } from "./dbUtils";
 
 export async function getRepos(page: number, authHeader: string) {
   const url = `https://api.github.com/user/repos?per_page=100&page=${page}&affiliation=owner`;
-  const res = await axios.get(url, {
-    headers: {
-      Authorization: `${authHeader}`,
-      Accept: "application/vnd.github.v3+json",
-    },
-  });
-  return res.data;
+  let attempts = 0;
+  const maxAttempts = 3;
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  while (attempts < maxAttempts) {
+    try {
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `${authHeader}`,
+          Accept: "application/vnd.github.v3+json",
+        },
+      });
+      return res.data;
+    } catch (error: any) {
+      attempts++;
+      console.error(`Attempt ${attempts} failed: ${error.message}`);
+      if (attempts >= maxAttempts) {
+        throw new Error("Failed to fetch repositories after multiple attempts");
+      }
+      await delay(1000); // wait for 1 second before retrying
+    }
+  }
 }
 
 export async function getTotalCommits(username: string, authHeader: string) {
   const url = `https://api.github.com/search/commits?q=author:${username}`;
-  const res = await axios.get(url, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `${authHeader}`,
-      Accept: "application/vnd.github.cloak-preview",
-    },
-  });
-  return res.data.total_count;
+  try {
+    const res = await axios.get(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${authHeader}`,
+        Accept: "application/vnd.github.cloak-preview",
+      },
+    });
+    return res.data.total_count;
+  } catch (error: any) {
+    console.error("Error fetching total commits:", error.message);
+    throw new Error("Failed to fetch total commits");
+  }
 }
 
 export async function getGithubGraphql(login: string, authHeader: string) {
