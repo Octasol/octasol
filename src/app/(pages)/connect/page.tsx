@@ -160,7 +160,6 @@ export default function Connect() {
   };
 
   const handleSecondModalOpen = (item: any) => {
-    // console.log(item);
     setModalOpen(false);
     setSecondModalOpen(true);
     setActiveItemTitle(item);
