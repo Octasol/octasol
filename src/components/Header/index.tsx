@@ -11,7 +11,8 @@ const Header = (props: Props) => {
   const counter = useSelector((state: any) => state.counter);
 
   useEffect(() => {
-    console.log("counter", counter);
+    //console.log("counter", counter);
+    // Effect logic here if any
   }, [counter]);
   return (
     <>

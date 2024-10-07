@@ -102,7 +102,7 @@ const Login = () => {
           isVerifiedEmail: sessionUser?.isVerifiedEmail || false,
         })
       );
-      console.log("sessionUser:", sessionUser);
+      // console.log("sessionUser:", sessionUser);
       if (pathname === "/") {
         router.push("/dashboard");
       } else {

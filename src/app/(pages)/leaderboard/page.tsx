@@ -30,7 +30,7 @@ const Leaderboard = () => {
 
   useEffect(() => {
     response();
-    console.log(user?.login);
+    // console.log(user?.login);
   }, []);
 
   const handleNextPage = () => {
