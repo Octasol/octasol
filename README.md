@@ -125,6 +125,12 @@ We welcome contributions from the community! Here’s how you can help:
 3. Make your changes and commit them (`git commit -m 'Add new feature'`).
 4. Push to the branch (`git push origin feature-branch`).
 5. Open a pull request.
+---
+## 📩 Contact 
+
+1. Discord: https://discord.gg/gjYB6x7Q
+2. Telegram: https://t.me/octasol
+3. Email: contact@octasol.io
 
 ---
 
