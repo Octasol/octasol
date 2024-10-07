@@ -43,14 +43,10 @@ export function RepoInitializeForm() {
         }
       } else {
         console.error(error);
-        // dispatch(setError(error));
       }
     }
   };
 
-  // useEffect(() => {
-  //   dispatchInstallationId();
-  // }, []);
 
   const fetchRepositories = async (installationId: string) => {
     try {
@@ -66,9 +62,7 @@ export function RepoInitializeForm() {
     }
   };
 
-  // useEffect(() => {
-  //   fetchRepositories(installationId);
-  // }, []);
+  
 
   const filteredRepositories = repositories.filter((repo: any) =>
     repo.name.toLowerCase().includes(searchTerm.toLowerCase())
