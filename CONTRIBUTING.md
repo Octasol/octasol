@@ -169,12 +169,12 @@ Following these guidelines shows respect for our maintainer's time, and in turn,
 <p>&nbsp;</p>
 
 ## How to Report Bugs
-If you encounter any bugs or have ideas for new features, please open an [issues](#https://github.com/Octasol/octasol/issues) in the repository. Make sure to include as much information as possible, such as screenshots, text output, and both the expected and actual results.
+If you encounter any bugs or have ideas for new features, please open an [issues](https://github.com/Octasol/octasol/issues) in the repository. Make sure to include as much information as possible, such as screenshots, text output, and both the expected and actual results.
 
 <p>&nbsp;</p>
 
 ## Your Help is needed
-Please check out the [issues](#https://github.com/Octasol/octasol/issues). Comment on an issue you would like to work on. 
+Please check out the [issues](https://github.com/Octasol/octasol/issues). Comment on an issue you would like to work on. 
 
 <p>&nbsp;</p>
 
