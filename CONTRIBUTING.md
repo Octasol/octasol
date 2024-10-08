@@ -10,7 +10,7 @@ Following these guidelines shows respect for our maintainer's time, and in turn,
 <p>&nbsp;</p>
 
 ## 👀 Table of Contents
-1. [Setting Up Local Development Environment](https://github.com/LaraKraemer/octasol/edit/add/contributing-md/CONTRIBUTING.md#setting-up-local-development-environment)
+1. [Setting Up Local Development Environment](#setting-up-local-development-environment)
 1. [Pull Requests Process](#pull-requests-process)
 1. [Code Guidelines](#code-guidelines)
 1. [Test your Code](#test-your-code)
