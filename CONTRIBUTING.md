@@ -1,22 +1,25 @@
 # 🤝 Contributing to octasol
 
-Welcome to Octasol! We appreciate your interest in contributing. Please review this document to support an easy and effective contribution process for everyone.
+Welcome to Octasol! We are glad about your interest in contributing. Please take a look at this document to support an easy and effective contribution process for everyone.
 
-Following these guidelines shows respect for the developers' time, and in turn, they will reciprocate by addressing your issues and evaluating your contributions.
+Following these guidelines shows respect for our maintainer's time, and in turn, they will respond to your issues and evaluate your contributions.
 
->**Note**
+> [!NOTE] 
 > Please submit one Pull Request per issue! 
 
+<p>&nbsp;</p>
 
 ## 👀 Table of Contents
-1. [Setting Up Local Development Environment](#Setting-Up-Local-Development-Environment)
-1. [Pull Requests Process](#Pull-Requests-Process)
-1. [Code Guidelines](#Code-Guidelines)
-1. [How to Report Bugs](#How-to-Report-Bugs)
-1. [Your Help is needed](#Your-Help-is-needed)
+1. [Setting Up Local Development Environment](https://github.com/LaraKraemer/octasol/edit/add/contributing-md/CONTRIBUTING.md#setting-up-local-development-environment)
+1. [Pull Requests Process](#pull-requests-process)
+1. [Code Guidelines](#code-guidelines)
+1. [Test your Code](#test-your-code)
+1. [How to Report Bugs](#how-to-report-bugs)
+1. [Your Help is needed](#your-help-is-needed)
 
+<p>&nbsp;</p>
 
-## 💻 Setting Up Local Development Environment
+## Setting Up Local Development Environment
 
 
 1. Fork the Repository
@@ -58,7 +61,7 @@ Following these guidelines shows respect for the developers' time, and in turn, 
     ```
 1. Generate Prisma Client
 
-    If it's not automatically generated during the install or migration process, run:
+    If it's not automatically generated during the installation or migration process, run:
 
     ```
     npx prisma generate
@@ -71,22 +74,24 @@ Following these guidelines shows respect for the developers' time, and in turn, 
     ```
 
 1. Keep your repo up-to-date
-    > **Note**
-    > Keep your `master` branch pointing at the original repository and make
-    > pull requests from branches on your fork. To do this, run:
-    >
-    > ```
-    > git remote add upstream https://github.com/Octasol/octasol.git
-    > git fetch upstream
-    > git branch --set-upstream-to=upstream/master master
-    > ```
-    >
-    > This adds the original repository as a "remote" called "upstream," fetches the latest changes from that repo, 
-    >and sets your local `master` to track the upstream `master` branch. To update your `master` branch, run `git pull`. 
-    >Afterward, create new branches from `master` for your pull requests.
 
+> [!NOTE] 
+> Keep your `master` branch pointing at the original repository and make
+> pull requests from branches on your fork. To do this, run:
+>
+> ```
+> git remote add upstream https://github.com/Octasol/octasol.git
+> git fetch upstream
+> git branch --set-upstream-to=upstream/master master
+> ```
+>
+> This adds the original repository as a "remote" called "upstream," fetches the latest changes from that repo, 
+>and sets your local `master` to track the upstream `master` branch. To update your `master` branch, run `git pull`. 
+>Afterward, create new branches from `master` for your pull requests.
 
-## 👾 Pull Requests Process
+<p>&nbsp;</p>
+
+## Pull Requests Process
 
 1. Fork the Repository
 1. Clone the Repository
@@ -103,11 +108,11 @@ Following these guidelines shows respect for the developers' time, and in turn, 
     git checkout -b <your-branch-name>
     ```
 
-1. Commit, push changes of your PR 
+1. Commit, push changes to your PR 
 
     ```
     git add . 
-    git commit -m "Include message about your PR"
+    git commit -m "Include a message about your PR"
     git push origin <your-branch-name>
     ```
 
@@ -120,11 +125,14 @@ Following these guidelines shows respect for the developers' time, and in turn, 
 1. Pull Request Review  
     * One or more maintainers will review the changes and may request modifications. After approval, your PR will be merged into the main codebase.
 
-    > **Note**
-    > Respond to feedback: If changes are requested by maintainer, commit those changes to the same branch. Push the updated code, and GitHub will automatically update your PR.
-    > Approval: Once the changes are satisfactory, the reviewer will approve the PR.
+> [!NOTE] 
+> Respond to feedback: If the maintainer requests changes, commit those changes to the same branch. Push the updated code, and GitHub will automatically update your PR.
+> Approval: Once the changes are satisfactory, the reviewer will approve the PR.
 
-## ✏️ Code Guidelines
+
+<p>&nbsp;</p>
+
+## Code Guidelines
 
 * Use Consistent Naming Conventions
 * Use camelCase for variables and function names (e.g., myVariable, calculateTotal)
@@ -138,11 +146,13 @@ Following these guidelines shows respect for the developers' time, and in turn, 
 * Use Tailwind’s responsive utilities to build responsive designs easily.
 * Customize your theme in the tailwind.config.js file to define your own color palette, spacing, and more.
 
-## 🚨 Test your Code
+<p>&nbsp;</p>
+
+## Test your Code
 1. Execute a test suite. 
 
     Ensure that all tests pass locally before pushing your code. 
-    You can use mocha as testing framework. Follow this [instruction](https://medium.com/swlh/how-to-setting-up-unit-tests-with-typescript-871c0f4f1609) to run unit test with typescript. 
+    You can use mocha as a testing framework. Follow this [instruction](https://medium.com/swlh/how-to-setting-up-unit-tests-with-typescript-871c0f4f1609) to run a unit test with typescript. 
     As a first step, install all dependencies:
 
 
@@ -156,12 +166,17 @@ Following these guidelines shows respect for the developers' time, and in turn, 
     npm run lint
     ```
 
+<p>&nbsp;</p>
 
-## 🪲 How to Report Bugs
+## How to Report Bugs
 If you encounter any bugs or have ideas for new features, please open an [issues](#https://github.com/Octasol/octasol/issues) in the repository. Make sure to include as much information as possible, such as screenshots, text output, and both the expected and actual results.
 
-## 💯 Your Help is needed
-Please checkout the [issues](#https://github.com/Octasol/octasol/issues). Comment on a issue you would like to work on. 
+<p>&nbsp;</p>
 
-> **Important**
+## Your Help is needed
+Please check out the [issues](#https://github.com/Octasol/octasol/issues). Comment on an issue you would like to work on. 
+
+<p>&nbsp;</p>
+
+> [!Important]
 > By submitting patches, you agree to allow the project owners to license your work under the terms of the GNU License.
