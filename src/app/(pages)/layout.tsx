@@ -3,8 +3,6 @@ import Sidebar from "@/components/Sidebar";
 import VerifyMail from "@/components/verifyMail";
 import React, { ReactNode, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { store } from "../Redux/store";
-import { decrement } from "../Redux/Features/loader/loaderSlice";
 import Image from "next/image";
 
 type Props = { children: ReactNode };

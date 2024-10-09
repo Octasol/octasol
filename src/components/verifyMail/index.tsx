@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -39,7 +38,6 @@ const VerifyMail = ({ verify, session }: Props) => {
   const [timer, setTimer] = useState<number>(30);
   const [canResend, setCanResend] = useState(false);
   const user = useSelector((state: any) => state.user);
-  const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -75,18 +73,17 @@ const VerifyMail = ({ verify, session }: Props) => {
           }
         );
         if (response?.status === 200) {
-          // update isVerifiedEmail in redux user
           store.dispatch(
             setUser({
               ...user,
               isVerifiedEmail: true,
             })
           );
-          verify(); // Call verify function from props
+          verify(); 
         } else {
           setErrorMessage("Invalid OTP. Please try again.");
           setCanResend(false);
-          setTimer(30); // Reset timer on error
+          setTimer(30); 
         }
       } else {
         const { response } = await POST(
@@ -98,7 +95,7 @@ const VerifyMail = ({ verify, session }: Props) => {
         );
         if (response?.status === 200) {
           setOtpSent(true);
-          setErrorMessage(null); // Clear error message
+          setErrorMessage(null); 
         }
       }
     } catch (err) {

@@ -1,7 +1,6 @@
 import { Reclaim } from "@reclaimprotocol/js-sdk";
 import { processHackerRankData } from "./hackerrank/service";
 import { processSuperteamEarnData } from "./superteamearn/service";
-import { setUsername } from "@/utils/dbUtils";
 import { processLeetcodeData } from "./leetcode/service";
 import { processGeeksForGeeksData } from "./geeksforgeeks/service";
 import { processCodechefData } from "./codechef/service";
@@ -39,7 +38,7 @@ async function handleReclaimSession(
     onSuccessCallback: async (proof: any) => {
       try {
         let processedData;
-        // let username;
+        
 
         switch (providerName) {
           case "Hackerrank":
@@ -48,11 +47,6 @@ async function handleReclaimSession(
               proof,
               providerName
             );
-            // username = JSON.parse(proof[0].claimData.parameters).paramValues
-            //   .username;
-            // await setUsername(githubId, {
-            //   hackerrankUsername: username,
-            // });
             break;
 
           case "SuperteamEarn":
@@ -61,9 +55,6 @@ async function handleReclaimSession(
               proof,
               providerName
             );
-            // let username = JSON.parse(proof[0].claimData.parameters).paramValues
-            //   .username;
-            // await setUsername(githubId, { superteamUsername: username });
             break;
 
           case "Leetcode":
@@ -88,9 +79,6 @@ async function handleReclaimSession(
               proof,
               providerName
             );
-            // let username = JSON.parse(proof[0].claimData.parameters).paramValues
-            //   .username;
-            // await setUsername(githubId, { superteamUsername: username });
             break;
 
           default:

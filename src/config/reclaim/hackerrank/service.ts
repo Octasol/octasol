@@ -15,14 +15,6 @@ export async function processHackerRankData(
   const { currentPoints, stars } = await getHackerrankStats(username);
   await setHackerrankDatabyGithubId(BigInt(githubId), currentPoints, stars);
   return true;
-  // return new ReclaimServiceResponse(
-  //   providerName,
-  //   lastUpdateTimeStamp,
-  //   username,
-  //   { currentPoints, stars },
-  //   proof[0],
-  //   userId
-  // );
 }
 
 export async function getHackerrankStats(username: string) {

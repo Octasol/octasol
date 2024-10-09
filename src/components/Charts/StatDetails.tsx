@@ -34,7 +34,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 interface Props {
-  stats: DataObject | undefined; // Allow stats to be undefined
+  stats: DataObject | undefined; 
 }
 
 export function StatDetails(props: Props) {
@@ -48,7 +48,7 @@ export function StatDetails(props: Props) {
           value: value || 0,
         }));
     }
-    return []; // Return an empty array if stats is undefined or not an object
+    return []; 
   }, [props.stats]);
 
   return (
