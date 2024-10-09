@@ -2,10 +2,7 @@
 
 Welcome to Octasol! We are glad about your interest in contributing. Please take a look at this document to support an easy and effective contribution process for everyone.
 
-Following these guidelines shows respect for our maintainer's time, and in turn, they will respond to your issues and evaluate your contributions.
-
-> [!NOTE] 
-> Please submit one Pull Request per issue! 
+Following these guidelines shows respect for our maintainer's time, and in turn, they will respond to your issues and evaluate your contributions. You are also invited to join our [Discord](https://discord.gg/gjYB6x7Q) for any help and support.
 
 <p>&nbsp;</p>
 
@@ -13,7 +10,6 @@ Following these guidelines shows respect for our maintainer's time, and in turn,
 1. [Setting Up Local Development Environment](#setting-up-local-development-environment)
 1. [Pull Requests Process](#pull-requests-process)
 1. [Code Guidelines](#code-guidelines)
-1. [Test your Code](#test-your-code)
 1. [How to Report Bugs](#how-to-report-bugs)
 1. [Your Help is needed](#your-help-is-needed)
 
@@ -26,9 +22,9 @@ Following these guidelines shows respect for our maintainer's time, and in turn,
 1. Clone the Repository
 
     ```
-    git clone https://github.com/<yourusername>/octasol.git <octasol>
+    git clone https://github.com/yourusername/octasol.git octasol
 
-    cd <octasol>
+    cd octasol
     ```
 
 
@@ -76,18 +72,18 @@ Following these guidelines shows respect for our maintainer's time, and in turn,
 1. Keep your repo up-to-date
 
 > [!NOTE] 
-> Keep your `master` branch pointing at the original repository and make
+> Keep your `main` branch pointing at the original repository and make
 > pull requests from branches on your fork. To do this, run:
 >
 > ```
 > git remote add upstream https://github.com/Octasol/octasol.git
 > git fetch upstream
-> git branch --set-upstream-to=upstream/master master
+> git branch --set-upstream-to=upstream/main main
 > ```
 >
 > This adds the original repository as a "remote" called "upstream," fetches the latest changes from that repo, 
->and sets your local `master` to track the upstream `master` branch. To update your `master` branch, run `git pull`. 
->Afterward, create new branches from `master` for your pull requests.
+>and sets your local `main` to track the upstream `main` branch. To update your `main` branch, run `git pull`. 
+>Afterward, create new branches from `main` for your pull requests.
 
 <p>&nbsp;</p>
 
@@ -97,15 +93,15 @@ Following these guidelines shows respect for our maintainer's time, and in turn,
 1. Clone the Repository
 
      ```
-    git clone https://github.com/<yourusername>/octasol.git <octasol>
+    git clone https://github.com/yourusername/octasol.git octasol
 
-    cd <octasol>
+    cd octasol
     ```
 
 1. Create a branch for your PR 
 
     ```
-    git checkout -b <your-branch-name>
+    git checkout -b your-branch-name
     ```
 
 1. Commit, push changes to your PR 
@@ -113,12 +109,12 @@ Following these guidelines shows respect for our maintainer's time, and in turn,
     ```
     git add . 
     git commit -m "Include a message about your PR"
-    git push origin <your-branch-name>
+    git push origin your-branch-name
     ```
 
 1. Open [Pull Request](https://docs.github.com/de/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests)
     * Go to your fork on GitHub, where you'll see a notification that your branch has recent pushes and an option to create a Pull Request. 
-    * Click on the Compare & Pull Request button and select your branch from the "head repository" dropdown, and compare it with the main or master branch of the original repository.  
+    * Click on the Compare & Pull Request button and select your branch from the "head repository" dropdown, and compare it with the main branch of the original repository.  
     * Provide a title and clear description for your pull request and which issue it fixes. 
     * Prefer async/await over promises for handling asynchronous operations, as it improves readability.
 
@@ -145,26 +141,6 @@ Following these guidelines shows respect for our maintainer's time, and in turn,
 * Use .env.local for environment variables to separate secrets and configurations from your codebase.
 * Use Tailwind’s responsive utilities to build responsive designs easily.
 * Customize your theme in the tailwind.config.js file to define your own color palette, spacing, and more.
-
-<p>&nbsp;</p>
-
-## Test your Code
-1. Execute a test suite. 
-
-    Ensure that all tests pass locally before pushing your code. 
-    You can use mocha as a testing framework. Follow this [instruction](https://medium.com/swlh/how-to-setting-up-unit-tests-with-typescript-871c0f4f1609) to run a unit test with typescript. 
-    As a first step, install all dependencies:
-
-
-    ```
-    npm install --dev ts-node mocha @testdeck/mocha nyc chai ts-mockito
-    ```
-1. Lint your code: Ensure your code adheres to the project's coding style. Run the linter and fix any issues:
-
-
-    ```
-    npm run lint
-    ```
 
 <p>&nbsp;</p>
 
