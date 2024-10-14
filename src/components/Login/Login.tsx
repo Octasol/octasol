@@ -8,7 +8,7 @@ import { setUser } from "@/app/Redux/Features/user/userSlice";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuLabel,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import ProfileImage from "../ProfileImage";
@@ -28,6 +28,7 @@ import { decrement, increment } from "@/app/Redux/Features/loader/loaderSlice";
 import { store } from "@/app/Redux/store";
 import { Skeleton } from "../ui/skeleton";
 import Cookies from "js-cookie";
+import { Button } from "../ui/button";
 
 const Login = () => {
   const { data: session, status } = useSession() as any;
@@ -184,55 +185,71 @@ const Login = () => {
               </LoginButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-black text-white border-2 border-t-green-500/20 border-b-indigo-500/20 border-r-green-500/40 border-l-indigo-500/40 flex flex-col gap-2">
-              <DropdownMenuLabel className="cursor-pointer flex md:hidden">
-                <Link prefetch href="/dashboard">
+              {/* Changed DropdownMenuLabel to DropdownMenuItem which is the correct way to create dropdown menu */}
+              <DropdownMenuItem
+                asChild
+                className="cursor-pointer flex md:hidden"
+              >
+                <Link prefetch href="/dashboard" className="w-full">
                   <div className="flex items-center gap-4 justify-between w-full">
                     <span>Dashboard</span>
                     <Home size={20} />
                   </div>
                 </Link>
-              </DropdownMenuLabel>
+              </DropdownMenuItem>
 
-              <DropdownMenuLabel className="cursor-pointer flex md:hidden">
+              <DropdownMenuItem
+                asChild
+                className="cursor-pointer flex md:hidden"
+              >
                 <Link prefetch href="/repoinitialize">
                   <div className="flex items-center gap-4 justify-between w-full">
                     <span>Repo Initialize</span>
                     <CopyPlus size={20} />
                   </div>
                 </Link>
-              </DropdownMenuLabel>
+              </DropdownMenuItem>
 
-              <DropdownMenuLabel className="cursor-pointer flex md:hidden">
+              <DropdownMenuItem
+                asChild
+                className="cursor-pointer flex md:hidden"
+              >
                 <Link prefetch href="/connect">
                   <div className="flex items-center gap-4 justify-between w-full">
                     <span>Connect</span>
                     <Blocks size={20} />
                   </div>
                 </Link>
-              </DropdownMenuLabel>
+              </DropdownMenuItem>
 
-              <DropdownMenuLabel className="cursor-pointer flex md:hidden">
+              <DropdownMenuItem
+                asChild
+                className="cursor-pointer flex md:hidden"
+              >
                 <Link prefetch href="/leaderboard">
                   <div className="flex items-center gap-4 justify-between w-full">
                     <span>Leaderboard</span>
                     <IconChartHistogram size={20} />
                   </div>
                 </Link>
-              </DropdownMenuLabel>
+              </DropdownMenuItem>
 
-              <DropdownMenuLabel className="cursor-pointer flex flex-col">
+              <DropdownMenuItem
+                asChild
+                className="cursor-pointer flex flex-col"
+              >
                 <Link prefetch href={`/p/${user?.login}`}>
                   <div className="relative flex md:hidden">
                     <BottomGradient />
                   </div>
-                  <div className="flex items-center gap-4 justify-between w-full pt-3 md:pt-0">
+                  <div className="flex items-center gap-4 justify-between w-full">
                     <span>Profile</span>
                     <SquareUser size={20} />
                   </div>
                 </Link>
-              </DropdownMenuLabel>
+              </DropdownMenuItem>
 
-              <DropdownMenuLabel className="cursor-pointer flex flex-col">
+              <DropdownMenuItem asChild className="cursor-pointer flex">
                 <button
                   onClick={logout}
                   className="flex items-center gap-4 justify-between w-full"
@@ -240,7 +257,7 @@ const Login = () => {
                   <span>Sign Out</span>
                   <LogOut size={20} />
                 </button>
-              </DropdownMenuLabel>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </>
