@@ -128,7 +128,7 @@ We welcome contributions from the community! Here’s how you can help:
 ---
 ## 📩 Contact 
 
-1. Discord: https://discord.gg
+1. Discord: https://discord.gg/zQGv8RD8cx
 2. Telegram: https://t.me/octasol
 3. Email: contact@octasol.io
 
