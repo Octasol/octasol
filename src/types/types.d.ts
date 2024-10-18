@@ -1,4 +1,3 @@
-// types.d.ts
 import { Profile as NextAuthProfile } from "next-auth";
 
 declare module "next-auth" {

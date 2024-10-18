@@ -6,7 +6,6 @@ import { providers } from "@/providers/constants";
 import { getGithubIdbyAccessToken } from "@/lib/apiUtils";
 
 export async function GET(req: NextRequest) {
-  // const provider = req.nextUrl.searchParams.get("provider");
   const username = req.nextUrl.searchParams.get("username") || "";
   let data = await getHackerrankStats(username);
   return NextResponse.json(data);

@@ -142,11 +142,7 @@ const Login = () => {
     signIn("github");
   };
 
-  // useEffect(() => {
-  //   if (status === "unauthenticated") {
-  //     logout();
-  //   }
-  // }, [status]);
+  
 
   return (
     <>

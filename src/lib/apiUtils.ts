@@ -42,10 +42,7 @@ export async function getAccessToken(installationId: number) {
   return accessToken;
 }
 
-/**
- * Unused function
- * @returns installations of the app, error if any
- */
+
 async function getInstallations() {
   const token = getToken();
   try {
@@ -64,11 +61,7 @@ async function getInstallations() {
   }
 }
 
-/**
- * Unused function
- * @param githubId Github Id of user
- * @returns installationId of the app for the user
- */
+
 export async function getInstallationIdbyGithubId(githubId: number) {
   const installations = await getInstallations();
   if (installations.error != "") {
