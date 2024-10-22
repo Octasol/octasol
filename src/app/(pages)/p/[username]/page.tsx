@@ -143,13 +143,6 @@ export default function BentoGridDemo() {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
-                    {/* {user?.githubId == view && (
-                    <div className="flex justify-end px-4">
-                      <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
-                        Refresh
-                      </button>
-                    </div>
-                  )} */}
                     <StatDetails stats={githubData} />
                   </AccordionContent>
                 </AccordionItem>
@@ -176,15 +169,7 @@ export default function BentoGridDemo() {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
-                    {/* {user?.githubId == view && (
-                    <div className="flex justify-end px-4">
-                      <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
-                        Refresh
-                      </button>
-                    </div>
-                  )} */}
-
-                    <StatDetails stats={superteamData} />
+                  <StatDetails stats={superteamData} />
                   </AccordionContent>
                 </AccordionItem>
               )}
@@ -210,13 +195,6 @@ export default function BentoGridDemo() {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
-                    {/* {user?.githubId == view && (
-                    <div className="flex justify-end px-4">
-                      <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
-                        Refresh
-                      </button>
-                    </div>
-                  )} */}
                     <StatDetails stats={leetcodeData} />
                   </AccordionContent>
                 </AccordionItem>
@@ -226,13 +204,6 @@ export default function BentoGridDemo() {
                 <AccordionItem value="codeforces">
                   <AccordionTrigger>Codeforces</AccordionTrigger>
                   <AccordionContent>
-                    {/* {user?.githubId == view && (
-                    <div className="flex justify-end px-4">
-                      <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
-                        Refresh
-                      </button>
-                    </div>
-                  )} */}
                     Username: {userName.codeforcesUsername}
                   </AccordionContent>
                 </AccordionItem>
@@ -259,13 +230,6 @@ export default function BentoGridDemo() {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
-                    {/* {user?.githubId == view && (
-                    <div className="flex justify-end px-4">
-                      <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
-                        Refresh
-                      </button>
-                    </div>
-                  )} */}
                     <StatDetails stats={hackerrankData} />
                   </AccordionContent>
                 </AccordionItem>
@@ -293,13 +257,6 @@ export default function BentoGridDemo() {
                   </AccordionTrigger>
 
                   <AccordionContent>
-                    {/* {user?.githubId == view && (
-                    <div className="flex justify-end px-4">
-                      <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
-                        Refresh
-                      </button>
-                    </div>
-                  )} */}
                     <StatDetails stats={codechefData} />
                   </AccordionContent>
                 </AccordionItem>
@@ -326,13 +283,6 @@ export default function BentoGridDemo() {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
-                    {/* {user?.githubId == view && (
-                    <div className="flex justify-end px-4">
-                      <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
-                        Refresh
-                      </button>
-                    </div>
-                  )} */}
                     <StatDetails stats={gfgData} />
                   </AccordionContent>
                 </AccordionItem>
@@ -342,13 +292,6 @@ export default function BentoGridDemo() {
                 <AccordionItem value="gitlab">
                   <AccordionTrigger>GitLab</AccordionTrigger>
                   <AccordionContent>
-                    {/* {user?.githubId == view && (
-                    <div className="flex justify-end px-4">
-                      <button className="bg-[#1e604b] text-white px-5 py-2 rounded-md hover:bg-[#267b60]">
-                        Refresh
-                      </button>
-                    </div>
-                  )} */}
                     Username: {userName.gitlabUsername}
                   </AccordionContent>
                 </AccordionItem>

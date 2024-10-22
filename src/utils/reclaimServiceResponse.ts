@@ -1,4 +1,3 @@
-// src/utils/reclaimServiceResponse.ts
 export class ReclaimServiceResponse {
     flag: string;
     timestamp: string;

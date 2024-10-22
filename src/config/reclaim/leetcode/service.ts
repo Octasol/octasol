@@ -11,7 +11,6 @@ export async function processLeetcodeData(
     leetcodeUsername: username,
   });
 
-  // Leetcode GraphQL query and variables
   const query = `
     query userProfileUserQuestionProgressV2($userSlug: String!) {
       userProfileUserQuestionProgressV2(userSlug: $userSlug) {
@@ -29,7 +28,6 @@ export async function processLeetcodeData(
 
   const url = 'https://leetcode.com/graphql/';
   try {
-    // Make the POST request to Leetcode's GraphQL API
     const response = await fetch(url, {
       method: 'POST',
       headers: {

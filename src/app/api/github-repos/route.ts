@@ -20,15 +20,13 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    // Fetch the installation access token
+    
     const accessToken = await getAccessToken(Number(installationId));
 
-    // Fetch the repositories
     const reposResponse = await axios.get(
       "https://api.github.com/installation/repositories",
       {
         headers: {
-          // Authorization: `Bearer ${token}`,
           Authorization: `token ${accessToken}`,
           Accept: "application/vnd.github.v3+json",
         },
