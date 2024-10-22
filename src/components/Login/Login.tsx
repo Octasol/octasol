@@ -90,7 +90,7 @@ const Login = () => {
   useLayoutEffect(() => {
     if (sessionUser) {
       store.dispatch(decrement());
-      Cookies.set("session", JSON.stringify(sessionUser), { expires: 1 });
+      Cookies.set("session", JSON.stringify(sessionUser), { expires: 8 / 24 });
       dispatch(
         setUser({
           name: sessionUser?.name || "",
@@ -116,9 +116,21 @@ const Login = () => {
   useEffect(() => {
     if (status === "unauthenticated") {
       Cookies.remove("session");
+      dispatch(
+        setUser({
+          name: "",
+          email: "",
+          photo: "",
+          githubId: "",
+          login: "",
+          accessToken: "",
+          status: "unauthenticated",
+          isVerifiedEmail: true,
+        })
+      );
       router.push("/");
     }
-  }, [status, router]);
+  }, [status, router, dispatch]);
 
   const logout = async () => {
     await signOut({ redirect: false });
