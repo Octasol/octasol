@@ -10,6 +10,7 @@ Following these guidelines shows respect for our maintainer's time, and in turn,
 1. [Setting Up Local Development Environment](#setting-up-local-development-environment)
 1. [Pull Requests Process](#pull-requests-process)
 1. [Code Guidelines](#code-guidelines)
+1. [Commit Guidelines](#commit-guidelines)
 1. [How to Report Bugs](#how-to-report-bugs)
 1. [Your Help is needed](#your-help-is-needed)
 
@@ -141,6 +142,50 @@ Following these guidelines shows respect for our maintainer's time, and in turn,
 * Use .env.local for environment variables to separate secrets and configurations from your codebase.
 * Use Tailwind’s responsive utilities to build responsive designs easily.
 * Customize your theme in the tailwind.config.js file to define your own color palette, spacing, and more.
+
+<p>&nbsp;</p>
+
+## Commit Guidelines
+
+Each commit consist out of a mandatory subject, an optional body and an optional footer:
+
+
+```
+<subject type>: <subject description>
+<BLANK LINE>
+< optional body>
+<BLANK LINE>
+< optional footer>
+```
+
+#### Subject:
+* The subject contains a type of the change and a description, which must not be longer than 60 characters.
+* Must be present tense.
+* Written in the imperative.
+* First letter is not capitalized.
+* Does not end with a '.'.
+
+Allowed Subject Types:
+* feat -> feature
+* fix -> bug fix
+* docs -> documentation
+* style -> formatting, lint stuff
+* refactor -> code restructure without changing external behavior
+* test -> adding missing tests
+* chore -> maintenance
+* init -> initial commit
+* rearrange -> files moved, added, deleted etc
+* update -> update code (versions, library compatibility)
+
+#### Body:
+* Use the imperative, present tense.
+* Include the motivation for the change and contrast this with previous behavior.
+* Keep lines under 73 characters in width.
+
+#### Footer:
+* Contain any information about Breaking Changes.
+* Breaking Changes should start with the word BREAKING CHANGE: with a space or two newlines.
+* Place reference to GitHub issues that this commit Closes.
 
 <p>&nbsp;</p>
 
