@@ -5,7 +5,7 @@ type ErrorState = string;
 
 const initialErrorState: ErrorState = "";
 
-// Slice for managing error state
+
 export const errorSlice = createSlice({
   name: "error",
   initialState: initialErrorState,

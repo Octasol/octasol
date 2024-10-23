@@ -36,7 +36,7 @@ export const sendMail = async (
   placeholders: { [key: string]: string }
 ) => {
   try {
-    // Get the absolute path to email.html
+    
     const emailTemplatePath = path.resolve(
       process.cwd(),
       "src",
@@ -44,10 +44,10 @@ export const sendMail = async (
       "email.html"
     );
 
-    // Read the HTML template file
+    
     const htmlTemplate = await readFileAsync(emailTemplatePath, "utf-8");
 
-    // Replace placeholders like {{name}} and {{OTP}} in the template
+    
     let htmlContent = replacePlaceholders(htmlTemplate, placeholders);
 
     const mailOptions: Mail.Options = {

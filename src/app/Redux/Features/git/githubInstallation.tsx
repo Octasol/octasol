@@ -12,7 +12,7 @@ type InstallationId = string | null;
 const initialInstallationsState: Installation[] = [];
 const InstallationId: InstallationId = "";
 
-// Slice for managing installations
+
 export const gitSlice = createSlice({
   name: "git",
   initialState: initialInstallationsState,
@@ -23,7 +23,7 @@ export const gitSlice = createSlice({
   },
 });
 
-// Slice for managing installations id
+
 export const installationIdSlice = createSlice({
   name: "installationId",
   initialState: InstallationId,
