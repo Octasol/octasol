@@ -92,9 +92,11 @@ export default function BentoGridDemo() {
     }
 
     try {
-      const radarResponse = (await axios.get(`/api/radar?username=${name}`))
-        .data;
+      const radarResponse = (await axios.get(`/api/radar?username=${name}`)).data;
       setRadarData(radarResponse);
+
+      // Save radar data in localStorage
+      localStorage.setItem(`radarData_${name}`, JSON.stringify(radarResponse));
     } catch (error) {
       console.error("Error fetching radar chart data:", error);
     } finally {
@@ -104,7 +106,22 @@ export default function BentoGridDemo() {
 
   useEffect(() => {
     const name = pathname.split("/p/").pop();
-    if (name) userData(name);
+
+    if (name) {
+      // Step 1: Check for saved radar data in localStorage
+      const savedRadarData = localStorage.getItem(`radarData_${name}`);
+      if (savedRadarData) {
+        // Step 2: Set saved radar data to the state and show it
+        setRadarData(JSON.parse(savedRadarData));
+        setIsRadarLoading(false);
+      } else {
+        // No saved data, indicate loading
+        setIsRadarLoading(true);
+      }
+
+      // Step 3: Fetch new radar data
+      userData(name);
+    }
   }, [pathname]);
 
   return (
