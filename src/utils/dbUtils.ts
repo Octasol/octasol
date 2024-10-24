@@ -7,17 +7,31 @@ export const initializeUser = async (
   email?: string | null
 ) => {
   try {
-    await db.user.upsert({
+    const existingUser = await db.user.findUnique({
       where: { githubId: githubId },
-      update: {},
-      create: {
-        githubId: githubId,
-        installationId: 0,
-        ...(email
-          ? { email: email, verifiedEmail: true, emails: [email] }
-          : {}),
-      },
     });
+
+    let result;
+    if (!existingUser) {
+      result = await db.user.create({
+        data: {
+          githubId: githubId,
+          installationId: 0,
+          ...(email
+            ? { email: email, verifiedEmail: true, emails: [email] }
+            : {}),
+        },
+      });
+
+      if (process.env.NODE_ENV === "production") {
+        await logToDiscord(
+          `Triggered initializeUser for id: ${githubId}`,
+          "INFO"
+        );
+      }
+    } else {
+      result = existingUser;
+    }
     return true;
   } catch (error) {
     if (process.env.NODE_ENV === "production") {
@@ -83,6 +97,9 @@ export const setUsername = async (id: bigint, username: UserDB) => {
         ...username,
       },
     });
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`Updated ${username} for id: ${id}`, "INFO");
+    }
     return true;
   } catch (error) {
     if (process.env.NODE_ENV === "production") {
@@ -117,7 +134,11 @@ export const setGithubDevProfile = async (
         totalIssues: profile.totalIssues,
       },
     });
-    await updateTotalPoints(id);
+    await updateTotalPoints(id).then(() => {
+      if (process.env.NODE_ENV === "production") {
+        logToDiscord(`Updated Github data for id: ${id}`, "INFO");
+      }
+    });
     return true;
   } catch (error) {
     if (process.env.NODE_ENV === "production") {
@@ -189,6 +210,9 @@ export const getGithubUsername = async (id: bigint) => {
   return user?.githubUsername || "";
 };
 
+/**
+ * Note: This function is not used anywhere in the codebase.
+ */
 export const setHackerrankProfile = async (id: bigint, profile: any) => {
   try {
     await db.hackerrankProfile.upsert({
@@ -201,7 +225,11 @@ export const setHackerrankProfile = async (id: bigint, profile: any) => {
         ...profile,
       },
     });
-    await updateTotalPoints(id);
+    await updateTotalPoints(id).then(() => {
+      if (process.env.NODE_ENV === "production") {
+        logToDiscord(`Updated Hackerrank data for id: ${id}`, "INFO");
+      }
+    });
     return true;
   } catch (error) {
     if (process.env.NODE_ENV === "production") {
@@ -253,6 +281,12 @@ export const getSuperteamEarnProfile = async (id: bigint) => {
 };
 
 export const updateTotalPoints = async (id: bigint) => {
+  if (process.env.NODE_ENV === "production") {
+    await logToDiscord(
+      `Updating total points initialized for id: ${id}`,
+      "INFO"
+    );
+  }
   const hackerrankProfile = await getHackerrankProfile(id);
   const githubDevProfile = await getGithubDevProfile(id);
   const gfgProfile = await getGFGProfile(id);
@@ -304,7 +338,11 @@ export const updateTotalPoints = async (id: bigint) => {
     return false;
   }
 
-  await db.user.update({
+  if (process.env.NODE_ENV === "production") {
+    await logToDiscord(`Updating total points triggered for id: ${id}`, "INFO");
+  }
+
+  return await db.user.update({
     where: { githubId: id },
     data: {
       totalPoints: totalPoints,
@@ -338,7 +376,11 @@ export async function setHackerrankDatabyGithubId(
         stars: stars,
       },
     });
-    await updateTotalPoints(githubId);
+    await updateTotalPoints(githubId).then(() => {
+      if (process.env.NODE_ENV === "production") {
+        logToDiscord(`Updated Hackerrank data for id: ${githubId}`, "INFO");
+      }
+    });
     return true;
   } catch (error) {
     if (process.env.NODE_ENV === "production") {
@@ -367,7 +409,11 @@ export async function setGFGDatabyGithubId(
         problemsSolved: problemsSolved,
       },
     });
-    await updateTotalPoints(githubId);
+    await updateTotalPoints(githubId).then(() => {
+      if (process.env.NODE_ENV === "production") {
+        logToDiscord(`Updated GFG data for id: ${githubId}`, "INFO");
+      }
+    });
     return true;
   } catch (error) {
     if (process.env.NODE_ENV === "production") {
@@ -393,7 +439,11 @@ export async function setCodeChefDatabyGithubId(
         currentRating: currentRating,
       },
     });
-    await updateTotalPoints(githubId);
+    await updateTotalPoints(githubId).then(() => {
+      if (process.env.NODE_ENV === "production") {
+        logToDiscord(`Updated Codechef data for id: ${githubId}`, "INFO");
+      }
+    });
     return true;
   } catch (error) {
     if (process.env.NODE_ENV === "production") {
@@ -425,7 +475,11 @@ export async function setLeetCodeDatabyGithubId(
         hardQues: hardQues,
       },
     });
-    await updateTotalPoints(githubId);
+    await updateTotalPoints(githubId).then(() => {
+      if (process.env.NODE_ENV === "production") {
+        logToDiscord(`Updated Leetcode data for id: ${githubId}`, "INFO");
+      }
+    });
     return true;
   } catch (error) {
     if (process.env.NODE_ENV === "production") {
@@ -457,7 +511,11 @@ export async function setSuperteamEarnDatabyGithubId(
         totalWinnings: totalWinnings,
       },
     });
-    await updateTotalPoints(githubId);
+    await updateTotalPoints(githubId).then(() => {
+      if (process.env.NODE_ENV === "production") {
+        logToDiscord(`Updated Superteam Earn data for id: ${githubId}`, "INFO");
+      }
+    });
     return true;
   } catch (error) {
     if (process.env.NODE_ENV === "production") {
