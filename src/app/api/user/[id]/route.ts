@@ -14,8 +14,11 @@ export async function GET(
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
     return NextResponse.json(userDbData);
-  } catch (error: any) {
+  } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: (error as any).message },
+      { status: 500 }
+    );
   }
 }

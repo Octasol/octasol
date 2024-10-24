@@ -16,7 +16,10 @@ export async function GET(req: NextRequest) {
       }
     );
     return NextResponse.json({ installations: response.data });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: (error as any).message },
+      { status: 500 }
+    );
   }
 }

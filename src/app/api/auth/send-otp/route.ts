@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
     await sendMail(email, "Your Octasol OTP Code", otpPlaceholders);
 
     return NextResponse.json({ message: "OTP sent successfully" });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
       { error: "Something went wrong." },
       { status: 500 }

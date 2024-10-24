@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
 
     try {
       await setUsername(id, { verifiedEmail: true, email: email });
-    } catch (error: any) {
+    } catch (error) {
       return NextResponse.json(
         { error: "Failed to update user status." },
         { status: 500 }

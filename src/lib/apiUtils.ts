@@ -42,7 +42,6 @@ export async function getAccessToken(installationId: number) {
   return accessToken;
 }
 
-
 async function getInstallations() {
   const token = getToken();
   try {
@@ -56,11 +55,10 @@ async function getInstallations() {
       }
     );
     return { installations: response.data, error: "" };
-  } catch (error: any) {
-    return { installations: [], error: error.message };
+  } catch (error) {
+    return { installations: [], error: (error as any).message };
   }
 }
-
 
 export async function getInstallationIdbyGithubId(githubId: number) {
   const installations = await getInstallations();
@@ -89,7 +87,7 @@ export async function getGithubIdbyInstallationId(installationId: number) {
       }
     );
     return response.data.account.id;
-  } catch (error: any) {
+  } catch (error) {
     return 0;
   }
 }
@@ -111,7 +109,7 @@ export async function getGithubIdbyAuthHeader(authHeader: string) {
     }
     const accessToken = authHeader.split(" ")[1];
     return await getGithubIdbyAccessToken(accessToken);
-  } catch (error: any) {
+  } catch (error) {
     return 0;
   }
 }
@@ -129,7 +127,7 @@ export async function getGithubProfileWithGithubID(githubId: number) {
     const response = await axios.get(`https://api.github.com/user/${githubId}`);
     setCache(cacheKey, response.data);
     return response.data;
-  } catch (error: any) {
+  } catch (error) {
     return null;
   }
 }
@@ -149,7 +147,7 @@ export async function getUserByAuthHeader(authHeader: string) {
     });
     setCache(cacheKey, response.data);
     return response.data;
-  } catch (error: any) {
+  } catch (error) {
     console.error("Failed to fetch Github ID", error);
     return null;
   }
@@ -170,7 +168,7 @@ export async function getGithubIdbyAccessToken(accessToken: string) {
     });
     setCache(cacheKey, response.data.id);
     return response.data.id;
-  } catch (error: any) {
+  } catch (error) {
     console.error("Failed to fetch Github ID", error);
     return 0;
   }

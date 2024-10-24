@@ -3,7 +3,7 @@ import axios from "axios";
 import { getAccessToken } from "@/lib/apiUtils";
 
 /**
- * 
+ *
  * @param req NextRequest
  * @returns Next JSON response
  * @note This function required env variables like GITHUB_PRIVATE_KEY_FILE_NAME & GITHUB_APP_ID
@@ -20,7 +20,6 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    
     const accessToken = await getAccessToken(Number(installationId));
 
     const reposResponse = await axios.get(
@@ -34,7 +33,10 @@ export async function GET(req: NextRequest) {
     );
 
     return NextResponse.json({ repositories: reposResponse.data.repositories });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: (error as any).message },
+      { status: 500 }
+    );
   }
 }

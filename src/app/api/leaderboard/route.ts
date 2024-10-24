@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAllProfiles } from "@/utils/dbUtils";
 import { unstable_noStore as noStore } from "next/cache";
 
-
 export async function POST(req: NextRequest) {
   try {
     const allProfiles = await getAllProfiles();
@@ -20,8 +19,11 @@ export async function POST(req: NextRequest) {
     // Set caching headers to prevent caching
     const response = NextResponse.json(serializedProfile);
     return response;
-  } catch (error: any) {
+  } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: (error as any).message },
+      { status: 500 }
+    );
   }
 }

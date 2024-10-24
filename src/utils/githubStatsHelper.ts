@@ -7,7 +7,8 @@ export async function getRepos(page: number, authHeader: string) {
   const url = `https://api.github.com/user/repos?per_page=100&page=${page}&affiliation=owner`;
   let attempts = 0;
   const maxAttempts = 3;
-  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+  const delay = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
 
   while (attempts < maxAttempts) {
     try {
@@ -18,9 +19,9 @@ export async function getRepos(page: number, authHeader: string) {
         },
       });
       return res.data;
-    } catch (error: any) {
+    } catch (error) {
       attempts++;
-      console.error(`Attempt ${attempts} failed: ${error.message}`);
+      console.error(`Attempt ${attempts} failed: ${(error as any).message}`);
       if (attempts >= maxAttempts) {
         throw new Error("Failed to fetch repositories after multiple attempts");
       }
@@ -40,8 +41,8 @@ export async function getTotalCommits(username: string, authHeader: string) {
       },
     });
     return res.data.total_count;
-  } catch (error: any) {
-    console.error("Error fetching total commits:", error.message);
+  } catch (error) {
+    console.error("Error fetching total commits:", (error as any).message);
     throw new Error("Failed to fetch total commits");
   }
 }
@@ -66,8 +67,11 @@ export async function getGithubGraphql(login: string, authHeader: string) {
       },
     });
     return res.data.data;
-  } catch (error: any) {
-    console.error("Error fetching GitHub GraphQL data:", error.message);
+  } catch (error) {
+    console.error(
+      "Error fetching GitHub GraphQL data:",
+      (error as any).message
+    );
     throw new Error("Failed to fetch GitHub GraphQL data");
   }
 }
