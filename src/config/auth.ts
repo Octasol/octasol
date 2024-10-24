@@ -39,7 +39,11 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }: { session: any; token: any }) {
       session.accessToken = token.accessToken;
-      session.user = { ...session.user, ...token.profile };
+      session.user = {
+        ...session.user,
+        ...token.profile,
+        accessToken: token.accessToken,
+      };
       await initializeUser(session.user.id, session.user.email);
       const userDbData = bigintToString(
         await getDbUser(BigInt(session.user.id))
@@ -55,6 +59,12 @@ export const authOptions: NextAuthOptions = {
       session.user.isVerifiedEmail = userDbData.verifiedEmail;
       return session;
     },
+  },
+  jwt: {
+    maxAge: 10, // 8 hours in seconds
+  },
+  session: {
+    maxAge: 10, // 8 hours in seconds
   },
 };
 

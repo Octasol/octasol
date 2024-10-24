@@ -45,7 +45,6 @@ const Login = () => {
     accessToken?: string | null;
     isVerifiedEmail?: boolean | true;
   }
-
   const sessionUser = useMemo(
     () => session?.user as SessionUser | null,
     [session]
@@ -80,8 +79,32 @@ const Login = () => {
         console.error("Error parsing cookie session:", error);
         Cookies.remove("session");
         router.push("/");
+        dispatch(
+          setUser({
+            name: "",
+            email: "",
+            photo: "",
+            githubId: "",
+            login: "",
+            accessToken: "",
+            status: "loading",
+            isVerifiedEmail: true,
+          })
+        );
       }
     } else {
+      dispatch(
+        setUser({
+          name: "",
+          email: "",
+          photo: "",
+          githubId: "",
+          login: "",
+          accessToken: "",
+          status: "loading",
+          isVerifiedEmail: true,
+        })
+      );
       router.push("/");
     }
   };
@@ -89,8 +112,9 @@ const Login = () => {
   useLayoutEffect(() => {
     if (sessionUser) {
       store.dispatch(decrement());
+      const sessionExpiryDate = new Date(session?.expires || "");
       Cookies.set("session", JSON.stringify(sessionUser), {
-        expires: 8 / 24,
+        expires: sessionExpiryDate,
       });
       dispatch(
         setUser({
@@ -112,7 +136,7 @@ const Login = () => {
     } else {
       handleSessionFromCookies();
     }
-  }, [sessionUser, pathname, router, dispatch]);
+  }, [session, pathname, router, dispatch]);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -132,6 +156,7 @@ const Login = () => {
       router.push("/");
     }
   }, [router, dispatch, status]);
+
   const logout = async () => {
     await signOut({ redirect: false });
     dispatch(
@@ -149,6 +174,14 @@ const Login = () => {
     Cookies.remove("session");
     router.push("/");
   };
+
+  useEffect(() => {
+    if (!Cookies.get("session")) handleSessionFromCookies();
+  }, [pathname]);
+
+  useEffect(() => {
+    console.log(session);
+  }, [session, pathname]);
 
   const userLogin = () => {
     signIn("github");
