@@ -90,7 +90,7 @@ const Login = () => {
     if (sessionUser) {
       store.dispatch(decrement());
       Cookies.set("session", JSON.stringify(sessionUser), {
-        expires: 1 / 3,
+        expires: 8 / 24,
       });
       dispatch(
         setUser({
