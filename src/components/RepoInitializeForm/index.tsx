@@ -57,8 +57,8 @@ export function RepoInitializeForm() {
       );
       const data = await response.json();
       dispatch(setRepositories(data.repositories));
-    } catch (err: any) {
-      dispatch(setError(err.message));
+    } catch (error: any) {
+      dispatch(setError(error.message));
     }
   };
 

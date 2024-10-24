@@ -18,8 +18,8 @@ export const initializeUser = async (
       },
     });
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch(error) {
+    console.error(error);
     return false;
   }
 };
@@ -41,8 +41,8 @@ export const setUser = async (
       create: { githubId: githubId, installationId: installationId },
     });
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch(error) {
+    console.error(error);
     return false;
   }
 };
@@ -77,8 +77,8 @@ export const setUsername = async (id: bigint, username: UserDB) => {
       },
     });
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch(error) {
+    console.error(error);
     return false;
   }
 };
@@ -109,8 +109,8 @@ export const setGithubDevProfile = async (
     });
     await updateTotalPoints(id);
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch(error) {
+    console.error(error);
     return false;
   }
 };
@@ -182,8 +182,8 @@ export const setHackerrankProfile = async (id: bigint, profile: any) => {
     });
     await updateTotalPoints(id);
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch(error) {
+    console.error(error);
     return false;
   }
 };
@@ -316,8 +316,8 @@ export async function setHackerrankDatabyGithubId(
     });
     await updateTotalPoints(githubId);
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch(error) {
+    console.error(error);
     return false;
   }
 }
@@ -342,8 +342,8 @@ export async function setGFGDatabyGithubId(
     });
     await updateTotalPoints(githubId);
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch(error) {
+    console.error(error);
     return false;
   }
 }
@@ -365,8 +365,8 @@ export async function setCodeChefDatabyGithubId(
     });
     await updateTotalPoints(githubId);
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch(error) {
+    console.error(error);
     return false;
   }
 }
@@ -394,8 +394,8 @@ export async function setLeetCodeDatabyGithubId(
     });
     await updateTotalPoints(githubId);
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch(error) {
+    console.error(error);
     return false;
   }
 }
@@ -423,8 +423,8 @@ export async function setSuperteamEarnDatabyGithubId(
     });
     await updateTotalPoints(githubId);
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch(error) {
+    console.error(error);
     return false;
   }
 }

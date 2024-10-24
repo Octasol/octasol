@@ -98,8 +98,8 @@ const VerifyMail = ({ verify, session }: Props) => {
           setErrorMessage(null); 
         }
       }
-    } catch (err) {
-      console.error(err);
+    } catch(error) {
+      console.error(error);
       setErrorMessage("An error occurred. Please try again.");
     }
   }
