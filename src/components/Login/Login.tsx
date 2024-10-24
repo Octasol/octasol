@@ -28,7 +28,6 @@ import { decrement, increment } from "@/app/Redux/Features/loader/loaderSlice";
 import { store } from "@/app/Redux/store";
 import { Skeleton } from "../ui/skeleton";
 import Cookies from "js-cookie";
-import { Button } from "../ui/button";
 
 const Login = () => {
   const { data: session, status } = useSession() as any;
@@ -90,7 +89,9 @@ const Login = () => {
   useLayoutEffect(() => {
     if (sessionUser) {
       store.dispatch(decrement());
-      Cookies.set("session", JSON.stringify(sessionUser), { expires: 8 / 24 });
+      Cookies.set("session", JSON.stringify(sessionUser), {
+        expires: 1 / 3,
+      });
       dispatch(
         setUser({
           name: sessionUser?.name || "",
@@ -114,23 +115,30 @@ const Login = () => {
   }, [sessionUser, pathname, router, dispatch]);
 
   useEffect(() => {
-    if (status === "unauthenticated") {
-      Cookies.remove("session");
-      dispatch(
-        setUser({
-          name: "",
-          email: "",
-          photo: "",
-          githubId: "",
-          login: "",
-          accessToken: "",
-          status: "unauthenticated",
-          isVerifiedEmail: true,
-        })
-      );
-      router.push("/");
-    }
-  }, [status, router, dispatch]);
+    const checkSession = () => {
+      const cookieSession = Cookies.get("session");
+      if (!cookieSession || status === "unauthenticated") {
+        dispatch(
+          setUser({
+            name: "",
+            email: "",
+            photo: "",
+            githubId: "",
+            login: "",
+            accessToken: "",
+            status: "unauthenticated",
+            isVerifiedEmail: true,
+          })
+        );
+        logout();
+        router.push("/");
+      }
+    };
+
+    const interval = setInterval(checkSession, 1000);
+
+    return () => clearInterval(interval);
+  }, [router, dispatch, Cookies, status]);
 
   const logout = async () => {
     await signOut({ redirect: false });
@@ -153,8 +161,6 @@ const Login = () => {
   const userLogin = () => {
     signIn("github");
   };
-
-  
 
   return (
     <>
