@@ -79,32 +79,8 @@ const Login = () => {
         console.error("Error parsing cookie session:", error);
         Cookies.remove("session");
         router.push("/");
-        dispatch(
-          setUser({
-            name: "",
-            email: "",
-            photo: "",
-            githubId: "",
-            login: "",
-            accessToken: "",
-            status: "loading",
-            isVerifiedEmail: true,
-          })
-        );
       }
     } else {
-      dispatch(
-        setUser({
-          name: "",
-          email: "",
-          photo: "",
-          githubId: "",
-          login: "",
-          accessToken: "",
-          status: "loading",
-          isVerifiedEmail: true,
-        })
-      );
       router.push("/");
     }
   };
@@ -136,7 +112,7 @@ const Login = () => {
     } else {
       handleSessionFromCookies();
     }
-  }, [session, pathname, router, dispatch]);
+  }, [session]);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -176,12 +152,11 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (!Cookies.get("session")) handleSessionFromCookies();
+    if (pathname !== "/" && !Cookies.get("session")) {
+      handleSessionFromCookies();
+      logout();
+    }
   }, [pathname]);
-
-  useEffect(() => {
-    console.log(session);
-  }, [session, pathname]);
 
   const userLogin = () => {
     signIn("github");
