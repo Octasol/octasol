@@ -29,7 +29,11 @@ export const authOptions: NextAuthOptions = {
         if (!profile.email) {
           profile.email = await getEmail(token.accessToken);
         }
-        token.profile = profile;
+        token.profile = {
+          login: profile.login,
+          id: profile.id,
+          email: profile.email,
+        };
       }
       return token;
     },
