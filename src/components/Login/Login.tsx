@@ -24,7 +24,7 @@ import {
 import BottomGradient from "../ui/BottomGradient";
 import LoginButton from "../Button/LoginButton";
 import { IconChartHistogram } from "@tabler/icons-react";
-import { decrement, increment } from "@/app/Redux/Features/loader/loaderSlice";
+import { decrement } from "@/app/Redux/Features/loader/loaderSlice";
 import { store } from "@/app/Redux/store";
 import { Skeleton } from "../ui/skeleton";
 import Cookies from "js-cookie";
@@ -134,12 +134,7 @@ const Login = () => {
         router.push("/");
       }
     };
-
-    const interval = setInterval(checkSession, 1000);
-
-    return () => clearInterval(interval);
   }, [router, dispatch, Cookies, status]);
-
   const logout = async () => {
     await signOut({ redirect: false });
     dispatch(
