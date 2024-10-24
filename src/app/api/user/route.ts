@@ -10,6 +10,7 @@ import {
   getSuperteamEarnProfile,
   getUserByUsername,
 } from "@/utils/dbUtils";
+import { logToDiscord } from "@/utils/logger";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -37,6 +38,10 @@ export async function GET(req: NextRequest) {
       githubId: userDbData.githubId,
     });
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     console.error(error);
     return NextResponse.json(
       { error: (error as any).message },
@@ -81,6 +86,10 @@ export async function POST(req: NextRequest) {
     };
     return NextResponse.json(data);
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     console.error(error);
     return NextResponse.json(
       { error: (error as any).message },

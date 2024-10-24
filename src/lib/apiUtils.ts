@@ -3,6 +3,7 @@ import { readFileSync } from "fs";
 import axios from "axios";
 import { getInstallationId, setUser } from "@/utils/dbUtils";
 import { getCache, setCache } from "./cache";
+import { logToDiscord } from "@/utils/logger";
 
 export function getToken() {
   const basedir = process.cwd();
@@ -56,6 +57,10 @@ async function getInstallations() {
     );
     return { installations: response.data, error: "" };
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     return { installations: [], error: (error as any).message };
   }
 }
@@ -88,6 +93,10 @@ export async function getGithubIdbyInstallationId(installationId: number) {
     );
     return response.data.account.id;
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     return 0;
   }
 }
@@ -110,6 +119,10 @@ export async function getGithubIdbyAuthHeader(authHeader: string) {
     const accessToken = authHeader.split(" ")[1];
     return await getGithubIdbyAccessToken(accessToken);
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     return 0;
   }
 }
@@ -128,6 +141,10 @@ export async function getGithubProfileWithGithubID(githubId: number) {
     setCache(cacheKey, response.data);
     return response.data;
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     return null;
   }
 }
@@ -148,6 +165,10 @@ export async function getUserByAuthHeader(authHeader: string) {
     setCache(cacheKey, response.data);
     return response.data;
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     console.error("Failed to fetch Github ID", error);
     return null;
   }
@@ -169,6 +190,10 @@ export async function getGithubIdbyAccessToken(accessToken: string) {
     setCache(cacheKey, response.data.id);
     return response.data.id;
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     console.error("Failed to fetch Github ID", error);
     return 0;
   }
@@ -189,6 +214,10 @@ export async function getHackerrankProfileByApi(username: string) {
     );
     return response.data;
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     console.error(
       `Failed to fetch HackerRank profile for username: ${username}`,
       error

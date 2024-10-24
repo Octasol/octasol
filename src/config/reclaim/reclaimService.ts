@@ -4,6 +4,7 @@ import { processSuperteamEarnData } from "./superteamearn/service";
 import { processLeetcodeData } from "./leetcode/service";
 import { processGeeksForGeeksData } from "./geeksforgeeks/service";
 import { processCodechefData } from "./codechef/service";
+import { logToDiscord } from "@/utils/logger";
 
 const reclaimAppID = process.env.RECLAIM_APP_ID!;
 const reclaimAppSecret = process.env.RECLAIM_APP_SECRET!;
@@ -38,7 +39,6 @@ async function handleReclaimSession(
     onSuccessCallback: async (proof: any) => {
       try {
         let processedData;
-        
 
         switch (providerName) {
           case "Hackerrank":
@@ -85,6 +85,10 @@ async function handleReclaimSession(
             throw new Error(`Unsupported provider: ${providerName}`);
         }
       } catch (error) {
+        if (process.env.NODE_ENV === "production") {
+          await logToDiscord(`${(error as any).message}`, "ERROR");
+        }
+
         console.error(
           `Failed to process Reclaim proof for githubId: ${githubId}`,
           error

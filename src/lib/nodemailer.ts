@@ -3,6 +3,7 @@ import fs from "fs";
 import { promisify } from "util";
 import Mail from "nodemailer/lib/mailer";
 import path from "path";
+import { logToDiscord } from "@/utils/logger";
 
 const readFileAsync = promisify(fs.readFile);
 
@@ -36,7 +37,6 @@ export const sendMail = async (
   placeholders: { [key: string]: string }
 ) => {
   try {
-    
     const emailTemplatePath = path.resolve(
       process.cwd(),
       "src",
@@ -44,10 +44,8 @@ export const sendMail = async (
       "email.html"
     );
 
-    
     const htmlTemplate = await readFileAsync(emailTemplatePath, "utf-8");
 
-    
     let htmlContent = replacePlaceholders(htmlTemplate, placeholders);
 
     const mailOptions: Mail.Options = {
@@ -60,6 +58,10 @@ export const sendMail = async (
 
     await transporter.sendMail(mailOptions);
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     console.error("Error sending email:", error);
   }
 };

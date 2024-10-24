@@ -2,6 +2,7 @@ import axios from "axios";
 import { GRAPHQL_STATS_QUERY } from "./githubQueries";
 import { getUserByAuthHeader } from "@/lib/apiUtils";
 import { setGithubDevProfile } from "./dbUtils";
+import { logToDiscord } from "./logger";
 
 export async function getRepos(page: number, authHeader: string) {
   const url = `https://api.github.com/user/repos?per_page=100&page=${page}&affiliation=owner`;
@@ -20,6 +21,10 @@ export async function getRepos(page: number, authHeader: string) {
       });
       return res.data;
     } catch (error) {
+      if (process.env.NODE_ENV === "production") {
+        await logToDiscord(`${(error as any).message}`, "ERROR");
+      }
+
       attempts++;
       console.error(`Attempt ${attempts} failed: ${(error as any).message}`);
       if (attempts >= maxAttempts) {
@@ -42,6 +47,10 @@ export async function getTotalCommits(username: string, authHeader: string) {
     });
     return res.data.total_count;
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     console.error("Error fetching total commits:", (error as any).message);
     throw new Error("Failed to fetch total commits");
   }
@@ -68,6 +77,10 @@ export async function getGithubGraphql(login: string, authHeader: string) {
     });
     return res.data.data;
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     console.error(
       "Error fetching GitHub GraphQL data:",
       (error as any).message

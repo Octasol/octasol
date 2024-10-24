@@ -6,6 +6,7 @@ import {
   getRepos,
   getTotalCommits,
 } from "@/utils/githubStatsHelper";
+import { logToDiscord } from "@/utils/logger";
 
 // export async function GET() {
 //   try {
@@ -118,6 +119,10 @@ export async function POST(req: NextRequest) {
       totalIssues,
     });
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     console.error(error);
     return NextResponse.json(
       { error: (error as any).message },

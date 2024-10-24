@@ -4,6 +4,7 @@ import { getHackerrankStats } from "@/config/reclaim/hackerrank/service";
 import QRCode from "qrcode";
 import { providers } from "@/providers/constants";
 import { getGithubIdbyAccessToken } from "@/lib/apiUtils";
+import { logToDiscord } from "@/utils/logger";
 
 export async function GET(req: NextRequest) {
   const username = req.nextUrl.searchParams.get("username") || "";
@@ -24,6 +25,10 @@ export async function POST(req: NextRequest) {
     const qrCode = await QRCode.toDataURL(signedUrl);
     return NextResponse.json({ success: true, url: signedUrl, qr: qrCode });
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     if (error instanceof Error) {
       return NextResponse.json(
         { success: false, message: (error as any).message },

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import { getAccessToken } from "@/lib/apiUtils";
+import { logToDiscord } from "@/utils/logger";
 
 /**
  *
@@ -34,6 +35,10 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ repositories: reposResponse.data.repositories });
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     return NextResponse.json(
       { error: (error as any).message },
       { status: 500 }
