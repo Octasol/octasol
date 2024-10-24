@@ -115,26 +115,23 @@ const Login = () => {
   }, [sessionUser, pathname, router, dispatch]);
 
   useEffect(() => {
-    const checkSession = () => {
-      const cookieSession = Cookies.get("session");
-      if (!cookieSession || status === "unauthenticated") {
-        dispatch(
-          setUser({
-            name: "",
-            email: "",
-            photo: "",
-            githubId: "",
-            login: "",
-            accessToken: "",
-            status: "unauthenticated",
-            isVerifiedEmail: true,
-          })
-        );
-        logout();
-        router.push("/");
-      }
-    };
-  }, [router, dispatch, Cookies, status]);
+    if (status === "unauthenticated") {
+      dispatch(
+        setUser({
+          name: "",
+          email: "",
+          photo: "",
+          githubId: "",
+          login: "",
+          accessToken: "",
+          status: "unauthenticated",
+          isVerifiedEmail: true,
+        })
+      );
+      logout();
+      router.push("/");
+    }
+  }, [router, dispatch, status]);
   const logout = async () => {
     await signOut({ redirect: false });
     dispatch(
