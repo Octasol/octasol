@@ -47,7 +47,6 @@ export function RepoInitializeForm() {
     }
   };
 
-
   const fetchRepositories = async (installationId: string) => {
     try {
       dispatch(clearError());
@@ -57,12 +56,10 @@ export function RepoInitializeForm() {
       );
       const data = await response.json();
       dispatch(setRepositories(data.repositories));
-    } catch (err: any) {
-      dispatch(setError(err.message));
+    } catch (error) {
+      dispatch(setError((error as any).message));
     }
   };
-
-  
 
   const filteredRepositories = repositories.filter((repo: any) =>
     repo.name.toLowerCase().includes(searchTerm.toLowerCase())

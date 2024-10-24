@@ -1,4 +1,5 @@
 import { setCodeChefDatabyGithubId, setUsername } from "@/utils/dbUtils";
+import { logToDiscord } from "@/utils/logger";
 import axios from "axios";
 
 export async function processCodechefData(
@@ -9,16 +10,12 @@ export async function processCodechefData(
   const username = JSON.parse(proof[0].claimData.context).extractedParameters
     .URL_PARAMS_GRD;
 
-
   const lastUpdateTimeStamp = proof[0].claimData.timestampS;
-
 
   try {
     const response = await axios.get(
       `https://codechef-api.vercel.app/handle/${username}`
     );
-
-
 
     await setUsername(BigInt(githubId), {
       codechefUsername: username,
@@ -30,6 +27,10 @@ export async function processCodechefData(
     );
     return true;
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     console.error(
       `Failed to fetch CodeChef data for username: ${username}`,
       error

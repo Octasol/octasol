@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { GithubDevProfile, UserDB } from "@/lib/types";
+import { logToDiscord } from "./logger";
 
 export const initializeUser = async (
   githubId: bigint,
@@ -18,8 +19,11 @@ export const initializeUser = async (
       },
     });
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+    console.error(error);
     return false;
   }
 };
@@ -41,8 +45,11 @@ export const setUser = async (
       create: { githubId: githubId, installationId: installationId },
     });
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+    console.error(error);
     return false;
   }
 };
@@ -77,8 +84,11 @@ export const setUsername = async (id: bigint, username: UserDB) => {
       },
     });
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+    console.error(error);
     return false;
   }
 };
@@ -109,8 +119,11 @@ export const setGithubDevProfile = async (
     });
     await updateTotalPoints(id);
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+    console.error(error);
     return false;
   }
 };
@@ -140,6 +153,10 @@ export const getAllGithubDevProfiles = async () => {
       githubUsername: profile.User?.githubUsername || null,
     }));
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     console.error("Error fetching GitHub dev profiles:", error);
     throw error;
   }
@@ -158,6 +175,10 @@ export const getAllProfiles = async () => {
       ...profile,
     }));
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     console.error("Error fetching profiles:", error);
     throw error;
   }
@@ -182,8 +203,11 @@ export const setHackerrankProfile = async (id: bigint, profile: any) => {
     });
     await updateTotalPoints(id);
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+    console.error(error);
     return false;
   }
 };
@@ -316,8 +340,11 @@ export async function setHackerrankDatabyGithubId(
     });
     await updateTotalPoints(githubId);
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+    console.error(error);
     return false;
   }
 }
@@ -342,8 +369,11 @@ export async function setGFGDatabyGithubId(
     });
     await updateTotalPoints(githubId);
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+    console.error(error);
     return false;
   }
 }
@@ -365,8 +395,11 @@ export async function setCodeChefDatabyGithubId(
     });
     await updateTotalPoints(githubId);
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+    console.error(error);
     return false;
   }
 }
@@ -394,8 +427,11 @@ export async function setLeetCodeDatabyGithubId(
     });
     await updateTotalPoints(githubId);
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+    console.error(error);
     return false;
   }
 }
@@ -423,8 +459,11 @@ export async function setSuperteamEarnDatabyGithubId(
     });
     await updateTotalPoints(githubId);
     return true;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+    console.error(error);
     return false;
   }
 }
@@ -512,6 +551,10 @@ export const getUserProfileForRadarChart = async (githubUsername: string) => {
       superteamEarnPoints,
     };
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     console.error("Error fetching user profile for radar chart:", error);
     throw error;
   }

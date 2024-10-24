@@ -1,3 +1,4 @@
+import { logToDiscord } from "@/utils/logger";
 import axiosInstance from "./axiosInterceptor";
 
 export const GET = async (
@@ -12,6 +13,10 @@ export const GET = async (
     });
     return response.data;
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     throw error;
   }
 };
@@ -29,6 +34,10 @@ export const POST = async (
     });
     return { response: response, error: null };
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     return { response: null, error: error };
   }
 };
@@ -38,6 +47,10 @@ export const PUT = async (url: string, data: any) => {
     const response = await axiosInstance.put(url, data);
     return response.data;
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     throw error;
   }
 };
@@ -47,6 +60,10 @@ export const DELETE = async (url: string) => {
     const response = await axiosInstance.delete(url);
     return response.data;
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     throw error;
   }
 };

@@ -1,5 +1,6 @@
 import { bigintToString } from "@/lib/utils";
 import { getDbUser } from "@/utils/dbUtils";
+import { logToDiscord } from "@/utils/logger";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -14,8 +15,15 @@ export async function GET(
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
     return NextResponse.json(userDbData);
-  } catch (error: any) {
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: (error as any).message },
+      { status: 500 }
+    );
   }
 }

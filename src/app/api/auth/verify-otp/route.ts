@@ -1,6 +1,7 @@
 import { getGithubIdbyAuthHeader } from "@/lib/apiUtils";
 import { deleteOtp, getOtp } from "@/lib/otpStore";
 import { getDbUser, setUsername } from "@/utils/dbUtils";
+import { logToDiscord } from "@/utils/logger";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -41,7 +42,11 @@ export async function POST(req: NextRequest) {
 
     try {
       await setUsername(id, { verifiedEmail: true, email: email });
-    } catch (error: any) {
+    } catch (error) {
+      if (process.env.NODE_ENV === "production") {
+        await logToDiscord(`${(error as any).message}`, "ERROR");
+      }
+
       return NextResponse.json(
         { error: "Failed to update user status." },
         { status: 500 }

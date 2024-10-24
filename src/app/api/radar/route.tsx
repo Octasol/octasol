@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
-    
     const { searchParams } = new URL(request.url);
     const githubUsername = searchParams.get("username");
 
@@ -15,16 +14,17 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    
     const radarData = await getUserProfileForRadarChart(githubUsername);
 
     if (!radarData) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    
     return NextResponse.json(bigintToString(radarData));
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: (error as any).message },
+      { status: 500 }
+    );
   }
 }

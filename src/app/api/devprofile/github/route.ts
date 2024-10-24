@@ -6,6 +6,7 @@ import {
   getRepos,
   getTotalCommits,
 } from "@/utils/githubStatsHelper";
+import { logToDiscord } from "@/utils/logger";
 
 // export async function GET() {
 //   try {
@@ -42,8 +43,8 @@ import {
 //     );
 
 //     return NextResponse.json(serializedProfile);
-//   } catch (error: any) {
-//     return NextResponse.json({ error: error.message }, { status: 500 });
+//   } catch (error) {
+//     return NextResponse.json({ error: (error as any).message }, { status: 500 });
 //   }
 // }
 
@@ -117,8 +118,15 @@ export async function POST(req: NextRequest) {
       mergedPullRequests,
       totalIssues,
     });
-  } catch (error: any) {
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: (error as any).message },
+      { status: 500 }
+    );
   }
 }

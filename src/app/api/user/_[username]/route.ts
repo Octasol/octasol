@@ -1,5 +1,6 @@
 import { bigintToString } from "@/lib/utils";
 import { getUserByUsername } from "@/utils/dbUtils";
+import { logToDiscord } from "@/utils/logger";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -12,8 +13,15 @@ export async function GET(req: NextRequest) {
     const { githubId, githubUsername } = userDbData;
 
     return NextResponse.json(userDbData);
-  } catch (error: any) {
+  } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      await logToDiscord(`${(error as any).message}`, "ERROR");
+    }
+
     console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: (error as any).message },
+      { status: 500 }
+    );
   }
 }
