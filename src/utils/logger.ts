@@ -31,11 +31,7 @@ const logStyles = {
 const getISTTimestamp = (): string => {
   const now = new Date();
 
-  // IST is UTC +5:30
-  const offsetIST = 5 * 60 + 30; // in minutes
-  const istTime = new Date(now.getTime() + offsetIST * 60000);
-
-  return istTime.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+  return now.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
 };
 
 /**
