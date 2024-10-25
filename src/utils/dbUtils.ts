@@ -321,6 +321,10 @@ export const updateTotalPoints = async (id: bigint) => {
   }
 
   if (totalPoints == user?.totalPoints) {
+    await logToDiscord(
+      `Total points (${totalPoints}) already up to date for id: ${id}`,
+      "INFO"
+    );
     return false;
   }
 
