@@ -54,7 +54,7 @@ export const authOptions: NextAuthOptions = {
         });
         await updateGithubProfile(session.accessToken);
       } else {
-        updateGithubProfile(session.accessToken);
+        setTimeout(() => updateGithubProfile(session.accessToken), 0);
       }
       session.user.isVerifiedEmail = userDbData.verifiedEmail;
       return session;
