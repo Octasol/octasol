@@ -43,9 +43,7 @@ export async function POST(req: NextRequest) {
     try {
       await setUsername(id, { verifiedEmail: true, email: email });
     } catch (error) {
-      if (process.env.NODE_ENV === "production") {
-        await logToDiscord(`${(error as any).message}`, "ERROR");
-      }
+      await logToDiscord(`${(error as any).message}`, "ERROR");
 
       return NextResponse.json(
         { error: "Failed to update user status." },

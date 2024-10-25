@@ -27,9 +27,7 @@ export async function processCodechefData(
     );
     return true;
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
 
     console.error(
       `Failed to fetch CodeChef data for username: ${username}`,

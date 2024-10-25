@@ -53,9 +53,7 @@ export async function processLeetcodeData(
 
     return true;
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
 
     console.error("Error fetching Leetcode data:", error);
     return false;
