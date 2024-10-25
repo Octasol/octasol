@@ -12,22 +12,37 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowBigRight } from "lucide-react";
+import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
 export default function ListUnescrowed() {
   const [selectedCard, setSelectedCard] = useState<string>("");
+  const [activeTab, setActiveTab] = useState<string>("personal_Details");
 
   const handleSelect = (value: string) => {
     setSelectedCard(value);
   };
+  const handleNextClick = () => {
+    setActiveTab("password");
+  };
+  const handlePrevClick = () => {
+    setActiveTab("personal_Details");
+  };
   return (
     <div className="w-full  flex justify-center items-center">
-      <Tabs defaultValue="personal_Details" className="max-w-6xl px-5">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="max-w-6xl px-5"
+      >
         <TabsList className="grid w-full h-full grid-cols-1 grid-rows-3 md:grid-cols-5 md:grid-rows-1 mb-12">
-          <TabsTrigger value="personal_Details">Personal Details</TabsTrigger>
-          <TabsTrigger value="password">Password</TabsTrigger>
+          <TabsTrigger value="personal_Details" className="pointer-events-none">
+            Personal Details
+          </TabsTrigger>
+          <TabsTrigger value="password" className="pointer-events-none">
+            Password
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="personal_Details">
           <Card className="">
@@ -81,7 +96,7 @@ export default function ListUnescrowed() {
               </div>
             </CardContent>
             <CardFooter className="w-full flex justify-end">
-              <NextButton>
+              <NextButton onClick={handleNextClick}>
                 <div className="flex items-center gap-2">
                   NEXT
                   <ArrowBigRight size={20} />
@@ -131,7 +146,21 @@ export default function ListUnescrowed() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button>Save password</Button>
+              <div className="w-full flex justify-between items-center">
+                <NextButton onClick={handlePrevClick}>
+                  <div className="flex gap-2 items-center">
+                    <ArrowBigLeft size={20} />
+                    PREV
+                  </div>
+                </NextButton>
+
+                <NextButton onClick={handleNextClick}>
+                  <div className="flex gap-2 items-center">
+                    NEXT
+                    <ArrowBigRight size={20} />
+                  </div>
+                </NextButton>
+              </div>
             </CardFooter>
           </Card>
         </TabsContent>
