@@ -7,22 +7,32 @@ export const initializeUser = async (
   email?: string | null
 ) => {
   try {
-    await db.user.upsert({
+    const existingUser = await db.user.findUnique({
       where: { githubId: githubId },
-      update: {},
-      create: {
-        githubId: githubId,
-        installationId: 0,
-        ...(email
-          ? { email: email, verifiedEmail: true, emails: [email] }
-          : {}),
-      },
     });
+
+    let result;
+    if (!existingUser) {
+      result = await db.user.create({
+        data: {
+          githubId: githubId,
+          installationId: 0,
+          ...(email
+            ? { email: email, verifiedEmail: true, emails: [email] }
+            : {}),
+        },
+      });
+
+      await logToDiscord(
+        `Triggered initializeUser for id: ${githubId}`,
+        "INFO"
+      );
+    } else {
+      result = existingUser;
+    }
     return true;
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
     console.error(error);
     return false;
   }
@@ -46,9 +56,7 @@ export const setUser = async (
     });
     return true;
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
     console.error(error);
     return false;
   }
@@ -83,11 +91,14 @@ export const setUsername = async (id: bigint, username: UserDB) => {
         ...username,
       },
     });
+
+    await logToDiscord(
+      `Updated ${JSON.stringify(username)} for id: ${id}`,
+      "INFO"
+    );
     return true;
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
     console.error(error);
     return false;
   }
@@ -98,31 +109,40 @@ export const setGithubDevProfile = async (
   profile: GithubDevProfile
 ) => {
   try {
-    await db.githubDevProfile.upsert({
+    const existingProfile = await db.githubDevProfile.findUnique({
       where: { githubId: id },
-      update: {
-        ...profile,
-      },
-      create: {
-        githubId: id,
-        stars: profile.stars,
-        forkedRepos: profile.forkedRepos,
-        originalRepos: profile.originalRepos,
-        forks: profile.forks,
-        followers: profile.followers,
-        totalCommits: profile.totalCommits,
-        repositoriesContributedTo: profile.repositoriesContributedTo,
-        pullRequests: profile.pullRequests,
-        mergedPullRequests: profile.mergedPullRequests,
-        totalIssues: profile.totalIssues,
-      },
     });
-    await updateTotalPoints(id);
+
+    if (existingProfile) {
+      await db.githubDevProfile.update({
+        where: { githubId: id },
+        data: {
+          ...profile,
+        },
+      });
+    } else {
+      await db.githubDevProfile.create({
+        data: {
+          githubId: id,
+          stars: profile.stars,
+          forkedRepos: profile.forkedRepos,
+          originalRepos: profile.originalRepos,
+          forks: profile.forks,
+          followers: profile.followers,
+          totalCommits: profile.totalCommits,
+          repositoriesContributedTo: profile.repositoriesContributedTo,
+          pullRequests: profile.pullRequests,
+          mergedPullRequests: profile.mergedPullRequests,
+          totalIssues: profile.totalIssues,
+        },
+      });
+    }
+    await updateTotalPoints(id).then(() => {
+      logToDiscord(`Updated Github data for id: ${id}`, "INFO");
+    });
     return true;
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
     console.error(error);
     return false;
   }
@@ -153,9 +173,7 @@ export const getAllGithubDevProfiles = async () => {
       githubUsername: profile.User?.githubUsername || null,
     }));
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
 
     console.error("Error fetching GitHub dev profiles:", error);
     throw error;
@@ -175,9 +193,7 @@ export const getAllProfiles = async () => {
       ...profile,
     }));
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
 
     console.error("Error fetching profiles:", error);
     throw error;
@@ -189,6 +205,9 @@ export const getGithubUsername = async (id: bigint) => {
   return user?.githubUsername || "";
 };
 
+/**
+ * Note: This function is not used anywhere in the codebase.
+ */
 export const setHackerrankProfile = async (id: bigint, profile: any) => {
   try {
     await db.hackerrankProfile.upsert({
@@ -201,12 +220,12 @@ export const setHackerrankProfile = async (id: bigint, profile: any) => {
         ...profile,
       },
     });
-    await updateTotalPoints(id);
+    await updateTotalPoints(id).then(() => {
+      logToDiscord(`Updated Hackerrank data for id: ${id}`, "INFO");
+    });
     return true;
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
     console.error(error);
     return false;
   }
@@ -253,6 +272,7 @@ export const getSuperteamEarnProfile = async (id: bigint) => {
 };
 
 export const updateTotalPoints = async (id: bigint) => {
+  await logToDiscord(`Updating total points initialized for id: ${id}`, "INFO");
   const hackerrankProfile = await getHackerrankProfile(id);
   const githubDevProfile = await getGithubDevProfile(id);
   const gfgProfile = await getGFGProfile(id);
@@ -304,7 +324,9 @@ export const updateTotalPoints = async (id: bigint) => {
     return false;
   }
 
-  await db.user.update({
+  await logToDiscord(`Updating total points triggered for id: ${id}`, "INFO");
+
+  return await db.user.update({
     where: { githubId: id },
     data: {
       totalPoints: totalPoints,
@@ -338,12 +360,12 @@ export async function setHackerrankDatabyGithubId(
         stars: stars,
       },
     });
-    await updateTotalPoints(githubId);
+    await updateTotalPoints(githubId).then(() => {
+      logToDiscord(`Updated Hackerrank data for id: ${githubId}`, "INFO");
+    });
     return true;
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
     console.error(error);
     return false;
   }
@@ -367,12 +389,12 @@ export async function setGFGDatabyGithubId(
         problemsSolved: problemsSolved,
       },
     });
-    await updateTotalPoints(githubId);
+    await updateTotalPoints(githubId).then(() => {
+      logToDiscord(`Updated GFG data for id: ${githubId}`, "INFO");
+    });
     return true;
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
     console.error(error);
     return false;
   }
@@ -393,12 +415,12 @@ export async function setCodeChefDatabyGithubId(
         currentRating: currentRating,
       },
     });
-    await updateTotalPoints(githubId);
+    await updateTotalPoints(githubId).then(() => {
+      logToDiscord(`Updated Codechef data for id: ${githubId}`, "INFO");
+    });
     return true;
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
     console.error(error);
     return false;
   }
@@ -425,12 +447,12 @@ export async function setLeetCodeDatabyGithubId(
         hardQues: hardQues,
       },
     });
-    await updateTotalPoints(githubId);
+    await updateTotalPoints(githubId).then(() => {
+      logToDiscord(`Updated Leetcode data for id: ${githubId}`, "INFO");
+    });
     return true;
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
     console.error(error);
     return false;
   }
@@ -457,12 +479,12 @@ export async function setSuperteamEarnDatabyGithubId(
         totalWinnings: totalWinnings,
       },
     });
-    await updateTotalPoints(githubId);
+    await updateTotalPoints(githubId).then(() => {
+      logToDiscord(`Updated Superteam Earn data for id: ${githubId}`, "INFO");
+    });
     return true;
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
     console.error(error);
     return false;
   }
@@ -551,9 +573,7 @@ export const getUserProfileForRadarChart = async (githubUsername: string) => {
       superteamEarnPoints,
     };
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
 
     console.error("Error fetching user profile for radar chart:", error);
     throw error;

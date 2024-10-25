@@ -29,9 +29,7 @@ export async function getHackerrankStats(username: string) {
     });
     return { currentPoints, stars };
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
 
     console.error("Error fetching Hackerrank stats:", error);
     return { currentPoints: 0, stars: 0 };

@@ -3,9 +3,14 @@
  */
 import axios from "axios";
 
-const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+const defaultWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
+const webhookUrls = {
+  INFO: process.env.DISCORD_WEBHOOK_URL_INFO || defaultWebhookUrl,
+  WARN: process.env.DISCORD_WEBHOOK_URL_WARN || defaultWebhookUrl,
+  ERROR: process.env.DISCORD_WEBHOOK_URL_ERROR || defaultWebhookUrl,
+};
 
-if (!webhookUrl) {
+if (!defaultWebhookUrl) {
   console.error("DISCORD_WEBHOOK_URL is not defined");
 }
 
@@ -26,11 +31,7 @@ const logStyles = {
 const getISTTimestamp = (): string => {
   const now = new Date();
 
-  // IST is UTC +5:30
-  const offsetIST = 5 * 60 + 30; // in minutes
-  const istTime = new Date(now.getTime() + offsetIST * 60000);
-
-  return istTime.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+  return now.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
 };
 
 /**
@@ -45,6 +46,7 @@ export const logToDiscord = async (
   try {
     const timestamp = getISTTimestamp();
     const { emoji, color } = logStyles[level];
+    const webhookUrl = webhookUrls[level];
 
     const payload = {
       content: `${emoji} **[${level}]** [${timestamp} IST] \n\n${message}`,
@@ -60,7 +62,9 @@ export const logToDiscord = async (
       await axios.post(webhookUrl, payload);
       console.log(`Logged to Discord [${level}]: ${message}`);
     } else {
-      console.warn("Webhook URL is not defined. Skipping Discord log.");
+      console.warn(
+        `Webhook URL for ${level} is not defined. Skipping Discord log.`
+      );
     }
   } catch (error) {
     console.error("Error logging to Discord:", error);

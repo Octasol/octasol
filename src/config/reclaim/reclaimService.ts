@@ -85,9 +85,7 @@ async function handleReclaimSession(
             throw new Error(`Unsupported provider: ${providerName}`);
         }
       } catch (error) {
-        if (process.env.NODE_ENV === "production") {
-          await logToDiscord(`${(error as any).message}`, "ERROR");
-        }
+        await logToDiscord(`${(error as any).message}`, "ERROR");
 
         console.error(
           `Failed to process Reclaim proof for githubId: ${githubId}`,

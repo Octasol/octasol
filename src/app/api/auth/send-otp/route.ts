@@ -56,9 +56,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ message: "OTP sent successfully" });
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
 
     return NextResponse.json(
       { error: "Something went wrong." },

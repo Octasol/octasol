@@ -58,9 +58,7 @@ export const sendMail = async (
 
     await transporter.sendMail(mailOptions);
   } catch (error) {
-    if (process.env.NODE_ENV === "production") {
-      await logToDiscord(`${(error as any).message}`, "ERROR");
-    }
+    await logToDiscord(`${(error as any).message}`, "ERROR");
 
     console.error("Error sending email:", error);
   }
