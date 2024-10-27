@@ -32,8 +32,12 @@ const Sidebar = (props: Props) => {
                     size={32}
                     color={isActive("/dashboard") ? "cyan" : "currentColor"}
                   />
-                  {/* Show the label only on hover */}
-                  <span className="hidden group-hover:inline-block text-white">
+
+                  <span
+                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out hover:text-[#45bd95] ${
+                      isActive("/dashboard") ? "text-cyan-500" : "text-white"
+                    }`}
+                  >
                     Dashboard
                   </span>
                 </Link>
@@ -54,8 +58,8 @@ const Sidebar = (props: Props) => {
                     color={isActive("/p/") ? "cyan" : "currentColor"}
                   />
                   <span
-                    className={`hidden group-hover:inline-block ${
-                      isActive("/p/") ? "text-cyan" : "text-white"
+                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out hover:text-[#45bd95] ${
+                      isActive("/p/") ? "text-cyan-500" : "text-white"
                     }`}
                   >
                     Profile
@@ -79,7 +83,13 @@ const Sidebar = (props: Props) => {
                       isActive("/repoinitialize") ? "cyan" : "currentColor"
                     }
                   />
-                  <span className="hidden group-hover:inline-block text-white">
+                  <span
+                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out hover:text-[#45bd95] ${
+                      isActive("/repoinitialize")
+                        ? "text-cyan-500"
+                        : "text-white"
+                    }`}
+                  >
                     Repository
                   </span>
                 </Link>
@@ -96,7 +106,11 @@ const Sidebar = (props: Props) => {
                     size={32}
                     color={isActive("/connect") ? "cyan" : "currentColor"}
                   />
-                  <span className="hidden group-hover:inline-block text-white">
+                  <span
+                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out hover:text-[#45bd95] ${
+                      isActive("/connect") ? "text-cyan-500" : "text-white"
+                    }`}
+                  >
                     Connect
                   </span>
                 </Link>
@@ -113,7 +127,11 @@ const Sidebar = (props: Props) => {
                     size={32}
                     color={isActive("/leaderboard") ? "cyan" : "currentColor"}
                   />
-                  <span className="hidden group-hover:inline-block text-white">
+                  <span
+                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out hover:text-[#45bd95] ${
+                      isActive("/leaderboard") ? "text-cyan-500" : "text-white"
+                    }`}
+                  >
                     Leaderboard
                   </span>
                 </Link>
