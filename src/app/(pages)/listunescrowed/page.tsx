@@ -1,6 +1,5 @@
 "use client";
-import NextButton from "@/components/Button/NextButton";
-import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
   CardContent,
@@ -9,32 +8,30 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
-import Image from "next/image";
 import { useState } from "react";
+import Tab1 from "./component/Tab1";
+import TabNavigation from "./component/TabNavigation";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 export default function ListUnescrowed() {
-  const [selectedCard, setSelectedCard] = useState<string>("");
   const [activeTab, setActiveTab] = useState<string>("personal_Details");
 
-  const handleSelect = (value: string) => {
-    setSelectedCard(value);
+  const handleNextClick = (value: string) => {
+    setActiveTab(value);
   };
-  const handleNextClick = () => {
-    setActiveTab("password");
+
+  const handlePrevClick = (value: string) => {
+    setActiveTab(value);
   };
-  const handlePrevClick = () => {
-    setActiveTab("personal_Details");
-  };
+
   return (
-    <div className="w-full  flex justify-center items-center">
+    <div className="w-full flex justify-center items-center">
       <Tabs
         value={activeTab}
         onValueChange={setActiveTab}
-        className="max-w-6xl px-5"
+        className="container px-5"
       >
         <TabsList className="grid w-full h-full grid-cols-1 grid-rows-3 md:grid-cols-5 md:grid-rows-1 mb-12">
           <TabsTrigger value="personal_Details" className="pointer-events-none">
@@ -45,122 +42,43 @@ export default function ListUnescrowed() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="personal_Details">
+          <Tab1 onNext={() => handleNextClick("password")} />
+        </TabsContent>
+        <TabsContent value="password">
           <Card className="">
             <CardHeader>
-              <CardTitle>Who Are You?</CardTitle>
+              <CardTitle>Profile</CardTitle>
               <CardDescription>
                 Make changes to your account here. Click save when you're done.
               </CardDescription>
             </CardHeader>
-
             <CardContent className="py-8">
-              <div className="w-full grid grid-cols-1 grid-rows-2 md:grid-cols-2 md:grid-rows-1 gap-8 lg:gap-0">
-                <Card
-                  onClick={() => handleSelect("Individual")}
-                  className={`lg:mx-10 p-5 py-8 flex flex-col gap-5 justify-center items-center 
-                hover:shadow-lg hover:shadow-[#34597e]
-                ${
-                  selectedCard != "Organization"
-                    ? "shadow-[#34597e] shadow-lg"
-                    : "opacity-50 "
-                }`}
-                >
-                  <CardTitle className="flex justify-center items-center text-xl">
-                    Individual
-                  </CardTitle>
-                  <CardDescription>
-                    Ideal for freelancers or solo creators looking to complete
-                    tasks independently. Select this if you&apos;re working on
-                    your own.
-                  </CardDescription>
-                </Card>
-                <Card
-                  onClick={() => handleSelect("Organization")}
-                  className={`lg:mx-10 p-5 py-8 flex flex-col gap-5 justify-center items-center 
-                hover:shadow-lg hover:shadow-[#34597e]
-                ${
-                  selectedCard != "Individual"
-                    ? "shadow-[#34597e] shadow-lg"
-                    : "opacity-50 "
-                }`}
-                >
-                  <CardTitle className="flex justify-center items-center text-xl">
-                    Organization
-                  </CardTitle>
-                  <CardDescription>
-                    Perfect for businesses or teams managing bounties on behalf
-                    of a group. Choose this if you&apos;re posting tasks as a
-                    company or community.
-                  </CardDescription>
-                </Card>
-              </div>
-            </CardContent>
-            <CardFooter className="w-full flex justify-end">
-              <NextButton onClick={handleNextClick}>
-                <div className="flex items-center gap-2">
-                  NEXT
-                  <ArrowBigRight size={20} />
+              <div className="flex gap-12 items-center">
+                <Avatar>
+                  <AvatarImage
+                    src="https://github.com/shadcn.png"
+                    alt="@shadcn"
+                  />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <div className="w-full grid grid-cols-1 grid-rows-2 md:grid-cols-2 md:grid-rows-1 gap-4 md:gap-12">
+                  <div className="space-y-1">
+                    <Label htmlFor="current">Current password</Label>
+                    <Input id="current" type="password" />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="new">New password</Label>
+                    <Input id="new" type="password" />
+                  </div>
                 </div>
-              </NextButton>
-            </CardFooter>
-          </Card>
-
-          <div className="flex flex-col justify-center items-center py-12  gap-6">
-            <p className="text-center text-xl lg:text-2xl font-semibold leading-none tracking-wide">
-              or choose exixting profile...
-            </p>
-            <div className="w-full h-full gap-6 flex justify-center items-center flex-wrap">
-              <Image
-                src="/gfg.png"
-                alt="org"
-                width={45}
-                height={45}
-                className="rounded-lg"
-              />
-              <Image
-                src="/gfg.png"
-                alt="org"
-                width={45}
-                height={45}
-                className="rounded-lg"
-              />
-            </div>
-          </div>
-        </TabsContent>
-        <TabsContent value="password">
-          <Card>
-            <CardHeader>
-              <CardTitle>Password</CardTitle>
-              <CardDescription>
-                Change your password here. After saving, you'll be logged out.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="current">Current password</Label>
-                <Input id="current" type="password" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="new">New password</Label>
-                <Input id="new" type="password" />
               </div>
             </CardContent>
-            <CardFooter>
-              <div className="w-full flex justify-between items-center">
-                <NextButton onClick={handlePrevClick}>
-                  <div className="flex gap-2 items-center">
-                    <ArrowBigLeft size={20} />
-                    PREV
-                  </div>
-                </NextButton>
 
-                <NextButton onClick={handleNextClick}>
-                  <div className="flex gap-2 items-center">
-                    NEXT
-                    <ArrowBigRight size={20} />
-                  </div>
-                </NextButton>
-              </div>
+            <CardFooter>
+              <TabNavigation
+                onPrev={() => handlePrevClick("personal_Details")}
+                onNext={() => handleNextClick("")}
+              />
             </CardFooter>
           </Card>
         </TabsContent>

@@ -22,11 +22,11 @@ const Layout = ({ children }: Props) => {
   return (
     <>
       <div className="flex w-full h-full relative">
-        <div className="absolute top-0 left-0 w-[80px] hover:w-[200px] min-h-screen z-30 transition-width duration-500 ease-in-out md:flex flex-col items-start gap-8 overflow-hidden bg-black">
+        <div className="absolute top-0 left-0 w-[80px] hover:w-[200px] min-h-screen z-30 transition-width duration-500 ease-in-out hidden md:flex flex-col items-start gap-8 overflow-hidden bg-black">
           <Sidebar />
         </div>
 
-        <div className="flex-1 w-full ml-[60px]">
+        <div className="flex-1 w-full ml-0 md:ml-[80px]">
           {verifiedEmail ? (
             <div className="w-full max-h-screen pt-24 overflow-scroll">
               {children}

@@ -27,15 +27,18 @@ const Sidebar = (props: Props) => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <Link href="/dashboard" className="flex items-center gap-4">
+                <Link
+                  href="/dashboard"
+                  className="flex items-center gap-4 hover:text-[#45bd95]"
+                >
                   <HomeIcon
                     size={32}
                     color={isActive("/dashboard") ? "cyan" : "currentColor"}
                   />
 
                   <span
-                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out hover:text-[#45bd95] ${
-                      isActive("/dashboard") ? "text-cyan-500" : "text-white"
+                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out  ${
+                      isActive("/dashboard") && "text-cyan-500"
                     }`}
                   >
                     Dashboard
@@ -51,15 +54,15 @@ const Sidebar = (props: Props) => {
               <TooltipTrigger>
                 <Link
                   href={`/p/${user?.login}`}
-                  className="flex items-center gap-4"
+                  className="flex items-center gap-4 hover:text-[#45bd95]"
                 >
                   <User
                     size={32}
                     color={isActive("/p/") ? "cyan" : "currentColor"}
                   />
                   <span
-                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out hover:text-[#45bd95] ${
-                      isActive("/p/") ? "text-cyan-500" : "text-white"
+                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out  ${
+                      isActive("/p/") && "text-cyan-500"
                     }`}
                   >
                     Profile
@@ -75,7 +78,7 @@ const Sidebar = (props: Props) => {
               <TooltipTrigger>
                 <Link
                   href="/repoinitialize"
-                  className="flex items-center gap-4"
+                  className="flex items-center gap-4 hover:text-[#45bd95]"
                 >
                   <CopyPlus
                     size={32}
@@ -84,10 +87,8 @@ const Sidebar = (props: Props) => {
                     }
                   />
                   <span
-                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out hover:text-[#45bd95] ${
-                      isActive("/repoinitialize")
-                        ? "text-cyan-500"
-                        : "text-white"
+                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out  ${
+                      isActive("/repoinitialize") && "text-cyan-500"
                     }`}
                   >
                     Repository
@@ -101,14 +102,17 @@ const Sidebar = (props: Props) => {
 
             <Tooltip>
               <TooltipTrigger>
-                <Link href="/connect" className="flex items-center gap-4">
+                <Link
+                  href="/connect"
+                  className="flex items-center gap-4 hover:text-[#45bd95]"
+                >
                   <Blocks
                     size={32}
                     color={isActive("/connect") ? "cyan" : "currentColor"}
                   />
                   <span
-                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out hover:text-[#45bd95] ${
-                      isActive("/connect") ? "text-cyan-500" : "text-white"
+                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out  ${
+                      isActive("/connect") && "text-cyan-500"
                     }`}
                   >
                     Connect
@@ -122,14 +126,17 @@ const Sidebar = (props: Props) => {
 
             <Tooltip>
               <TooltipTrigger>
-                <Link href="/leaderboard" className="flex items-center gap-4">
+                <Link
+                  href="/leaderboard"
+                  className="flex items-center gap-4 hover:text-[#45bd95]"
+                >
                   <IconChartHistogram
                     size={32}
                     color={isActive("/leaderboard") ? "cyan" : "currentColor"}
                   />
                   <span
-                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out hover:text-[#45bd95] ${
-                      isActive("/leaderboard") ? "text-cyan-500" : "text-white"
+                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out  ${
+                      isActive("/leaderboard") && "text-cyan-500"
                     }`}
                   >
                     Leaderboard
