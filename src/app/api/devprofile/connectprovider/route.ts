@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     const qrCode = await QRCode.toDataURL(signedUrl);
     return NextResponse.json({ success: true, url: signedUrl, qr: qrCode });
   } catch (error) {
-    await logToDiscord(`${(error as any).message}`, "ERROR");
+    await logToDiscord(`devprofile/connectprovider: ${(error as any).message}`, "ERROR");
 
     if (error instanceof Error) {
       return NextResponse.json(

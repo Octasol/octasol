@@ -53,7 +53,7 @@ export async function processLeetcodeData(
 
     return true;
   } catch (error) {
-    await logToDiscord(`${(error as any).message}`, "ERROR");
+    await logToDiscord(`processLeetcodeData: ${(error as any).message}`, "ERROR");
 
     console.error("Error fetching Leetcode data:", error);
     return false;

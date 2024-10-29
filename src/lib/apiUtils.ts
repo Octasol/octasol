@@ -57,7 +57,7 @@ async function getInstallations() {
     );
     return { installations: response.data, error: "" };
   } catch (error) {
-    await logToDiscord(`${(error as any).message}`, "ERROR");
+    await logToDiscord(`getInstallations: ${(error as any).message}`, "ERROR");
 
     return { installations: [], error: (error as any).message };
   }
@@ -91,7 +91,7 @@ export async function getGithubIdbyInstallationId(installationId: number) {
     );
     return response.data.account.id;
   } catch (error) {
-    await logToDiscord(`${(error as any).message}`, "ERROR");
+    await logToDiscord(`getGithubIdbyInstallationId: ${(error as any).message}`, "ERROR");
 
     return 0;
   }
@@ -115,7 +115,7 @@ export async function getGithubIdbyAuthHeader(authHeader: string) {
     const accessToken = authHeader.split(" ")[1];
     return await getGithubIdbyAccessToken(accessToken);
   } catch (error) {
-    await logToDiscord(`${(error as any).message}`, "ERROR");
+    await logToDiscord(`getGithubIdbyAuthHeader: ${(error as any).message}`, "ERROR");
 
     return 0;
   }
@@ -135,7 +135,7 @@ export async function getGithubProfileWithGithubID(githubId: number) {
     setCache(cacheKey, response.data);
     return response.data;
   } catch (error) {
-    await logToDiscord(`${(error as any).message}`, "ERROR");
+    await logToDiscord(`getGithubProfileWithGithubID: ${(error as any).message}`, "ERROR");
 
     return null;
   }
@@ -157,7 +157,7 @@ export async function getUserByAuthHeader(authHeader: string) {
     setCache(cacheKey, response.data);
     return response.data;
   } catch (error) {
-    await logToDiscord(`${(error as any).message}`, "ERROR");
+    await logToDiscord(`getUserByAuthHeader: ${(error as any).message}`, "ERROR");
 
     console.error("Failed to fetch Github ID", error);
     return null;
@@ -180,7 +180,7 @@ export async function getGithubIdbyAccessToken(accessToken: string) {
     setCache(cacheKey, response.data.id);
     return response.data.id;
   } catch (error) {
-    await logToDiscord(`${(error as any).message}`, "ERROR");
+    await logToDiscord(`getGithubIdbyAccessToken: ${(error as any).message}`, "ERROR");
 
     console.error("Failed to fetch Github ID", error);
     return 0;
@@ -202,7 +202,7 @@ export async function getHackerrankProfileByApi(username: string) {
     );
     return response.data;
   } catch (error) {
-    await logToDiscord(`${(error as any).message}`, "ERROR");
+    await logToDiscord(`getHackerrankProfileByApi: ${(error as any).message}`, "ERROR");
 
     console.error(
       `Failed to fetch HackerRank profile for username: ${username}`,

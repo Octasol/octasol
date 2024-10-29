@@ -38,7 +38,7 @@ export async function GET(req: NextRequest) {
       githubId: userDbData.githubId,
     });
   } catch (error) {
-    await logToDiscord(`${(error as any).message}`, "ERROR");
+    await logToDiscord(`user/GET: ${(error as any).message}`, "ERROR");
 
     console.error(error);
     return NextResponse.json(
@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
     };
     return NextResponse.json(data);
   } catch (error) {
-    await logToDiscord(`${(error as any).message}`, "ERROR");
+    await logToDiscord(`user/POST: ${(error as any).message}`, "ERROR");
 
     console.error(error);
     return NextResponse.json(

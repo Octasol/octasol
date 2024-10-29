@@ -16,7 +16,7 @@ export async function GET(
     }
     return NextResponse.json(userDbData);
   } catch (error) {
-    await logToDiscord(`${(error as any).message}`, "ERROR");
+    await logToDiscord(`user/id: ${(error as any).message}`, "ERROR");
 
     console.error(error);
     return NextResponse.json(

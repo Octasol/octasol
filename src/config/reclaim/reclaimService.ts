@@ -85,7 +85,7 @@ async function handleReclaimSession(
             throw new Error(`Unsupported provider: ${providerName}`);
         }
       } catch (error) {
-        await logToDiscord(`${(error as any).message}`, "ERROR");
+        await logToDiscord(`reclaimService/handleReclaimSession: ${(error as any).message}`, "ERROR");
 
         console.error(
           `Failed to process Reclaim proof for githubId: ${githubId}`,
