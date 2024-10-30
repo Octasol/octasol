@@ -78,6 +78,7 @@ const Tab2 = ({ onPrev, onNext }: Props) => {
             onClick={() => document.getElementById("avatar-upload")?.click()}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
           >
             <Avatar>
               <AvatarImage src={avatar || ""} alt="User avatar" />
@@ -121,7 +122,6 @@ const Tab2 = ({ onPrev, onNext }: Props) => {
               </div>
             </div>
           </div>
-          {/* </div> */}
           <div className=" grid grid-cols-1 gap-6">
             <div className="space-y-1">
               <Label htmlFor="first-name">Description</Label>
