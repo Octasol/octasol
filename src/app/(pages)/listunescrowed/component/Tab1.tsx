@@ -11,6 +11,7 @@ import { ArrowBigRight } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
+import { setWho } from "@/app/Redux/Features/profile/profileSlice";
 
 type Props = {
   onNext: () => void;
@@ -21,7 +22,7 @@ const Tab1 = ({ onNext }: Props) => {
   const who = useSelector((state: any) => state.profile.who);
 
   const handleSelect = (value: string) => {
-    dispatch({ type: "profile/setWho", payload: value });
+    dispatch(setWho(value));
   };
 
   return (

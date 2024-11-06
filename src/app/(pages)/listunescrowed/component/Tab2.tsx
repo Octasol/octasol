@@ -19,7 +19,17 @@ import {
   User2Icon,
 } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setDescription,
+  setDiscord,
+  setGithub,
+  setImage,
+  setLink,
+  setName,
+  setTelegram,
+  setTwitter,
+} from "@/app/Redux/Features/profile/profileSlice";
 
 type Props = {
   onPrev: () => void;
@@ -27,14 +37,23 @@ type Props = {
 };
 
 const Tab2 = ({ onPrev, onNext }: Props) => {
-  const [avatar, setAvatar] = useState<string | null>("");
+  const [avatar, setAvatar] = useState("");
+  const image = useSelector((state: any) => state.profile.image);
   const [isDragging, setIsDragging] = useState(false);
+  const user = useSelector((state: any) => state.user);
+  const dispatch = useDispatch();
+  const profile = useSelector((state: any) => state.profile);
+  useEffect(() => {
+    console.log(profile);
+  }, [image, profile]);
+
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setAvatar(reader.result as string);
+        dispatch(setImage(reader.result as string));
       };
       reader.readAsDataURL(file);
     }
@@ -48,6 +67,7 @@ const Tab2 = ({ onPrev, onNext }: Props) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setAvatar(reader.result as string);
+        dispatch(setImage(reader.result as string));
       };
       reader.readAsDataURL(file);
     }
@@ -63,6 +83,34 @@ const Tab2 = ({ onPrev, onNext }: Props) => {
   const handleDragLeave = () => {
     setIsDragging(false);
   };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.name);
+    switch (event.target.name) {
+      case "name":
+        dispatch(setName(event.target.value));
+        break;
+      case "link":
+        dispatch(setLink(event.target.value));
+        break;
+      case "description":
+        dispatch(setDescription(event.target.value));
+        break;
+      case "github":
+        dispatch(setGithub(event.target.value));
+        break;
+      case "twitter":
+        dispatch(setTwitter(event.target.value));
+        break;
+      case "telegram":
+        dispatch(setTelegram(event.target.value));
+        break;
+      case "discord":
+        dispatch(setDiscord(event.target.value));
+        break;
+    }
+  };
+
   return (
     <Card className="">
       <CardHeader>
@@ -81,7 +129,7 @@ const Tab2 = ({ onPrev, onNext }: Props) => {
             onDragLeave={handleDragLeave}
           >
             <Avatar>
-              <AvatarImage src={avatar || ""} alt="User avatar" />
+              <AvatarImage src={profile?.image || ""} alt="User image" />
               <AvatarFallback>
                 <User2Icon size={40} />
               </AvatarFallback>
@@ -114,11 +162,23 @@ const Tab2 = ({ onPrev, onNext }: Props) => {
             <div className=" grid grid-cols-2 gap-6">
               <div className="space-y-1">
                 <Label htmlFor="first-name">Name</Label>
-                <Input id="first-name" placeholder="Enter your name" />
+                <Input
+                  id="first-name"
+                  placeholder="Enter your name"
+                  name="name"
+                  value={profile.name}
+                  onChange={handleChange}
+                />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="first-name">Website link</Label>
-                <Input id="first-name" placeholder="Enter your Website link" />
+                <Input
+                  id="first-name"
+                  placeholder="Enter your Website link"
+                  name="link"
+                  value={profile.link}
+                  onChange={handleChange}
+                />
               </div>
             </div>
           </div>
@@ -128,27 +188,52 @@ const Tab2 = ({ onPrev, onNext }: Props) => {
               <Input
                 id="first-name"
                 placeholder="Enter your Project Description"
+                name="description"
+                value={profile.description}
+                onChange={handleChange}
               />
             </div>
           </div>{" "}
           <div className=" grid grid-cols-2 gap-6">
             <div className="space-y-1">
               <Label htmlFor="first-name">Github</Label>
-              <Input id="first-name" placeholder="https://github.com/...." />
+              <Input
+                id="first-name"
+                placeholder="https://github.com/...."
+                value={user?.login}
+              />
             </div>
             <div className="space-y-1">
               <Label htmlFor="first-name">Twitter</Label>
-              <Input id="first-name" placeholder="@your_twitter_handle" />
+              <Input
+                id="first-name"
+                placeholder="@your_twitter_handle"
+                name="twitter"
+                value={profile.twitter}
+                onChange={handleChange}
+              />
             </div>
           </div>
           <div className=" grid grid-cols-2 gap-6">
             <div className="space-y-1">
               <Label htmlFor="first-name">Telegram</Label>
-              <Input id="first-name" placeholder="@your_telegram_handle" />
+              <Input
+                id="first-name"
+                placeholder="@your_telegram_handle"
+                name="telegram"
+                value={profile.telegram}
+                onChange={handleChange}
+              />
             </div>
             <div className="space-y-1">
               <Label htmlFor="first-name">Discord</Label>
-              <Input id="first-name" placeholder="your_discord_handle" />
+              <Input
+                id="first-name"
+                placeholder="your_discord_handle"
+                name="discord"
+                value={profile.discord}
+                onChange={handleChange}
+              />
             </div>
           </div>
         </div>
