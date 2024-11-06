@@ -7,10 +7,15 @@ type Profilestate = {
   name: string;
   link: string;
   description: string;
-  github: string;
   twitter: string;
   telegram: string;
   discord: string;
+  bountyname: string;
+  price: number;
+  skills: string[];
+  // time: Date;
+  contact: string;
+  bountyDescription: string;
 };
 
 const initialState: Profilestate = {
@@ -19,10 +24,15 @@ const initialState: Profilestate = {
   name: "",
   link: "",
   description: "",
-  github: "",
   twitter: "",
   telegram: "",
   discord: "",
+  bountyname: "",
+  price: 0,
+  skills: [],
+  // time: new Date(),
+  contact: "",
+  bountyDescription: "",
 };
 
 export const profileSlice = createSlice({
@@ -47,9 +57,6 @@ export const profileSlice = createSlice({
     setDescription: (state, action: PayloadAction<string>) => {
       state.description = action.payload;
     },
-    setGithub: (state, action: PayloadAction<string>) => {
-      state.github = action.payload;
-    },
     setTwitter: (state, action: PayloadAction<string>) => {
       state.twitter = action.payload;
     },
@@ -58,6 +65,24 @@ export const profileSlice = createSlice({
     },
     setDiscord: (state, action: PayloadAction<string>) => {
       state.discord = action.payload;
+    },
+    setBountyName: (state, action: PayloadAction<string>) => {
+      state.bountyname = action.payload;
+    },
+    setPrice: (state, action: PayloadAction<number>) => {
+      state.price = action.payload;
+    },
+    setSkills: (state, action: PayloadAction<string[]>) => {
+      state.skills = action.payload;
+    },
+    // setTime: (state, action: PayloadAction<Date>) => {
+    //   state.time = action.payload;
+    // },
+    setContact: (state, action: PayloadAction<string>) => {
+      state.contact = action.payload;
+    },
+    setBountyDescription: (state, action: PayloadAction<string>) => {
+      state.bountyDescription = action.payload;
     },
     resetProfile: () => initialState,
   },
@@ -70,10 +95,15 @@ export const {
   setName,
   setLink,
   setDescription,
-  setGithub,
   setTwitter,
   setTelegram,
   setDiscord,
   resetProfile,
+  setBountyName,
+  setPrice,
+  setSkills,
+  // setTime,
+  setContact,
+  setBountyDescription,
 } = profileSlice.actions;
 export const profileReducer = profileSlice.reducer;

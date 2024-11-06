@@ -17,7 +17,7 @@ type Props = {
   onNext: () => void;
 };
 
-const Tab1 = ({ onNext }: Props) => {
+const Who = ({ onNext }: Props) => {
   const dispatch = useDispatch();
   const who = useSelector((state: any) => state.profile.who);
 
@@ -76,7 +76,7 @@ const Tab1 = ({ onNext }: Props) => {
           </div>
         </CardContent>
         <CardFooter className="w-full flex justify-end">
-          <NextButton onClick={onNext}>
+          <NextButton onClick={onNext} disabled={!who}>
             <div className="flex items-center gap-2">
               NEXT
               <ArrowBigRight size={20} />
@@ -109,4 +109,4 @@ const Tab1 = ({ onNext }: Props) => {
   );
 };
 
-export default Tab1;
+export default Who;
