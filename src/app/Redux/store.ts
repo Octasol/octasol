@@ -8,6 +8,7 @@ import { errorReducer } from "./Features/error/error";
 import { searchReducer } from "./Features/git/search";
 import userReducer from "./Features/user/userSlice";
 import counterReducer from "./Features/loader/loaderSlice";
+import { profileReducer } from "./Features/profile/profileSlice";
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     search: searchReducer,
     repoData: repoReducer,
     counter: counterReducer,
+    profile: profileReducer,
   },
 });
 
