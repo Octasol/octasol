@@ -10,16 +10,18 @@ import {
 import { ArrowBigRight } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
 
 type Props = {
   onNext: () => void;
 };
 
 const Tab1 = ({ onNext }: Props) => {
-  const [selectedCard, setSelectedCard] = useState<string>("");
+  const dispatch = useDispatch();
+  const who = useSelector((state: any) => state.profile.who);
 
   const handleSelect = (value: string) => {
-    setSelectedCard(value);
+    dispatch({ type: "profile/setWho", payload: value });
   };
 
   return (
@@ -38,7 +40,7 @@ const Tab1 = ({ onNext }: Props) => {
               className={`lg:mx-10 p-5 py-8 flex flex-col gap-5 justify-center items-center 
                 hover:shadow-lg hover:shadow-[#34597e]
                 ${
-                  selectedCard != "Organization"
+                  who != "Organization"
                     ? "shadow-[#34597e] shadow-lg"
                     : "opacity-50 "
                 }`}
@@ -56,7 +58,7 @@ const Tab1 = ({ onNext }: Props) => {
               className={`lg:mx-10 p-5 py-8 flex flex-col gap-5 justify-center items-center 
                 hover:shadow-lg hover:shadow-[#34597e]
                 ${
-                  selectedCard !== "Individual"
+                  who !== "Individual"
                     ? "shadow-[#34597e] shadow-lg"
                     : "opacity-50 "
                 }`}

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ArrowBigLeft,
   ArrowBigRight,
@@ -19,6 +19,7 @@ import {
   User2Icon,
 } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
+import { useSelector } from "react-redux";
 
 type Props = {
   onPrev: () => void;
@@ -28,7 +29,6 @@ type Props = {
 const Tab2 = ({ onPrev, onNext }: Props) => {
   const [avatar, setAvatar] = useState<string | null>("");
   const [isDragging, setIsDragging] = useState(false);
-
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
