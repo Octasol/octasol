@@ -31,7 +31,7 @@ const Tab1 = ({ onNext }: Props) => {
         <CardHeader>
           <CardTitle>Who Are You?</CardTitle>
           <CardDescription>
-            Make changes to your account here. Click save when you're done.
+            Make changes to your account here. Click save when you&apos;re done.
           </CardDescription>
         </CardHeader>
         <CardContent className="py-8">

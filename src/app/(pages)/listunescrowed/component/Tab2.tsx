@@ -30,6 +30,7 @@ import {
   setTelegram,
   setTwitter,
 } from "@/app/Redux/Features/profile/profileSlice";
+import { Textarea } from "@/components/ui/textarea";
 
 type Props = {
   onPrev: () => void;
@@ -93,9 +94,6 @@ const Tab2 = ({ onPrev, onNext }: Props) => {
       case "link":
         dispatch(setLink(event.target.value));
         break;
-      case "description":
-        dispatch(setDescription(event.target.value));
-        break;
       case "github":
         dispatch(setGithub(event.target.value));
         break;
@@ -111,12 +109,18 @@ const Tab2 = ({ onPrev, onNext }: Props) => {
     }
   };
 
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    dispatch(setDescription(event.target.value));
+  };
+
   return (
     <Card className="">
       <CardHeader>
         <CardTitle>Profile</CardTitle>
         <CardDescription>
-          Make changes to your account here. Click save when you're done.
+          Make changes to your account here. Click save when you&apos;re done.
         </CardDescription>
       </CardHeader>
       <CardContent className="py-4 px-12">
@@ -185,12 +189,12 @@ const Tab2 = ({ onPrev, onNext }: Props) => {
           <div className=" grid grid-cols-1 gap-6">
             <div className="space-y-1">
               <Label htmlFor="first-name">Description</Label>
-              <Input
+              <Textarea
                 id="first-name"
                 placeholder="Enter your Project Description"
                 name="description"
                 value={profile.description}
-                onChange={handleChange}
+                onChange={handleDescriptionChange}
               />
             </div>
           </div>{" "}
