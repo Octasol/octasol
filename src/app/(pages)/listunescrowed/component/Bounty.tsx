@@ -19,28 +19,29 @@ import {
 } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
 import { useDispatch, useSelector } from "react-redux";
 import MDEditor from "@uiw/react-md-editor";
-import Image from "next/image";
 import {
   setBountyDescription,
   setBountyName,
   setContact,
   setPrice,
+  setSkills,
   setTime,
 } from "@/app/Redux/Features/profile/profileSlice";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { MultiSelect } from "@/components/ui/multi-select";
+import { Cat, Dog, Fish, Rabbit, Turtle } from "lucide-react";
+
+const frameworksList = [
+  { value: "react", label: "React", icon: Turtle },
+  { value: "angular", label: "Angular", icon: Cat },
+  { value: "vue", label: "Vue", icon: Dog },
+  { value: "svelte", label: "Svelte", icon: Rabbit },
+  { value: "ember", label: "Ember", icon: Fish },
+];
 
 type Props = {
   onPrev: () => void;
@@ -50,6 +51,10 @@ type Props = {
 const Bounty = ({ onPrev, onNext }: Props) => {
   const dispatch = useDispatch();
   const profile = useSelector((state: any) => state.profile);
+
+  const setSelectedFrameworks = (skill: string[]) => {
+    dispatch(setSkills(skill));
+  };
 
   useEffect(() => {
     console.log(profile);
@@ -91,14 +96,14 @@ const Bounty = ({ onPrev, onNext }: Props) => {
   return (
     <Card className="">
       <CardHeader>
-        <CardTitle>Profile</CardTitle>
+        <CardTitle>Bounty</CardTitle>
         <CardDescription>
           Make changes to your account here. Click save when you&apos;re done.
         </CardDescription>
       </CardHeader>
       <CardContent className="py-4 px-12">
         <div className="flex flex-col gap-4">
-          <div className=" flex gap-12 w-full border-[1px] border-gray-900 rounded-lg p-4 ">
+          {/* <div className=" flex gap-12 w-full border-[1px] border-gray-900 rounded-lg p-4 ">
             <Image
               src={profile.image}
               alt="user image"
@@ -111,7 +116,7 @@ const Bounty = ({ onPrev, onNext }: Props) => {
               <p className="underline underline-offset-4">{profile.name}</p>
               <p className="text-gray-500">{profile.description}</p>
             </div>
-          </div>
+          </div> */}
           <div className="w-full grid grid-cols-1  gap-4">
             <div className=" grid grid-cols-2 gap-6">
               <div className="space-y-1">
@@ -154,67 +159,56 @@ const Bounty = ({ onPrev, onNext }: Props) => {
           <div className="grid grid-cols-1 gap-6">
             <div className="space-y-1">
               <Label htmlFor="bounty-description">Skills</Label>
-              <Select>
-                <SelectTrigger
-                  className=" flex  gap-12 h-10 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-sm  file:border-0 file:bg-transparent 
-          file:text-sm file:font-medium placeholder:text-neutral-400 dark:placeholder-text-neutral-600 
-          focus-visible:outline-none focus-visible:ring-[2px]  focus-visible:ring-neutral-400 dark:focus-visible:ring-neutral-600
-           disabled:cursor-not-allowed disabled:opacity-50
-           dark:shadow-[0px_0px_1px_1px_var(--neutral-700)]
-           group-hover/input:shadow-none transition duration-40"
-                >
-                  <SelectValue placeholder="Select a fruit" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Fruits</SelectLabel>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+
+              <MultiSelect
+                options={frameworksList}
+                onValueChange={setSelectedFrameworks}
+                defaultValue={profile.skills}
+                placeholder="Select Skills"
+                variant="inverted"
+                maxCount={5}
+              />
             </div>
           </div>
 
           <div className=" grid grid-cols-2 gap-6">
             <div className="space-y-1">
               <Label htmlFor="first-name">Expiry Time</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant={"outline"}
-                    className={cn(
-                      `flex text-left justify-start gap-12 h-10 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-sm  file:border-0 file:bg-transparent 
+              <div className="mt-2">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        `flex text-left justify-start gap-8 h-10 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-sm  file:border-0 file:bg-transparent 
           file:text-sm file:font-medium placeholder:text-neutral-400 dark:placeholder-text-neutral-600 
           focus-visible:outline-none focus-visible:ring-[2px]  focus-visible:ring-neutral-400 dark:focus-visible:ring-neutral-600
            disabled:cursor-not-allowed disabled:opacity-50
            dark:shadow-[0px_0px_1px_1px_var(--neutral-700)]
-           group-hover/input:shadow-none transition duration-40`,
-                      !profile.time && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon />
-                    {profile.time ? (
-                      format(profile.time, "PPP")
-                    ) : (
-                      <span>Pick a profile.time</span>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-full p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={profile.time}
-                    onSelect={setExpiryTime}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
+           group-hover/input:shadow-none transition duration-400 mt-2`,
+                        !profile.time && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon />
+                      {profile.time ? (
+                        format(profile.time, "PPP")
+                      ) : (
+                        <span>Pick a profile.time</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={profile.time}
+                      onSelect={setExpiryTime}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
             </div>
-            <div className="space-y-1">
+            <div className="space-y-1 ">
               <Label htmlFor="first-name">Contact</Label>
               <Input
                 id="first-name"
