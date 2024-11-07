@@ -6,13 +6,18 @@ import Profile from "./component/Profile";
 import Bounty from "./component/Bounty";
 
 export default function ListUnescrowed() {
-  const [activeTab, setActiveTab] = useState<string>("who");
+  const [activeTab, setActiveTab] = useState<string>(
+    localStorage.getItem("activeTab") || "who"
+  );
 
   const handleNextClick = (value: string) => {
+    localStorage.setItem("activeTab", value);
     setActiveTab(value);
   };
 
   const handlePrevClick = (value: string) => {
+    localStorage.setItem("activeTab", value);
+
     setActiveTab(value);
   };
 
