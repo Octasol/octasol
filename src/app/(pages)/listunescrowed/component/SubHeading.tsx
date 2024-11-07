@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -19,11 +19,15 @@ type Props = {
 
 const SubHeading = ({ onNext }: Props) => {
   const dispatch = useDispatch();
-  const subHeading = useSelector((state: any) => state.profile.subHeading);
+  const profile = useSelector((state: any) => state.profile);
 
   const handleSelect = (value: string) => {
     dispatch(setSubHeading(value));
   };
+
+  useEffect(() => {
+    console.log(profile);
+  }, [profile]);
 
   return (
     <div className="flex flex-col ">
@@ -41,7 +45,7 @@ const SubHeading = ({ onNext }: Props) => {
               className={`lg:mx-10 p-5 py-8 flex flex-col gap-5 justify-center items-center 
                 hover:shadow-lg hover:shadow-[#34597e]
                 ${
-                  subHeading != "Organization"
+                  profile?.subHeading != "Organization"
                     ? "shadow-[#34597e] shadow-lg"
                     : "opacity-50 "
                 }`}
@@ -59,7 +63,7 @@ const SubHeading = ({ onNext }: Props) => {
               className={`lg:mx-10 p-5 py-8 flex flex-col gap-5 justify-center items-center 
                 hover:shadow-lg hover:shadow-[#34597e]
                 ${
-                  subHeading !== "Individual"
+                  profile?.subHeading !== "Individual"
                     ? "shadow-[#34597e] shadow-lg"
                     : "opacity-50 "
                 }`}
@@ -76,7 +80,7 @@ const SubHeading = ({ onNext }: Props) => {
           </div>
         </CardContent>
         <CardFooter className="w-full flex justify-end">
-          <NextButton onClick={onNext} disabled={!subHeading}>
+          <NextButton onClick={onNext} disabled={!profile?.subHeading}>
             <div className="flex items-center gap-2">
               NEXT
               <ArrowBigRight size={20} />

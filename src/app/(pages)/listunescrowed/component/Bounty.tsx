@@ -19,12 +19,13 @@ import {
 } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
 import { useDispatch, useSelector } from "react-redux";
 import MDEditor from "@uiw/react-md-editor";
 import {
+  resetProfile,
   setBountyDescription,
   setBountyName,
   setContact,
@@ -34,6 +35,7 @@ import {
 } from "@/app/Redux/Features/profile/profileSlice";
 import { MultiSelect } from "@/components/ui/multi-select";
 import { Cat, Dog, Fish, Rabbit, Turtle } from "lucide-react";
+import { POST } from "@/config/axios/requests";
 
 const frameworksList = [
   { value: "react", label: "React", icon: Turtle },
@@ -45,20 +47,22 @@ const frameworksList = [
 
 type Props = {
   onPrev: () => void;
-  onNext: () => void;
+  // onNext: () => void;
+  setActiveTab: () => void;
 };
 
-const Bounty = ({ onPrev, onNext }: Props) => {
+const Bounty = ({ onPrev, setActiveTab }: Props) => {
   const dispatch = useDispatch();
   const profile = useSelector((state: any) => state.profile);
+  const user = useSelector((state: any) => state.user);
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   const setSelectedFrameworks = (skill: string[]) => {
     dispatch(setSkills(skill));
   };
-
-  useEffect(() => {
-    console.log(profile);
-  }, [profile]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.name);
@@ -91,6 +95,25 @@ const Bounty = ({ onPrev, onNext }: Props) => {
 
   const handleDescriptionChange = (value: string | undefined) => {
     dispatch(setBountyDescription(value || ""));
+  };
+
+  const submitProfile = async (id: bigint) => {
+    console.log("submitting profile");
+    const { response, error } = await POST("/unescrowedprofile", {
+      userId: id,
+      ...profile,
+    });
+    if (response) {
+      console.log(response);
+      if (response.status === 200) {
+        console.log("Profile submitted successfully");
+        dispatch(resetProfile());
+        setActiveTab();
+      }
+    }
+    if (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -232,7 +255,7 @@ const Bounty = ({ onPrev, onNext }: Props) => {
           </NextButton>
 
           <NextButton
-            onClick={onNext}
+            onClick={() => submitProfile(user?.githubId)}
             disabled={
               !profile.bountyname ||
               !profile.bountyDescription ||

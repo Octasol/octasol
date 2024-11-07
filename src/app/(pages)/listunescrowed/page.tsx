@@ -1,11 +1,16 @@
 "use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import Profile from "./component/Profile";
 import Bounty from "./component/Bounty";
 import SubHeading from "./component/SubHeading";
+import { useSelector } from "react-redux";
 
 export default function ListUnescrowed() {
+  const user = useSelector((state: any) => state.user);
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
   const [activeTab, setActiveTab] = useState<string>(
     localStorage.getItem("activeTab") || "subheading"
   );
@@ -17,7 +22,6 @@ export default function ListUnescrowed() {
 
   const handlePrevClick = (value: string) => {
     localStorage.setItem("activeTab", value);
-
     setActiveTab(value);
   };
 
@@ -51,7 +55,8 @@ export default function ListUnescrowed() {
         <TabsContent value="bounty">
           <Bounty
             onPrev={() => handlePrevClick("profile")}
-            onNext={() => handleNextClick("bunty")}
+            setActiveTab={() => setActiveTab("subheading")}
+            // onNext={() => handleNextClick("bunty")}
           />
         </TabsContent>
       </Tabs>

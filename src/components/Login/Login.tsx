@@ -149,12 +149,15 @@ const Login = () => {
       })
     );
     Cookies.remove("session");
+    dispatch(resetProfile());
+    localStorage.setItem("activeTab", "subheading");
     router.push("/");
   };
 
   useEffect(() => {
     if (pathname !== "/" && !Cookies.get("session")) {
       dispatch(resetProfile());
+      localStorage.setItem("activeTab", "subheading");
       handleSessionFromCookies();
       logout();
     }
