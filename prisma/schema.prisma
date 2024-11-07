@@ -85,6 +85,20 @@ model SuperteamEarnProfile {
 }
 
 model Unescrowed {
-  User     User?  @relation(fields: [githubId], references: [githubId])
-  githubId BigInt @id @unique
+  User              User?    @relation(fields: [githubId], references: [githubId])
+  githubId          BigInt   @id @unique
+  subHeading        String
+  image             String
+  name              String
+  link              String
+  description       String
+  twitter           String
+  telegram          String
+  discord           String
+  bountyname        String
+  price             Int
+  bountyDescription String
+  skills            String[]
+  time              String
+  contact           String
 }
