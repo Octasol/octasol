@@ -1,5 +1,4 @@
 "use client";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
   CardContent,
@@ -8,20 +7,40 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
 import { useDispatch, useSelector } from "react-redux";
-
-import { Textarea } from "@/components/ui/textarea";
+import MDEditor from "@uiw/react-md-editor";
 import Image from "next/image";
 import {
   setBountyDescription,
   setBountyName,
+  setContact,
   setPrice,
+  setTime,
 } from "@/app/Redux/Features/profile/profileSlice";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type Props = {
   onPrev: () => void;
@@ -48,6 +67,11 @@ const Bounty = ({ onPrev, onNext }: Props) => {
         if (/^\d*$/.test(numericValue)) {
           dispatch(setPrice(numericValue ? parseInt(numericValue, 10) : 0));
         }
+        break;
+      }
+      case "contact": {
+        dispatch(setContact(event.target.value));
+        break;
       }
       default: {
         break;
@@ -55,10 +79,13 @@ const Bounty = ({ onPrev, onNext }: Props) => {
     }
   };
 
-  const handleDescriptionChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    dispatch(setBountyDescription(event.target.value));
+  const setExpiryTime = (date: Date | undefined) => {
+    const isoDate = date ? date.toISOString() : undefined;
+    dispatch(setTime(isoDate));
+  };
+
+  const handleDescriptionChange = (value: string | undefined) => {
+    dispatch(setBountyDescription(value || ""));
   };
 
   return (
@@ -103,66 +130,101 @@ const Bounty = ({ onPrev, onNext }: Props) => {
                   id="first-name"
                   placeholder="Enter Bounty Price"
                   name="price"
-                  value={`$${profile.price || ""}`}
+                  value={profile.price && `$${profile.price}`}
                   onChange={handleChange}
                 />
               </div>
             </div>
           </div>
-          <div className=" grid grid-cols-1 gap-6">
+          <div className="grid grid-cols-1 gap-6">
             <div className="space-y-1">
-              <Label htmlFor="first-name">Bounty Description</Label>
-              <Textarea
-                id="first-name"
-                placeholder="Enter your Project Description"
-                name="bountyDescription"
+              <Label htmlFor="bounty-description">Bounty Description</Label>
+              <MDEditor
                 value={profile.bountyDescription}
                 onChange={handleDescriptionChange}
+                preview="edit"
+                height={200}
+                textareaProps={{
+                  placeholder: "Enter your Project Description in Markdown",
+                }}
               />
             </div>
-          </div>{" "}
-          {/* <div className=" grid grid-cols-2 gap-6">
+          </div>
+
+          <div className="grid grid-cols-1 gap-6">
             <div className="space-y-1">
-              <Label htmlFor="first-name">Github</Label>
-              <Input
-                id="first-name"
-                placeholder="https://github.com/...."
-                value={user?.login}
-              />
+              <Label htmlFor="bounty-description">Skills</Label>
+              <Select>
+                <SelectTrigger
+                  className=" flex  gap-12 h-10 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-sm  file:border-0 file:bg-transparent 
+          file:text-sm file:font-medium placeholder:text-neutral-400 dark:placeholder-text-neutral-600 
+          focus-visible:outline-none focus-visible:ring-[2px]  focus-visible:ring-neutral-400 dark:focus-visible:ring-neutral-600
+           disabled:cursor-not-allowed disabled:opacity-50
+           dark:shadow-[0px_0px_1px_1px_var(--neutral-700)]
+           group-hover/input:shadow-none transition duration-40"
+                >
+                  <SelectValue placeholder="Select a fruit" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Fruits</SelectLabel>
+                    <SelectItem value="apple">Apple</SelectItem>
+                    <SelectItem value="banana">Banana</SelectItem>
+                    <SelectItem value="blueberry">Blueberry</SelectItem>
+                    <SelectItem value="grapes">Grapes</SelectItem>
+                    <SelectItem value="pineapple">Pineapple</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className=" grid grid-cols-2 gap-6">
+            <div className="space-y-1">
+              <Label htmlFor="first-name">Expiry Time</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      `flex text-left justify-start gap-12 h-10 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-sm  file:border-0 file:bg-transparent 
+          file:text-sm file:font-medium placeholder:text-neutral-400 dark:placeholder-text-neutral-600 
+          focus-visible:outline-none focus-visible:ring-[2px]  focus-visible:ring-neutral-400 dark:focus-visible:ring-neutral-600
+           disabled:cursor-not-allowed disabled:opacity-50
+           dark:shadow-[0px_0px_1px_1px_var(--neutral-700)]
+           group-hover/input:shadow-none transition duration-40`,
+                      !profile.time && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon />
+                    {profile.time ? (
+                      format(profile.time, "PPP")
+                    ) : (
+                      <span>Pick a profile.time</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-full p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={profile.time}
+                    onSelect={setExpiryTime}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
             <div className="space-y-1">
-              <Label htmlFor="first-name">Twitter</Label>
+              <Label htmlFor="first-name">Contact</Label>
               <Input
                 id="first-name"
-                placeholder="@your_twitter_handle"
-                name="twitter"
-                value={profile.twitter}
+                placeholder="@your_contact_handle"
+                name="contact"
+                value={profile.contact}
                 onChange={handleChange}
               />
             </div>
-          </div> */}
-          {/* <div className=" grid grid-cols-2 gap-6">
-            <div className="space-y-1">
-              <Label htmlFor="first-name">Telegram</Label>
-              <Input
-                id="first-name"
-                placeholder="@your_telegram_handle"
-                name="telegram"
-                value={profile.telegram}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="first-name">Discord</Label>
-              <Input
-                id="first-name"
-                placeholder="your_discord_handle"
-                name="discord"
-                value={profile.discord}
-                onChange={handleChange}
-              />
-            </div>
-          </div> */}
+          </div>
         </div>
       </CardContent>
 

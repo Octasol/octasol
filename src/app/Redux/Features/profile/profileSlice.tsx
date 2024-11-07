@@ -11,11 +11,11 @@ type Profilestate = {
   telegram: string;
   discord: string;
   bountyname: string;
-  price: number;
+  price: number | undefined;
   skills: string[];
-  // time: Date;
+  time: string | undefined;
   contact: string;
-  bountyDescription: string;
+  bountyDescription: string | undefined;
 };
 
 const initialState: Profilestate = {
@@ -28,9 +28,9 @@ const initialState: Profilestate = {
   telegram: "",
   discord: "",
   bountyname: "",
-  price: 0,
+  price: undefined,
   skills: [],
-  // time: new Date(),
+  time: new Date().toISOString(),
   contact: "",
   bountyDescription: "",
 };
@@ -75,9 +75,9 @@ export const profileSlice = createSlice({
     setSkills: (state, action: PayloadAction<string[]>) => {
       state.skills = action.payload;
     },
-    // setTime: (state, action: PayloadAction<Date>) => {
-    //   state.time = action.payload;
-    // },
+    setTime: (state, action: PayloadAction<string | undefined>) => {
+      state.time = action.payload;
+    },
     setContact: (state, action: PayloadAction<string>) => {
       state.contact = action.payload;
     },
@@ -102,7 +102,7 @@ export const {
   setBountyName,
   setPrice,
   setSkills,
-  // setTime,
+  setTime,
   setContact,
   setBountyDescription,
 } = profileSlice.actions;
