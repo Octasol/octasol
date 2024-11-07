@@ -28,6 +28,7 @@ import { decrement } from "@/app/Redux/Features/loader/loaderSlice";
 import { store } from "@/app/Redux/store";
 import { Skeleton } from "../ui/skeleton";
 import Cookies from "js-cookie";
+import { resetProfile } from "@/app/Redux/Features/profile/profileSlice";
 
 const Login = () => {
   const { data: session, status } = useSession() as any;
@@ -153,6 +154,7 @@ const Login = () => {
 
   useEffect(() => {
     if (pathname !== "/" && !Cookies.get("session")) {
+      dispatch(resetProfile());
       handleSessionFromCookies();
       logout();
     }
