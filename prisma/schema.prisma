@@ -3,33 +3,34 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
 model User {
-  githubId           BigInt             @id @unique
-  installationId     BigInt
-  githubUsername     String?            @unique
-  superteamUsername  String?            @unique
-  leetcodeUsername   String?            @unique
-  codeforcesUsername String?            @unique
-  hackerrankUsername String?            @unique
-  codechefUsername   String?            @unique
-  gfgUsername        String?            @unique
-  gitlabUsername     String?            @unique
-  email              String?            @unique
-  emails             String[]           @default([])
-  verifiedEmail      Boolean            @default(false)
-  totalPoints        Int                @default(0)
-  emailOtp           String?
-  GithubDevProfile   GithubDevProfile?
-  HackerrankProfile  HackerrankProfile?
-  GFGProfile         GFGProfile?
-  CodeChefProfile    CodeChefProfile?
-  LeetcodeProfile    LeetcodeProfile?
+  githubId             BigInt                @id @unique
+  installationId       BigInt
+  githubUsername       String?               @unique
+  superteamUsername    String?               @unique
+  leetcodeUsername     String?               @unique
+  codeforcesUsername   String?               @unique
+  hackerrankUsername   String?               @unique
+  codechefUsername     String?               @unique
+  gfgUsername          String?               @unique
+  gitlabUsername       String?               @unique
+  email                String?               @unique
+  emails               String[]              @default([])
+  verifiedEmail        Boolean               @default(false)
+  totalPoints          Int                   @default(0)
+  emailOtp             String?
+  GithubDevProfile     GithubDevProfile?
+  HackerrankProfile    HackerrankProfile?
+  GFGProfile           GFGProfile?
+  CodeChefProfile      CodeChefProfile?
+  LeetcodeProfile      LeetcodeProfile?
   SuperteamEarnProfile SuperteamEarnProfile?
+  Unescrowed           Unescrowed?
 }
 
 model GithubDevProfile {
@@ -68,17 +69,22 @@ model CodeChefProfile {
 }
 
 model LeetcodeProfile {
-  User           User?  @relation(fields: [githubId], references: [githubId])
-  githubId       BigInt @id @unique
-  easyQues       Int
-  mediumQues     Int     
-  hardQues       Int     
+  User       User?  @relation(fields: [githubId], references: [githubId])
+  githubId   BigInt @id @unique
+  easyQues   Int
+  mediumQues Int
+  hardQues   Int
 }
 
 model SuperteamEarnProfile {
-  User          User?   @relation(fields: [githubId], references: [githubId])
-  githubId      BigInt  @id @unique
-  participations Int    
-  wins           Int    
-  totalWinnings  Int    
+  User           User?  @relation(fields: [githubId], references: [githubId])
+  githubId       BigInt @id @unique
+  participations Int
+  wins           Int
+  totalWinnings  Int
+}
+
+model Unescrowed {
+  User     User?  @relation(fields: [githubId], references: [githubId])
+  githubId BigInt @id @unique
 }

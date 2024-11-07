@@ -1,13 +1,13 @@
 "use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
-import Who from "./component/Who";
 import Profile from "./component/Profile";
 import Bounty from "./component/Bounty";
+import SubHeading from "./component/SubHeading";
 
 export default function ListUnescrowed() {
   const [activeTab, setActiveTab] = useState<string>(
-    localStorage.getItem("activeTab") || "who"
+    localStorage.getItem("activeTab") || "subheading"
   );
 
   const handleNextClick = (value: string) => {
@@ -29,8 +29,8 @@ export default function ListUnescrowed() {
         className="w-11/12  md:w-10/12 lg:w-8/12 px-0 md:px-5"
       >
         <TabsList className="grid w-full h-full grid-cols-1 grid-rows-3 md:grid-cols-3 md:grid-rows-1 mb-12">
-          <TabsTrigger value="who" className="pointer-events-none">
-            Who
+          <TabsTrigger value="subheading" className="pointer-events-none">
+            Who Are You?
           </TabsTrigger>
           <TabsTrigger value="profile" className="pointer-events-none">
             Profile
@@ -39,12 +39,12 @@ export default function ListUnescrowed() {
             Bounty
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="who">
-          <Who onNext={() => handleNextClick("profile")} />
+        <TabsContent value="subheading">
+          <SubHeading onNext={() => handleNextClick("profile")} />
         </TabsContent>
         <TabsContent value="profile">
           <Profile
-            onPrev={() => handlePrevClick("who")}
+            onPrev={() => handlePrevClick("subheading")}
             onNext={() => handleNextClick("bounty")}
           />
         </TabsContent>

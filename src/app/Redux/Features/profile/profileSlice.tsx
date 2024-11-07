@@ -2,7 +2,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type Profilestate = {
-  who: string;
+  subHeading: string;
   image: string;
   name: string;
   link: string;
@@ -19,7 +19,7 @@ type Profilestate = {
 };
 
 const initialState: Profilestate = {
-  who: "",
+  subHeading: "",
   image: "",
   name: "",
   link: "",
@@ -42,8 +42,8 @@ export const profileSlice = createSlice({
     setUser: (state, action: PayloadAction<Profilestate>) => {
       return { ...state, ...action.payload };
     },
-    setWho: (state, action: PayloadAction<string>) => {
-      state.who = action.payload;
+    setSubHeading: (state, action: PayloadAction<string>) => {
+      state.subHeading = action.payload;
     },
     setImage: (state, action: PayloadAction<string>) => {
       state.image = action.payload;
@@ -91,7 +91,7 @@ export const profileSlice = createSlice({
 export const {
   setUser,
   setImage,
-  setWho,
+  setSubHeading,
   setName,
   setLink,
   setDescription,

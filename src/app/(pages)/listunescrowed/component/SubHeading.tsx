@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Card,
   CardContent,
@@ -11,18 +11,18 @@ import { ArrowBigRight } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { setWho } from "@/app/Redux/Features/profile/profileSlice";
+import { setSubHeading } from "@/app/Redux/Features/profile/profileSlice";
 
 type Props = {
   onNext: () => void;
 };
 
-const Who = ({ onNext }: Props) => {
+const SubHeading = ({ onNext }: Props) => {
   const dispatch = useDispatch();
-  const who = useSelector((state: any) => state.profile.who);
+  const subHeading = useSelector((state: any) => state.profile.subHeading);
 
   const handleSelect = (value: string) => {
-    dispatch(setWho(value));
+    dispatch(setSubHeading(value));
   };
 
   return (
@@ -41,7 +41,7 @@ const Who = ({ onNext }: Props) => {
               className={`lg:mx-10 p-5 py-8 flex flex-col gap-5 justify-center items-center 
                 hover:shadow-lg hover:shadow-[#34597e]
                 ${
-                  who != "Organization"
+                  subHeading != "Organization"
                     ? "shadow-[#34597e] shadow-lg"
                     : "opacity-50 "
                 }`}
@@ -59,7 +59,7 @@ const Who = ({ onNext }: Props) => {
               className={`lg:mx-10 p-5 py-8 flex flex-col gap-5 justify-center items-center 
                 hover:shadow-lg hover:shadow-[#34597e]
                 ${
-                  who !== "Individual"
+                  subHeading !== "Individual"
                     ? "shadow-[#34597e] shadow-lg"
                     : "opacity-50 "
                 }`}
@@ -76,7 +76,7 @@ const Who = ({ onNext }: Props) => {
           </div>
         </CardContent>
         <CardFooter className="w-full flex justify-end">
-          <NextButton onClick={onNext} disabled={!who}>
+          <NextButton onClick={onNext} disabled={!subHeading}>
             <div className="flex items-center gap-2">
               NEXT
               <ArrowBigRight size={20} />
@@ -109,4 +109,4 @@ const Who = ({ onNext }: Props) => {
   );
 };
 
-export default Who;
+export default SubHeading;
