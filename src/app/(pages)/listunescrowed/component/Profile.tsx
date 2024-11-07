@@ -246,7 +246,7 @@ const Profile = ({ onPrev, onNext }: Props) => {
 
           <NextButton
             onClick={onNext}
-            // disabled={!profile.name || !profile.image}
+            disabled={!profile.name || !profile.image}
           >
             <div className="flex gap-2 items-center">
               NEXT
