@@ -233,7 +233,14 @@ const Bounty = ({ onPrev, onNext }: Props) => {
 
           <NextButton
             onClick={onNext}
-            disabled={!profile.name || !profile.image}
+            disabled={
+              !profile.bountyname ||
+              !profile.bountyDescription ||
+              !profile.price ||
+              !profile.skills.length ||
+              !profile.time ||
+              !profile.contact
+            }
           >
             <div className="flex gap-2 items-center">
               NEXT
