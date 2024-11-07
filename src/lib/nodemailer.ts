@@ -58,7 +58,7 @@ export const sendMail = async (
 
     await transporter.sendMail(mailOptions);
   } catch (error) {
-    await logToDiscord(`${(error as any).message}`, "ERROR");
+    await logToDiscord(`nodemailer/sendMail: ${(error as any).message}`, "ERROR");
 
     console.error("Error sending email:", error);
   }

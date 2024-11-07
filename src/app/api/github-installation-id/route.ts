@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     const installationId = await getInstallationId(BigInt(githubId));
     return NextResponse.json({ installationId: Number(installationId) });
   } catch (error) {
-    await logToDiscord(`${(error as any).message}`, "ERROR");
+    await logToDiscord(`github-installation-id ${(error as any).message}`, "ERROR");
 
     return NextResponse.json(
       { error: (error as any).message },

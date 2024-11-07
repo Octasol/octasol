@@ -27,7 +27,7 @@ export async function processCodechefData(
     );
     return true;
   } catch (error) {
-    await logToDiscord(`${(error as any).message}`, "ERROR");
+    await logToDiscord(`processCodechefData: ${(error as any).message}`, "ERROR");
 
     console.error(
       `Failed to fetch CodeChef data for username: ${username}`,
