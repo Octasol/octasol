@@ -1,3 +1,4 @@
+"use server";
 import {
   Card,
   CardContent,
@@ -35,6 +36,9 @@ import {
 import { MultiSelect } from "@/components/ui/multi-select";
 import { Cat, Dog, Fish, Rabbit, Turtle } from "lucide-react";
 import { POST } from "@/config/axios/requests";
+import { S3Client } from "@aws-sdk/client-s3";
+import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
+import { randomUUID } from "crypto";
 
 const frameworksList = [
   { value: "react", label: "React", icon: Turtle },
@@ -48,6 +52,7 @@ type Props = {
   onPrev: () => void;
   setActiveTab: () => void;
 };
+const awsClient = new S3Client({ region: process.env.AWS_REGION });
 
 const Bounty = ({ onPrev, setActiveTab }: Props) => {
   const dispatch = useDispatch();
@@ -111,7 +116,10 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
   };
 
   const uploadImage = async (file: File): Promise<string> => {
-    const url = URL.createObjectURL(file);
+    const { url, fields } = await createPresignedPost(awsClient, {
+      Bucket: process.env.AWS_BUCKET || "",
+      Key: randomUUID(),
+    });
     return url;
   };
 
