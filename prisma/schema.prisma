@@ -30,12 +30,15 @@ model User {
   CodeChefProfile      CodeChefProfile?
   LeetcodeProfile      LeetcodeProfile?
   SuperteamEarnProfile SuperteamEarnProfile?
-  Unescrowed           Unescrowed?
+  Sponsor              Sponsor?
+  submissions          Submission[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @default(now()) @updatedAt
 }
 
 model GithubDevProfile {
-  User                      User?  @relation(fields: [githubId], references: [githubId])
-  githubId                  BigInt @id @unique
+  User                      User?    @relation(fields: [githubId], references: [githubId])
+  githubId                  BigInt   @id @unique
   stars                     Int
   forks                     Int
   forkedRepos               Int
@@ -46,75 +49,101 @@ model GithubDevProfile {
   pullRequests              Int
   mergedPullRequests        Int
   totalIssues               Int
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @default(now()) @updatedAt
 }
 
 model HackerrankProfile {
-  User          User?  @relation(fields: [githubId], references: [githubId])
-  githubId      BigInt @id @unique
+  User          User?    @relation(fields: [githubId], references: [githubId])
+  githubId      BigInt   @id @unique
   currentPoints Int
   stars         Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
 }
 
 model GFGProfile {
-  User           User?  @relation(fields: [githubId], references: [githubId])
-  githubId       BigInt @id @unique
+  User           User?    @relation(fields: [githubId], references: [githubId])
+  githubId       BigInt   @id @unique
   score          Int
   problemsSolved Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
 }
 
 model CodeChefProfile {
-  User          User?  @relation(fields: [githubId], references: [githubId])
-  githubId      BigInt @id @unique
+  User          User?    @relation(fields: [githubId], references: [githubId])
+  githubId      BigInt   @id @unique
   currentRating Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
 }
 
 model LeetcodeProfile {
-  User       User?  @relation(fields: [githubId], references: [githubId])
-  githubId   BigInt @id @unique
+  User       User?    @relation(fields: [githubId], references: [githubId])
+  githubId   BigInt   @id @unique
   easyQues   Int
   mediumQues Int
   hardQues   Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
 }
 
 model SuperteamEarnProfile {
-  User           User?  @relation(fields: [githubId], references: [githubId])
-  githubId       BigInt @id @unique
+  User           User?    @relation(fields: [githubId], references: [githubId])
+  githubId       BigInt   @id @unique
   participations Int
   wins           Int
   totalWinnings  Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
 }
 
-model Unescrowed {
-  User        User?              @relation(fields: [githubId], references: [githubId])
-  githubId    BigInt             @id @unique
-  subHeading  String
-  image       String
+model Sponsor {
+  githubId    BigInt   @id @unique
+  type        String
+  image       String?
   name        String
-  link        String
+  link        String?
   description String
   twitter     String
   telegram    String
-  discord     String
-  bounties    UnescrowedBounty[]
+  discord     String?
+  bounties    Bounty[] @relation("SponsorBounties")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+
+  User User? @relation(fields: [githubId], references: [githubId])
 }
 
 model Bounty {
-  id                 Int                @id @default(autoincrement())
-  bountyname         String
-  price              Int
-  bountyDescription  String
-  skills             String[]
-  time               String
-  contact            String
-  unescrowedProfiles UnescrowedBounty[]
+  id                Int          @id @default(autoincrement())
+  bountyname        String
+  price             Int
+  status            Int          @default(0) // 0: draft, 1: in review by admin, 2: active, 3: completed, 4: in review by sponsor, 5: rejected by admin, 6: rejected by sponsor
+  bountyDescription String
+  skills            String[]
+  time              String
+  timeExtendedTo    String?
+  primaryContact    String
+  sponsorId         BigInt?
+  sponsor           Sponsor?     @relation("SponsorBounties", fields: [sponsorId], references: [githubId])
+  submissions       Submission[]
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @default(now()) @updatedAt
 }
 
-model UnescrowedBounty {
+model Submission {
+  id        Int      @id @default(autoincrement())
+  links     String[] @default([])
+  status    Int      @default(0) // 0: draft, 1: submitted
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
   githubId BigInt
+  user     User   @relation(fields: [githubId], references: [githubId])
+
   bountyId Int
-
-  Unescrowed Unescrowed @relation(fields: [githubId], references: [githubId])
-  Bounty     Bounty     @relation(fields: [bountyId], references: [id])
-
-  @@id([githubId, bountyId])
+  bounty   Bounty @relation(fields: [bountyId], references: [id])
 }
