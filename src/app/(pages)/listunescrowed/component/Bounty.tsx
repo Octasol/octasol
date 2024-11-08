@@ -47,7 +47,6 @@ const frameworksList = [
 
 type Props = {
   onPrev: () => void;
-  // onNext: () => void;
   setActiveTab: () => void;
 };
 
@@ -55,10 +54,10 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
   const dispatch = useDispatch();
   const profile = useSelector((state: any) => state.profile);
   const user = useSelector((state: any) => state.user);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  const [description, setDescription] = useState(profile.bountyDescription);
+  // useEffect(() => {
+  //   console.log(profile);
+  // }, [profile]);
 
   const setSelectedFrameworks = (skill: string[]) => {
     dispatch(setSkills(skill));
@@ -97,6 +96,10 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
     dispatch(setBountyDescription(value || ""));
   };
 
+  useEffect(() => {
+    handleDescriptionChange(description);
+  }, [description]);
+
   const submitProfile = async (id: bigint) => {
     console.log("submitting profile");
     const { response, error } = await POST("/unescrowedprofile", {
@@ -113,6 +116,21 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
     }
     if (error) {
       console.log(error);
+    }
+  };
+  const uploadImage = async (file: File): Promise<string> => {
+    const url = URL.createObjectURL(file);
+    return url;
+  };
+
+  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+
+    if (file && file.type.startsWith("image/")) {
+      const imageUrl = await uploadImage(file);
+      const markdownImageSyntax = `![Image Description](${imageUrl})\n`;
+      setDescription((prev: any) => prev + markdownImageSyntax);
     }
   };
 
@@ -167,15 +185,17 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
           <div className="grid grid-cols-1 gap-6">
             <div className="space-y-1">
               <Label htmlFor="bounty-description">Bounty Description</Label>
-              <MDEditor
-                value={profile.bountyDescription}
-                onChange={handleDescriptionChange}
-                preview="edit"
-                height={200}
-                textareaProps={{
-                  placeholder: "Enter your Project Description in Markdown",
-                }}
-              />
+              <div onDrop={handleDrop} onDragOver={(e) => e.preventDefault()}>
+                <MDEditor
+                  value={description}
+                  onChange={setDescription}
+                  preview="edit"
+                  height={200}
+                  textareaProps={{
+                    placeholder: "Enter your Project Description in Markdown",
+                  }}
+                />
+              </div>
             </div>
           </div>
 
