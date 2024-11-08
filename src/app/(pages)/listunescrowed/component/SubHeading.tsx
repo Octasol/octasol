@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Card,
   CardContent,
@@ -24,10 +24,6 @@ const SubHeading = ({ onNext }: Props) => {
   const handleSelect = (value: string) => {
     dispatch(setSubHeading(value));
   };
-
-  useEffect(() => {
-    console.log(profile);
-  }, [profile]);
 
   return (
     <div className="flex flex-col ">

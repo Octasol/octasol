@@ -1,4 +1,3 @@
-"use client";
 import {
   Card,
   CardContent,
@@ -19,7 +18,7 @@ import {
 } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import React, { use, useEffect, useState } from "react";
+import React from "react";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
 import { useDispatch, useSelector } from "react-redux";
@@ -54,10 +53,6 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
   const dispatch = useDispatch();
   const profile = useSelector((state: any) => state.profile);
   const user = useSelector((state: any) => state.user);
-  const [description, setDescription] = useState(profile.bountyDescription);
-  // useEffect(() => {
-  //   console.log(profile);
-  // }, [profile]);
 
   const setSelectedFrameworks = (skill: string[]) => {
     dispatch(setSkills(skill));
@@ -96,10 +91,6 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
     dispatch(setBountyDescription(value || ""));
   };
 
-  useEffect(() => {
-    handleDescriptionChange(description);
-  }, [description]);
-
   const submitProfile = async (id: bigint) => {
     console.log("submitting profile");
     const { response, error } = await POST("/unescrowedprofile", {
@@ -118,6 +109,7 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
       console.log(error);
     }
   };
+
   const uploadImage = async (file: File): Promise<string> => {
     const url = URL.createObjectURL(file);
     return url;
@@ -130,7 +122,7 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
     if (file && file.type.startsWith("image/")) {
       const imageUrl = await uploadImage(file);
       const markdownImageSyntax = `![Image Description](${imageUrl})\n`;
-      setDescription((prev: any) => prev + markdownImageSyntax);
+      handleDescriptionChange(profile.bountyDescription + markdownImageSyntax);
     }
   };
 
@@ -187,8 +179,8 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
               <Label htmlFor="bounty-description">Bounty Description</Label>
               <div onDrop={handleDrop} onDragOver={(e) => e.preventDefault()}>
                 <MDEditor
-                  value={description}
-                  onChange={setDescription}
+                  value={profile.bountyDescription}
+                  onChange={handleDescriptionChange}
                   preview="edit"
                   height={200}
                   textareaProps={{
