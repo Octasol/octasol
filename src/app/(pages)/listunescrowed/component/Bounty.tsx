@@ -132,7 +132,7 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
 
     if (file && file.type.startsWith("image/")) {
       const imageUrl = await uploadImage(file);
-      const markdownImageSyntax = `![Image Description](${imageUrl})\n`;
+      const markdownImageSyntax = `![Uploaded Image](${imageUrl})\n`;
       handleDescriptionChange(profile.bountyDescription + markdownImageSyntax);
     }
   };
