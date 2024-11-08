@@ -649,19 +649,8 @@ export const setUnscrowedBounty = async (id: bigint, bountyData: any) => {
       },
     });
 
-    const bounty = await db.bounty.upsert({
-      where: { id: bountyData.id ?? 0 },
-      update: {
-        bountyname: bountyData.bountyname,
-        price: bountyData.price,
-        bountyDescription: bountyData.bountyDescription,
-        skills: bountyData.skills,
-        time: bountyData.time,
-        primaryContact: bountyData.contact,
-        // timeExtendedTo: bountyData.timeExtendedTo,
-        sponsorId: id, // Linking the bounty to the sponsor's githubId
-      },
-      create: {
+    const bounty = await db.bounty.create({
+      data: {
         bountyname: bountyData.bountyname,
         price: bountyData.price,
         bountyDescription: bountyData.bountyDescription,
