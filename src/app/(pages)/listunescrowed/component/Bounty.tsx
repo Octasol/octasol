@@ -1,4 +1,3 @@
-"use server";
 import {
   Card,
   CardContent,
@@ -38,8 +37,8 @@ import { Cat, Dog, Fish, Rabbit, Turtle } from "lucide-react";
 import { POST } from "@/config/axios/requests";
 import { S3Client } from "@aws-sdk/client-s3";
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
-import { randomUUID } from "crypto";
 import { nanoid } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const frameworksList = [
   { value: "react", label: "React", icon: Turtle },
@@ -53,7 +52,6 @@ type Props = {
   onPrev: () => void;
   setActiveTab: () => void;
 };
-const awsClient = new S3Client({ region: process.env.AWS_REGION });
 
 const Bounty = ({ onPrev, setActiveTab }: Props) => {
   const dispatch = useDispatch();
@@ -117,11 +115,19 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
   };
 
   const uploadImage = async (file: File): Promise<string> => {
-    const { url, fields } = await createPresignedPost(awsClient, {
-      Bucket: process.env.AWS_BUCKET || "",
-      Key: nanoid(),
+    const formData = new FormData();
+    formData.append("file", file);
+
+    // Send the file to the backend to handle S3 upload
+    const { response, error } = await POST("/uploadImage", formData, {
+      "Content-Type": "multipart/form-data",
     });
-    return url;
+
+    if (error || !response?.data?.url) {
+      throw new Error("Failed to upload image");
+    }
+
+    return response.data.url;
   };
 
   const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
