@@ -16,6 +16,7 @@ import { combineReducers } from "redux";
 const persistConfig = {
   key: "root",
   storage,
+  whitelist: ["profile"],
 };
 
 const rootReducer = combineReducers({
@@ -30,23 +31,15 @@ const rootReducer = combineReducers({
   profile: profileReducer,
 });
 
-// export const store = configureStore({
-//   reducer: {
-//     user: userReducer,
-//     git: gitReducer,
-//     error: errorReducer,
-//     repo: repoReducer,
-//     installationId: installationIdReducer,
-//     search: searchReducer,
-//     repoData: repoReducer,
-//     counter: counterReducer,
-//     profile: profileReducer,
-//   },
-// });
-
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+      },
+    }),
 });
 export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
