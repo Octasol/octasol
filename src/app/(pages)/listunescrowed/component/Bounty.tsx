@@ -39,6 +39,7 @@ import { POST } from "@/config/axios/requests";
 import { S3Client } from "@aws-sdk/client-s3";
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
 import { randomUUID } from "crypto";
+import { nanoid } from "@reduxjs/toolkit";
 
 const frameworksList = [
   { value: "react", label: "React", icon: Turtle },
@@ -118,7 +119,7 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
   const uploadImage = async (file: File): Promise<string> => {
     const { url, fields } = await createPresignedPost(awsClient, {
       Bucket: process.env.AWS_BUCKET || "",
-      Key: randomUUID(),
+      Key: nanoid(),
     });
     return url;
   };
