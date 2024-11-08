@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ message: "OTP sent successfully" });
   } catch (error) {
-    await logToDiscord(`send-otp: ${(error as any).message}`, "ERROR");
+    await logToDiscord(`send-otp for ${id}: ${(error as any).message}`, "ERROR");
 
     return NextResponse.json(
       { error: "Something went wrong." },
