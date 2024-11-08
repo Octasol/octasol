@@ -249,29 +249,6 @@ export const setHackerrankProfile = async (id: bigint, profile: any) => {
   }
 };
 
-export const setUnscrowedBounty = async (id: bigint, bounty: any) => {
-  try {
-    await db.unescrowed.upsert({
-      where: { githubId: id },
-      update: {
-        ...bounty,
-      },
-      create: {
-        githubId: id,
-        ...bounty,
-      },
-    });
-    return true;
-  } catch (error) {
-    await logToDiscord(
-      `dbUtils/setUnscrowedBounty: ${(error as any).message}`,
-      "ERROR"
-    );
-    console.error(error);
-    return false;
-  }
-};
-
 export const getHackerrankProfile = async (id: bigint) => {
   return db.hackerrankProfile.findUnique({
     where: {
@@ -640,5 +617,82 @@ export const getUserProfileForRadarChart = async (githubUsername: string) => {
 
     console.error("Error fetching user profile for radar chart:", error);
     throw error;
+  }
+};
+
+export const setUnscrowedBounty = async (id: bigint, bountyData: any) => {
+  console.log("bounty", bountyData);
+  console.log("data cehckin");
+
+  try {
+    const profile = await db.unescrowed.upsert({
+      where: { githubId: id },
+      update: {
+        subHeading: bountyData.subHeading,
+        image: bountyData.image,
+        link: bountyData.link,
+        description: bountyData.description,
+        telegram: bountyData.telegram,
+        twitter: bountyData.twitter,
+        discord: bountyData.discord,
+        name: bountyData.name,
+      },
+      create: {
+        githubId: id,
+        subHeading: bountyData.subHeading,
+        image: bountyData.image,
+        link: bountyData.link,
+        description: bountyData.description,
+        telegram: bountyData.telegram,
+        twitter: bountyData.twitter,
+        discord: bountyData.discord,
+        name: bountyData.name,
+      },
+    });
+
+    const bounty = await db.bounty.upsert({
+      where: { id: bountyData.id ?? 0 },
+      update: {
+        bountyname: bountyData.bountyname,
+        price: bountyData.price,
+        bountyDescription: bountyData.bountyDescription,
+        skills: bountyData.skills,
+        time: bountyData.time,
+        contact: bountyData.contact,
+      },
+      create: {
+        bountyname: bountyData.bountyname,
+        price: bountyData.price,
+        bountyDescription: bountyData.bountyDescription,
+        skills: bountyData.skills,
+        time: bountyData.time,
+        contact: bountyData.contact,
+      },
+    });
+
+    await db.unescrowedBounty.upsert({
+      where: {
+        githubId_bountyId: {
+          githubId: id,
+          bountyId: bounty.id,
+        },
+      },
+      update: {},
+      create: {
+        githubId: id,
+        bountyId: bounty.id,
+      },
+    });
+
+    console.log("profile", profile);
+
+    return true;
+  } catch (error) {
+    await logToDiscord(
+      `dbUtils/setUnscrowedBounty: ${(error as any).message}`,
+      "ERROR"
+    );
+    console.error(error);
+    return false;
   }
 };
