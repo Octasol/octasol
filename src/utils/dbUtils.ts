@@ -619,16 +619,15 @@ export const getUserProfileForRadarChart = async (githubUsername: string) => {
     throw error;
   }
 };
-
 export const setUnscrowedBounty = async (id: bigint, bountyData: any) => {
   console.log("bounty", bountyData);
-  console.log("data cehckin");
+  console.log("data checking");
 
   try {
-    const profile = await db.unescrowed.upsert({
+    const sponsor = await db.sponsor.upsert({
       where: { githubId: id },
       update: {
-        subHeading: bountyData.subHeading,
+        type: bountyData.subHeading,
         image: bountyData.image,
         link: bountyData.link,
         description: bountyData.description,
@@ -639,7 +638,7 @@ export const setUnscrowedBounty = async (id: bigint, bountyData: any) => {
       },
       create: {
         githubId: id,
-        subHeading: bountyData.subHeading,
+        type: bountyData.subHeading,
         image: bountyData.image,
         link: bountyData.link,
         description: bountyData.description,
@@ -658,7 +657,9 @@ export const setUnscrowedBounty = async (id: bigint, bountyData: any) => {
         bountyDescription: bountyData.bountyDescription,
         skills: bountyData.skills,
         time: bountyData.time,
-        contact: bountyData.contact,
+        primaryContact: bountyData.contact,
+        // timeExtendedTo: bountyData.timeExtendedTo,
+        sponsorId: id, // Linking the bounty to the sponsor's githubId
       },
       create: {
         bountyname: bountyData.bountyname,
@@ -666,25 +667,13 @@ export const setUnscrowedBounty = async (id: bigint, bountyData: any) => {
         bountyDescription: bountyData.bountyDescription,
         skills: bountyData.skills,
         time: bountyData.time,
-        contact: bountyData.contact,
+        // timeExtendedTo: bountyData.timeExtendedTo,
+        primaryContact: bountyData.contact,
+        sponsorId: id,
       },
     });
 
-    await db.unescrowedBounty.upsert({
-      where: {
-        githubId_bountyId: {
-          githubId: id,
-          bountyId: bounty.id,
-        },
-      },
-      update: {},
-      create: {
-        githubId: id,
-        bountyId: bounty.id,
-      },
-    });
-
-    console.log("profile", profile);
+    console.log("sponsor", sponsor);
 
     return true;
   } catch (error) {
