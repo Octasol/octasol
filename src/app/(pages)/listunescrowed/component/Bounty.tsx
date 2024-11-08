@@ -35,10 +35,6 @@ import {
 import { MultiSelect } from "@/components/ui/multi-select";
 import { Cat, Dog, Fish, Rabbit, Turtle } from "lucide-react";
 import { POST } from "@/config/axios/requests";
-import { S3Client } from "@aws-sdk/client-s3";
-import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
-import { nanoid } from "@reduxjs/toolkit";
-import axios from "axios";
 
 const frameworksList = [
   { value: "react", label: "React", icon: Turtle },
