@@ -17,6 +17,7 @@ import {
   Camera,
   Upload,
   User2Icon,
+  X,
 } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,6 +43,12 @@ const Profile = ({ onPrev, onNext }: Props) => {
   const user = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
   const profile = useSelector((state: any) => state.profile);
+
+  const removeImage = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setAvatar("");
+    dispatch(setImage(""));
+  };
 
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -153,6 +160,7 @@ const Profile = ({ onPrev, onNext }: Props) => {
                 <p>Choose or drag and drop media</p>
               )}
             </div>
+            <X color="white" size={20} onClick={removeImage} />
           </div>
           <div className="w-full grid grid-cols-1  gap-4">
             <div className=" grid grid-cols-2 gap-6">
