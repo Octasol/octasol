@@ -1,9 +1,9 @@
 "use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { use, useEffect, useState } from "react";
-import Profile from "./component/Profile";
-import Bounty from "./component/Bounty";
-import SubHeading from "./component/SubHeading";
+import { useEffect, useState } from "react";
+import Profile from "../../../components/Profile";
+import Bounty from "../../../components/Bounty";
+import SubHeading from "../../../components/SubHeading";
 import { useSelector } from "react-redux";
 
 export default function ListUnescrowed() {
