@@ -122,10 +122,10 @@ const Profile = ({ onPrev, onNext }: Props) => {
           Make changes to your account here. Click save when you&apos;re done.
         </CardDescription>
       </CardHeader>
-      <CardContent className="py-4 px-12">
+      <CardContent className="py-4 px-4 md:px-12">
         <div className="flex flex-col gap-4">
           <div
-            className="relative flex gap-12 w-full border-[1px] border-gray-900 rounded-lg p-4 cursor-pointer"
+            className="relative flex gap-6 md:gap-12 w-full border-[1px] border-gray-900 rounded-lg p-4 cursor-pointer"
             onClick={() => document.getElementById("avatar-upload")?.click()}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
@@ -150,20 +150,22 @@ const Profile = ({ onPrev, onNext }: Props) => {
               className="hidden"
               onChange={handleAvatarChange}
             />
-            <div className="w-full flex justify-center items-center mr-12">
+            <div className="w-full flex justify-center items-center mr-0 md:mr-12">
               {isDragging ? (
                 <div className="text-blue-500 flex items-center gap-2">
                   <Upload size={20} />
                   <p>You can drop here</p>
                 </div>
               ) : (
-                <p>Choose or drag and drop media</p>
+                <p className="text-xs md:text-sm">
+                  Choose or drag and drop media
+                </p>
               )}
             </div>
-            <X color="white" size={20} onClick={removeImage} />
+            <X color="white" size={32} onClick={removeImage} />
           </div>
           <div className="w-full grid grid-cols-1  gap-4">
-            <div className=" grid grid-cols-2 gap-6">
+            <div className=" grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-1">
                 <Label htmlFor="first-name">Name</Label>
                 <Input
@@ -198,7 +200,7 @@ const Profile = ({ onPrev, onNext }: Props) => {
               />
             </div>
           </div>{" "}
-          <div className=" grid grid-cols-2 gap-6">
+          <div className=" grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-1">
               <Label htmlFor="first-name">Github</Label>
               <Input
@@ -218,7 +220,7 @@ const Profile = ({ onPrev, onNext }: Props) => {
               />
             </div>
           </div>
-          <div className=" grid grid-cols-2 gap-6">
+          <div className=" grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-1">
               <Label htmlFor="first-name">Telegram</Label>
               <Input
