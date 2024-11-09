@@ -145,7 +145,7 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
           Make changes to your account here. Click save when you&apos;re done.
         </CardDescription>
       </CardHeader>
-      <CardContent className="py-4 px-12">
+      <CardContent className="py-4 px-4 md:px-12">
         <div className="flex flex-col gap-4">
           {/* <div className=" flex gap-12 w-full border-[1px] border-gray-900 rounded-lg p-4 ">
             <Image
@@ -162,7 +162,7 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
             </div>
           </div> */}
           <div className="w-full grid grid-cols-1  gap-4">
-            <div className=" grid grid-cols-2 gap-6">
+            <div className=" grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-1">
                 <Label htmlFor="first-name">Bounty Name</Label>
                 <Input
@@ -217,7 +217,7 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
             </div>
           </div>
 
-          <div className=" grid grid-cols-2 gap-6">
+          <div className=" grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-1">
               <Label htmlFor="first-name">Expiry Time</Label>
               <div className="mt-2">
