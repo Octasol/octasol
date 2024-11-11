@@ -1,6 +1,13 @@
 "use client";
-import { IconChartHistogram } from "@tabler/icons-react";
-import { Blocks, CopyPlus, HomeIcon, User } from "lucide-react";
+import {
+  Trophy,
+  BadgeDollarSign,
+  Blocks,
+  CopyPlus,
+  HomeIcon,
+  User,
+  PictureInPicture,
+} from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -23,7 +30,7 @@ const Sidebar = (props: Props) => {
   return (
     <>
       <div className="w-full flex justify-between">
-        <div className="w-full pt-24 pb-4 min-h-screen z-50 overflow-hidden flex flex-col items-start gap-8 px-5 transition-all duration-500 ease-in-out group hover:w-[200px] relative">
+        <div className="w-full pt-24 pb-4 min-h-screen z-50 overflow-hidden flex flex-col items-start gap-8 px-5 transition-all duration-500 ease-in-out group hover:w-[250px] relative">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -130,7 +137,7 @@ const Sidebar = (props: Props) => {
                   href="/leaderboard"
                   className="flex items-center gap-4 hover:text-[#45bd95]"
                 >
-                  <IconChartHistogram
+                  <Trophy
                     size={32}
                     color={isActive("/leaderboard") ? "cyan" : "currentColor"}
                   />
@@ -145,6 +152,56 @@ const Sidebar = (props: Props) => {
               </TooltipTrigger>
               <TooltipContent className="bg-black">
                 <p>Leaderboard</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger>
+                <Link
+                  href="/listunescrowed"
+                  className="flex items-center gap-4 hover:text-[#45bd95]"
+                >
+                  <PictureInPicture
+                    size={32}
+                    color={
+                      isActive("/listunescrowed") ? "cyan" : "currentColor"
+                    }
+                  />
+                  <span
+                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out  ${
+                      isActive("/listunescrowed") && "text-cyan-500"
+                    }`}
+                  >
+                    Unescrowed&nbsp;Bounty
+                  </span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent className="bg-black">
+                <p>Unescrowed Bouty</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger>
+                <Link
+                  href="/bounty"
+                  className="flex items-center gap-4 hover:text-[#45bd95]"
+                >
+                  <BadgeDollarSign
+                    size={32}
+                    color={isActive("/bounty") ? "cyan" : "currentColor"}
+                  />
+                  <span
+                    className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out  ${
+                      isActive("/bounty") && "text-cyan-500"
+                    }`}
+                  >
+                    Bounty
+                  </span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent className="bg-black">
+                <p>Bounty</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

@@ -13,17 +13,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 import ProfileImage from "../ProfileImage";
 import {
+  BadgeDollarSign,
   Blocks,
   ChevronDown,
   CopyPlus,
   Home,
   LogOut,
   Menu,
+  PictureInPicture,
   SquareUser,
+  Trophy,
 } from "lucide-react";
 // import BottomGradient from "../ui/BottomGradient";
 import LoginButton from "../Button/LoginButton";
-import { IconChartHistogram } from "@tabler/icons-react";
 import { decrement } from "@/app/Redux/Features/loader/loaderSlice";
 import { store } from "@/app/Redux/store";
 import { Skeleton } from "../ui/skeleton";
@@ -248,7 +250,31 @@ const Login = () => {
                 <Link prefetch href="/leaderboard">
                   <div className="flex items-center gap-4 justify-between w-full">
                     <span>Leaderboard</span>
-                    <IconChartHistogram size={20} />
+                    <Trophy size={20} />
+                  </div>
+                </Link>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem
+                asChild
+                className="cursor-pointer flex md:hidden"
+              >
+                <Link prefetch href="/listunescrowed">
+                  <div className="flex items-center gap-4 justify-between w-full">
+                    <span>Unescrowed Bounty</span>
+                    <PictureInPicture size={20} />
+                  </div>
+                </Link>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem
+                asChild
+                className="cursor-pointer flex md:hidden"
+              >
+                <Link prefetch href="/bounty">
+                  <div className="flex items-center gap-4 justify-between w-full">
+                    <span>Bounty</span>
+                    <BadgeDollarSign size={20} />
                   </div>
                 </Link>
               </DropdownMenuItem>

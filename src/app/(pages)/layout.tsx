@@ -22,7 +22,7 @@ const Layout = ({ children }: Props) => {
   return (
     <>
       <div className="flex w-full h-full relative">
-        <div className="absolute top-0 left-0 w-[80px] hover:w-[200px] min-h-screen z-50 transition-width duration-500 ease-in-out hidden md:flex flex-col items-start gap-8 overflow-hidden bg-black">
+        <div className="absolute top-0 left-0 w-[80px] hover:w-[250px] min-h-screen z-50 transition-width duration-500 ease-in-out hidden md:flex flex-col items-start gap-8 overflow-hidden bg-black">
           <Sidebar />
         </div>
 
