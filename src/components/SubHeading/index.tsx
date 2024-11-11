@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -12,6 +12,7 @@ import NextButton from "@/components/Button/NextButton";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setSubHeading } from "@/app/Redux/Features/profile/profileSlice";
+import { GET } from "@/config/axios/requests";
 
 type Props = {
   onNext: () => void;
@@ -20,10 +21,22 @@ type Props = {
 const SubHeading = ({ onNext }: Props) => {
   const dispatch = useDispatch();
   const profile = useSelector((state: any) => state.profile);
+  const user = useSelector((state: any) => state.user);
 
   const handleSelect = (value: string) => {
     dispatch(setSubHeading(value));
   };
+
+  const getProfile = async (id: bigint) => {
+    if (id) {
+      const response = await GET(`/unescrowedprofile?userId=${id.toString()}`);
+      console.log(response);
+    }
+  };
+
+  useEffect(() => {
+    // if (user?.githubId) getProfile(user?.githubId as bigint);
+  }, [user]);
 
   return (
     <div className="flex flex-col ">

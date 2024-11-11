@@ -624,19 +624,8 @@ export const setUnscrowedBounty = async (id: bigint, bountyData: any) => {
   console.log("data checking");
 
   try {
-    const sponsor = await db.sponsor.upsert({
-      where: { githubId: id },
-      update: {
-        type: bountyData.subHeading,
-        image: bountyData.image,
-        link: bountyData.link,
-        description: bountyData.description,
-        telegram: bountyData.telegram,
-        twitter: bountyData.twitter,
-        discord: bountyData.discord,
-        name: bountyData.name,
-      },
-      create: {
+    const sponsor = await db.sponsor.create({
+      data: {
         githubId: id,
         type: bountyData.subHeading,
         image: bountyData.image,
@@ -668,6 +657,47 @@ export const setUnscrowedBounty = async (id: bigint, bountyData: any) => {
   } catch (error) {
     await logToDiscord(
       `dbUtils/setUnscrowedBounty: ${(error as any).message}`,
+      "ERROR"
+    );
+    console.error(error);
+    return false;
+  }
+};
+
+// export const getUnscrowedBounty = async (id: bigint) => {
+//   console.log("id", id);
+//   try {
+//     const bounty = await db.bounty.findMany({
+//       where: {
+//         sponsorId: id,
+//       },
+//     });
+//     console.log("bounty", bounty);
+//     return bounty;
+//   } catch (error) {
+//     await logToDiscord(
+//       `dbUtils/getUnscrowedBounty: ${(error as any).message}`,
+//       "ERROR"
+//     );
+//     console.error(error);
+//     return false;
+//   }
+// };
+
+export const getSponsorProfile = async (id: bigint) => {
+  console.log("id", id);
+
+  try {
+    const sponsor = await db.sponsor.findMany({
+      where: {
+        githubId: id,
+      },
+    });
+    console.log("sponsor", sponsor);
+    return sponsor;
+  } catch (error) {
+    await logToDiscord(
+      `dbUtils/getSponsorProfile: ${(error as any).message}`,
       "ERROR"
     );
     console.error(error);
