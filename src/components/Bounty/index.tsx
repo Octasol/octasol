@@ -102,6 +102,7 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
       if (response.status === 200) {
         console.log("Profile submitted successfully");
         dispatch(resetProfile());
+        localStorage.removeItem("activeTab");
         setActiveTab();
       }
     }
