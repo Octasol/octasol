@@ -62,6 +62,10 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        spin: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -83,6 +87,11 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "meteor-effect": "meteor 5s linear infinite",
+        "spin-slow": "spin 10s linear infinite",
+      },
+      backgroundImage: {
+        "gradient-r":
+          "linear-gradient(to right, rgba(99, 102, 241, 0.9), rgba(249, 115, 22, 0.9))",
       },
     },
   },
