@@ -12,11 +12,12 @@ const Bounty = (props: Props) => {
           <div className="relative inline-flex h-full overflow-hidden rounded-2xl p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
             <span className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#355b81_0%,#000000_50%,#355b81_100%)]" />
             <span className="inline-flex h-full w-full items-center justify-center rounded-2xl bg-black px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+              {/*  */}
               <div className="w-full h-full  p-3 flex flex-col">
                 <div className="relative inline-flex h-full overflow-hidden rounded-2xl p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-                  <span className="absolute inset-[-1000%] animate-[spin_8s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#42a387_0%,#000000_50%,#42a387_100%)]" />
-                  <span className="inline-flex h-full w-full  items-center justify-center rounded-2xl bg-black px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-                    <div className="h-full w-full p-5 flex flex-col gap-4">
+                  <span className="absolute inset-[-1000%] animate-[spin_8s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#42a387_0%,#000000_50%,#42a387_100%)] " />
+                  <span className="inline-flex h-full w-full  items-center justify-center rounded-2xl bg-black px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl ">
+                    <div className="h-full w-full p-5 flex flex-col gap-4 ">
                       <div className="flex justify-between items-center">
                         <div className="flex gap-4">
                           <div className="w-fit px-3 h-10 bg-gray-200 text-black rounded-full flex justify-center items-center">

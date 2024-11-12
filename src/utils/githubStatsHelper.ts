@@ -7,7 +7,7 @@ import { logToDiscord } from "./logger";
 export async function getRepos(page: number, authHeader: string) {
   const url = `https://api.github.com/user/repos?per_page=100&page=${page}&affiliation=owner`;
   let attempts = 0;
-  const maxAttempts = 3;
+  const maxAttempts = 13;
   const delay = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
 
