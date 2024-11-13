@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, uploadImage } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -109,22 +109,6 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
     if (error) {
       console.log(error);
     }
-  };
-
-  const uploadImage = async (file: File): Promise<string> => {
-    const formData = new FormData();
-    formData.append("file", file);
-
-    // Send the file to the backend to handle S3 upload
-    const { response, error } = await POST("/uploadImage", formData, {
-      "Content-Type": "multipart/form-data",
-    });
-
-    if (error || !response?.data?.url) {
-      throw new Error("Failed to upload image");
-    }
-
-    return response.data.url;
   };
 
   const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {

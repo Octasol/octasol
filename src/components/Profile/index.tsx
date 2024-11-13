@@ -31,6 +31,8 @@ import {
   setTwitter,
 } from "@/app/Redux/Features/profile/profileSlice";
 import { Textarea } from "@/components/ui/textarea";
+import { POST } from "@/config/axios/requests";
+import { uploadImage } from "@/lib/utils";
 
 type Props = {
   onPrev: () => void;
@@ -50,29 +52,27 @@ const Profile = ({ onPrev, onNext }: Props) => {
     dispatch(setImage(""));
   };
 
-  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAvatarChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result as string);
-        dispatch(setImage(reader.result as string));
-      };
-      reader.readAsDataURL(file);
+    if (file && file.type.startsWith("image/")) {
+      const image = await uploadImage(file);
+      console.log("image", image);
+      setAvatar(image);
+      dispatch(setImage(image));
     }
   };
 
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setIsDragging(false);
     const file = event.dataTransfer.files[0];
     if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result as string);
-        dispatch(setImage(reader.result as string));
-      };
-      reader.readAsDataURL(file);
+      const image = await uploadImage(file);
+      console.log("image", image);
+      setAvatar(image);
+      dispatch(setImage(image));
     }
   };
 

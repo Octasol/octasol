@@ -1,3 +1,4 @@
+import { POST } from "@/config/axios/requests";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -17,6 +18,22 @@ export function openInNewWindow(url: string) {
     "toolbar=yes,scrollbars=yes,resizable=yes,width=1000,height=1000, left=500, top=500"
   );
 }
+
+export const uploadImage = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  // Send the file to the backend to handle S3 upload
+  const { response, error } = await POST("/uploadImage", formData, {
+    "Content-Type": "multipart/form-data",
+  });
+
+  if (error || !response?.data?.url) {
+    throw new Error("Failed to upload image");
+  }
+
+  return response.data.url;
+};
 
 export function bigintToString(obj: any): any {
   if (obj === null || obj === undefined) return obj;
