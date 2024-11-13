@@ -1,6 +1,6 @@
 import { sign } from "jsonwebtoken";
 import { readFileSync } from "fs";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { getInstallationId, setUser } from "@/utils/dbUtils";
 import { getCache, setCache } from "./cache";
 import { logToDiscord } from "@/utils/logger";
@@ -91,7 +91,10 @@ export async function getGithubIdbyInstallationId(installationId: number) {
     );
     return response.data.account.id;
   } catch (error) {
-    await logToDiscord(`getGithubIdbyInstallationId: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `getGithubIdbyInstallationId: ${(error as any).message}`,
+      "ERROR"
+    );
 
     return 0;
   }
@@ -115,7 +118,10 @@ export async function getGithubIdbyAuthHeader(authHeader: string) {
     const accessToken = authHeader.split(" ")[1];
     return await getGithubIdbyAccessToken(accessToken);
   } catch (error) {
-    await logToDiscord(`getGithubIdbyAuthHeader: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `getGithubIdbyAuthHeader: ${(error as any).message}`,
+      "ERROR"
+    );
 
     return 0;
   }
@@ -135,7 +141,10 @@ export async function getGithubProfileWithGithubID(githubId: number) {
     setCache(cacheKey, response.data);
     return response.data;
   } catch (error) {
-    await logToDiscord(`getGithubProfileWithGithubID: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `getGithubProfileWithGithubID: ${(error as any).message}`,
+      "ERROR"
+    );
 
     return null;
   }
@@ -157,7 +166,10 @@ export async function getUserByAuthHeader(authHeader: string) {
     setCache(cacheKey, response.data);
     return response.data;
   } catch (error) {
-    await logToDiscord(`getUserByAuthHeader: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `getUserByAuthHeader: ${(error as any).message}`,
+      "ERROR"
+    );
 
     console.error("Failed to fetch Github ID", error);
     return null;
@@ -180,7 +192,10 @@ export async function getGithubIdbyAccessToken(accessToken: string) {
     setCache(cacheKey, response.data.id);
     return response.data.id;
   } catch (error) {
-    await logToDiscord(`getGithubIdbyAccessToken: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `getGithubIdbyAccessToken: ${(error as any).message}`,
+      "ERROR"
+    );
 
     console.error("Failed to fetch Github ID", error);
     return 0;
@@ -202,12 +217,46 @@ export async function getHackerrankProfileByApi(username: string) {
     );
     return response.data;
   } catch (error) {
-    await logToDiscord(`getHackerrankProfileByApi: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `getHackerrankProfileByApi: ${(error as any).message}`,
+      "ERROR"
+    );
 
     console.error(
       `Failed to fetch HackerRank profile for username: ${username}`,
       error
     );
     throw new Error("Error fetching HackerRank profile");
+  }
+}
+
+export async function validateAccessToken(accessToken: string) {
+  try {
+    const client_id = process.env.GITHUB_CLIENT_ID as string;
+    const client_secret = process.env.GITHUB_CLIENT_SECRET as string;
+
+    const config: AxiosRequestConfig = {
+      method: "POST",
+      url: `https://api.github.com/applications/${client_id}/token`,
+      headers: {
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        Authorization: `Basic ${Buffer.from(
+          `${client_id}:${client_secret}`
+        ).toString("base64")}`,
+      },
+      data: {
+        access_token: accessToken,
+      },
+    };
+    await axios(config);
+    return true;
+  } catch (error) {
+    await logToDiscord(
+      `validateAccessToken: ${(error as any).message}`,
+      "ERROR"
+    );
+
+    return false;
   }
 }

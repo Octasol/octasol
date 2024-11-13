@@ -1,3 +1,4 @@
+import { validateAccessToken } from "@/lib/apiUtils";
 import { bigintToString } from "@/lib/utils";
 import { getDbUser, initializeUser, setUsername } from "@/utils/dbUtils";
 import { updateGithubProfile } from "@/utils/githubStatsHelper";
@@ -48,6 +49,9 @@ export const authOptions: NextAuthOptions = {
       const userDbData = bigintToString(
         await getDbUser(BigInt(session.user.id))
       );
+      if (!await validateAccessToken(session.accessToken)) {
+        return null;
+      }
       if (!userDbData?.githubUsername) {
         await setUsername(BigInt(session.user.id), {
           githubUsername: session.user.login,
