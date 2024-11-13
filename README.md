@@ -137,3 +137,10 @@ We welcome contributions from the community! Here’s how you can help:
 Octasol makes open-source collaboration more efficient and rewarding, ensuring contributions are valued and compensated. Join the future of open-source development today at [octasol.io](https://octasol.io)!
 
 ---
+<a href="https://star-history.com/#octasol/octasol&Timeline">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=octasol/octasol&type=Timeline&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=octasol/octasol&type=Timeline" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=octasol/octasol&type=Timeline" />
+ </picture>
+</a>
