@@ -30,7 +30,7 @@ model User {
   CodeChefProfile      CodeChefProfile?
   LeetcodeProfile      LeetcodeProfile?
   SuperteamEarnProfile SuperteamEarnProfile?
-  Sponsor              Sponsor?
+  Sponsors             Sponsor[]             @relation("UserSponsors")
   submissions          Submission[]
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @default(now()) @updatedAt
@@ -113,7 +113,7 @@ model Sponsor {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
 
-  User User? @relation(fields: [githubId], references: [githubId])
+  User User? @relation("UserSponsors", fields: [githubId], references: [githubId])
 }
 
 model Bounty {
