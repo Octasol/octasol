@@ -114,11 +114,11 @@ const Leaderboard = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-10 right-10 z-30 max-w-[500px]">
+      <div className="absolute bottom-[5px] right-10 z-30 max-w-[500px]">
         <div>
           <button
             onClick={toggleSearch}
-            className="px-5 py-1 border-[1px] rounded-full border-slate-800 flex justify-center items-center gap-4"
+            className="px-5 py-1 border-[1px] rounded-full border-slate-800 bg-black flex justify-center items-center gap-4"
           >
             <SearchIcon size={20} />
             Search
@@ -126,7 +126,7 @@ const Leaderboard = () => {
         </div>
 
         <div
-          className={`fixed w-1/3 h-4/6  bottom-0 right-0 z-30 border-[1px] bg-black border-slate-800 transition-transform duration-500 ease-in-out rounded-lg ${
+          className={`fixed w-full md:w-1/2 lg:w-1/3 h-4/6  bottom-0 right-0 z-30 border-[1px] bg-black border-slate-800 transition-transform duration-500 ease-in-out rounded-lg ${
             isOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
