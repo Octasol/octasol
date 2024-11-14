@@ -5,7 +5,6 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const bounties = bigintToString(await getUnscrowedBounty());
-    console.log("bounties", bounties);
     return NextResponse.json({
       bounties: bounties,
       status: 200,

@@ -671,9 +671,6 @@ export const getUnscrowedBounty = async () => {
         sponsor: true,
       },
     });
-    console.log("owin3riodnewidfn");
-
-    console.log("bounty", bounty);
     return bounty;
   } catch (error) {
     await logToDiscord(
