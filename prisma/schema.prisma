@@ -100,7 +100,8 @@ model SuperteamEarnProfile {
 }
 
 model Sponsor {
-  githubId    BigInt   @id
+  id          Int      @id @default(autoincrement())
+  githubId    BigInt
   type        String
   image       String?
   name        String
@@ -126,8 +127,8 @@ model Bounty {
   time              String
   timeExtendedTo    String?
   primaryContact    String
-  sponsorId         BigInt?
-  sponsor           Sponsor?     @relation("SponsorBounties", fields: [sponsorId], references: [githubId])
+  sponsorId         Int?
+  sponsor           Sponsor?     @relation("SponsorBounties", fields: [sponsorId], references: [id])
   submissions       Submission[]
   createdAt         DateTime     @default(now())
   updatedAt         DateTime     @default(now()) @updatedAt
