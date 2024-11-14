@@ -647,7 +647,7 @@ export const setUnscrowedBounty = async (id: bigint, bountyData: any) => {
         time: bountyData.time,
         // timeExtendedTo: bountyData.timeExtendedTo,
         primaryContact: bountyData.contact,
-        sponsorId: id,
+        sponsorId: sponsor.id,
       },
     });
 
