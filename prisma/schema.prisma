@@ -100,7 +100,7 @@ model SuperteamEarnProfile {
 }
 
 model Sponsor {
-  githubId    BigInt   @id @unique
+  githubId    BigInt   @id
   type        String
   image       String?
   name        String
