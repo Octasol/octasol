@@ -664,25 +664,26 @@ export const setUnscrowedBounty = async (id: bigint, bountyData: any) => {
   }
 };
 
-// export const getUnscrowedBounty = async (id: bigint) => {
-//   console.log("id", id);
-//   try {
-//     const bounty = await db.bounty.findMany({
-//       where: {
-//         sponsorId: id,
-//       },
-//     });
-//     console.log("bounty", bounty);
-//     return bounty;
-//   } catch (error) {
-//     await logToDiscord(
-//       `dbUtils/getUnscrowedBounty: ${(error as any).message}`,
-//       "ERROR"
-//     );
-//     console.error(error);
-//     return false;
-//   }
-// };
+export const getUnscrowedBounty = async () => {
+  try {
+    const bounty = await db.bounty.findMany({
+      include: {
+        sponsor: true,
+      },
+    });
+    console.log("owin3riodnewidfn");
+
+    console.log("bounty", bounty);
+    return bounty;
+  } catch (error) {
+    await logToDiscord(
+      `dbUtils/getUnscrowedBounty: ${(error as any).message}`,
+      "ERROR"
+    );
+    console.error(error);
+    return false;
+  }
+};
 
 export const getSponsorProfile = async (id: bigint) => {
   console.log("id", id);
