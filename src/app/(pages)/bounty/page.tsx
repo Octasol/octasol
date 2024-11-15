@@ -1,21 +1,19 @@
 "use client";
 import LoginButton from "@/components/Button/LoginButton";
 import { GET } from "@/config/axios/requests";
-import { Bookmark, User } from "lucide-react";
+import { User } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
-type Props = {};
+interface Bounty {
+  sponsor: {
+    name: string;
+  };
+  price: number;
+  bountyname: string;
+  skills: string[];
+}
 
-const Bounty = (props: Props) => {
-  interface Bounty {
-    sponsor: {
-      name: string;
-    };
-    price: number;
-    bountyname: string;
-    skills: string[];
-  }
-
+const Bounty = () => {
   const [bounties, setbounties] = useState<Bounty[]>([]);
   const getBounties = async () => {
     try {
