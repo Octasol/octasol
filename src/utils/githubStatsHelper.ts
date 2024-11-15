@@ -18,6 +18,7 @@ export async function getRepos(page: number, authHeader: string) {
           Authorization: `${authHeader}`,
           Accept: "application/vnd.github.v3+json",
         },
+        timeout: 100000, // 100 seconds
       });
       return res.data;
     } catch (error) {
