@@ -23,6 +23,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_CONNECTION_URL }} << 'EOF'
           cd /home/ubuntu/octasol
           git pull origin main
+          source /home/ubuntu/.bashrc
           npm install
           npm run build
           pm2 reload octasol-app
