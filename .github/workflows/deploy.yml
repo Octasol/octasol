@@ -21,6 +21,12 @@ jobs:
       - name: Deploy to EC2
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_CONNECTION_URL }} << 'EOF'
+          echo "Current PATH: $PATH"
+          which node
+          which npm
+          which pm2
+          node -v
+          npm -v
           cd /home/ubuntu/octasol
           git pull origin main
           source /home/ubuntu/.bashrc
