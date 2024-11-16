@@ -24,6 +24,7 @@ jobs:
           cd /home/ubuntu/octasol
           git pull origin main
           source /home/ubuntu/.bashrc
+          source /home/ubuntu/.profile
           npm install
           npm run build
           pm2 reload octasol-app
