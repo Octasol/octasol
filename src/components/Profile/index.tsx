@@ -41,7 +41,6 @@ type Props = {
 };
 
 const Profile = ({ onPrev, onNext }: Props) => {
-  const [avatar, setAvatar] = useState("");
   const [isDragging, setIsDragging] = useState(false);
   const user = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
@@ -49,7 +48,6 @@ const Profile = ({ onPrev, onNext }: Props) => {
 
   const removeImage = (event: React.MouseEvent) => {
     event.stopPropagation();
-    setAvatar("");
     dispatch(setImage(""));
   };
 
@@ -60,7 +58,6 @@ const Profile = ({ onPrev, onNext }: Props) => {
     if (file && file.type.startsWith("image/")) {
       const image = await uploadImage(file);
       console.log("image", image);
-      setAvatar(image);
       dispatch(setImage(image));
     }
   };
@@ -72,7 +69,6 @@ const Profile = ({ onPrev, onNext }: Props) => {
     if (file && file.type.startsWith("image/")) {
       const image = await uploadImage(file);
       console.log("image", image);
-      setAvatar(image);
       dispatch(setImage(image));
     }
   };
