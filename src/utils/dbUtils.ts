@@ -619,25 +619,44 @@ export const getUserProfileForRadarChart = async (githubUsername: string) => {
     throw error;
   }
 };
-export const setUnscrowedBounty = async (id: bigint, bountyData: any) => {
-  console.log("bounty", bountyData);
+export const setSponsorProfile = async (id: bigint, profileData: any) => {
+  console.log("profile", profileData);
   console.log("data checking");
 
   try {
     const sponsor = await db.sponsor.create({
       data: {
         githubId: id,
-        type: bountyData.subHeading,
-        image: bountyData.image,
-        link: bountyData.link,
-        description: bountyData.description,
-        telegram: bountyData.telegram,
-        twitter: bountyData.twitter,
-        discord: bountyData.discord,
-        name: bountyData.name,
+        type: profileData.subHeading,
+        image: profileData.image,
+        link: profileData.link,
+        description: profileData.description,
+        telegram: profileData.telegram,
+        twitter: profileData.twitter,
+        discord: profileData.discord,
+        name: profileData.name,
       },
     });
 
+    return sponsor;
+  } catch (error) {
+    await logToDiscord(
+      `dbUtils/setSponsorProfile: ${(error as any).message}`,
+      "ERROR"
+    );
+    console.error(error);
+    return false;
+  }
+};
+
+export const setUnscrowedBounty = async (
+  sponsorId: number,
+  bountyData: any
+) => {
+  console.log("bounty", bountyData);
+  console.log("data checking");
+
+  try {
     const bounty = await db.bounty.create({
       data: {
         bountyname: bountyData.bountyname,
@@ -645,13 +664,10 @@ export const setUnscrowedBounty = async (id: bigint, bountyData: any) => {
         bountyDescription: bountyData.bountyDescription,
         skills: bountyData.skills,
         time: bountyData.time,
-        // timeExtendedTo: bountyData.timeExtendedTo,
         primaryContact: bountyData.contact,
-        sponsorId: sponsor.id,
+        sponsorId: sponsorId,
       },
     });
-
-    console.log("sponsor", sponsor);
 
     return true;
   } catch (error) {

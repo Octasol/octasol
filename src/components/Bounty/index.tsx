@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import React from "react";
+import React, { useEffect } from "react";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
 import { useDispatch, useSelector } from "react-redux";
@@ -52,7 +52,6 @@ type Props = {
 const Bounty = ({ onPrev, setActiveTab }: Props) => {
   const dispatch = useDispatch();
   const profile = useSelector((state: any) => state.profile);
-  const user = useSelector((state: any) => state.user);
 
   const setSelectedFrameworks = (skill: string[]) => {
     dispatch(setSkills(skill));
@@ -93,8 +92,8 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
 
   const submitProfile = async (id: bigint) => {
     console.log("submitting profile");
-    const { response, error } = await POST("/unescrowedprofile", {
-      userId: id,
+    const { response, error } = await POST("/unescrowedbounty", {
+      sponsorid: id,
       ...profile,
     });
     if (response) {
@@ -132,20 +131,6 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
       </CardHeader>
       <CardContent className="py-4 px-4 md:px-12">
         <div className="flex flex-col gap-4">
-          {/* <div className=" flex gap-12 w-full border-[1px] border-gray-900 rounded-lg p-4 ">
-            <Image
-              src={profile.image}
-              alt="user image"
-              className="aspect-square rounded-md"
-              width={100}
-              height={100}
-            />
-
-            <div className="w-full flex flex-col justify-center items-center mr-12 gap-2">
-              <p className="underline underline-offset-4">{profile.name}</p>
-              <p className="text-gray-500">{profile.description}</p>
-            </div>
-          </div> */}
           <div className="w-full grid grid-cols-1  gap-4">
             <div className=" grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-1">
@@ -263,7 +248,7 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
           </NextButton>
 
           <NextButton
-            onClick={() => submitProfile(user?.githubId)}
+            onClick={() => submitProfile(profile?.sponsorid)}
             disabled={
               !profile.bountyname ||
               !profile.bountyDescription ||

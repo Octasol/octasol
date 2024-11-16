@@ -27,6 +27,7 @@ import {
   setImage,
   setLink,
   setName,
+  setSponsorId,
   setTelegram,
   setTwitter,
 } from "@/app/Redux/Features/profile/profileSlice";
@@ -112,6 +113,24 @@ const Profile = ({ onPrev, onNext }: Props) => {
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     dispatch(setDescription(event.target.value));
+  };
+
+  const setProfile = async (id: bigint) => {
+    const { response, error } = await POST("/unescrowedprofile", {
+      userId: id,
+      ...profile,
+    });
+    if (response) {
+      console.log(response);
+      if (response.status === 200) {
+        console.log("Profile submitted successfully");
+        dispatch(setSponsorId(response?.data?.response?.id));
+        onNext();
+      }
+    }
+    if (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -255,7 +274,7 @@ const Profile = ({ onPrev, onNext }: Props) => {
           </NextButton>
 
           <NextButton
-            onClick={onNext}
+            onClick={() => setProfile(user?.githubId)}
             disabled={!profile.name || !profile.description}
           >
             <div className="flex gap-2 items-center">

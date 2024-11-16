@@ -1,18 +1,18 @@
 import { bigintToString } from "@/lib/utils";
-import { getSponsorProfile, setUnscrowedBounty } from "@/utils/dbUtils";
+import { getSponsorProfile, setSponsorProfile } from "@/utils/dbUtils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const { userId, ...profile } = await req.json();
   const sponsor = profile;
   try {
-    const status = await setUnscrowedBounty(userId, sponsor);
-    console.log("status", status);
+    const response = bigintToString(await setSponsorProfile(userId, sponsor));
+    console.log("response", response);
 
     return NextResponse.json({
       success: true,
       userId: userId,
-      profile: profile,
+      response: response,
     });
   } catch (error) {
     return NextResponse.json(
