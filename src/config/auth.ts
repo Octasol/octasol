@@ -49,9 +49,8 @@ export const authOptions: NextAuthOptions = {
         accessToken: token.accessToken,
       };
       await initializeUser(session.user.id, session.user.email);
-      const userDbData = bigintToString(
-        await getDbUser(BigInt(session.user.id))
-      );
+      const userDbDataRaw = await getDbUser(session.user.id);
+      const userDbData = bigintToString(userDbDataRaw);
       if (!(await validateAccessToken(session.accessToken))) {
         return null;
       }
@@ -77,7 +76,10 @@ export const authOptions: NextAuthOptions = {
           await addUpdateGithubProfileToQueue(
             session.accessToken,
             session.user.id,
-            QueuePriority.Low
+            QueuePriority.Low,
+            userDbDataRaw && userDbDataRaw.GithubDevProfile
+              ? (userDbDataRaw.GithubDevProfile.updatedAt as Date)
+              : undefined
           );
         } catch (error) {
           await logToDiscord(

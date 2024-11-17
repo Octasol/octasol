@@ -43,18 +43,18 @@ export const initializeUser = async (
 
 /**
  * Sets the user in the database with the provided GitHub ID and installation ID.
- * 
+ *
  * @param githubId - The GitHub ID of the user.
  * @param installationId - The installation ID associated with the user.
  * @returns A promise that resolves to a boolean indicating whether the user was successfully set.
- * 
+ *
  * @remarks
- * This function first checks if the user already has an installation ID. If the user does not have an installation ID, 
- * it upserts the user record in the database with the provided GitHub ID and installation ID. If an error occurs, 
+ * This function first checks if the user already has an installation ID. If the user does not have an installation ID,
+ * it upserts the user record in the database with the provided GitHub ID and installation ID. If an error occurs,
  * it logs the error to Discord and returns false.
- * 
+ *
  * @throws Will throw an error if the database operation fails.
- * 
+ *
  * @note The `getInstallationId` function is not used in the current implementation.
  */
 export const setUser = async (
@@ -85,6 +85,9 @@ export const getDbUser = async (githubId: bigint) => {
   return db.user.findUnique({
     where: {
       githubId: githubId,
+    },
+    include: {
+      GithubDevProfile: true,
     },
   });
 };
