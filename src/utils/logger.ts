@@ -67,6 +67,11 @@ export const logToDiscord = async (
       );
     }
   } catch (error) {
-    console.error("Error logging to Discord:", error);
+    if (axios.isAxiosError(error) && error.response?.status === 429) {
+      console.warn(`Rate limit reached for ${level} logs.`);
+      console.log(`[${level}]: ${message}`);
+    } else {
+      console.error("Error logging to Discord:", error);
+    }
   }
 };
