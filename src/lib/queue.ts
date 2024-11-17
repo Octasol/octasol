@@ -21,5 +21,21 @@ const lowPriorityQueue = new Queue(lowPriorityQueueName, {
 export const addToQueue = async (taskData: object, priority: QueuePriority) => {
   const queue =
     priority === QueuePriority.High ? highPriorityQueue : lowPriorityQueue;
+
+  if (priority === QueuePriority.Low) {
+    const jobs = await lowPriorityQueue.getJobs([
+      "waiting",
+      "active",
+      "delayed",
+      "paused",
+    ]);
+    const isDuplicate = jobs.some(
+      (job) => JSON.stringify(job.data) === JSON.stringify(taskData)
+    );
+    if (isDuplicate) {
+      console.log("Duplicate task found, not enqueuing.");
+      return;
+    }
+  }
   await queue.add("task", taskData);
 };
