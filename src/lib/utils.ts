@@ -19,13 +19,17 @@ export function openInNewWindow(url: string) {
   );
 }
 
-export const uploadImage = async (file: File): Promise<string> => {
+export const uploadImage = async (
+  file: File,
+  accessToken: string
+): Promise<string> => {
   const formData = new FormData();
   formData.append("file", file);
 
   // Send the file to the backend to handle S3 upload
   const { response, error } = await POST("/uploadImage", formData, {
     "Content-Type": "multipart/form-data",
+    Authorization: `Bearer ${accessToken}`,
   });
 
   if (error || !response?.data?.url) {

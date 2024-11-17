@@ -1,3 +1,4 @@
+import { getUserByAuthHeader } from "@/lib/apiUtils";
 import { bigintToString } from "@/lib/utils";
 import { getUnscrowedBounty, setUnscrowedBounty } from "@/utils/dbUtils";
 import { NextRequest, NextResponse } from "next/server";
@@ -18,6 +19,20 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const authHeader = req.headers.get("Authorization");
+  if (!authHeader) {
+    return NextResponse.json(
+      { error: "Authorization header is required" },
+      { status: 400 }
+    );
+  }
+  const user = await getUserByAuthHeader(authHeader);
+  if (!user) {
+    return NextResponse.json(
+      { error: "Invalid Authorization Header" },
+      { status: 401 }
+    );
+  }
   const { sponsorid, ...profile } = await req.json();
   const bounty = {
     bountyname: profile.bountyname,

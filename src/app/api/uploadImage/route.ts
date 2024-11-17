@@ -1,3 +1,4 @@
+import { getUserByAuthHeader } from "@/lib/apiUtils";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
@@ -5,7 +6,20 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   const formData = await req.formData();
   const file = formData.get("file") as File;
-
+  const authHeader = req.headers.get("Authorization");
+  if (!authHeader) {
+    return NextResponse.json(
+      { error: "Authorization header is required" },
+      { status: 400 }
+    );
+  }
+  const user = await getUserByAuthHeader(authHeader);
+  if (!user) {
+    return NextResponse.json(
+      { error: "Invalid Authorization Header" },
+      { status: 401 }
+    );
+  }
   if (!file) {
     return NextResponse.json(
       { success: false, message: "No file provided" },

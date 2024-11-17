@@ -56,7 +56,7 @@ const Profile = ({ onPrev, onNext }: Props) => {
   ) => {
     const file = event.target.files?.[0];
     if (file && file.type.startsWith("image/")) {
-      const image = await uploadImage(file);
+      const image = await uploadImage(file, user.accessToken as string);
       console.log("image", image);
       dispatch(setImage(image));
     }
@@ -67,7 +67,7 @@ const Profile = ({ onPrev, onNext }: Props) => {
     setIsDragging(false);
     const file = event.dataTransfer.files[0];
     if (file && file.type.startsWith("image/")) {
-      const image = await uploadImage(file);
+      const image = await uploadImage(file, user.accessToken as string);
       console.log("image", image);
       dispatch(setImage(image));
     }
@@ -112,10 +112,16 @@ const Profile = ({ onPrev, onNext }: Props) => {
   };
 
   const setProfile = async (id: bigint) => {
-    const { response, error } = await POST("/unescrowedprofile", {
-      userId: id,
-      ...profile,
-    });
+    const { response, error } = await POST(
+      "/unescrowedprofile",
+      {
+        userId: id,
+        ...profile,
+      },
+      {
+        Authorization: `Bearer ${user.accessToken}`,
+      }
+    );
     if (response) {
       console.log(response);
       if (response.status === 200) {

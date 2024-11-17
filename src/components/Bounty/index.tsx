@@ -52,6 +52,7 @@ type Props = {
 const Bounty = ({ onPrev, setActiveTab }: Props) => {
   const dispatch = useDispatch();
   const profile = useSelector((state: any) => state.profile);
+  const user = useSelector((state: any) => state.user);
 
   const setSelectedFrameworks = (skill: string[]) => {
     dispatch(setSkills(skill));
@@ -92,10 +93,14 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
 
   const submitProfile = async (id: bigint) => {
     console.log("submitting profile");
-    const { response, error } = await POST("/unescrowedbounty", {
-      sponsorid: id,
-      ...profile,
-    });
+    const { response, error } = await POST(
+      "/unescrowedbounty",
+      {
+        sponsorid: id,
+        ...profile,
+      },
+      { Authorization: `Bearer ${user.accessToken}` }
+    );
     if (response) {
       console.log(response);
       if (response.status === 200) {
@@ -115,7 +120,7 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
     const file = event.dataTransfer.files[0];
 
     if (file && file.type.startsWith("image/")) {
-      const imageUrl = await uploadImage(file);
+      const imageUrl = await uploadImage(file, user.accessToken as string);
       const markdownImageSyntax = `![Uploaded Image](${imageUrl})\n`;
       handleDescriptionChange(profile.bountyDescription + markdownImageSyntax);
     }
