@@ -6,24 +6,11 @@ export const addUpdateGithubProfileToQueue = async (
   githubId: string,
   priority: QueuePriority
 ) => {
-  if (priority === QueuePriority.High) {
-    await addToQueue(
-      {
-        method: "updateGithubProfile",
-        accessToken,
-        githubId,
-      },
-      QueuePriority.High
-    );
-    // action: set github username & update profile
-  } else {
-    await addToQueue(
-      {
-        method: "updateGithubProfile",
-        accessToken,
-        githubId,
-      },
-      QueuePriority.Low
-    );
-  }
+  await addToQueue(
+    {
+      method: "updateGithubProfile",
+      data: { accessToken, githubId },
+    },
+    priority
+  );
 };
