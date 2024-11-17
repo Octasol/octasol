@@ -15,10 +15,10 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { POST } from "@/config/axios/requests";
 import { sendOtp, verifyOtp } from "@/config/axios/Breakpoints";
-import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { store } from "@/app/Redux/store";
 import { setUser } from "@/app/Redux/Features/user/userSlice";
+import { decrement, increment } from "@/app/Redux/Features/loader/loaderSlice";
 
 type Props = {
   verify: () => void;
@@ -33,6 +33,8 @@ const FormSchema = z.object({
 });
 
 const VerifyMail = ({ verify, session }: Props) => {
+  const counter = useSelector((state: any) => state.counter);
+  const dispatch = useDispatch();
   const [otpSent, setOtpSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [timer, setTimer] = useState<number>(30);
@@ -62,6 +64,15 @@ const VerifyMail = ({ verify, session }: Props) => {
     };
   }, [timer, canResend]);
 
+  useEffect(() => {
+    if (counter.value > 0) {
+      dispatch(decrement());
+    }
+    return () => {
+      dispatch(increment());
+    };
+  }, []);
+
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       if (otpSent) {
@@ -79,11 +90,11 @@ const VerifyMail = ({ verify, session }: Props) => {
               isVerifiedEmail: true,
             })
           );
-          verify(); 
+          verify();
         } else {
           setErrorMessage("Invalid OTP. Please try again.");
           setCanResend(false);
-          setTimer(30); 
+          setTimer(30);
         }
       } else {
         const { response } = await POST(
@@ -95,10 +106,10 @@ const VerifyMail = ({ verify, session }: Props) => {
         );
         if (response?.status === 200) {
           setOtpSent(true);
-          setErrorMessage(null); 
+          setErrorMessage(null);
         }
       }
-    } catch(error) {
+    } catch (error) {
       console.error(error);
       setErrorMessage("An error occurred. Please try again.");
     }

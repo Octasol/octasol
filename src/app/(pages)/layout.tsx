@@ -2,33 +2,24 @@
 import Sidebar from "@/components/Sidebar";
 import VerifyMail from "@/components/verifyMail";
 import React, { ReactNode, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Image from "next/image";
-import { decrement } from "../Redux/Features/loader/loaderSlice";
 
 type Props = { children: ReactNode };
 const Layout = ({ children }: Props) => {
   const session = useSelector((state: any) => state.user);
-  const counter = useSelector((state: any) => state.counter);
   const [verifiedEmail, setVerifiedEmail] = useState(true);
-  const dispatch = useDispatch();
 
   const verified = async (): Promise<void> => {
     console.log("session", session);
 
     if (session && session.accessToken) {
       setVerifiedEmail(session.isVerifiedEmail);
-      if (session) {
-        console.log(counter);
-        if (counter.value > 0) {
-          dispatch(decrement());
-        }
-      }
     }
   };
   useEffect(() => {
     verified();
-  }, [session, verifiedEmail, counter]);
+  }, [session, verifiedEmail]);
 
   return (
     <>
