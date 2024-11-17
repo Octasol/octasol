@@ -42,4 +42,4 @@ next-env.d.ts
 
 *.pem
 del-dir
-*-lock.json
+package-lock.json
