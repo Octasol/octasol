@@ -29,6 +29,7 @@ import { store } from "@/app/Redux/store";
 import { Skeleton } from "../ui/skeleton";
 import Cookies from "js-cookie";
 import { resetProfile } from "@/app/Redux/Features/profile/profileSlice";
+import { cn } from "@/lib/utils";
 
 const Login = () => {
   const { data: session, status } = useSession() as any;
@@ -36,6 +37,11 @@ const Login = () => {
   const pathname = usePathname();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
+  const sessionToVerifyEmail = useSelector((state: any) => state.user);
+
+  useEffect(() => {
+    console.log("session", sessionToVerifyEmail.isVerifiedEmail);
+  });
 
   interface SessionUser {
     name?: string | null;
@@ -207,7 +213,12 @@ const Login = () => {
               {/* Changed DropdownMenuLabel to DropdownMenuItem which is the correct way to create dropdown menu */}
               <DropdownMenuItem
                 asChild
-                className="cursor-pointer flex md:hidden"
+                className={cn(
+                  "cursor-pointer",
+                  sessionToVerifyEmail.isVerifiedEmail
+                    ? "flex md:hidden"
+                    : "hidden"
+                )}
               >
                 <Link prefetch href="/dashboard" className="w-full">
                   <div className="flex items-center gap-4 justify-between w-full">
@@ -219,7 +230,12 @@ const Login = () => {
 
               <DropdownMenuItem
                 asChild
-                className="cursor-pointer flex md:hidden"
+                className={cn(
+                  "cursor-pointer",
+                  sessionToVerifyEmail.isVerifiedEmail
+                    ? "flex md:hidden"
+                    : "hidden"
+                )}
               >
                 <Link prefetch href="/repoinitialize">
                   <div className="flex items-center gap-4 justify-between w-full">
@@ -231,7 +247,12 @@ const Login = () => {
 
               <DropdownMenuItem
                 asChild
-                className="cursor-pointer flex md:hidden"
+                className={cn(
+                  "cursor-pointer",
+                  sessionToVerifyEmail.isVerifiedEmail
+                    ? "flex md:hidden"
+                    : "hidden"
+                )}
               >
                 <Link prefetch href="/connect">
                   <div className="flex items-center gap-4 justify-between w-full">
@@ -243,7 +264,12 @@ const Login = () => {
 
               <DropdownMenuItem
                 asChild
-                className="cursor-pointer flex md:hidden"
+                className={cn(
+                  "cursor-pointer",
+                  sessionToVerifyEmail.isVerifiedEmail
+                    ? "flex md:hidden"
+                    : "hidden"
+                )}
               >
                 <Link prefetch href="/leaderboard">
                   <div className="flex items-center gap-4 justify-between w-full">
@@ -255,7 +281,10 @@ const Login = () => {
 
               <DropdownMenuItem
                 asChild
-                className="cursor-pointer flex flex-col"
+                className={cn(
+                  "cursor-pointer flex-col",
+                  sessionToVerifyEmail.isVerifiedEmail ? "flex " : "hidden"
+                )}
               >
                 <Link prefetch href={`/p/${user?.login}`}>
                   <div className="relative flex md:hidden">
