@@ -82,3 +82,8 @@ export interface RadarObject {
   leetcodePoints?: number;
   superteamEarnPoints?: number;
 }
+
+export enum QueuePriority {
+  High = "high",
+  Low = "low",
+}
