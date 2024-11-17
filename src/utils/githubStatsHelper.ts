@@ -128,6 +128,8 @@ export const updateGithubProfile = async (accessToken: string) => {
     }
   }
 
+  // TODO: Refactor to fetch all required data in a single API call if possible
+
   const { login, id, followers } = await getUserByAuthHeader(
     `Bearer ${accessToken}`
   );
