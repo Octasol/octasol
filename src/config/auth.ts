@@ -1,4 +1,6 @@
 import { validateAccessToken } from "@/lib/apiUtils";
+import { addUpdateGithubProfileToQueue } from "@/lib/queueUtils";
+import { QueuePriority } from "@/lib/types";
 import { bigintToString } from "@/lib/utils";
 import { getDbUser, initializeUser, setUsername } from "@/utils/dbUtils";
 import { updateGithubProfile } from "@/utils/githubStatsHelper";
@@ -49,16 +51,23 @@ export const authOptions: NextAuthOptions = {
       const userDbData = bigintToString(
         await getDbUser(BigInt(session.user.id))
       );
-      if (!await validateAccessToken(session.accessToken)) {
+      if (!(await validateAccessToken(session.accessToken))) {
         return null;
       }
       if (!userDbData?.githubUsername) {
-        await setUsername(BigInt(session.user.id), {
-          githubUsername: session.user.login,
-        });
-        await updateGithubProfile(session.accessToken);
+        await addUpdateGithubProfileToQueue(
+          session.accessToken,
+          session.user.id,
+          session.user.login,
+          QueuePriority.High
+        );
       } else {
-        setTimeout(() => updateGithubProfile(session.accessToken), 0);
+        await addUpdateGithubProfileToQueue(
+          session.accessToken,
+          session.user.id,
+          session.user.login,
+          QueuePriority.Low
+        );
       }
       session.user.isVerifiedEmail = userDbData.verifiedEmail;
       return session;
