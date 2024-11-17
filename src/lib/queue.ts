@@ -2,7 +2,14 @@ import { Queue } from "bullmq";
 import Redis from "ioredis";
 import { QueuePriority } from "./types";
 
-const redisConnection = new Redis(process.env.REDIS_URL || "");
+const redisConnection = new Redis({
+  host: process.env.REDIS_HOST || "127.0.0.1",
+  port: parseInt(process.env.REDIS_PORT || "6379"),
+  retryStrategy(times) {
+    const delay = Math.min(times * 50, 2000);
+    return delay; // Retry connection with exponential backoff
+  },
+});
 
 const highPriorityQueueName = "highPriorityQueue";
 const lowPriorityQueueName = "lowPriorityQueue";

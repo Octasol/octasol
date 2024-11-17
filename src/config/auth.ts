@@ -1,5 +1,4 @@
 import { validateAccessToken } from "@/lib/apiUtils";
-import { addUpdateGithubProfileToQueue } from "@/lib/queueUtils";
 import { QueuePriority } from "@/lib/types";
 import { bigintToString } from "@/lib/utils";
 import { getDbUser, initializeUser, setUsername } from "@/utils/dbUtils";
@@ -59,11 +58,19 @@ export const authOptions: NextAuthOptions = {
           githubUsername: session.user.login,
         });
         try {
-          await addUpdateGithubProfileToQueue(
-            session.accessToken,
-            session.user.id,
-            QueuePriority.High
-          );
+          if (process.env.USE_REDIS) {
+            // todo: fix this import once the implementation is done
+            const { addUpdateGithubProfileToQueue } = await import(
+              "@/lib/queueUtils"
+            );
+            await addUpdateGithubProfileToQueue(
+              session.accessToken,
+              session.user.id,
+              QueuePriority.High
+            );
+          } else {
+            await updateGithubProfile(session.accessToken);
+          }
         } catch (error) {
           await logToDiscord(
             `Failed to add update to queue, adding profile directly ${error}`,
@@ -73,14 +80,22 @@ export const authOptions: NextAuthOptions = {
         }
       } else {
         try {
-          await addUpdateGithubProfileToQueue(
-            session.accessToken,
-            session.user.id,
-            QueuePriority.Low,
-            userDbDataRaw && userDbDataRaw.GithubDevProfile
-              ? (userDbDataRaw.GithubDevProfile.updatedAt as Date)
-              : undefined
-          );
+          if (process.env.USE_REDIS == "true") {
+            // todo: fix this import once the implementation is done
+            const { addUpdateGithubProfileToQueue } = await import(
+              "@/lib/queueUtils"
+            );
+            await addUpdateGithubProfileToQueue(
+              session.accessToken,
+              session.user.id,
+              QueuePriority.Low,
+              userDbDataRaw && userDbDataRaw.GithubDevProfile
+                ? (userDbDataRaw.GithubDevProfile.updatedAt as Date)
+                : undefined
+            );
+          } else {
+            setTimeout(() => updateGithubProfile(session.accessToken), 0);
+          }
         } catch (error) {
           await logToDiscord(
             `Failed to add update to queue, updating profile directly ${error}`,
