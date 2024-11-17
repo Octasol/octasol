@@ -3,6 +3,8 @@ import { addUpdateGithubProfileToQueue } from "@/lib/queueUtils";
 import { QueuePriority } from "@/lib/types";
 import { bigintToString } from "@/lib/utils";
 import { getDbUser, initializeUser, setUsername } from "@/utils/dbUtils";
+import { updateGithubProfile } from "@/utils/githubStatsHelper";
+import { logToDiscord } from "@/utils/logger";
 import axios from "axios";
 import { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
@@ -57,17 +59,33 @@ export const authOptions: NextAuthOptions = {
         await setUsername(session.user.id, {
           githubUsername: session.user.login,
         });
-        await addUpdateGithubProfileToQueue(
-          session.accessToken,
-          session.user.id,
-          QueuePriority.High
-        );
+        try {
+          await addUpdateGithubProfileToQueue(
+            session.accessToken,
+            session.user.id,
+            QueuePriority.High
+          );
+        } catch (error) {
+          await logToDiscord(
+            `Failed to add update to queue, adding profile directly ${error}`,
+            "ERROR"
+          );
+          await updateGithubProfile(session.accessToken);
+        }
       } else {
-        await addUpdateGithubProfileToQueue(
-          session.accessToken,
-          session.user.id,
-          QueuePriority.Low
-        );
+        try {
+          await addUpdateGithubProfileToQueue(
+            session.accessToken,
+            session.user.id,
+            QueuePriority.Low
+          );
+        } catch (error) {
+          await logToDiscord(
+            `Failed to add update to queue, updating profile directly ${error}`,
+            "ERROR"
+          );
+          setTimeout(() => updateGithubProfile(session.accessToken), 0);
+        }
       }
       session.user.isVerifiedEmail = userDbData.verifiedEmail;
       return session;
