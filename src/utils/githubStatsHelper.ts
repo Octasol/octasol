@@ -17,6 +17,7 @@ async function getRepos(page: number, authHeader: string) {
         headers: {
           Authorization: `${authHeader}`,
           Accept: "application/vnd.github.v3+json",
+          Connection: "keep-alive",
         },
         timeout: 100000, // 100 seconds
       });
@@ -45,7 +46,9 @@ async function getTotalCommits(username: string, authHeader: string) {
         "Content-Type": "application/json",
         Authorization: `${authHeader}`,
         Accept: "application/vnd.github.cloak-preview",
+        Connection: "keep-alive",
       },
+      timeout: 100000, // 100 seconds
     });
     return res.data.total_count;
   } catch (error) {
@@ -67,6 +70,7 @@ async function getGithubGraphql(login: string, authHeader: string) {
       headers: {
         Authorization: `${authHeader}`,
         Accept: "application/vnd.github.v3+json",
+        Connection: "keep-alive",
       },
       data: {
         query: GRAPHQL_STATS_QUERY,
@@ -77,11 +81,12 @@ async function getGithubGraphql(login: string, authHeader: string) {
           includeDiscussionsAnswers: true,
         },
       },
+      timeout: 100000, // 100 seconds
     });
     return res.data.data;
   } catch (error) {
     await logToDiscord(
-      `githubStatsHelper/getGithubGraphql: ${(error as any).message}`,
+      `githubStatsHelper/getGithubGraphql: ${(error as any).toString()}`,
       "ERROR"
     );
 
@@ -89,7 +94,7 @@ async function getGithubGraphql(login: string, authHeader: string) {
       "Error fetching GitHub GraphQL data:",
       (error as any).message
     );
-    throw new Error("Failed to fetch GitHub GraphQL data");
+    throw new Error(`Failed to fetch GitHub GraphQL data: ${error}`);
   }
 }
 
