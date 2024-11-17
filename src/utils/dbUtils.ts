@@ -32,7 +32,10 @@ export const initializeUser = async (
     }
     return true;
   } catch (error) {
-    await logToDiscord(`dbUtils/initializeUser: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `dbUtils/initializeUser: ${(error as any).message}`,
+      "ERROR"
+    );
     console.error(error);
     return false;
   }
@@ -98,7 +101,10 @@ export const setUsername = async (id: bigint, username: UserDB) => {
     );
     return true;
   } catch (error) {
-    await logToDiscord(`dbUtils/setUsername: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `dbUtils/setUsername: ${(error as any).message}`,
+      "ERROR"
+    );
     console.error(error);
     return false;
   }
@@ -142,7 +148,10 @@ export const setGithubDevProfile = async (
     });
     return true;
   } catch (error) {
-    await logToDiscord(`dbUtils/setGithubDevProfile: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `dbUtils/setGithubDevProfile: ${(error as any).message}`,
+      "ERROR"
+    );
     console.error(error);
     return false;
   }
@@ -173,7 +182,10 @@ export const getAllGithubDevProfiles = async () => {
       githubUsername: profile.User?.githubUsername || null,
     }));
   } catch (error) {
-    await logToDiscord(`dbUtils/getAllGithubDevProfiles: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `dbUtils/getAllGithubDevProfiles: ${(error as any).message}`,
+      "ERROR"
+    );
 
     console.error("Error fetching GitHub dev profiles:", error);
     throw error;
@@ -193,7 +205,10 @@ export const getAllProfiles = async () => {
       ...profile,
     }));
   } catch (error) {
-    await logToDiscord(`dbUtils/getAllProfiles: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `dbUtils/getAllProfiles: ${(error as any).message}`,
+      "ERROR"
+    );
 
     console.error("Error fetching profiles:", error);
     throw error;
@@ -225,7 +240,10 @@ export const setHackerrankProfile = async (id: bigint, profile: any) => {
     });
     return true;
   } catch (error) {
-    await logToDiscord(`dbUtils/setHackerrankProfile: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `dbUtils/setHackerrankProfile: ${(error as any).message}`,
+      "ERROR"
+    );
     console.error(error);
     return false;
   }
@@ -369,7 +387,10 @@ export async function setHackerrankDatabyGithubId(
     });
     return true;
   } catch (error) {
-    await logToDiscord(`dbUtils/setHackerrankDatabyGithubId: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `dbUtils/setHackerrankDatabyGithubId: ${(error as any).message}`,
+      "ERROR"
+    );
     console.error(error);
     return false;
   }
@@ -398,7 +419,10 @@ export async function setGFGDatabyGithubId(
     });
     return true;
   } catch (error) {
-    await logToDiscord(`dbUtils/setGFGDatabyGithubId: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `dbUtils/setGFGDatabyGithubId: ${(error as any).message}`,
+      "ERROR"
+    );
     console.error(error);
     return false;
   }
@@ -424,7 +448,10 @@ export async function setCodeChefDatabyGithubId(
     });
     return true;
   } catch (error) {
-    await logToDiscord(`dbUtils/setCodeChefDatabyGithubId: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `dbUtils/setCodeChefDatabyGithubId: ${(error as any).message}`,
+      "ERROR"
+    );
     console.error(error);
     return false;
   }
@@ -456,7 +483,10 @@ export async function setLeetCodeDatabyGithubId(
     });
     return true;
   } catch (error) {
-    await logToDiscord(`dbUtils/setLeetCodeDatabyGithubId: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `dbUtils/setLeetCodeDatabyGithubId: ${(error as any).message}`,
+      "ERROR"
+    );
     console.error(error);
     return false;
   }
@@ -488,7 +518,10 @@ export async function setSuperteamEarnDatabyGithubId(
     });
     return true;
   } catch (error) {
-    await logToDiscord(`dbUtils/setSuperteamEarnDatabyGithubId: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `dbUtils/setSuperteamEarnDatabyGithubId: ${(error as any).message}`,
+      "ERROR"
+    );
     console.error(error);
     return false;
   }
@@ -577,9 +610,97 @@ export const getUserProfileForRadarChart = async (githubUsername: string) => {
       superteamEarnPoints,
     };
   } catch (error) {
-    await logToDiscord(`dbUtils/getUserProfileForRadarChart: ${(error as any).message}`, "ERROR");
+    await logToDiscord(
+      `dbUtils/getUserProfileForRadarChart: ${(error as any).message}`,
+      "ERROR"
+    );
 
     console.error("Error fetching user profile for radar chart:", error);
     throw error;
+  }
+};
+export const setUnscrowedBounty = async (id: bigint, bountyData: any) => {
+  console.log("bounty", bountyData);
+  console.log("data checking");
+
+  try {
+    const sponsor = await db.sponsor.create({
+      data: {
+        githubId: id,
+        type: bountyData.subHeading,
+        image: bountyData.image,
+        link: bountyData.link,
+        description: bountyData.description,
+        telegram: bountyData.telegram,
+        twitter: bountyData.twitter,
+        discord: bountyData.discord,
+        name: bountyData.name,
+      },
+    });
+
+    const bounty = await db.bounty.create({
+      data: {
+        bountyname: bountyData.bountyname,
+        price: bountyData.price,
+        bountyDescription: bountyData.bountyDescription,
+        skills: bountyData.skills,
+        time: bountyData.time,
+        // timeExtendedTo: bountyData.timeExtendedTo,
+        primaryContact: bountyData.contact,
+        sponsorId: sponsor.id,
+      },
+    });
+
+    console.log("sponsor", sponsor);
+
+    return true;
+  } catch (error) {
+    await logToDiscord(
+      `dbUtils/setUnscrowedBounty: ${(error as any).message}`,
+      "ERROR"
+    );
+    console.error(error);
+    return false;
+  }
+};
+
+// export const getUnscrowedBounty = async (id: bigint) => {
+//   console.log("id", id);
+//   try {
+//     const bounty = await db.bounty.findMany({
+//       where: {
+//         sponsorId: id,
+//       },
+//     });
+//     console.log("bounty", bounty);
+//     return bounty;
+//   } catch (error) {
+//     await logToDiscord(
+//       `dbUtils/getUnscrowedBounty: ${(error as any).message}`,
+//       "ERROR"
+//     );
+//     console.error(error);
+//     return false;
+//   }
+// };
+
+export const getSponsorProfile = async (id: bigint) => {
+  console.log("id", id);
+
+  try {
+    const sponsor = await db.sponsor.findMany({
+      where: {
+        githubId: id,
+      },
+    });
+    console.log("sponsor", sponsor);
+    return sponsor;
+  } catch (error) {
+    await logToDiscord(
+      `dbUtils/getSponsorProfile: ${(error as any).message}`,
+      "ERROR"
+    );
+    console.error(error);
+    return false;
   }
 };

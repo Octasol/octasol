@@ -3,38 +3,42 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
 model User {
-  githubId           BigInt             @id @unique
-  installationId     BigInt
-  githubUsername     String?            @unique
-  superteamUsername  String?            @unique
-  leetcodeUsername   String?            @unique
-  codeforcesUsername String?            @unique
-  hackerrankUsername String?            @unique
-  codechefUsername   String?            @unique
-  gfgUsername        String?            @unique
-  gitlabUsername     String?            @unique
-  email              String?            @unique
-  emails             String[]           @default([])
-  verifiedEmail      Boolean            @default(false)
-  totalPoints        Int                @default(0)
-  emailOtp           String?
-  GithubDevProfile   GithubDevProfile?
-  HackerrankProfile  HackerrankProfile?
-  GFGProfile         GFGProfile?
-  CodeChefProfile    CodeChefProfile?
-  LeetcodeProfile    LeetcodeProfile?
+  githubId             BigInt                @id @unique
+  installationId       BigInt
+  githubUsername       String?               @unique
+  superteamUsername    String?               @unique
+  leetcodeUsername     String?               @unique
+  codeforcesUsername   String?               @unique
+  hackerrankUsername   String?               @unique
+  codechefUsername     String?               @unique
+  gfgUsername          String?               @unique
+  gitlabUsername       String?               @unique
+  email                String?               @unique
+  emails               String[]              @default([])
+  verifiedEmail        Boolean               @default(false)
+  totalPoints          Int                   @default(0)
+  emailOtp             String?
+  GithubDevProfile     GithubDevProfile?
+  HackerrankProfile    HackerrankProfile?
+  GFGProfile           GFGProfile?
+  CodeChefProfile      CodeChefProfile?
+  LeetcodeProfile      LeetcodeProfile?
   SuperteamEarnProfile SuperteamEarnProfile?
+  Sponsors             Sponsor[]             @relation("UserSponsors")
+  submissions          Submission[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @default(now()) @updatedAt
 }
 
 model GithubDevProfile {
-  User                      User?  @relation(fields: [githubId], references: [githubId])
-  githubId                  BigInt @id @unique
+  User                      User?    @relation(fields: [githubId], references: [githubId])
+  githubId                  BigInt   @id @unique
   stars                     Int
   forks                     Int
   forkedRepos               Int
@@ -45,40 +49,102 @@ model GithubDevProfile {
   pullRequests              Int
   mergedPullRequests        Int
   totalIssues               Int
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @default(now()) @updatedAt
 }
 
 model HackerrankProfile {
-  User          User?  @relation(fields: [githubId], references: [githubId])
-  githubId      BigInt @id @unique
+  User          User?    @relation(fields: [githubId], references: [githubId])
+  githubId      BigInt   @id @unique
   currentPoints Int
   stars         Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
 }
 
 model GFGProfile {
-  User           User?  @relation(fields: [githubId], references: [githubId])
-  githubId       BigInt @id @unique
+  User           User?    @relation(fields: [githubId], references: [githubId])
+  githubId       BigInt   @id @unique
   score          Int
   problemsSolved Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
 }
 
 model CodeChefProfile {
-  User          User?  @relation(fields: [githubId], references: [githubId])
-  githubId      BigInt @id @unique
+  User          User?    @relation(fields: [githubId], references: [githubId])
+  githubId      BigInt   @id @unique
   currentRating Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
 }
 
 model LeetcodeProfile {
-  User           User?  @relation(fields: [githubId], references: [githubId])
-  githubId       BigInt @id @unique
-  easyQues       Int
-  mediumQues     Int     
-  hardQues       Int     
+  User       User?    @relation(fields: [githubId], references: [githubId])
+  githubId   BigInt   @id @unique
+  easyQues   Int
+  mediumQues Int
+  hardQues   Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
 }
 
 model SuperteamEarnProfile {
-  User          User?   @relation(fields: [githubId], references: [githubId])
-  githubId      BigInt  @id @unique
-  participations Int    
-  wins           Int    
-  totalWinnings  Int    
+  User           User?    @relation(fields: [githubId], references: [githubId])
+  githubId       BigInt   @id @unique
+  participations Int
+  wins           Int
+  totalWinnings  Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
+}
+
+model Sponsor {
+  id          Int      @id @default(autoincrement())
+  githubId    BigInt
+  type        String
+  image       String?
+  name        String
+  link        String?
+  description String
+  twitter     String
+  telegram    String
+  discord     String?
+  bounties    Bounty[] @relation("SponsorBounties")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+
+  User User? @relation("UserSponsors", fields: [githubId], references: [githubId])
+}
+
+model Bounty {
+  id                Int          @id @default(autoincrement())
+  bountyname        String
+  price             Int
+  status            Int          @default(0) // 0: draft, 1: in review by admin, 2: active, 3: completed, 4: in review by sponsor, 5: rejected by admin, 6: rejected by sponsor
+  bountyDescription String
+  skills            String[]
+  time              String
+  timeExtendedTo    String?
+  primaryContact    String
+  sponsorId         Int?
+  sponsor           Sponsor?     @relation("SponsorBounties", fields: [sponsorId], references: [id])
+  submissions       Submission[]
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @default(now()) @updatedAt
+}
+
+model Submission {
+  id        Int      @id @default(autoincrement())
+  links     String[] @default([])
+  status    Int      @default(0) // 0: draft, 1: submitted
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  githubId BigInt
+  user     User   @relation(fields: [githubId], references: [githubId])
+
+  bountyId Int
+  bounty   Bounty @relation(fields: [bountyId], references: [id])
 }

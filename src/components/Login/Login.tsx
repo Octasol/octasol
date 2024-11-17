@@ -21,13 +21,14 @@ import {
   Menu,
   SquareUser,
 } from "lucide-react";
-import BottomGradient from "../ui/BottomGradient";
+// import BottomGradient from "../ui/BottomGradient";
 import LoginButton from "../Button/LoginButton";
 import { IconChartHistogram } from "@tabler/icons-react";
 import { decrement } from "@/app/Redux/Features/loader/loaderSlice";
 import { store } from "@/app/Redux/store";
 import { Skeleton } from "../ui/skeleton";
 import Cookies from "js-cookie";
+import { resetProfile } from "@/app/Redux/Features/profile/profileSlice";
 
 const Login = () => {
   const { data: session, status } = useSession() as any;
@@ -148,11 +149,15 @@ const Login = () => {
       })
     );
     Cookies.remove("session");
+    dispatch(resetProfile());
+    localStorage.setItem("activeTab", "subheading");
     router.push("/");
   };
 
   useEffect(() => {
     if (pathname !== "/" && !Cookies.get("session")) {
+      dispatch(resetProfile());
+      localStorage.setItem("activeTab", "subheading");
       handleSessionFromCookies();
       logout();
     }
@@ -254,7 +259,7 @@ const Login = () => {
               >
                 <Link prefetch href={`/p/${user?.login}`}>
                   <div className="relative flex md:hidden">
-                    <BottomGradient />
+                    {/* <BottomGradient /> */}
                   </div>
                   <div className="flex items-center gap-4 justify-between w-full">
                     <span>Profile</span>

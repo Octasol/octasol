@@ -11,7 +11,7 @@ const Header = (props: Props) => {
     <>
       <nav className="text-white fixed top-0 right-0 left-0 w-full h-20 flex justify-between items-center md:px-20 px-2 py-6 bg-black z-50 ">
         <div className="flex justify-center items-center">
-          <Link href="/" passHref>
+          <Link href="/dashboard" passHref>
             <Image
               src="/octasolLandingLogo.png"
               alt="logo"
