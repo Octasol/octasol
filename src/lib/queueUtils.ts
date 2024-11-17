@@ -7,11 +7,6 @@ export const addUpdateGithubProfileToQueue = async (
   priority: QueuePriority,
   lastUpdated?: Date
 ) => {
-  if (lastUpdated) {
-    console.log(new Date(), new Date().getTime())
-    console.log(lastUpdated, lastUpdated.getTime())
-    console.log(new Date().getTime() - lastUpdated.getTime());
-  }
   if (
     priority === QueuePriority.Low &&
     lastUpdated &&
