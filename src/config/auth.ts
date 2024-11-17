@@ -3,7 +3,6 @@ import { addUpdateGithubProfileToQueue } from "@/lib/queueUtils";
 import { QueuePriority } from "@/lib/types";
 import { bigintToString } from "@/lib/utils";
 import { getDbUser, initializeUser, setUsername } from "@/utils/dbUtils";
-import { updateGithubProfile } from "@/utils/githubStatsHelper";
 import axios from "axios";
 import { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
@@ -55,17 +54,18 @@ export const authOptions: NextAuthOptions = {
         return null;
       }
       if (!userDbData?.githubUsername) {
+        await setUsername(session.user.id, {
+          githubUsername: session.user.login,
+        });
         await addUpdateGithubProfileToQueue(
           session.accessToken,
           session.user.id,
-          session.user.login,
           QueuePriority.High
         );
       } else {
         await addUpdateGithubProfileToQueue(
           session.accessToken,
           session.user.id,
-          session.user.login,
           QueuePriority.Low
         );
       }
