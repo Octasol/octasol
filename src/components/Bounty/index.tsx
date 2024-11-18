@@ -115,6 +115,12 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
     }
   };
 
+  const reset = () => {
+    dispatch(resetProfile());
+    localStorage.removeItem("activeTab");
+    setActiveTab();
+  };
+
   const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
@@ -245,12 +251,21 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
 
       <CardFooter>
         <div className="w-full flex justify-between items-center">
-          <NextButton onClick={onPrev} disabled={profile.preDefined}>
-            <div className="flex gap-2 items-center">
-              <ArrowBigLeft size={20} />
-              PREV
-            </div>
-          </NextButton>
+          {profile.preDefined ? (
+            <NextButton onClick={reset}>
+              <div className="flex gap-2 items-center">
+                <ArrowBigLeft size={20} />
+                Reset
+              </div>
+            </NextButton>
+          ) : (
+            <NextButton onClick={onPrev} disabled={profile.preDefined}>
+              <div className="flex gap-2 items-center">
+                <ArrowBigLeft size={20} />
+                PREV
+              </div>
+            </NextButton>
+          )}
 
           <NextButton
             onClick={() => submitProfile(profile?.sponsorid)}
