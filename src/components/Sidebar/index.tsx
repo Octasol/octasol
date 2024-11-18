@@ -9,7 +9,7 @@ import {
   PictureInPicture,
 } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   Tooltip,
@@ -18,19 +18,31 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
-type Props = {};
+type Props = {
+  verified: boolean;
+};
 
-const Sidebar = (props: Props) => {
+const Sidebar = ({ verified }: Props) => {
   const user = useSelector((state: any) => state.user);
   const pathname = usePathname();
 
   const isActive = (linkPath: string) => pathname.includes(linkPath);
 
+  useEffect(() => {
+    console.log("session", verified);
+  }, [verified]);
+
   return (
     <>
       <div className="w-full flex justify-between">
-        <div className="w-full pt-24 pb-4 min-h-screen z-50 overflow-hidden flex flex-col items-start gap-8 px-5 transition-all duration-500 ease-in-out group hover:w-[250px] relative">
+        <div
+          className={cn(
+            "w-full pt-24 pb-4 min-h-screen overflow-hidden flex flex-col items-start gap-8 px-5 transition-all duration-500 ease-in-out group hover:w-[250px] relative",
+            verified ? "z-50" : "z-0 hidden"
+          )}
+        >
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
