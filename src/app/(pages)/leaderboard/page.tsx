@@ -113,14 +113,14 @@ const Leaderboard = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-[5px] right-10 z-30 max-w-[500px]">
+      <div className="absolute bottom-[82vh]  md:bottom-10 right-[10px] z-30 max-w-[500px]">
         <div>
           <button
             onClick={toggleSearch}
-            className="px-5 py-1 border-[1px] rounded-full border-slate-800 bg-black flex justify-center items-center gap-4"
+            className="px-4 py-3 border-[1px] rounded-full border-slate-800 bg-black flex justify-center items-center gap-4"
           >
             <SearchIcon size={20} />
-            Search
+            <p className="hidden md:flex">Search</p>
           </button>
         </div>
 
@@ -168,7 +168,7 @@ const Leaderboard = () => {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center items-center container max-w-5xl">
+      <div className="flex flex-col justify-center items-center px-4 md:container md:max-w-5xl">
         <Table>
           <TableHeader>
             <TableRow>
@@ -213,7 +213,7 @@ const Leaderboard = () => {
             </Table>
           </div>
         )}
-        <div className="flex justify-between items-center py-6 w-full">
+        <div className="flex justify-between items-center pt-6 pb-16 w-full">
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
