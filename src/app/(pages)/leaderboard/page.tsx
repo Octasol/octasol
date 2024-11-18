@@ -94,9 +94,9 @@ const Leaderboard = () => {
 
   return (
     <>
-      {/* <div className="w-full flex justify-center items-center text-3xl font-bold tracking-widest">
+      <div className="w-full hidden md:flex justify-center items-center text-3xl font-bold tracking-widest">
         LEADERBOARD
-      </div> */}
+      </div>
       <div className="w-full h-fit pt-4">
         <div className="w-full flex flex-col justify-center items-center py-2 md:py-10">
           <div className="mb-8 md:mb-0 z-20">
@@ -213,7 +213,7 @@ const Leaderboard = () => {
             </Table>
           </div>
         )}
-        <div className="flex justify-between items-center pt-6 pb-16 w-full">
+        <div className="flex justify-between items-center pt-6 pb-6 md:pb-16 w-full">
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
