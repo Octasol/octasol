@@ -154,8 +154,13 @@ const Leaderboard = () => {
                       onClick={() => userProfile(item.githubUsername)}
                     >
                       <div className="flex justify-between">
-                        <span>{item.githubUsername}</span>
-                        <span>{item.totalPoints}</span>
+                        <p className="w-[60px]">{item.rank}</p>
+                        <p className="w-[210px] flex justify-start">
+                          {item.githubUsername}
+                        </p>
+                        <p className="w-[80px] flex justify-end">
+                          {item.totalPoints}
+                        </p>
                       </div>
                     </li>
                   ))}
