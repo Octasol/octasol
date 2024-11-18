@@ -10,7 +10,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ArrowBigRight } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
-import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { setSubHeading } from "@/app/Redux/Features/profile/profileSlice";
 import { GET } from "@/config/axios/requests";
