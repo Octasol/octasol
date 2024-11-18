@@ -11,11 +11,21 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ArrowBigRight } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
 import { useDispatch, useSelector } from "react-redux";
-import { setSubHeading } from "@/app/Redux/Features/profile/profileSlice";
+import {
+  setDescription,
+  setDiscord,
+  setImage,
+  setLink,
+  setName,
+  setPredefined,
+  setSubHeading,
+  setTelegram,
+  setTwitter,
+} from "@/app/Redux/Features/profile/profileSlice";
 import { GET } from "@/config/axios/requests";
 
 type Props = {
-  onNext: () => void;
+  onNext: (value: any) => void;
 };
 
 const SubHeading = ({ onNext }: Props) => {
@@ -39,6 +49,21 @@ const SubHeading = ({ onNext }: Props) => {
   useEffect(() => {
     if (user?.githubId) getProfile(user?.githubId as bigint);
   }, [user]);
+
+  const setProfile = (profile: any) => {
+    console.log(profile);
+    dispatch(setSubHeading(profile?.type));
+    dispatch(setName(profile?.name));
+    dispatch(setLink(profile?.link));
+    dispatch(setDescription(profile?.description));
+    dispatch(setImage(profile?.image));
+    dispatch(setTelegram(profile?.telegram));
+    dispatch(setDiscord(profile?.discord));
+    dispatch(setTwitter(profile?.twitter));
+    dispatch(setPredefined(true));
+    onNext("bounty");
+    localStorage.setItem("activeTab", "bounty");
+  };
 
   return (
     <div className="flex flex-col ">
@@ -91,7 +116,10 @@ const SubHeading = ({ onNext }: Props) => {
           </div>
         </CardContent>
         <CardFooter className="w-full flex justify-end">
-          <NextButton onClick={onNext} disabled={!profile?.subHeading}>
+          <NextButton
+            onClick={() => onNext("profile")}
+            disabled={!profile?.subHeading}
+          >
             <div className="flex items-center gap-2">
               NEXT
               <ArrowBigRight size={20} />
@@ -107,7 +135,8 @@ const SubHeading = ({ onNext }: Props) => {
           {sponsorProfiles.map((profile: any, index: number) => (
             <div
               key={index}
-              className="flex flex-col gap-2 justify-center items-center "
+              className="flex flex-col gap-2 justify-center items-center cursor-pointer"
+              onClick={() => setProfile(profile)}
             >
               <Avatar>
                 <AvatarImage src={profile?.image} alt="sponsor" />

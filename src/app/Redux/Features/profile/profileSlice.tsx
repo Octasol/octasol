@@ -17,6 +17,7 @@ type Profilestate = {
   contact: string;
   bountyDescription: string | undefined;
   sponsorid?: number;
+  preDefined?: boolean;
 };
 
 const initialState: Profilestate = {
@@ -35,6 +36,7 @@ const initialState: Profilestate = {
   contact: "",
   bountyDescription: "",
   sponsorid: undefined,
+  preDefined: false,
 };
 
 export const profileSlice = createSlice({
@@ -89,6 +91,9 @@ export const profileSlice = createSlice({
     setBountyDescription: (state, action: PayloadAction<string>) => {
       state.bountyDescription = action.payload;
     },
+    setPredefined: (state, action: PayloadAction<boolean>) => {
+      state.preDefined = action.payload;
+    },
     resetProfile: () => initialState,
   },
 });
@@ -111,5 +116,6 @@ export const {
   setTime,
   setContact,
   setBountyDescription,
+  setPredefined,
 } = profileSlice.actions;
 export const profileReducer = profileSlice.reducer;

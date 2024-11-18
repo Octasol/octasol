@@ -4,11 +4,9 @@ import { useState } from "react";
 import Profile from "../../../components/Profile";
 import Bounty from "../../../components/Bounty";
 import SubHeading from "../../../components/SubHeading";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 export default function ListUnescrowed() {
-  const user = useSelector((state: any) => state.user);
-
   const [activeTab, setActiveTab] = useState<string>(
     localStorage.getItem("activeTab") || "subheading"
   );
@@ -42,7 +40,7 @@ export default function ListUnescrowed() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="subheading">
-          <SubHeading onNext={() => handleNextClick("profile")} />
+          <SubHeading onNext={(value) => handleNextClick(value)} />
         </TabsContent>
         <TabsContent value="profile">
           <Profile
