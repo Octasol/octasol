@@ -9,7 +9,7 @@ import {
   PictureInPicture,
 } from "lucide-react";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import {
   Tooltip,
@@ -29,10 +29,6 @@ const Sidebar = ({ verified }: Props) => {
   const pathname = usePathname();
 
   const isActive = (linkPath: string) => pathname.includes(linkPath);
-
-  useEffect(() => {
-    console.log("session", verified);
-  }, [verified]);
 
   return (
     <>

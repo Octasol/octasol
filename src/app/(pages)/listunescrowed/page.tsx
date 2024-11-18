@@ -1,6 +1,6 @@
 "use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Profile from "../../../components/Profile";
 import Bounty from "../../../components/Bounty";
 import SubHeading from "../../../components/SubHeading";
@@ -8,9 +8,7 @@ import { useSelector } from "react-redux";
 
 export default function ListUnescrowed() {
   const user = useSelector((state: any) => state.user);
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+
   const [activeTab, setActiveTab] = useState<string>(
     localStorage.getItem("activeTab") || "subheading"
   );

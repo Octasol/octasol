@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ArrowBigRight } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
 import Image from "next/image";
@@ -22,6 +23,7 @@ const SubHeading = ({ onNext }: Props) => {
   const dispatch = useDispatch();
   const profile = useSelector((state: any) => state.profile);
   const user = useSelector((state: any) => state.user);
+  const [sponsorProfiles, setSponsorProfiles] = useState<any>([]);
 
   const handleSelect = (value: string) => {
     dispatch(setSubHeading(value));
@@ -31,11 +33,12 @@ const SubHeading = ({ onNext }: Props) => {
     if (id) {
       const response = await GET(`/unescrowedprofile?userId=${id.toString()}`);
       console.log(response);
+      setSponsorProfiles(response.sponsor);
     }
   };
 
   useEffect(() => {
-    // if (user?.githubId) getProfile(user?.githubId as bigint);
+    if (user?.githubId) getProfile(user?.githubId as bigint);
   }, [user]);
 
   return (
@@ -102,20 +105,24 @@ const SubHeading = ({ onNext }: Props) => {
           or choose exixting profile...
         </p>
         <div className="w-full h-full gap-6 flex justify-center items-center flex-wrap">
-          <Image
-            src="/gfg.png"
-            alt="org"
-            width={45}
-            height={45}
-            className="rounded-lg"
-          />
-          <Image
-            src="/gfg.png"
-            alt="org"
-            width={45}
-            height={45}
-            className="rounded-lg"
-          />
+          {sponsorProfiles.map((profile: any, index: number) => (
+            <div
+              key={index}
+              className="flex flex-col gap-2 justify-center items-center "
+            >
+              <Avatar>
+                <AvatarImage src={profile?.image} alt="sponsor" />
+                <AvatarFallback>{`${(profile?.name).slice(
+                  0,
+                  2
+                )}...`}</AvatarFallback>
+              </Avatar>
+
+              <p className="text-xs lg:text-sm font-semibold">
+                {profile?.name}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </div>

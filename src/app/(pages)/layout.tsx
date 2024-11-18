@@ -11,8 +11,6 @@ const Layout = ({ children }: Props) => {
   const [verifiedEmail, setVerifiedEmail] = useState(true);
 
   const verified = async (): Promise<void> => {
-    console.log("session", session);
-
     if (session && session.accessToken) {
       setVerifiedEmail(session.isVerifiedEmail);
     }

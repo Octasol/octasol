@@ -41,10 +41,6 @@ const Login = () => {
   const user = useSelector((state: any) => state.user);
   const sessionToVerifyEmail = useSelector((state: any) => state.user);
 
-  useEffect(() => {
-    console.log("session", sessionToVerifyEmail.isVerifiedEmail);
-  });
-
   interface SessionUser {
     name?: string | null;
     email?: string | null;
