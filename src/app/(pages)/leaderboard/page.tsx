@@ -32,13 +32,12 @@ const Leaderboard = () => {
     const fetchProfiles = async () => {
       const { response } = await POST(leaderboard, {});
       setProfile(response?.data);
-      setFilteredProfiles(response?.data); // Set initial profiles for display
+      setFilteredProfiles(response?.data);
     };
     fetchProfiles();
   }, []);
 
   useEffect(() => {
-    // Filter profiles based on search input and add rank
     if (search) {
       const rankedProfiles = profile.map((p, index) => ({
         ...p,
@@ -156,7 +155,6 @@ const Leaderboard = () => {
                     >
                       <div className="flex justify-between">
                         <span>{item.githubUsername}</span>
-                        {/* <span>Rank: {item?.rank}</span> */}
                         <span>{item.totalPoints}</span>
                       </div>
                     </li>
@@ -241,8 +239,6 @@ const Leaderboard = () => {
           </button>
         </div>
       </div>
-
-      {/* Pagination controls */}
     </>
   );
 };
