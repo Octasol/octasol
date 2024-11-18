@@ -245,7 +245,7 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
 
       <CardFooter>
         <div className="w-full flex justify-between items-center">
-          <NextButton onClick={onPrev}>
+          <NextButton onClick={onPrev} disabled={profile.preDefined}>
             <div className="flex gap-2 items-center">
               <ArrowBigLeft size={20} />
               PREV
