@@ -23,10 +23,6 @@ const Sidebar = ({ verified }: Props) => {
 
   const isActive = (linkPath: string) => pathname.includes(linkPath);
 
-  useEffect(() => {
-    console.log("session", verified);
-  }, [verified]);
-
   return (
     <>
       <div className="w-full flex justify-between">
