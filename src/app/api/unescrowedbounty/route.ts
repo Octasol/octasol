@@ -46,7 +46,6 @@ export async function POST(req: NextRequest) {
     const response = bigintToString(
       await setUnscrowedBounty(sponsorid, bounty)
     );
-    console.log("response", response);
 
     return NextResponse.json({
       success: true,

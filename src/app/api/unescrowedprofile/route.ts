@@ -22,7 +22,6 @@ export async function POST(req: NextRequest) {
   const sponsor = profile;
   try {
     const response = bigintToString(await setSponsorProfile(userId, sponsor));
-    console.log("response", response);
 
     return NextResponse.json({
       success: true,
@@ -44,7 +43,6 @@ export async function GET(req: NextRequest) {
     console.log("userId", userId);
     if (userId !== "") {
       const sponsor = bigintToString(await getSponsorProfile(userId as any));
-      console.log("sponsor", sponsor);
 
       return NextResponse.json({
         success: true,
