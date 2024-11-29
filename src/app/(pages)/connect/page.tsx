@@ -171,7 +171,7 @@ export default function Connect() {
   };
 
   return (
-    <div className="w-full min-h-screen flex justify-center items-center py-8">
+    <div className="w-full h-full flex justify-center items-center py-8">
       <div className="grid md:auto-rows-[20rem] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 max-w-9xl px-6 py-4 max-w-8xl mx-auto">
         {items.map((item, i) => {
           const username =
