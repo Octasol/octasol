@@ -1,6 +1,10 @@
 import { getUserByAuthHeader } from "@/lib/apiUtils";
 import { bigintToString } from "@/lib/utils";
-import { getUnscrowedBounty, setUnscrowedBounty } from "@/utils/dbUtils";
+import {
+  getUnscrowedBounty,
+  getUnscrowedBountyById,
+  setUnscrowedBounty,
+} from "@/utils/dbUtils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -21,7 +25,17 @@ export async function GET(req: NextRequest) {
       );
     }
   } else {
-    return NextResponse.json({ id: bountyId }, { status: 200 });
+    try {
+      const bounty = bigintToString(
+        await getUnscrowedBountyById(parseInt(bountyId))
+      );
+      return NextResponse.json({ response: bounty }, { status: 200 });
+    } catch (error) {
+      return NextResponse.json(
+        { success: false, message: (error as any).message },
+        { status: 500 }
+      );
+    }
   }
 }
 

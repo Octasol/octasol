@@ -717,6 +717,24 @@ export const getUnscrowedBounty = async () => {
   }
 };
 
+export const getUnscrowedBountyById = async (id: number) => {
+  try {
+    const bounty = await db.bounty.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return bounty;
+  } catch (error) {
+    await logToDiscord(
+      `dbUtils/getUnscrowedBountyById: ${(error as any).message}`,
+      "ERROR"
+    );
+    console.error(error);
+    return false;
+  }
+};
+
 export const getSponsorProfile = async (id: bigint) => {
   console.log("id", id);
 
