@@ -723,6 +723,9 @@ export const getUnscrowedBountyById = async (id: number) => {
       where: {
         id: id,
       },
+      include: {
+        sponsor: true,
+      },
     });
     return bounty;
   } catch (error) {
