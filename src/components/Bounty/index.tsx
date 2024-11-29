@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
-import { cn, uploadImage } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -18,11 +18,13 @@ import {
 } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import React, { useEffect } from "react";
+import React from "react";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
 import { useDispatch, useSelector } from "react-redux";
-import MDEditor from "@uiw/react-md-editor";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   resetProfile,
   setBountyDescription,
@@ -35,6 +37,8 @@ import {
 import { MultiSelect } from "@/components/ui/multi-select";
 import { Cat, Dog, Fish, Rabbit, Turtle } from "lucide-react";
 import { POST } from "@/config/axios/requests";
+import { Form } from "../ui/form";
+import RichTextEditor from "../RichTextEditor";
 
 const frameworksList = [
   { value: "react", label: "React", icon: Turtle },
@@ -48,6 +52,23 @@ type Props = {
   onPrev: () => void;
   setActiveTab: () => void;
 };
+
+function extractTextFromHTML(html: any) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+  return doc.body.textContent?.trim() || "";
+}
+
+const formSchema = z.object({
+  post: z.string().refine(
+    (value) => {
+      return extractTextFromHTML(value).trim().length >= 5;
+    },
+    {
+      message: "The text must be at least 5 characters long after trimming",
+    }
+  ),
+});
 
 const Bounty = ({ onPrev, setActiveTab }: Props) => {
   const dispatch = useDispatch();
@@ -121,16 +142,13 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
     setActiveTab();
   };
 
-  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    const file = event.dataTransfer.files[0];
-
-    if (file && file.type.startsWith("image/")) {
-      const imageUrl = await uploadImage(file, user.accessToken as string);
-      const markdownImageSyntax = `![Uploaded Image](${imageUrl})\n`;
-      handleDescriptionChange(profile.bountyDescription + markdownImageSyntax);
-    }
-  };
+  const form = useForm({
+    mode: "onTouched",
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      post: "",
+    },
+  });
 
   return (
     <Card className="">
@@ -169,17 +187,14 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
           <div className="grid grid-cols-1 gap-6">
             <div className="space-y-1">
               <Label htmlFor="bounty-description">Bounty Description</Label>
-              <div onDrop={handleDrop} onDragOver={(e) => e.preventDefault()}>
-                <MDEditor
-                  value={profile.bountyDescription}
-                  onChange={handleDescriptionChange}
-                  preview="edit"
-                  height={200}
-                  textareaProps={{
-                    placeholder: "Enter your Project Description in Markdown",
-                  }}
-                />
-              </div>
+              <Form {...form}>
+                <form>
+                  <RichTextEditor
+                    content={profile.bountyDescription}
+                    onChange={handleDescriptionChange}
+                  />
+                </form>
+              </Form>
             </div>
           </div>
 
