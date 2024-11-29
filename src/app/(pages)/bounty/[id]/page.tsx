@@ -1,7 +1,7 @@
 "use client";
 import LoginButton from "@/components/Button/LoginButton";
 import { GET } from "@/config/axios/requests";
-import { Send, Twitter } from "lucide-react";
+import { Send, Twitter, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -95,9 +95,9 @@ const page = () => {
 
   return (
     <>
-      <div className="w-full h-full py-5">
+      <div className="w-full h-full ">
         <div className="w-full flex flex-col md:flex-row ">
-          <div className="w-full md:max-w-[400px] flex">
+          <div className="w-full md:max-w-[400px] flex h-[85vh] overflow-scroll">
             <div className="w-full flex flex-col items-start p-5 gap-4">
               <p className=" underline underline-offset-4 text-gray-400">
                 SPONSOR DETAILS
@@ -106,13 +106,17 @@ const page = () => {
                 <div className="w-8/12">
                   {bounty?.sponsor && `${bounty?.sponsor.name}`}
                 </div>
-                <Image
-                  src={bounty?.sponsor?.image || "/default-image.png"}
-                  alt={bounty?.sponsor?.name ?? "default alt text"}
-                  width={50}
-                  height={50}
-                  className="rounded-full "
-                />
+                {bounty?.sponsor?.image ? (
+                  <Image
+                    src={bounty?.sponsor?.image || "/sponsor_image"}
+                    alt={bounty?.sponsor?.name ?? ""}
+                    width={100}
+                    height={100}
+                    className="rounded-md"
+                  />
+                ) : (
+                  <User size={50} />
+                )}
               </div>
               <div className="w-full flex flex-col gap-4">
                 <p className=" underline underline-offset-4 text-gray-400">
@@ -138,12 +142,18 @@ const page = () => {
               </div>
 
               <div className="w-full flex flex-col gap-4">
-                <p className=" underline underline-offset-4 text-gray-400">
-                  CONTACT
-                </p>
-                <p className="text-slate-500 italic text-sm">
-                  Reach out if you have any questions about this listing
-                </p>
+                {(bounty?.sponsor?.telegram ||
+                  bounty?.sponsor?.twitter ||
+                  bounty?.sponsor?.discord) && (
+                  <>
+                    <p className=" underline underline-offset-4 text-gray-400">
+                      CONTACT
+                    </p>
+                    <p className="text-slate-500 italic text-sm">
+                      Reach out if you have any questions about this listing
+                    </p>
+                  </>
+                )}
                 <div className="w-full flex flex-wrap  gap-3 ">
                   {bounty?.sponsor?.twitter && (
                     <Link
