@@ -3,18 +3,25 @@ import { bigintToString } from "@/lib/utils";
 import { getUnscrowedBounty, setUnscrowedBounty } from "@/utils/dbUtils";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
-  try {
-    const bounties = bigintToString(await getUnscrowedBounty());
-    return NextResponse.json({
-      bounties: bounties,
-      status: 200,
-    });
-  } catch (error) {
-    return NextResponse.json(
-      { success: false, message: (error as any).message },
-      { status: 500 }
-    );
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const bountyId = searchParams.get("id");
+
+  if (!bountyId) {
+    try {
+      const bounties = bigintToString(await getUnscrowedBounty());
+      return NextResponse.json({
+        bounties: bounties,
+        status: 200,
+      });
+    } catch (error) {
+      return NextResponse.json(
+        { success: false, message: (error as any).message },
+        { status: 500 }
+      );
+    }
+  } else {
+    return NextResponse.json({ id: bountyId }, { status: 200 });
   }
 }
 

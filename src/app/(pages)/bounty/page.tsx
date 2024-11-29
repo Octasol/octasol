@@ -2,6 +2,7 @@
 import LoginButton from "@/components/Button/LoginButton";
 import { GET } from "@/config/axios/requests";
 import { User } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 interface Bounty {
@@ -11,9 +12,11 @@ interface Bounty {
   price: number;
   bountyname: string;
   skills: string[];
+  id: number;
 }
 
 const Bounty = () => {
+  const router = useRouter();
   const [bounties, setbounties] = useState<Bounty[]>([]);
   const getBounties = async () => {
     try {
@@ -25,6 +28,14 @@ const Bounty = () => {
       console.log(err);
     }
   };
+
+  const bountyDetails = (id: number) => {
+    router.push(`/bounty/${id}`);
+  };
+
+  useEffect(() => {
+    console.log(bounties);
+  }, [bounties]);
 
   useEffect(() => {
     getBounties();
@@ -41,7 +52,6 @@ const Bounty = () => {
             >
               <span className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#355b81_0%,#000000_50%,#355b81_100%)]" />
               <span className="inline-flex h-full w-full items-center justify-center rounded-2xl bg-black px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-                {/*  */}
                 <div className="w-full h-full  p-3 flex flex-col">
                   <div className="relative inline-flex h-full overflow-hidden rounded-2xl p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
                     <span className="absolute inset-[-1000%] animate-[spin_8s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#42a387_0%,#000000_50%,#42a387_100%)] " />
@@ -54,15 +64,12 @@ const Bounty = () => {
                             </div>
                           </div>
                           <div className=" w-fit h-min p-2 flex justify-center items-center border-[1px] rounded-md cursor-pointer">
-                            {/* <Bookmark size={20} /> */}
                             <User size={40} />
                           </div>
                         </div>
                         <div>{bounty?.sponsor?.name}</div>
                         <div className=" flex justify-between items-center">
                           <p className="text-lg w-full">{bounty.bountyname}</p>
-                          {/* <div className="w-2/12">
-                </div> */}
                         </div>
                         <div className="flex flex-wrap gap-4">
                           {bounty.skills.map((skill) => (
@@ -81,7 +88,7 @@ const Bounty = () => {
                         <p className="text-sm text-gray-500">California</p>
                       </div>
 
-                      <div className="">
+                      <div onClick={() => bountyDetails(bounty.id)}>
                         <LoginButton>Details</LoginButton>
                       </div>
                     </div>
