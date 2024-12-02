@@ -6,8 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { EditorContent, EditorProvider, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 
 interface Sponsor {
   id: number;
@@ -40,42 +38,12 @@ interface Bounty {
   updatedAt: Date | null;
 }
 
-const markdownContent = `<h2>
-  Hi there,
-</h2>
-<p>
-  this is a <em>basic</em> example of <strong>Tiptap</strong>. Sure, there are all kind of basic text styles youd probably expect from a text editor. But wait until you see the lists:
-</p>
-<ul>
-  <li>
-    Thats a bullet list with one …
-  </li>
-  <li>
-    … or two list items.
-  </li>
-</ul>
-<p>
-  Isnt that great? And all of that is editable. But wait, theres more. Lets try a code block:
-</p>
-<pre><code class="language-css">body {
-  display: none;
-}</code></pre>
-<p>
-  I know, I know, this is impressive. Its only the tip of the iceberg though. Give it a try and click a little bit around. Dont forget to check the other examples too.
-</p>
-<blockquote>
-  Wow, thats amazing. Good work, boy! 👏
-  <br />
-  — Mom
-</blockquote>`;
-
 const page = () => {
   const pathname = usePathname();
   const [id, setId] = useState<number | null>(null);
   const [bounty, setBounty] = useState<Bounty | null>(null);
 
   useEffect(() => {
-    console.log(pathname.split("/bounty/")[1]);
     setId(parseInt(pathname.split("/bounty/")[1]));
   }, [pathname]);
 
@@ -83,9 +51,6 @@ const page = () => {
     const { response } = await GET(`/unescrowedbounty?id=${id}`);
     setBounty(response);
   };
-  useEffect(() => {
-    console.log(bounty?.bountyDescription);
-  }, [bounty]);
 
   useEffect(() => {
     if (id) {
@@ -97,8 +62,8 @@ const page = () => {
     <>
       <div className="w-full h-full ">
         <div className="w-full flex flex-col md:flex-row ">
-          <div className="w-full md:max-w-[400px] flex h-[85vh] overflow-scroll">
-            <div className="w-full flex flex-col items-start p-5 gap-4">
+          <div className="w-full md:max-w-[400px] flex h-full md:h-[85vh] overflow-hidden md:overflow-scroll">
+            <div className="w-full flex flex-col items-start py-5 px-4 md:px-8 gap-4">
               <p className=" underline underline-offset-4 text-gray-400">
                 SPONSOR DETAILS
               </p>
@@ -212,8 +177,8 @@ const page = () => {
               <div className="w-full h-full bg-gradient-to-b from-transparent via-[#46bf96] to-transparent"></div>
             </div>
           </div>
-          <div className="w-full flex h-[85vh] overflow-scroll">
-            <div className="w-full flex flex-col items-start py-5 px-8 gap-4">
+          <div className="w-full flex md:h-[85vh] overflow-hidden md:overflow-scroll">
+            <div className="w-full flex flex-col items-start py-5 px-4 md:px-8 gap-4">
               <p className=" underline underline-offset-4 text-gray-400">
                 BOUNTY DETAILS
               </p>
