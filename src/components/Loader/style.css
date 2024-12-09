@@ -4,8 +4,8 @@
   top: 0;
   left: 0;
   z-index: 2000;
-
   backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
 }
 
 .path {
