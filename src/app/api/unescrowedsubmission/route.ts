@@ -46,11 +46,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    // console.log("ieufiuebriu", await getBountySubmissions(parseInt(id)));
-
     const response = bigintToString(await getBountySubmissions(parseInt(id)));
-
-    console.log("response", response);
 
     return NextResponse.json({ response }, { status: 200 });
   } catch (error) {

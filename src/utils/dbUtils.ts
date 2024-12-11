@@ -799,7 +799,6 @@ export const getBountySubmissions = async (id: number) => {
         submissions: true,
       },
     });
-    console.log("bountysubmission", submissions);
 
     return submissions;
   } catch (error) {
