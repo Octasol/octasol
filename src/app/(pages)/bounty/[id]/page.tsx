@@ -21,6 +21,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useSelector } from "react-redux";
+import { cn } from "@/lib/utils";
 
 const bountySubmission = {
   link: [],
@@ -34,6 +35,8 @@ const page = () => {
   const [bounty, setBounty] = useState<Bounty | null>(null);
   const [submission, setSubmission] = useState(bountySubmission);
   const user = useSelector((state: any) => state.user);
+  const [submissions, setSubmissions] = useState<any>([]);
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     setId(parseInt(pathname.split("/bounty/")[1]));
@@ -73,8 +76,30 @@ const page = () => {
   };
 
   useEffect(() => {
-    console.log(submission);
-  }, [submission]);
+    console.log(submissions);
+    console.log(submissions.length);
+
+    if (submissions.length > 0) {
+      submissions.forEach((item: any) => {
+        if (item.githubId == user.githubId) {
+          setSubmitted(true);
+        }
+      });
+    }
+  }, [submissions]);
+
+  const getSubmissions = async (id: number) => {
+    const { response } = await GET(`/unescrowedsubmission?id=${id}`);
+    console.log(response);
+
+    setSubmissions(response.submissions);
+  };
+
+  useEffect(() => {
+    if (id !== null) {
+      getSubmissions(parseInt(id.toString()));
+    }
+  }, [id]);
 
   return (
     <>
@@ -259,9 +284,15 @@ const page = () => {
               <Drawer>
                 <DrawerTrigger asChild>
                   <div className="w-full flex justify-center items-center py-5">
-                    <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+                    <button
+                      disabled={submitted}
+                      className={cn(
+                        `relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 `,
+                        submitted ? "cursor-not-allowed" : "cursor-pointer"
+                      )}
+                    >
                       <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
-                        Apply for Bounty
+                        {submitted ? "Submitted" : "Apply for Bounty"}
                       </span>
                     </button>
                   </div>

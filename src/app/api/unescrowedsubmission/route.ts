@@ -1,6 +1,6 @@
 import { getUserByAuthHeader } from "@/lib/apiUtils";
 import { bigintToString } from "@/lib/utils";
-import { setBountySubmission } from "@/utils/dbUtils";
+import { getBountySubmissions, setBountySubmission } from "@/utils/dbUtils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -22,9 +22,35 @@ export async function POST(req: NextRequest) {
   const { link, note, wallet, id, githubId } = await req.json();
 
   try {
-    const response = await bigintToString(
-      setBountySubmission(link, note, wallet, id, githubId)
+    const response = bigintToString(
+      await setBountySubmission(link, note, wallet, id, githubId)
     );
+
+    return NextResponse.json({ response }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, message: (error as any).message },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get("id");
+  try {
+    if (!id) {
+      return NextResponse.json(
+        { error: "ID parameter is required" },
+        { status: 400 }
+      );
+    }
+
+    // console.log("ieufiuebriu", await getBountySubmissions(parseInt(id)));
+
+    const response = bigintToString(await getBountySubmissions(parseInt(id)));
+
+    console.log("response", response);
 
     return NextResponse.json({ response }, { status: 200 });
   } catch (error) {

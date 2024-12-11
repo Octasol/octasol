@@ -788,3 +788,26 @@ export const setBountySubmission = async (
     return false;
   }
 };
+
+export const getBountySubmissions = async (id: number) => {
+  try {
+    const submissions = await db.bounty.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        submissions: true,
+      },
+    });
+    console.log("bountysubmission", submissions);
+
+    return submissions;
+  } catch (error) {
+    await logToDiscord(
+      `dbUtils/getBountySubmissions: ${(error as any).message}`,
+      "ERROR"
+    );
+    console.error(error);
+    return false;
+  }
+};
