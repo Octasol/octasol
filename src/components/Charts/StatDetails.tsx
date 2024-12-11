@@ -34,7 +34,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 interface Props {
-  stats: DataObject | undefined; 
+  stats: DataObject | undefined;
 }
 
 export function StatDetails(props: Props) {
@@ -42,13 +42,16 @@ export function StatDetails(props: Props) {
     // Ensure stats is an object before processing
     if (props.stats && typeof props.stats === "object") {
       return Object.entries(props.stats)
-        .filter(([key]) => key !== "githubId")
+        .filter(
+          ([key]) =>
+            key !== "githubId" && key !== "createdAt" && key !== "updatedAt"
+        )
         .map(([key, value]) => ({
           label: key,
           value: value || 0,
         }));
     }
-    return []; 
+    return [];
   }, [props.stats]);
 
   return (
