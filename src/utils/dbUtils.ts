@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { GithubDevProfile, UserDB } from "@/lib/types";
 import { logToDiscord } from "./logger";
+import { link } from "fs";
 
 export const initializeUser = async (
   githubId: bigint,
@@ -752,6 +753,35 @@ export const getSponsorProfile = async (id: bigint) => {
   } catch (error) {
     await logToDiscord(
       `dbUtils/getSponsorProfile: ${(error as any).message}`,
+      "ERROR"
+    );
+    console.error(error);
+    return false;
+  }
+};
+
+export const setBountySubmission = async (
+  link: string[],
+  note: string,
+  wallet: string,
+  id: number,
+  githubId: bigint
+) => {
+  try {
+    const submission = await db.submission.create({
+      data: {
+        links: link,
+        notes: note,
+        // wallet: wallet,
+        githubId: githubId,
+        bountyId: id,
+      },
+    });
+
+    return submission;
+  } catch (error) {
+    await logToDiscord(
+      `dbUtils/setBountySubmission: ${(error as any).message}`,
       "ERROR"
     );
     console.error(error);

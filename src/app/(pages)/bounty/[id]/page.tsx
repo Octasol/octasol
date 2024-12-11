@@ -1,47 +1,39 @@
 "use client";
 import LoginButton from "@/components/Button/LoginButton";
-import { GET } from "@/config/axios/requests";
+import { GET, POST } from "@/config/axios/requests";
+import { Bounty } from "@/lib/types";
 import { Send, Twitter, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useSelector } from "react-redux";
 
-interface Sponsor {
-  id: number;
-  githubId: string;
-  name: string;
-  description: string;
-  type: string;
-  image: string;
-  link: string;
-  discord: string;
-  telegram: string;
-  twitter: string;
-  createdAt: Date | null;
-  updatedAt: Date | null;
-}
-
-interface Bounty {
-  id: number;
-  bountyname: string;
-  bountyDescription: string;
-  price: number;
-  primaryContact: string;
-  skills: string[];
-  sponsor: Sponsor;
-  sponsorId: number;
-  status: number;
-  time: string;
-  timeExtendedTo: string | null;
-  createdAt: Date | null;
-  updatedAt: Date | null;
-}
+const bountySubmission = {
+  link: [],
+  note: "",
+  wallet: "",
+};
 
 const page = () => {
   const pathname = usePathname();
   const [id, setId] = useState<number | null>(null);
   const [bounty, setBounty] = useState<Bounty | null>(null);
+  const [submission, setSubmission] = useState(bountySubmission);
+  const user = useSelector((state: any) => state.user);
 
   useEffect(() => {
     setId(parseInt(pathname.split("/bounty/")[1]));
@@ -57,6 +49,32 @@ const page = () => {
       getBounty(id);
     }
   }, [id]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+
+    setSubmission((prevState) => ({
+      ...prevState,
+      [name]:
+        name === "link" ? value.split(",").map((link) => link.trim()) : value,
+      id: id,
+      githubId: user.githubId,
+    }));
+  };
+
+  const submit = async () => {
+    console.log(submission);
+    const response = await POST("/unescrowedsubmission", submission, {
+      Authorization: `Bearer ${user.accessToken}`,
+    });
+    console.log(response);
+  };
+
+  useEffect(() => {
+    console.log(submission);
+  }, [submission]);
 
   return (
     <>
@@ -238,6 +256,77 @@ const page = () => {
                   )}
                 </div>
               </div>
+              <Drawer>
+                <DrawerTrigger asChild>
+                  <div className="w-full flex justify-center items-center py-5">
+                    <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+                      <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
+                        Apply for Bounty
+                      </span>
+                    </button>
+                  </div>
+                </DrawerTrigger>
+                <DrawerContent>
+                  <div className="mx-auto w-full max-w-lg">
+                    <DrawerHeader>
+                      <DrawerTitle className="flex justify-center items-center w-full">
+                        Submit Your Application
+                      </DrawerTitle>
+                      <DrawerDescription>
+                        Don't start working just yet! Apply first, and then
+                        begin working only once you've been hired for the
+                        project by the sponsor.
+                      </DrawerDescription>
+                    </DrawerHeader>
+                    <div className="conatiner px-2 flex flex-col gap-4 pt-4">
+                      <div className="grid w-full max-w-lg items-center gap-1.5">
+                        <Label htmlFor="text">
+                          Links to your previous work
+                        </Label>
+                        <Input
+                          type="text"
+                          id="link"
+                          name="link"
+                          onChange={handleChange}
+                          placeholder="Link to your previous work"
+                        />
+                      </div>
+                      <div className="grid w-full max-w-lg items-center gap-1.5">
+                        <Label htmlFor="text">
+                          Something you want to know about you
+                        </Label>
+                        <Textarea
+                          name="note"
+                          id="note"
+                          onChange={handleChange}
+                          placeholder="Note"
+                        />
+                      </div>
+                      <div className="grid w-full max-w-lg items-center gap-1.5">
+                        <Label htmlFor="text">Wallet address</Label>
+                        <Input
+                          type="text"
+                          id="wallet"
+                          name="wallet"
+                          onChange={handleChange}
+                          placeholder="wallet address"
+                        />
+                      </div>
+                    </div>
+                    <DrawerFooter>
+                      <DrawerClose asChild onClick={submit}>
+                        <div className="w-full flex justify-center items-center py-5">
+                          <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+                            <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
+                              Submit
+                            </span>
+                          </button>
+                        </div>
+                      </DrawerClose>
+                    </DrawerFooter>
+                  </div>
+                </DrawerContent>
+              </Drawer>
             </div>
           </div>
         </div>
