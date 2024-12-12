@@ -1,7 +1,8 @@
 import { db } from "@/lib/db";
 import { GithubDevProfile, UserDB } from "@/lib/types";
 import { logToDiscord } from "./logger";
-import { link } from "fs";
+import { formatISO } from "date-fns";
+import { formatDates } from "@/lib/utils";
 
 export const initializeUser = async (
   githubId: bigint,
@@ -640,9 +641,6 @@ export const getUserProfileForRadarChart = async (githubUsername: string) => {
   }
 };
 export const setSponsorProfile = async (id: bigint, profileData: any) => {
-  console.log("profile", profileData);
-  console.log("data checking");
-
   try {
     const sponsor = await db.sponsor.create({
       data: {
@@ -673,9 +671,6 @@ export const setUnscrowedBounty = async (
   sponsorId: number,
   bountyData: any
 ) => {
-  console.log("bounty", bountyData);
-  console.log("data checking");
-
   try {
     const bounty = await db.bounty.create({
       data: {
@@ -702,12 +697,22 @@ export const setUnscrowedBounty = async (
 
 export const getUnscrowedBounty = async () => {
   try {
-    const bounty = await db.bounty.findMany({
+    const bounties = await db.bounty.findMany({
       include: {
         sponsor: true,
+        submissions: true,
       },
     });
-    return bounty;
+
+    const formattedBounties = bounties.map((bounty) => ({
+      ...formatDates(bounty),
+      sponsor: bounty.sponsor ? formatDates(bounty.sponsor) : null,
+      submissions: bounty.submissions
+        ? bounty.submissions.map((submission: any) => formatDates(submission))
+        : [],
+    }));
+
+    return formattedBounties;
   } catch (error) {
     await logToDiscord(
       `dbUtils/getUnscrowedBounty: ${(error as any).message}`,
@@ -740,15 +745,13 @@ export const getUnscrowedBountyById = async (id: number) => {
 };
 
 export const getSponsorProfile = async (id: bigint) => {
-  console.log("id", id);
-
   try {
     const sponsor = await db.sponsor.findMany({
       where: {
         githubId: id,
       },
     });
-    console.log("sponsor", sponsor);
+
     return sponsor;
   } catch (error) {
     await logToDiscord(

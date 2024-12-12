@@ -52,3 +52,11 @@ export function bigintToString(obj: any): any {
   }
   return obj;
 }
+
+export function formatDates(entity: any): any {
+  return {
+    ...entity,
+    createdAt: entity.createdAt ? entity.createdAt.toISOString() : null,
+    updatedAt: entity.updatedAt ? entity.updatedAt.toISOString() : null,
+  };
+}

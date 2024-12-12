@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useSelector } from "react-redux";
 import { cn } from "@/lib/utils";
+import { toast } from "react-toastify";
 
 const bountySubmission = {
   link: [],
@@ -69,6 +70,10 @@ const page = () => {
 
   const submit = async () => {
     console.log(submission);
+    if (!submission.link.length || !submission.note || !submission.wallet) {
+      toast.info("Enter All Fields");
+      return;
+    }
     const response = await POST("/unescrowedsubmission", submission, {
       Authorization: `Bearer ${user.accessToken}`,
     });
@@ -268,6 +273,7 @@ const page = () => {
                             <Input
                               type="text"
                               id="link"
+                              required
                               name="link"
                               onChange={handleChange}
                               placeholder="Link to your previous work"
@@ -280,6 +286,7 @@ const page = () => {
                             <Textarea
                               name="note"
                               id="note"
+                              required
                               onChange={handleChange}
                               placeholder="Note"
                             />
@@ -290,6 +297,7 @@ const page = () => {
                               type="text"
                               id="wallet"
                               name="wallet"
+                              required
                               onChange={handleChange}
                               placeholder="wallet address"
                             />

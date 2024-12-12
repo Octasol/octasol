@@ -10,11 +10,14 @@ interface Bounty {
   sponsor: {
     name: string;
     image: string;
+    description: string;
   };
+  submissions: [];
   price: number;
   bountyname: string;
   skills: string[];
   id: number;
+  createdAt: string;
 }
 
 const Bounty = () => {
@@ -50,63 +53,54 @@ const Bounty = () => {
           {bounties.map((bounty, index) => (
             <div
               key={index}
-              className="relative inline-flex h-full overflow-hidden rounded-2xl p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+              className="relative inline-flex h-full overflow-hidden rounded-lg shadow-md shadow-[#34597f]"
             >
-              <span className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#355b81_0%,#000000_50%,#46bf96_100%)]" />
-              <span className="inline-flex h-full w-full items-center justify-center rounded-2xl bg-black px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-                <div className="w-full h-full  p-3 flex flex-col">
-                  <div className=" h-full overflow-hidden rounded-2xl p-[1px] border border-slate-800">
-                    {/* <span className="absolute inset-[-1000%] animate-[spin_8s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#42a387_0%,#000000_50%,#42a387_100%)] " />
-                    <span className="inline-flex h-full w-full  items-center justify-center rounded-2xl bg-black px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl ">
-                    */}
-                    <div className="h-full w-full p-5 flex flex-col gap-4 ">
-                      <div className="flex justify-between items-center">
-                        <div className="flex gap-4">
-                          <div className="w-fit px-3 h-10 bg-gray-200 text-black rounded-full flex justify-center items-center">
-                            In Progress
-                          </div>
-                        </div>
-                        <div className=" w-fit h-min flex justify-center items-center rounded-md cursor-pointer">
-                          {bounty?.sponsor?.image ? (
-                            <Image
-                              src={bounty?.sponsor?.image}
-                              alt={bounty?.sponsor?.name}
-                              width={100}
-                              height={100}
-                            />
-                          ) : (
-                            <User size={50} />
-                          )}
-                        </div>
-                      </div>
-                      <div>{bounty?.sponsor?.name}</div>
-                      <div className=" flex justify-between items-center">
-                        <p className="text-lg w-full">{bounty.bountyname}</p>
-                      </div>
-                      <div className="flex flex-wrap gap-4">
-                        {bounty.skills.map((skill) => (
-                          <div key={index}>
-                            <LoginButton>{skill}</LoginButton>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    {/* </span> */}
+              <div className="w-full p-5 flex flex-col justify-between ">
+                <div className=" rounded-lg  w-full gap-4 flex flex-col ">
+                  <h3 className="text-sm font-semibold text-gray-400 ">
+                    {bounty?.sponsor?.name}
+                  </h3>
+                  <div className="flex justify-between items-center">
+                    <h1 className="text-lg font-bold ">{bounty?.bountyname}</h1>
+                    <p className="font-bold">$&nbsp;{bounty.price}</p>
                   </div>
-                  <div className="w-full h-24 p-5">
-                    <div className="flex justify-between items-center">
-                      <div className="">
-                        <p className="font-bold">$&nbsp;{bounty.price}</p>
-                        <p className="text-sm text-gray-500">California</p>
-                      </div>
-
-                      <div onClick={() => bountyDetails(bounty.id)}>
-                        <LoginButton>Details</LoginButton>
-                      </div>
+                  <p className="text-sm text-slate-500 italic truncate">
+                    {bounty?.sponsor?.description}
+                  </p>
+                  <div className="flex flex-col justify-between gap-4">
+                    <p className="font-bold">Skills Required</p>
+                    <div className="flex flex-wrap gap-2 ">
+                      {bounty.skills.map((skill) => (
+                        <div key={index}>
+                          <button className="px-4 py-2 text-sm font-semibold border border-gray-800 rounded-lg hover:bg-gray-900 cursor-default">
+                            {skill}
+                          </button>
+                        </div>
+                      ))}
                     </div>
+                  </div>
+                  <div className="flex justify-between items-center ">
+                    <p className="font-bold">Hunters Applied</p>
+                    <p className="font-bold">{bounty.submissions.length}</p>
                   </div>
                 </div>
-              </span>
+
+                <div className="flex items-center justify-between mt-4 ">
+                  <p className="text-xs text-gray-400 ">
+                    {new Date(bounty?.createdAt).toLocaleDateString("en-US", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </p>
+                  <button
+                    className="px-4 py-2 text-sm font-semibold border border-gray-800 rounded-lg hover:bg-gray-900"
+                    onClick={() => bountyDetails(bounty.id)}
+                  >
+                    Details
+                  </button>
+                </div>
+              </div>
             </div>
           ))}
         </div>
