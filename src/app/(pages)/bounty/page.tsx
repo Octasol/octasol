@@ -55,7 +55,7 @@ const Bounty = () => {
               key={index}
               className="relative inline-flex h-full overflow-hidden rounded-lg shadow-md shadow-[#34597f]"
             >
-              <div className="w-full p-5 flex flex-col justify-between ">
+              <div className="w-full p-5 flex flex-col justify-between gap-3">
                 <div className=" rounded-lg  w-full gap-4 flex flex-col ">
                   <h3 className="text-sm font-semibold text-gray-400 ">
                     {bounty?.sponsor?.name}
@@ -79,26 +79,28 @@ const Bounty = () => {
                       ))}
                     </div>
                   </div>
-                  <div className="flex justify-between items-center ">
+                </div>
+
+                <div className="flex flex-col">
+                  <div className="flex justify-between items-center">
                     <p className="font-bold">Hunters Applied</p>
                     <p className="font-bold">{bounty.submissions.length}</p>
                   </div>
-                </div>
-
-                <div className="flex items-center justify-between mt-4 ">
-                  <p className="text-xs text-gray-400 ">
-                    {new Date(bounty?.createdAt).toLocaleDateString("en-US", {
-                      day: "numeric",
-                      month: "short",
-                      year: "numeric",
-                    })}
-                  </p>
-                  <button
-                    className="px-4 py-2 text-sm font-semibold border border-gray-800 rounded-lg hover:bg-gray-900"
-                    onClick={() => bountyDetails(bounty.id)}
-                  >
-                    Details
-                  </button>
+                  <div className="flex items-center justify-between mt-4 ">
+                    <p className="text-xs text-gray-400 ">
+                      {new Date(bounty?.createdAt).toLocaleDateString("en-US", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </p>
+                    <button
+                      className="px-4 py-2 text-sm font-semibold border border-gray-800 rounded-lg hover:bg-gray-900"
+                      onClick={() => bountyDetails(bounty.id)}
+                    >
+                      Details
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
