@@ -13,8 +13,8 @@ const Dashboard = () => {
         <div className="pb-10 md:pb-4 px-8  w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-evenly w-full gap-5">
             <Cards name="Bounties" data="100" />
-            <Cards name="Participations" data="300" />
-            <Cards name="Wins" data="10" />
+            <Cards name="Hunters" data="300" />
+            <Cards name="Win Amount" data="10" />
             <Cards name="Earnings" data="5000" />
           </div>
         </div>

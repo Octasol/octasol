@@ -35,17 +35,16 @@ import {
   setTime,
 } from "@/app/Redux/Features/profile/profileSlice";
 import { MultiSelect } from "@/components/ui/multi-select";
-import { Cat, Dog, Fish, Rabbit, Turtle } from "lucide-react";
 import { POST } from "@/config/axios/requests";
 import { Form } from "../ui/form";
 import RichTextEditor from "../RichTextEditor";
 
 const frameworksList = [
-  { value: "react", label: "React", icon: Turtle },
-  { value: "angular", label: "Angular", icon: Cat },
-  { value: "vue", label: "Vue", icon: Dog },
-  { value: "svelte", label: "Svelte", icon: Rabbit },
-  { value: "ember", label: "Ember", icon: Fish },
+  { value: "Frontend", label: "Frontend" },
+  { value: "Backend", label: "Backend" },
+  { value: "Blockchain", label: "Blockchain" },
+  { value: "UI/UX", label: "UI/UX" },
+  { value: "Content Writing", label: "Content Writing" },
 ];
 
 type Props = {
