@@ -32,13 +32,12 @@ const Leaderboard = () => {
     const fetchProfiles = async () => {
       const { response } = await POST(leaderboard, {});
       setProfile(response?.data);
-      setFilteredProfiles(response?.data); // Set initial profiles for display
+      setFilteredProfiles(response?.data);
     };
     fetchProfiles();
   }, []);
 
   useEffect(() => {
-    // Filter profiles based on search input and add rank
     if (search) {
       const rankedProfiles = profile.map((p, index) => ({
         ...p,
@@ -95,7 +94,7 @@ const Leaderboard = () => {
 
   return (
     <>
-      {/* <div className="w-full flex justify-center items-center text-3xl font-bold tracking-widest">
+      <div className="w-full hidden md:flex justify-center items-center text-3xl font-bold tracking-widest">
         LEADERBOARD
       </div> */}
       <div className="w-full h-fit pt-4">
@@ -114,19 +113,19 @@ const Leaderboard = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-10 right-10 z-30 max-w-[500px]">
+      <div className="absolute bottom-[82vh]  md:bottom-10 right-[10px] z-30 max-w-[500px]">
         <div>
           <button
             onClick={toggleSearch}
-            className="px-5 py-1 border-[1px] rounded-full border-slate-800 flex justify-center items-center gap-4"
+            className="px-4 py-3 border-[1px] rounded-full border-slate-800 bg-black flex justify-center items-center gap-4"
           >
             <SearchIcon size={20} />
-            Search
+            <p className="hidden md:flex">Search</p>
           </button>
         </div>
 
         <div
-          className={`fixed w-1/3 h-4/6  bottom-0 right-0 z-30 border-[1px] bg-black border-slate-800 transition-transform duration-500 ease-in-out rounded-lg ${
+          className={`fixed w-full md:w-1/2 lg:w-1/3 h-4/6  bottom-0 right-0 z-30 border-[1px] bg-black border-slate-800 transition-transform duration-500 ease-in-out rounded-lg ${
             isOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
@@ -155,9 +154,13 @@ const Leaderboard = () => {
                       onClick={() => userProfile(item.githubUsername)}
                     >
                       <div className="flex justify-between">
-                        <span>{item.githubUsername}</span>
-                        {/* <span>Rank: {item?.rank}</span> */}
-                        <span>{item.totalPoints}</span>
+                        <p className="w-[60px]">{item.rank}</p>
+                        <p className="w-[210px] flex justify-start">
+                          {item.githubUsername}
+                        </p>
+                        <p className="w-[80px] flex justify-end">
+                          {item.totalPoints}
+                        </p>
                       </div>
                     </li>
                   ))}
@@ -170,7 +173,7 @@ const Leaderboard = () => {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center items-center container max-w-5xl">
+      <div className="flex flex-col justify-center items-center px-4 md:container md:max-w-5xl">
         <Table>
           <TableHeader>
             <TableRow>
@@ -215,7 +218,7 @@ const Leaderboard = () => {
             </Table>
           </div>
         )}
-        <div className="flex justify-between items-center py-6 w-full">
+        <div className="flex justify-between items-center pt-6 pb-6 md:pb-16 w-full">
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
@@ -241,8 +244,6 @@ const Leaderboard = () => {
           </button>
         </div>
       </div>
-
-      {/* Pagination controls */}
     </>
   );
 };

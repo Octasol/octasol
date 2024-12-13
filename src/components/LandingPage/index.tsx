@@ -2,12 +2,12 @@
 import React, { useEffect } from "react";
 import Text from "./Text";
 import { store } from "@/app/Redux/store";
-import { decrement, increment } from "@/app/Redux/Features/loader/loaderSlice";
+import { decrement } from "@/app/Redux/Features/loader/loaderSlice";
 import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
 
 export default function LandingPage() {
-  const counter = useSelector((state: any) => state.counter);
+  const session = useSelector((state: any) => state.user);
   const SparklesCore = dynamic(
     () => import("../ui/sparkles").then((mod) => mod.SparklesCore),
     {
@@ -18,13 +18,8 @@ export default function LandingPage() {
     }
   );
   useEffect(() => {
-    if (counter.value > 0) {
-      store.dispatch(decrement());
-      return () => {
-        store.dispatch(increment());
-      };
-    }
-  }, []);
+    store.dispatch(decrement());
+  }, [session]);
   return (
     <main className="min-h-screen w-full flex flex-col items-center justify-center overflow-hidden gap-12 md:gap-8 mt-16 md:mt-0 py-24">
       <div className="container">

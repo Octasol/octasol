@@ -2,39 +2,28 @@
 import Sidebar from "@/components/Sidebar";
 import VerifyMail from "@/components/verifyMail";
 import React, { ReactNode, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Image from "next/image";
-import { decrement } from "../Redux/Features/loader/loaderSlice";
 
 type Props = { children: ReactNode };
 const Layout = ({ children }: Props) => {
   const session = useSelector((state: any) => state.user);
-  const counter = useSelector((state: any) => state.counter);
   const [verifiedEmail, setVerifiedEmail] = useState(true);
-  const dispatch = useDispatch();
 
   const verified = async (): Promise<void> => {
-    console.log("session", session);
-
     if (session && session.accessToken) {
       setVerifiedEmail(session.isVerifiedEmail);
-      if (session) {
-        console.log(counter);
-        if (counter.value > 0) {
-          dispatch(decrement());
-        }
-      }
     }
   };
   useEffect(() => {
     verified();
-  }, [session, verifiedEmail, counter]);
+  }, [session, verifiedEmail]);
 
   return (
     <>
       <div className="flex w-full h-full relative">
-        <div className="absolute top-0 left-0 w-[80px] hover:w-[250px] min-h-screen z-50 transition-width duration-500 ease-in-out hidden md:flex flex-col items-start gap-8 overflow-hidden bg-black">
-          <Sidebar />
+        <div className="absolute top-0 left-0 w-[80px] hover:w-[200px] min-h-screen z-50 transition-width duration-500 ease-in-out hidden md:flex flex-col items-start gap-8 overflow-hidden bg-black">
+          <Sidebar verified={verifiedEmail} />
         </div>
 
         <div className="flex-1 w-full ml-0 md:ml-[80px]">
