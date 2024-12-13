@@ -32,6 +32,7 @@ model User {
   SuperteamEarnProfile SuperteamEarnProfile?
   Sponsors             Sponsor[]             @relation("UserSponsors")
   submissions          Submission[]
+  walletAddress        String?
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @default(now()) @updatedAt
 }
@@ -135,12 +136,13 @@ model Bounty {
 }
 
 model Submission {
-  id        Int      @id @default(autoincrement())
-  links     String[] @default([])
-  status    Int      @default(0) // 0: draft, 1: submitted
-  notes     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id            Int      @id @default(autoincrement())
+  links         String[] @default([])
+  status        Int      @default(0) // 0: draft, 1: submitted
+  notes         String?
+  walletAddress String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
 
   githubId BigInt
   user     User   @relation(fields: [githubId], references: [githubId])
