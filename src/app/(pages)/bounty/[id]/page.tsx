@@ -63,8 +63,7 @@ const page = () => {
       ...prevState,
       [name]:
         name === "link" ? value.split(",").map((link) => link.trim()) : value,
-      id: id,
-      githubId: user.githubId,
+      bountyId: id
     }));
   };
 

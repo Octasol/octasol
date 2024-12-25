@@ -19,11 +19,11 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { link, note, wallet, id, githubId } = await req.json();
+  const { link, note, wallet, bountyId } = await req.json();
 
   try {
     const response = bigintToString(
-      await setBountySubmission(link, note, wallet, id, githubId)
+      await setBountySubmission(link, note, wallet, bountyId, user.id)
     );
 
     return NextResponse.json({ response }, { status: 200 });
