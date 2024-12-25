@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     );
   }
   // AUTH FOR ADMIN
-  if (!((user.login as string).toLowerCase() in adminGithub)) {
+  if (!adminGithub.includes((user.login as string).toLowerCase())) {
     return NextResponse.json(
       { error: "You are not authorized to perform this action" },
       { status: 401 }
