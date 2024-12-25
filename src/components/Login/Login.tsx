@@ -277,7 +277,7 @@ const Login = () => {
                 </Link>
               </DropdownMenuItem>
 
-              <DropdownMenuItem
+              {/* <DropdownMenuItem
                 asChild
                 className="cursor-pointer flex md:hidden"
               >
@@ -287,7 +287,7 @@ const Login = () => {
                     <PictureInPicture size={20} />
                   </div>
                 </Link>
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
 
               <DropdownMenuItem
                 asChild

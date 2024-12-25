@@ -163,7 +163,7 @@ const Sidebar = ({ verified }: Props) => {
               </TooltipContent>
             </Tooltip>
 
-            <Tooltip>
+            {/* <Tooltip>
               <TooltipTrigger>
                 <Link
                   href="/listunescrowed"
@@ -187,7 +187,7 @@ const Sidebar = ({ verified }: Props) => {
               <TooltipContent className="bg-black">
                 <p>Unescrowed Bouty</p>
               </TooltipContent>
-            </Tooltip>
+            </Tooltip> */}
 
             <Tooltip>
               <TooltipTrigger>

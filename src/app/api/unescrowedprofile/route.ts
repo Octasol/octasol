@@ -1,4 +1,5 @@
 import { getUserByAuthHeader } from "@/lib/apiUtils";
+import { adminGithub } from "@/lib/constants";
 import { bigintToString } from "@/lib/utils";
 import { getSponsorProfile, setSponsorProfile } from "@/utils/dbUtils";
 import { NextRequest, NextResponse } from "next/server";
@@ -15,6 +16,13 @@ export async function POST(req: NextRequest) {
   if (!user) {
     return NextResponse.json(
       { error: "Invalid Authorization Header" },
+      { status: 401 }
+    );
+  }
+  // AUTH FOR ADMIN
+  if (!((user.login as string).toLowerCase() in adminGithub)) {
+    return NextResponse.json(
+      { error: "You are not authorized to perform this action" },
       { status: 401 }
     );
   }
