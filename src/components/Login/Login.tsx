@@ -32,6 +32,7 @@ import { Skeleton } from "../ui/skeleton";
 import Cookies from "js-cookie";
 import { resetProfile } from "@/app/Redux/Features/profile/profileSlice";
 import { cn } from "@/lib/utils";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { data: session, status } = useSession() as any;
@@ -55,8 +56,53 @@ const Login = () => {
     [session]
   );
 
+  // const handleSessionFromCookies = () => {
+  //   const cookieSession = Cookies.get("session");
+  //   console.log("cookieSession", cookieSession);
+
+  //   if (cookieSession) {
+  //     try {
+  //       const parsedSession = JSON.parse(cookieSession);
+
+  //       dispatch(
+  //         setUser({
+  //           name: parsedSession?.name || "",
+  //           email: parsedSession?.email || "",
+  //           photo: parsedSession?.image || "",
+  //           githubId: parsedSession?.id || "",
+  //           login: parsedSession?.login || "",
+  //           accessToken: parsedSession?.accessToken || "",
+  //           status: "authenticated",
+  //           isVerifiedEmail: parsedSession?.isVerifiedEmail || false,
+  //         })
+  //       );
+
+  //       if (pathname === "/") {
+  //         router.push("/dashboard");
+  //       } else {
+  //         router.push(pathname);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error parsing cookie session:", error);
+  //       Cookies.remove("session");
+  //       if (!pathname.startsWith("/bounty")) {
+  //         router.push("/");
+  //         console.log("route testing");
+  //       }
+  //     }
+  //   } else {
+  //     console.log(pathname);
+
+  //     if (!pathname.startsWith("/bounty")) {
+  //       router.push("/");
+  //       console.log("route testing");
+  //     }
+  //   }
+  // };
+
   const handleSessionFromCookies = () => {
     const cookieSession = Cookies.get("session");
+    console.log("cookieSession", cookieSession);
 
     if (cookieSession) {
       try {
@@ -83,14 +129,20 @@ const Login = () => {
       } catch (error) {
         console.error("Error parsing cookie session:", error);
         Cookies.remove("session");
-        router.push("/");
+        if (!pathname.startsWith("/bounty")) {
+          router.push("/");
+        }
       }
     } else {
-      router.push("/");
+      if (!pathname.startsWith("/bounty")) {
+        router.push("/");
+      }
     }
   };
 
   useLayoutEffect(() => {
+    console.log("session");
+
     if (sessionUser) {
       store.dispatch(decrement());
       const sessionExpiryDate = new Date(session?.expires || "");
@@ -120,6 +172,8 @@ const Login = () => {
   }, [session]);
 
   useEffect(() => {
+    console.log("status", status);
+
     if (status === "unauthenticated") {
       dispatch(
         setUser({
@@ -134,7 +188,10 @@ const Login = () => {
         })
       );
       logout();
-      router.push("/");
+      if (!pathname.startsWith("/bounty")) {
+        router.push("/");
+        console.log("route testing");
+      }
     }
   }, [router, dispatch, status]);
 
@@ -155,17 +212,31 @@ const Login = () => {
     Cookies.remove("session");
     dispatch(resetProfile());
     localStorage.setItem("activeTab", "subheading");
-    router.push("/");
+    if (!pathname.startsWith("/bounty")) {
+      router.push("/");
+      console.log("route testing");
+    }
   };
+
+  // useEffect(() => {
+  //   if (pathname !== "/" && !Cookies.get("session")) {
+  //     dispatch(resetProfile());
+  //     localStorage.setItem("activeTab", "subheading");
+  //     handleSessionFromCookies();
+  //     logout();
+  //   }
+  // }, [pathname]);
 
   useEffect(() => {
     if (pathname !== "/" && !Cookies.get("session")) {
-      dispatch(resetProfile());
-      localStorage.setItem("activeTab", "subheading");
-      handleSessionFromCookies();
-      logout();
+      console.log("No session cookie found.");
+      if (status !== "loading") {
+        dispatch(resetProfile());
+        localStorage.setItem("activeTab", "subheading");
+        handleSessionFromCookies();
+      }
     }
-  }, [pathname]);
+  }, [pathname, status]);
 
   const userLogin = () => {
     signIn("github");

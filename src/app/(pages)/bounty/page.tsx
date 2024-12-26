@@ -1,10 +1,11 @@
 "use client";
-import LoginButton from "@/components/Button/LoginButton";
+import { decrement } from "@/app/Redux/Features/loader/loaderSlice";
 import { GET } from "@/config/axios/requests";
 import { User } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 interface Bounty {
   sponsor: {
@@ -22,6 +23,8 @@ interface Bounty {
 
 const Bounty = () => {
   const router = useRouter();
+  const counter = useSelector((state: any) => state.counter);
+  const dispatch = useDispatch();
   const [bounties, setbounties] = useState<Bounty[]>([]);
   const getBounties = async () => {
     try {
@@ -45,6 +48,13 @@ const Bounty = () => {
   useEffect(() => {
     getBounties();
   }, []);
+
+  useEffect(() => {
+    // console.log("counter/b", counter.value);
+    if (bounties && counter.value > 0) {
+      dispatch(decrement());
+    }
+  }, [bounties, counter]);
 
   return (
     <>

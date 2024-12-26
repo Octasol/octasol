@@ -20,9 +20,10 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { cn } from "@/lib/utils";
 import { toast } from "react-toastify";
+import { decrement } from "@/app/Redux/Features/loader/loaderSlice";
 
 const bountySubmission = {
   link: [],
@@ -32,6 +33,8 @@ const bountySubmission = {
 
 const page = () => {
   const pathname = usePathname();
+  const counter = useSelector((state: any) => state.counter);
+  const dispatch = useDispatch();
   const [id, setId] = useState<number | null>(null);
   const [bounty, setBounty] = useState<Bounty | null>(null);
   const [submission, setSubmission] = useState(bountySubmission);
@@ -63,7 +66,7 @@ const page = () => {
       ...prevState,
       [name]:
         name === "link" ? value.split(",").map((link) => link.trim()) : value,
-      bountyId: id
+      bountyId: id,
     }));
   };
 
@@ -73,16 +76,23 @@ const page = () => {
       toast.info("Enter All Fields");
       return;
     }
-    const response = await POST("/unescrowedsubmission", submission, {
-      Authorization: `Bearer ${user.accessToken}`,
-    });
-    console.log(response);
+    const { response, error }: any = await POST(
+      "/unescrowedsubmission",
+      submission,
+      {
+        Authorization: `Bearer ${user.accessToken}`,
+      }
+    );
+    if (response && response.status === 200) {
+      return toast.success("Application Submitted Successfully");
+    }
+
+    if (error && error.status === 401) {
+      return toast.error("You are not authorized to submit this bounty");
+    }
   };
 
   useEffect(() => {
-    console.log(submissions);
-    console.log(submissions.length);
-
     if (submissions.length > 0) {
       submissions.forEach((item: any) => {
         if (item.githubId == user.githubId) {
@@ -101,9 +111,18 @@ const page = () => {
 
   useEffect(() => {
     if (id !== null) {
+      console.log("subbmit");
+
       getSubmissions(parseInt(id.toString()));
     }
   }, [id]);
+
+  useEffect(() => {
+    // console.log("counter.b/id", counter.value);
+    if (bounty && counter.value > 0) {
+      dispatch(decrement());
+    }
+  }, [bounty, counter]);
 
   return (
     <>
