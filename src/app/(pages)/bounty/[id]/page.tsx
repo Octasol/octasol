@@ -257,7 +257,7 @@ const page = () => {
                   {bounty && `${bounty?.bountyname}`}
                 </div>
                 <div className="w-6/12 flex justify-end items-center">
-                  {user?.githubId && (
+                  {user?.githubId ? (
                     <Drawer>
                       <DrawerTrigger asChild>
                         <div className="w-fit flex justify-center items-center ">
@@ -349,8 +349,7 @@ const page = () => {
                         </div>
                       </DrawerContent>
                     </Drawer>
-                  )}
-                  {!user.githubId && (
+                  ) : (
                     <div className="w-fit flex justify-center items-center ">
                       <button
                         onClick={() => {
@@ -359,11 +358,7 @@ const page = () => {
                           }
                         }}
                         className="relative inline-flex items-center justify-center p-0.5  overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 cursor-pointer opacity-50"
-                      >
-                        {/* <span className="relative px-3 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
-                          {submitted ? "Submitted" : "Submit\u00A0Application"}
-                        </span> */}
-                      </button>
+                      ></button>
                     </div>
                   )}
                 </div>
