@@ -11,6 +11,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "@/components/Loader";
 import { websiteMetadata } from "@/utils/data";
+import { TooltipProvider } from "@/components/ui/tooltip";
 interface Props {
   session: Session | null;
   children: React.ReactNode;
@@ -70,10 +71,12 @@ export default function RootLayout({ children, session }: Props) {
           <Providers>
             <SessionProviderWrapper session={session}>
               <Loader />
-              <div className="min-h-screen w-full flex flex-col bg-black">
-                <Header />
-                {children}
-              </div>
+              <TooltipProvider>
+                <div className="min-h-screen w-full flex flex-col bg-black">
+                  <Header />
+                  {children}
+                </div>
+              </TooltipProvider>
             </SessionProviderWrapper>
           </Providers>
         </ThemeProvider>

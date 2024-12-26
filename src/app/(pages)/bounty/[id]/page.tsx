@@ -124,6 +124,10 @@ const page = () => {
     }
   }, [bounty, counter]);
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   return (
     <>
       <div className="w-full h-full ">
@@ -253,88 +257,115 @@ const page = () => {
                   {bounty && `${bounty?.bountyname}`}
                 </div>
                 <div className="w-6/12 flex justify-end items-center">
-                  <Drawer>
-                    <DrawerTrigger asChild>
-                      <div className="w-fit flex justify-center items-center ">
-                        <button
-                          disabled={submitted}
-                          className={cn(
-                            `relative inline-flex items-center justify-center p-0.5  overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 `,
-                            submitted ? "cursor-not-allowed" : "cursor-pointer"
-                          )}
-                        >
-                          <span className="relative px-3 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
-                            {submitted
-                              ? "Submitted"
-                              : "Submit\u00A0Application"}
-                          </span>
-                        </button>
-                      </div>
-                    </DrawerTrigger>
-                    <DrawerContent>
-                      <div className="mx-auto w-full max-w-lg">
-                        <DrawerHeader>
-                          <DrawerTitle className="flex justify-center items-center w-full">
-                            Submit Your Application
-                          </DrawerTitle>
-                          <DrawerDescription>
-                            Don't start working just yet! Apply first, and then
-                            begin working only once you've been hired for the
-                            project by the sponsor.
-                          </DrawerDescription>
-                        </DrawerHeader>
-                        <div className="conatiner px-2 flex flex-col gap-4 pt-4">
-                          <div className="grid w-full max-w-lg items-center gap-1.5">
-                            <Label htmlFor="text">
-                              Links to your previous work
-                            </Label>
-                            <Input
-                              type="text"
-                              id="link"
-                              required
-                              name="link"
-                              onChange={handleChange}
-                              placeholder="Link to your previous work"
-                            />
-                          </div>
-                          <div className="grid w-full max-w-lg items-center gap-1.5">
-                            <Label htmlFor="text">
-                              Something you want to know about you
-                            </Label>
-                            <Textarea
-                              name="note"
-                              id="note"
-                              required
-                              onChange={handleChange}
-                              placeholder="Note"
-                            />
-                          </div>
-                          <div className="grid w-full max-w-lg items-center gap-1.5">
-                            <Label htmlFor="text">Wallet address</Label>
-                            <Input
-                              type="text"
-                              id="wallet"
-                              name="wallet"
-                              required
-                              onChange={handleChange}
-                              placeholder="wallet address"
-                            />
-                          </div>
+                  {user?.githubId && (
+                    <Drawer>
+                      <DrawerTrigger asChild>
+                        <div className="w-fit flex justify-center items-center ">
+                          <button
+                            disabled={submitted}
+                            onClick={() => {
+                              if (!user.githubId) {
+                                toast.error(
+                                  "Please login to submit application"
+                                );
+                              }
+                            }}
+                            className={cn(
+                              `relative inline-flex items-center justify-center p-0.5  overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 `,
+                              submitted
+                                ? "cursor-not-allowed opacity-50"
+                                : "cursor-pointer"
+                            )}
+                          >
+                            <span className="relative px-3 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
+                              {submitted
+                                ? "Submitted"
+                                : "Submit\u00A0Application"}
+                            </span>
+                          </button>
                         </div>
-                        <DrawerFooter>
-                          <DrawerClose asChild onClick={submit}>
-                            <div className="w-full flex justify-center items-center py-5">
-                              <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
-                                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
-                                  Submit
-                                </span>
-                              </button>
+                      </DrawerTrigger>
+                      <DrawerContent>
+                        <div className="mx-auto w-full max-w-lg">
+                          <DrawerHeader>
+                            <DrawerTitle className="flex justify-center items-center w-full">
+                              Submit Your Application
+                            </DrawerTitle>
+                            <DrawerDescription>
+                              Don't start working just yet! Apply first, and
+                              then begin working only once you've been hired for
+                              the project by the sponsor.
+                            </DrawerDescription>
+                          </DrawerHeader>
+                          <div className="conatiner px-2 flex flex-col gap-4 pt-4">
+                            <div className="grid w-full max-w-lg items-center gap-1.5">
+                              <Label htmlFor="text">
+                                Links to your previous work
+                              </Label>
+                              <Input
+                                type="text"
+                                id="link"
+                                required
+                                name="link"
+                                onChange={handleChange}
+                                placeholder="Link to your previous work"
+                              />
                             </div>
-                          </DrawerClose>
-                        </DrawerFooter>
-                      </div>
-                    </DrawerContent>
-                  </Drawer>
+                            <div className="grid w-full max-w-lg items-center gap-1.5">
+                              <Label htmlFor="text">
+                                Something you want to know about you
+                              </Label>
+                              <Textarea
+                                name="note"
+                                id="note"
+                                required
+                                onChange={handleChange}
+                                placeholder="Note"
+                              />
+                            </div>
+                            <div className="grid w-full max-w-lg items-center gap-1.5">
+                              <Label htmlFor="text">Wallet address</Label>
+                              <Input
+                                type="text"
+                                id="wallet"
+                                name="wallet"
+                                required
+                                onChange={handleChange}
+                                placeholder="wallet address"
+                              />
+                            </div>
+                          </div>
+                          <DrawerFooter>
+                            <DrawerClose asChild onClick={submit}>
+                              <div className="w-full flex justify-center items-center py-5">
+                                <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+                                  <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
+                                    Submit
+                                  </span>
+                                </button>
+                              </div>
+                            </DrawerClose>
+                          </DrawerFooter>
+                        </div>
+                      </DrawerContent>
+                    </Drawer>
+                  )}
+                  {!user.githubId && (
+                    <div className="w-fit flex justify-center items-center ">
+                      <button
+                        onClick={() => {
+                          if (!user.githubId) {
+                            toast.error("Please login to submit application");
+                          }
+                        }}
+                        className="relative inline-flex items-center justify-center p-0.5  overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 cursor-pointer opacity-50"
+                      >
+                        {/* <span className="relative px-3 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
+                          {submitted ? "Submitted" : "Submit\u00A0Application"}
+                        </span> */}
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="w-full flex flex-col gap-4">
