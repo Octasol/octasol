@@ -704,6 +704,7 @@ export const getUnscrowedBounty = async (user: any) => {
 
     try {
       const bounties = await db.bounty.findMany({
+        where: isAdmin ? {} : { status: 2 },
         include: {
           sponsor: true,
           submissions: true,
