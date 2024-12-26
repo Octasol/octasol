@@ -24,11 +24,14 @@ interface Bounty {
 const Bounty = () => {
   const router = useRouter();
   const counter = useSelector((state: any) => state.counter);
+  const user = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
   const [bounties, setbounties] = useState<Bounty[]>([]);
   const getBounties = async () => {
     try {
-      const response = await GET("/unescrowedbounty");
+      const response = await GET("/unescrowedbounty", {
+        Authorization: `Bearer ${user.accessToken}`,
+      });
       if (response.status === 200) {
         setbounties(response.bounties);
       }
@@ -46,8 +49,10 @@ const Bounty = () => {
   }, [bounties]);
 
   useEffect(() => {
-    getBounties();
-  }, []);
+    console.log("user", user);
+
+    if (user?.accessToken) getBounties();
+  }, [user]);
 
   useEffect(() => {
     // console.log("counter/b", counter.value);

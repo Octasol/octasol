@@ -9,12 +9,29 @@ import {
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
+  const authHeader = req.headers.get("Authorization");
+
+  if (!authHeader) {
+    return NextResponse.json(
+      { error: "Authorization header is required" },
+      { status: 400 }
+    );
+  }
+
+  const user = await getUserByAuthHeader(authHeader);
+  if (!user) {
+    return NextResponse.json(
+      { error: "Invalid Authorization Header" },
+      { status: 401 }
+    );
+  }
+
   const { searchParams } = new URL(req.url);
   const bountyId = searchParams.get("id");
 
   if (!bountyId) {
     try {
-      const bounties = bigintToString(await getUnscrowedBounty());
+      const bounties = bigintToString(await getUnscrowedBounty(user));
       return NextResponse.json({
         bounties: bounties,
         status: 200,
@@ -28,7 +45,7 @@ export async function GET(req: NextRequest) {
   } else {
     try {
       const bounty = bigintToString(
-        await getUnscrowedBountyById(parseInt(bountyId))
+        await getUnscrowedBountyById(parseInt(bountyId), user)
       );
       return NextResponse.json({ response: bounty }, { status: 200 });
     } catch (error) {

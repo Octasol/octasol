@@ -3,6 +3,7 @@ import { GithubDevProfile, UserDB } from "@/lib/types";
 import { logToDiscord } from "./logger";
 import { formatISO } from "date-fns";
 import { formatDates } from "@/lib/utils";
+import { adminGithub } from "@/lib/constants";
 
 export const initializeUser = async (
   githubId: bigint,
@@ -695,9 +696,13 @@ export const setUnscrowedBounty = async (
   }
 };
 
-export const getUnscrowedBounty = async () => {
+export const getUnscrowedBounty = async (user: any) => {
+  // AUTH FOR ADMIN
+  const isAdmin = adminGithub.includes((user.login as string).toLowerCase());
+
   try {
     const bounties = await db.bounty.findMany({
+      where: isAdmin ? {} : { status: 2 },
       include: {
         sponsor: true,
         submissions: true,
@@ -723,12 +728,14 @@ export const getUnscrowedBounty = async () => {
   }
 };
 
-export const getUnscrowedBountyById = async (id: number) => {
+export const getUnscrowedBountyById = async (id: number, user: any) => {
+  // AUTH FOR ADMIN
+  const isAdmin = adminGithub.includes((user.login as string).toLowerCase());
+
   try {
     const bounty = await db.bounty.findUnique({
-      where: {
-        id: id,
-      },
+      where: isAdmin ? { id: id } : { id: id, status: 2 },
+
       include: {
         sponsor: true,
       },
