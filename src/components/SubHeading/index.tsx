@@ -129,7 +129,7 @@ const SubHeading = ({ onNext }: Props) => {
       </Card>
       <div className="flex flex-col justify-center items-center py-12  gap-6">
         <p className="text-center text-xl lg:text-2xl font-semibold leading-none tracking-wide">
-          or choose exixting profile...
+          or choose existing profile...
         </p>
         <div className="w-full h-full gap-6 flex justify-center items-center flex-wrap">
           {sponsorProfiles.map((profile: any, index: number) => (
