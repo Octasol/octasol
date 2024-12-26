@@ -697,57 +697,106 @@ export const setUnscrowedBounty = async (
 };
 
 export const getUnscrowedBounty = async (user: any) => {
-  // AUTH FOR ADMIN
-  const isAdmin = adminGithub.includes((user.login as string).toLowerCase());
+  if (user) {
+    // AUTH FOR ADMIN
+    const isAdmin = adminGithub.includes((user as string).toLowerCase());
+    console.log("isAdmin", isAdmin);
 
-  try {
-    const bounties = await db.bounty.findMany({
-      where: isAdmin ? {} : { status: 2 },
-      include: {
-        sponsor: true,
-        submissions: true,
-      },
-    });
+    try {
+      const bounties = await db.bounty.findMany({
+        include: {
+          sponsor: true,
+          submissions: true,
+        },
+      });
 
-    const formattedBounties = bounties.map((bounty) => ({
-      ...formatDates(bounty),
-      sponsor: bounty.sponsor ? formatDates(bounty.sponsor) : null,
-      submissions: bounty.submissions
-        ? bounty.submissions.map((submission: any) => formatDates(submission))
-        : [],
-    }));
+      const formattedBounties = bounties.map((bounty) => ({
+        ...formatDates(bounty),
+        sponsor: bounty.sponsor ? formatDates(bounty.sponsor) : null,
+        submissions: bounty.submissions
+          ? bounty.submissions.map((submission: any) => formatDates(submission))
+          : [],
+      }));
 
-    return formattedBounties;
-  } catch (error) {
-    await logToDiscord(
-      `dbUtils/getUnscrowedBounty: ${(error as any).message}`,
-      "ERROR"
-    );
-    console.error(error);
-    return false;
+      return formattedBounties;
+    } catch (error) {
+      await logToDiscord(
+        `dbUtils/getUnscrowedBounty: ${(error as any).message}`,
+        "ERROR"
+      );
+      console.error(error);
+      return false;
+    }
+  } else {
+    try {
+      const bounties = await db.bounty.findMany({
+        where: {
+          status: 2,
+        },
+        include: {
+          sponsor: true,
+          submissions: true,
+        },
+      });
+
+      const formattedBounties = bounties.map((bounty) => ({
+        ...formatDates(bounty),
+        sponsor: bounty.sponsor ? formatDates(bounty.sponsor) : null,
+        submissions: bounty.submissions
+          ? bounty.submissions.map((submission: any) => formatDates(submission))
+          : [],
+      }));
+
+      return formattedBounties;
+    } catch (error) {
+      await logToDiscord(
+        `dbUtils/getUnscrowedBounty: ${(error as any).message}`,
+        "ERROR"
+      );
+      console.error(error);
+      return false;
+    }
   }
 };
 
 export const getUnscrowedBountyById = async (id: number, user: any) => {
-  // AUTH FOR ADMIN
-  const isAdmin = adminGithub.includes((user.login as string).toLowerCase());
+  if (user) {
+    // AUTH FOR ADMIN
+    const isAdmin = adminGithub.includes((user as string).toLowerCase());
 
-  try {
-    const bounty = await db.bounty.findUnique({
-      where: isAdmin ? { id: id } : { id: id, status: 2 },
-
-      include: {
-        sponsor: true,
-      },
-    });
-    return bounty;
-  } catch (error) {
-    await logToDiscord(
-      `dbUtils/getUnscrowedBountyById: ${(error as any).message}`,
-      "ERROR"
-    );
-    console.error(error);
-    return false;
+    try {
+      const bounty = await db.bounty.findUnique({
+        where: isAdmin ? { id: id } : { id: id, status: 2 },
+        include: {
+          sponsor: true,
+        },
+      });
+      return bounty;
+    } catch (error) {
+      await logToDiscord(
+        `dbUtils/getUnscrowedBountyById: ${(error as any).message}`,
+        "ERROR"
+      );
+      console.error(error);
+      return false;
+    }
+  } else {
+    try {
+      const bounty = await db.bounty.findUnique({
+        where: { id: id },
+        include: {
+          sponsor: true,
+        },
+      });
+      return bounty;
+    } catch (error) {
+      await logToDiscord(
+        `dbUtils/getUnscrowedBountyById: ${(error as any).message}`,
+        "ERROR"
+      );
+      console.error(error);
+      return false;
+    }
   }
 };
 

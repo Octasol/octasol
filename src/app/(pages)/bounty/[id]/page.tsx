@@ -5,7 +5,7 @@ import { Bounty } from "@/lib/types";
 import { Send, Twitter, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import {
   Drawer,
@@ -23,7 +23,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useDispatch, useSelector } from "react-redux";
 import { cn } from "@/lib/utils";
 import { toast } from "react-toastify";
-import { decrement } from "@/app/Redux/Features/loader/loaderSlice";
+import { decrement, increment } from "@/app/Redux/Features/loader/loaderSlice";
 
 const bountySubmission = {
   link: [],
@@ -31,8 +31,9 @@ const bountySubmission = {
   wallet: "",
 };
 
-const page = () => {
+const BountyDetails = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const counter = useSelector((state: any) => state.counter);
   const dispatch = useDispatch();
   const [id, setId] = useState<number | null>(null);
@@ -50,11 +51,20 @@ const page = () => {
     const { response } = await GET(`/unescrowedbounty?id=${id}`, {
       Authorization: `Bearer ${user.accessToken}`,
     });
-    setBounty(response);
+    console.log("response", response);
+
+    console.log(user.githubId);
+    if (!user.githubId) {
+      if (response && response.status === 2) {
+        setBounty(response);
+      }
+    } else {
+      setBounty(response);
+    }
   };
 
   useEffect(() => {
-    if (id && user?.accessToken) getBounty(id);
+    if (id) getBounty(id);
   }, [id, user]);
 
   const handleChange = (
@@ -118,11 +128,25 @@ const page = () => {
   }, [id]);
 
   useEffect(() => {
-    // console.log("counter.b/id", counter.value);
-    if (bounty && counter.value > 0) {
-      dispatch(decrement());
+    console.log("bounty", bounty);
+    if (!bounty) {
+      if (counter.value > 0) {
+        dispatch(decrement());
+      }
+      // toast.error("Bounty not found");
+      // router.back();
     }
-  }, [bounty, counter]);
+  }, [bounty]);
+
+  // useEffect(() => {
+  //   // console.log("counter.b/id", counter.value);
+  //   if (counter.value > 0) {
+  //     dispatch(decrement());
+  //   }
+  //   return () => {
+  //     dispatch(increment());
+  //   };
+  // }, [bounty]);
 
   useEffect(() => {
     console.log(user);
@@ -293,9 +317,9 @@ const page = () => {
                                 Submit Your Application
                               </DrawerTitle>
                               <DrawerDescription>
-                                Don't start working just yet! Apply first, and
-                                then begin working only once you've been hired
-                                for the project by the sponsor.
+                                Don&apos;t start working just yet! Apply first,
+                                and then begin working only once you&apos;ve
+                                been hired for the project by the sponsor.
                               </DrawerDescription>
                             </DrawerHeader>
                             <div className="conatiner px-2 flex flex-col gap-4 pt-4">
@@ -434,4 +458,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default BountyDetails;

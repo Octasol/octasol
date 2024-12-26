@@ -1,5 +1,5 @@
 "use client";
-import { decrement } from "@/app/Redux/Features/loader/loaderSlice";
+import { decrement, increment } from "@/app/Redux/Features/loader/loaderSlice";
 import { GET } from "@/config/axios/requests";
 import { User } from "lucide-react";
 import Image from "next/image";
@@ -50,15 +50,17 @@ const Bounty = () => {
 
   useEffect(() => {
     console.log("user", user);
-
-    if (user?.accessToken) getBounties();
+    getBounties();
   }, [user]);
 
   useEffect(() => {
-    // console.log("counter/b", counter.value);
-    if (bounties && counter.value > 0) {
+    console.log("counter/b", counter.value);
+    if (bounties.length !== 0 && counter.value > 0) {
       dispatch(decrement());
     }
+    //   // return () => {
+    //   //   dispatch(increment());
+    //   // };
   }, [bounties, counter]);
 
   return (

@@ -9,29 +9,24 @@ import {
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
+  let user: any = false;
   const authHeader = req.headers.get("Authorization");
 
-  if (!authHeader) {
-    return NextResponse.json(
-      { error: "Authorization header is required" },
-      { status: 400 }
-    );
-  }
+  // console.log("wqoeinfioqwenfio", authHeader);
 
-  const user = await getUserByAuthHeader(authHeader);
-  if (!user) {
-    return NextResponse.json(
-      { error: "Invalid Authorization Header" },
-      { status: 401 }
-    );
+  if (authHeader && authHeader != "Bearer") {
+    user = await getUserByAuthHeader(authHeader);
   }
+  // console.log("user", user);
 
   const { searchParams } = new URL(req.url);
   const bountyId = searchParams.get("id");
 
   if (!bountyId) {
     try {
-      const bounties = bigintToString(await getUnscrowedBounty(user));
+      const bounties = bigintToString(
+        await getUnscrowedBounty(user ? user.login : false)
+      );
       return NextResponse.json({
         bounties: bounties,
         status: 200,
@@ -45,7 +40,10 @@ export async function GET(req: NextRequest) {
   } else {
     try {
       const bounty = bigintToString(
-        await getUnscrowedBountyById(parseInt(bountyId), user)
+        await getUnscrowedBountyById(
+          parseInt(bountyId),
+          user ? user.login : false
+        )
       );
       return NextResponse.json({ response: bounty }, { status: 200 });
     } catch (error) {
