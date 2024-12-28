@@ -145,7 +145,7 @@ const BountyDetails = () => {
       {bounty ? (
         <div className="w-full h-full ">
           <div className="w-full flex flex-col md:flex-row ">
-            <div className="w-full md:max-w-[400px] flex flex-col md:flex-row h-full md:h-[85vh] overflow-hidden md:overflow-scroll">
+            <div className="w-full md:max-w-[400px] flex flex-col md:flex-row h-full md:h-[90vh] overflow-hidden md:overflow-scroll">
               <div className="w-full flex flex-col items-start py-5 px-4 md:px-8 gap-4">
                 <p className=" underline underline-offset-4 text-gray-400">
                   SPONSOR DETAILS
@@ -158,9 +158,9 @@ const BountyDetails = () => {
                     <Image
                       src={bounty?.sponsor?.image || "/sponsor_image"}
                       alt={bounty?.sponsor?.name ?? ""}
-                      width={100}
-                      height={100}
-                      className="rounded-md"
+                      width={80}
+                      height={80}
+                      className="rounded-md aspect-square object-cover"
                     />
                   ) : (
                     <User size={50} />
@@ -260,7 +260,7 @@ const BountyDetails = () => {
                 <div className="w-full h-full bg-gradient-to-r md:bg-gradient-to-b from-transparent via-[#46bf96] to-transparent"></div>
               </div>
             </div>
-            <div className="w-full flex md:h-[88vh] overflow-hidden md:overflow-scroll">
+            <div className="w-full flex md:h-[90vh] overflow-hidden md:overflow-scroll ">
               <div className="w-full flex flex-col items-start py-5 px-4 md:px-8 gap-4">
                 <p className=" underline underline-offset-4 text-gray-400">
                   BOUNTY DETAILS
@@ -405,7 +405,7 @@ const BountyDetails = () => {
                   </div>
                 </div>
 
-                <div className="w-full flex flex-col gap-4">
+                <div className="w-full flex flex-col gap-4 pb-8">
                   <p className=" underline underline-offset-4 text-gray-400">
                     CONTACT
                   </p>

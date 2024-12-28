@@ -77,7 +77,7 @@ const Bounty = () => {
         {bounties.map((bounty, index) => (
           <Card
             key={index}
-            className="hover:shadow-lg transition-shadow duration-500 cursor-pointer bg-black hover:shadow-[#34597f]"
+            className="hover:shadow-sm transition-shadow duration-500 cursor-pointer bg-black hover:shadow-[#43aa8a]"
             onClick={() => bountyDetails(bounty.id)}
           >
             <CardHeader className="space-y-4">
@@ -87,6 +87,7 @@ const Bounty = () => {
                     <AvatarImage
                       src={bounty?.sponsor?.image}
                       alt={bounty?.sponsor?.name}
+                      className="object-cover"
                     />
                     <AvatarFallback>
                       <User className="h-6 w-6" />
