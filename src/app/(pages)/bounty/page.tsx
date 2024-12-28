@@ -1,11 +1,21 @@
 "use client";
+
 import { decrement, increment } from "@/app/Redux/Features/loader/loaderSlice";
 import { GET } from "@/config/axios/requests";
-import { User } from "lucide-react";
+import { Calendar, DollarSign, User, Users } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface Bounty {
   sponsor: {
@@ -27,6 +37,7 @@ const Bounty = () => {
   const user = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
   const [bounties, setbounties] = useState<Bounty[]>([]);
+
   const getBounties = async () => {
     try {
       const response = await GET("/unescrowedbounty", {
@@ -58,93 +69,79 @@ const Bounty = () => {
     if (bounties.length !== 0 && counter.value > 0) {
       dispatch(decrement());
     }
-    //   // return () => {
-    //   //   dispatch(increment());
-    //   // };
-  }, [bounties, counter]);
+  }, [bounties, counter, dispatch]);
 
   return (
-    <>
-      <div className="w-full flex justify-center items-center px-5 lg:px-8 py-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 w-full">
-          {bounties.map((bounty, index) => (
-            <div
-              key={index}
-              className="relative inline-flex h-full overflow-hidden rounded-lg shadow-md shadow-[#34597f] cursor-pointer"
-              onClick={() => bountyDetails(bounty.id)}
-            >
-              <div className="w-full p-5 flex flex-col justify-between gap-3">
-                <div className=" rounded-lg  w-full gap-4 flex flex-col ">
-                  <div className="flex justify-between items-center">
-                    {/* <h3 className="text-sm font-semibold text-gray-300 underline underline-offset-4">
-                      Sponsor
-                    </h3> */}
-                    {bounty?.sponsor?.image ? (
-                      <Image
-                        src={bounty?.sponsor?.image}
-                        alt={bounty?.sponsor?.name}
-                        width={100}
-                        height={100}
-                      />
-                    ) : (
-                      <User size={50} />
-                    )}
-                    <h3 className="text-sm font-bold text-gray-300">
+    <div className="container mx-auto px-4 py-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {bounties.map((bounty, index) => (
+          <Card
+            key={index}
+            className="hover:shadow-lg transition-shadow duration-500 cursor-pointer bg-black hover:shadow-[#34597f]"
+            onClick={() => bountyDetails(bounty.id)}
+          >
+            <CardHeader className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <Avatar className="h-12 w-12">
+                    <AvatarImage
+                      src={bounty?.sponsor?.image}
+                      alt={bounty?.sponsor?.name}
+                    />
+                    <AvatarFallback>
+                      <User className="h-6 w-6" />
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p className="font-semibold text-sm">
                       {bounty?.sponsor?.name}
-                    </h3>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <h1 className="text-lg font-bold ">{bounty?.bountyname}</h1>
-                    <p className="font-bold">$&nbsp;{bounty.price}</p>
-                  </div>
-                  {/* <p className="text-sm text-slate-400 italic truncate">
-                    {bounty?.sponsor?.description}
-                  </p> */}
-                  <div className="flex flex-col justify-between gap-4">
-                    {/* <p className="font-bold text-gray-300 underline underline-offset-4">
-                      Skills Required
-                    </p> */}
-                    <div className="flex flex-wrap gap-2 ">
-                      {bounty.skills.map((skill) => (
-                        <div key={index}>
-                          <button className="px-4 py-2 text-sm font-semibold border border-gray-800 rounded-lg ">
-                            {skill}
-                          </button>
-                        </div>
-                      ))}
-                    </div>
+                    </p>
+                    <p className="text-xs text-muted-foreground">Sponsor</p>
                   </div>
                 </div>
-
-                <div className="flex flex-col">
-                  {/* <div className="flex justify-between items-center">
-                    <p className="font-bold text-gray-300 underline underline-offset-4">
-                      Hunters Applied
-                    </p>
-                    <p className="font-bold">{bounty.submissions.length}</p>
-                  </div> */}
-                  <div className="flex items-center justify-between mt-4 ">
-                    <p className="text-xs text-gray-300 ">
-                      {new Date(bounty?.createdAt).toLocaleDateString("en-US", {
-                        day: "numeric",
-                        month: "short",
-                        year: "numeric",
-                      })}
-                    </p>
-                    <button
-                      className="px-4 py-2 text-sm font-semibold border border-gray-800 rounded-lg hover:bg-gray-900"
-                      onClick={() => bountyDetails(bounty.id)}
-                    >
-                      Apply
-                    </button>
-                  </div>
+                <div className="flex items-center space-x-1">
+                  <DollarSign className="h-4 w-4 text-green-500" />
+                  <span className="font-bold">{bounty.price}</span>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+              <h2 className="text-xl font-bold">{bounty?.bountyname}</h2>
+            </CardHeader>
+
+            <CardContent className="space-y-4">
+              <div className="flex flex-wrap gap-2">
+                {bounty.skills.map((skill, skillIndex) => (
+                  <Badge key={skillIndex} className="bg-gray-800">
+                    {skill}
+                  </Badge>
+                ))}
+              </div>
+            </CardContent>
+
+            <CardFooter className="flex items-center justify-between pt-4 border-t">
+              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                <Calendar className="h-4 w-4" />
+                <span>
+                  {new Date(bounty?.createdAt).toLocaleDateString("en-US", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })}
+                </span>
+              </div>
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-1 text-sm text-muted-foreground">
+                  <Users className="h-4 w-4" />
+                  <span>{bounty.submissions.length}</span>
+                </div>
+                <Button variant="outline" size="sm">
+                  Apply
+                </Button>
+              </div>
+            </CardFooter>
+          </Card>
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 

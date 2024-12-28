@@ -133,20 +133,8 @@ const BountyDetails = () => {
       if (counter.value > 0) {
         dispatch(decrement());
       }
-      // toast.error("Bounty not found");
-      // router.back();
     }
   }, [bounty]);
-
-  // useEffect(() => {
-  //   // console.log("counter.b/id", counter.value);
-  //   if (counter.value > 0) {
-  //     dispatch(decrement());
-  //   }
-  //   return () => {
-  //     dispatch(increment());
-  //   };
-  // }, [bounty]);
 
   useEffect(() => {
     console.log(user);
