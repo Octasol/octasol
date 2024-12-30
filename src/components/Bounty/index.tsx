@@ -22,7 +22,9 @@ import React from "react";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
 import { useDispatch, useSelector } from "react-redux";
-import MDEditor from "@uiw/react-md-editor";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   resetProfile,
   setBountyDescription,
@@ -33,21 +35,39 @@ import {
   setTime,
 } from "@/app/Redux/Features/profile/profileSlice";
 import { MultiSelect } from "@/components/ui/multi-select";
-import { Cat, Dog, Fish, Rabbit, Turtle } from "lucide-react";
 import { POST } from "@/config/axios/requests";
+import { Form } from "../ui/form";
+import RichTextEditor from "../RichTextEditor";
 
 const frameworksList = [
-  { value: "react", label: "React", icon: Turtle },
-  { value: "angular", label: "Angular", icon: Cat },
-  { value: "vue", label: "Vue", icon: Dog },
-  { value: "svelte", label: "Svelte", icon: Rabbit },
-  { value: "ember", label: "Ember", icon: Fish },
+  { value: "Frontend", label: "Frontend" },
+  { value: "Backend", label: "Backend" },
+  { value: "Blockchain", label: "Blockchain" },
+  { value: "UI/UX", label: "UI/UX" },
+  { value: "Content Writing", label: "Content Writing" },
 ];
 
 type Props = {
   onPrev: () => void;
   setActiveTab: () => void;
 };
+
+function extractTextFromHTML(html: any) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+  return doc.body.textContent?.trim() || "";
+}
+
+const formSchema = z.object({
+  post: z.string().refine(
+    (value) => {
+      return extractTextFromHTML(value).trim().length >= 5;
+    },
+    {
+      message: "The text must be at least 5 characters long after trimming",
+    }
+  ),
+});
 
 const Bounty = ({ onPrev, setActiveTab }: Props) => {
   const dispatch = useDispatch();
@@ -93,15 +113,20 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
 
   const submitProfile = async (id: bigint) => {
     console.log("submitting profile");
-    const { response, error } = await POST("/unescrowedprofile", {
-      userId: id,
-      ...profile,
-    });
+    const { response, error } = await POST(
+      "/unescrowedbounty",
+      {
+        sponsorid: id,
+        ...profile,
+      },
+      { Authorization: `Bearer ${user.accessToken}` }
+    );
     if (response) {
       console.log(response);
       if (response.status === 200) {
         console.log("Profile submitted successfully");
         dispatch(resetProfile());
+        localStorage.removeItem("activeTab");
         setActiveTab();
       }
     }
@@ -110,32 +135,19 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
     }
   };
 
-  const uploadImage = async (file: File): Promise<string> => {
-    const formData = new FormData();
-    formData.append("file", file);
-
-    // Send the file to the backend to handle S3 upload
-    const { response, error } = await POST("/uploadImage", formData, {
-      "Content-Type": "multipart/form-data",
-    });
-
-    if (error || !response?.data?.url) {
-      throw new Error("Failed to upload image");
-    }
-
-    return response.data.url;
+  const reset = () => {
+    dispatch(resetProfile());
+    localStorage.removeItem("activeTab");
+    setActiveTab();
   };
 
-  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    const file = event.dataTransfer.files[0];
-
-    if (file && file.type.startsWith("image/")) {
-      const imageUrl = await uploadImage(file);
-      const markdownImageSyntax = `![Uploaded Image](${imageUrl})\n`;
-      handleDescriptionChange(profile.bountyDescription + markdownImageSyntax);
-    }
-  };
+  const form = useForm({
+    mode: "onTouched",
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      post: "",
+    },
+  });
 
   return (
     <Card className="">
@@ -145,24 +157,10 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
           Make changes to your account here. Click save when you&apos;re done.
         </CardDescription>
       </CardHeader>
-      <CardContent className="py-4 px-12">
+      <CardContent className="py-4 px-4 md:px-12">
         <div className="flex flex-col gap-4">
-          {/* <div className=" flex gap-12 w-full border-[1px] border-gray-900 rounded-lg p-4 ">
-            <Image
-              src={profile.image}
-              alt="user image"
-              className="aspect-square rounded-md"
-              width={100}
-              height={100}
-            />
-
-            <div className="w-full flex flex-col justify-center items-center mr-12 gap-2">
-              <p className="underline underline-offset-4">{profile.name}</p>
-              <p className="text-gray-500">{profile.description}</p>
-            </div>
-          </div> */}
           <div className="w-full grid grid-cols-1  gap-4">
-            <div className=" grid grid-cols-2 gap-6">
+            <div className=" grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-1">
                 <Label htmlFor="first-name">Bounty Name</Label>
                 <Input
@@ -188,17 +186,14 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
           <div className="grid grid-cols-1 gap-6">
             <div className="space-y-1">
               <Label htmlFor="bounty-description">Bounty Description</Label>
-              <div onDrop={handleDrop} onDragOver={(e) => e.preventDefault()}>
-                <MDEditor
-                  value={profile.bountyDescription}
-                  onChange={handleDescriptionChange}
-                  preview="edit"
-                  height={200}
-                  textareaProps={{
-                    placeholder: "Enter your Project Description in Markdown",
-                  }}
-                />
-              </div>
+              <Form {...form}>
+                <form>
+                  <RichTextEditor
+                    content={profile.bountyDescription}
+                    onChange={handleDescriptionChange}
+                  />
+                </form>
+              </Form>
             </div>
           </div>
 
@@ -217,7 +212,7 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
             </div>
           </div>
 
-          <div className=" grid grid-cols-2 gap-6">
+          <div className=" grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-1">
               <Label htmlFor="first-name">Expiry Time</Label>
               <div className="mt-2">
@@ -270,15 +265,24 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
 
       <CardFooter>
         <div className="w-full flex justify-between items-center">
-          <NextButton onClick={onPrev}>
-            <div className="flex gap-2 items-center">
-              <ArrowBigLeft size={20} />
-              PREV
-            </div>
-          </NextButton>
+          {profile.preDefined ? (
+            <NextButton onClick={reset}>
+              <div className="flex gap-2 items-center">
+                <ArrowBigLeft size={20} />
+                Reset
+              </div>
+            </NextButton>
+          ) : (
+            <NextButton onClick={onPrev} disabled={profile.preDefined}>
+              <div className="flex gap-2 items-center">
+                <ArrowBigLeft size={20} />
+                PREV
+              </div>
+            </NextButton>
+          )}
 
           <NextButton
-            onClick={() => submitProfile(user?.githubId)}
+            onClick={() => submitProfile(profile?.sponsorid)}
             disabled={
               !profile.bountyname ||
               !profile.bountyDescription ||

@@ -17,6 +17,7 @@ import {
   Camera,
   Upload,
   User2Icon,
+  X,
 } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,10 +27,13 @@ import {
   setImage,
   setLink,
   setName,
+  setSponsorId,
   setTelegram,
   setTwitter,
 } from "@/app/Redux/Features/profile/profileSlice";
 import { Textarea } from "@/components/ui/textarea";
+import { POST } from "@/config/axios/requests";
+import { uploadImage } from "@/lib/utils";
 
 type Props = {
   onPrev: () => void;
@@ -37,35 +41,35 @@ type Props = {
 };
 
 const Profile = ({ onPrev, onNext }: Props) => {
-  const [avatar, setAvatar] = useState("");
   const [isDragging, setIsDragging] = useState(false);
   const user = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
   const profile = useSelector((state: any) => state.profile);
 
-  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const removeImage = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    dispatch(setImage(""));
+  };
+
+  const handleAvatarChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result as string);
-        dispatch(setImage(reader.result as string));
-      };
-      reader.readAsDataURL(file);
+    if (file && file.type.startsWith("image/")) {
+      const image = await uploadImage(file, user.accessToken as string);
+      console.log("image", image);
+      dispatch(setImage(image));
     }
   };
 
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setIsDragging(false);
     const file = event.dataTransfer.files[0];
     if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result as string);
-        dispatch(setImage(reader.result as string));
-      };
-      reader.readAsDataURL(file);
+      const image = await uploadImage(file, user.accessToken as string);
+      console.log("image", image);
+      dispatch(setImage(image));
     }
   };
 
@@ -107,6 +111,30 @@ const Profile = ({ onPrev, onNext }: Props) => {
     dispatch(setDescription(event.target.value));
   };
 
+  const setProfile = async (id: bigint) => {
+    const { response, error } = await POST(
+      "/unescrowedprofile",
+      {
+        userId: id,
+        ...profile,
+      },
+      {
+        Authorization: `Bearer ${user.accessToken}`,
+      }
+    );
+    if (response) {
+      console.log(response);
+      if (response.status === 200) {
+        console.log("Profile submitted successfully");
+        dispatch(setSponsorId(response?.data?.response?.id));
+        onNext();
+      }
+    }
+    if (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Card className="">
       <CardHeader>
@@ -115,10 +143,10 @@ const Profile = ({ onPrev, onNext }: Props) => {
           Make changes to your account here. Click save when you&apos;re done.
         </CardDescription>
       </CardHeader>
-      <CardContent className="py-4 px-12">
+      <CardContent className="py-4 px-4 md:px-12">
         <div className="flex flex-col gap-4">
           <div
-            className="relative flex gap-12 w-full border-[1px] border-gray-900 rounded-lg p-4 cursor-pointer"
+            className="relative flex gap-6 md:gap-12 w-full border-[1px] border-gray-900 rounded-lg p-4 cursor-pointer"
             onClick={() => document.getElementById("avatar-upload")?.click()}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
@@ -143,19 +171,22 @@ const Profile = ({ onPrev, onNext }: Props) => {
               className="hidden"
               onChange={handleAvatarChange}
             />
-            <div className="w-full flex justify-center items-center mr-12">
+            <div className="w-full flex justify-center items-center mr-0 md:mr-12">
               {isDragging ? (
                 <div className="text-blue-500 flex items-center gap-2">
                   <Upload size={20} />
                   <p>You can drop here</p>
                 </div>
               ) : (
-                <p>Choose or drag and drop media</p>
+                <p className="text-xs md:text-sm">
+                  Choose or drag and drop media
+                </p>
               )}
             </div>
+            <X color="white" size={32} onClick={removeImage} />
           </div>
           <div className="w-full grid grid-cols-1  gap-4">
-            <div className=" grid grid-cols-2 gap-6">
+            <div className=" grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-1">
                 <Label htmlFor="first-name">Name</Label>
                 <Input
@@ -190,7 +221,7 @@ const Profile = ({ onPrev, onNext }: Props) => {
               />
             </div>
           </div>{" "}
-          <div className=" grid grid-cols-2 gap-6">
+          <div className=" grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-1">
               <Label htmlFor="first-name">Github</Label>
               <Input
@@ -210,7 +241,7 @@ const Profile = ({ onPrev, onNext }: Props) => {
               />
             </div>
           </div>
-          <div className=" grid grid-cols-2 gap-6">
+          <div className=" grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-1">
               <Label htmlFor="first-name">Telegram</Label>
               <Input
@@ -245,7 +276,7 @@ const Profile = ({ onPrev, onNext }: Props) => {
           </NextButton>
 
           <NextButton
-            onClick={onNext}
+            onClick={() => setProfile(user?.githubId)}
             disabled={!profile.name || !profile.description}
           >
             <div className="flex gap-2 items-center">

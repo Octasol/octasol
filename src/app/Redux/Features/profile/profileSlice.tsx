@@ -16,6 +16,8 @@ type Profilestate = {
   time: string | undefined;
   contact: string;
   bountyDescription: string | undefined;
+  sponsorid?: number;
+  preDefined?: boolean;
 };
 
 const initialState: Profilestate = {
@@ -33,6 +35,8 @@ const initialState: Profilestate = {
   time: new Date().toISOString(),
   contact: "",
   bountyDescription: "",
+  sponsorid: undefined,
+  preDefined: false,
 };
 
 export const profileSlice = createSlice({
@@ -66,6 +70,9 @@ export const profileSlice = createSlice({
     setDiscord: (state, action: PayloadAction<string>) => {
       state.discord = action.payload;
     },
+    setSponsorId: (state, action: PayloadAction<number>) => {
+      state.sponsorid = action.payload;
+    },
     setBountyName: (state, action: PayloadAction<string>) => {
       state.bountyname = action.payload;
     },
@@ -84,6 +91,9 @@ export const profileSlice = createSlice({
     setBountyDescription: (state, action: PayloadAction<string>) => {
       state.bountyDescription = action.payload;
     },
+    setPredefined: (state, action: PayloadAction<boolean>) => {
+      state.preDefined = action.payload;
+    },
     resetProfile: () => initialState,
   },
 });
@@ -99,11 +109,13 @@ export const {
   setTelegram,
   setDiscord,
   resetProfile,
+  setSponsorId,
   setBountyName,
   setPrice,
   setSkills,
   setTime,
   setContact,
   setBountyDescription,
+  setPredefined,
 } = profileSlice.actions;
 export const profileReducer = profileSlice.reducer;

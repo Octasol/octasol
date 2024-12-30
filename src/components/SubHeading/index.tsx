@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -7,22 +7,62 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ArrowBigRight } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
-import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { setSubHeading } from "@/app/Redux/Features/profile/profileSlice";
+import {
+  setDescription,
+  setDiscord,
+  setImage,
+  setLink,
+  setName,
+  setPredefined,
+  setSubHeading,
+  setTelegram,
+  setTwitter,
+} from "@/app/Redux/Features/profile/profileSlice";
+import { GET } from "@/config/axios/requests";
 
 type Props = {
-  onNext: () => void;
+  onNext: (value: any) => void;
 };
 
 const SubHeading = ({ onNext }: Props) => {
   const dispatch = useDispatch();
   const profile = useSelector((state: any) => state.profile);
+  const user = useSelector((state: any) => state.user);
+  const [sponsorProfiles, setSponsorProfiles] = useState<any>([]);
 
   const handleSelect = (value: string) => {
     dispatch(setSubHeading(value));
+  };
+
+  const getProfile = async (id: bigint) => {
+    if (id) {
+      const response = await GET(`/unescrowedprofile?userId=${id.toString()}`);
+      console.log(response);
+      setSponsorProfiles(response.sponsor);
+    }
+  };
+
+  useEffect(() => {
+    if (user?.githubId) getProfile(user?.githubId as bigint);
+  }, [user]);
+
+  const setProfile = (profile: any) => {
+    console.log(profile);
+    dispatch(setSubHeading(profile?.type));
+    dispatch(setName(profile?.name));
+    dispatch(setLink(profile?.link));
+    dispatch(setDescription(profile?.description));
+    dispatch(setImage(profile?.image));
+    dispatch(setTelegram(profile?.telegram));
+    dispatch(setDiscord(profile?.discord));
+    dispatch(setTwitter(profile?.twitter));
+    dispatch(setPredefined(true));
+    onNext("bounty");
+    localStorage.setItem("activeTab", "bounty");
   };
 
   return (
@@ -76,7 +116,10 @@ const SubHeading = ({ onNext }: Props) => {
           </div>
         </CardContent>
         <CardFooter className="w-full flex justify-end">
-          <NextButton onClick={onNext} disabled={!profile?.subHeading}>
+          <NextButton
+            onClick={() => onNext("profile")}
+            disabled={!profile?.subHeading}
+          >
             <div className="flex items-center gap-2">
               NEXT
               <ArrowBigRight size={20} />
@@ -86,23 +129,28 @@ const SubHeading = ({ onNext }: Props) => {
       </Card>
       <div className="flex flex-col justify-center items-center py-12  gap-6">
         <p className="text-center text-xl lg:text-2xl font-semibold leading-none tracking-wide">
-          or choose exixting profile...
+          or choose existing profile...
         </p>
         <div className="w-full h-full gap-6 flex justify-center items-center flex-wrap">
-          <Image
-            src="/gfg.png"
-            alt="org"
-            width={45}
-            height={45}
-            className="rounded-lg"
-          />
-          <Image
-            src="/gfg.png"
-            alt="org"
-            width={45}
-            height={45}
-            className="rounded-lg"
-          />
+          {sponsorProfiles.map((profile: any, index: number) => (
+            <div
+              key={index}
+              className="flex flex-col gap-2 justify-center items-center cursor-pointer"
+              onClick={() => setProfile(profile)}
+            >
+              <Avatar>
+                <AvatarImage src={profile?.image} alt="sponsor" />
+                <AvatarFallback>{`${(profile?.name).slice(
+                  0,
+                  2
+                )}...`}</AvatarFallback>
+              </Avatar>
+
+              <p className="text-xs lg:text-sm font-semibold">
+                {profile?.name}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ import CoverUpPage from "@/components/CoverUpPage/Index";
 const Repoinitialize = () => {
   return (
     <>
-      <div className="flex flex-col gap-4 h-full w-full justify-center items-center relative z-10">
+      <div className="flex flex-col gap-4 min-h-screen w-full justify-center items-center relative z-10">
         <CoverUpPage />
         <div className=" pb-14 lg:pb-8 px-8 py-8 w-full flex flex-col lg:flex-row">
           <Meteors number={50} className="z-0" />

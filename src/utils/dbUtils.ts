@@ -1,6 +1,9 @@
 import { db } from "@/lib/db";
 import { GithubDevProfile, UserDB } from "@/lib/types";
 import { logToDiscord } from "./logger";
+import { formatISO } from "date-fns";
+import { formatDates } from "@/lib/utils";
+import { adminGithub } from "@/lib/constants";
 
 export const initializeUser = async (
   githubId: bigint,
@@ -638,25 +641,38 @@ export const getUserProfileForRadarChart = async (githubUsername: string) => {
     throw error;
   }
 };
-export const setUnscrowedBounty = async (id: bigint, bountyData: any) => {
-  console.log("bounty", bountyData);
-  console.log("data checking");
-
+export const setSponsorProfile = async (id: bigint, profileData: any) => {
   try {
     const sponsor = await db.sponsor.create({
       data: {
         githubId: id,
-        type: bountyData.subHeading,
-        image: bountyData.image,
-        link: bountyData.link,
-        description: bountyData.description,
-        telegram: bountyData.telegram,
-        twitter: bountyData.twitter,
-        discord: bountyData.discord,
-        name: bountyData.name,
+        type: profileData.subHeading,
+        image: profileData.image,
+        link: profileData.link,
+        description: profileData.description,
+        telegram: profileData.telegram,
+        twitter: profileData.twitter,
+        discord: profileData.discord,
+        name: profileData.name,
       },
     });
 
+    return sponsor;
+  } catch (error) {
+    await logToDiscord(
+      `dbUtils/setSponsorProfile: ${(error as any).message}`,
+      "ERROR"
+    );
+    console.error(error);
+    return false;
+  }
+};
+
+export const setUnscrowedBounty = async (
+  sponsorId: number,
+  bountyData: any
+) => {
+  try {
     const bounty = await db.bounty.create({
       data: {
         bountyname: bountyData.bountyname,
@@ -664,13 +680,10 @@ export const setUnscrowedBounty = async (id: bigint, bountyData: any) => {
         bountyDescription: bountyData.bountyDescription,
         skills: bountyData.skills,
         time: bountyData.time,
-        // timeExtendedTo: bountyData.timeExtendedTo,
         primaryContact: bountyData.contact,
-        sponsorId: sponsor.id,
+        sponsorId: sponsorId,
       },
     });
-
-    console.log("sponsor", sponsor);
 
     return true;
   } catch (error) {
@@ -683,40 +696,174 @@ export const setUnscrowedBounty = async (id: bigint, bountyData: any) => {
   }
 };
 
-// export const getUnscrowedBounty = async (id: bigint) => {
-//   console.log("id", id);
-//   try {
-//     const bounty = await db.bounty.findMany({
-//       where: {
-//         sponsorId: id,
-//       },
-//     });
-//     console.log("bounty", bounty);
-//     return bounty;
-//   } catch (error) {
-//     await logToDiscord(
-//       `dbUtils/getUnscrowedBounty: ${(error as any).message}`,
-//       "ERROR"
-//     );
-//     console.error(error);
-//     return false;
-//   }
-// };
+export const getUnscrowedBounty = async (user: any) => {
+  if (user) {
+    // AUTH FOR ADMIN
+    const isAdmin = adminGithub.includes((user as string).toLowerCase());
+    console.log("isAdmin", isAdmin);
+
+    try {
+      const bounties = await db.bounty.findMany({
+        where: isAdmin ? {} : { status: 2 },
+        include: {
+          sponsor: true,
+          submissions: true,
+        },
+      });
+
+      const formattedBounties = bounties.map((bounty) => ({
+        ...formatDates(bounty),
+        sponsor: bounty.sponsor ? formatDates(bounty.sponsor) : null,
+        submissions: bounty.submissions
+          ? bounty.submissions.map((submission: any) => formatDates(submission))
+          : [],
+      }));
+
+      return formattedBounties;
+    } catch (error) {
+      await logToDiscord(
+        `dbUtils/getUnscrowedBounty: ${(error as any).message}`,
+        "ERROR"
+      );
+      console.error(error);
+      return false;
+    }
+  } else {
+    try {
+      const bounties = await db.bounty.findMany({
+        where: {
+          status: 2,
+        },
+        include: {
+          sponsor: true,
+          submissions: true,
+        },
+      });
+
+      const formattedBounties = bounties.map((bounty) => ({
+        ...formatDates(bounty),
+        sponsor: bounty.sponsor ? formatDates(bounty.sponsor) : null,
+        submissions: bounty.submissions
+          ? bounty.submissions.map((submission: any) => formatDates(submission))
+          : [],
+      }));
+
+      return formattedBounties;
+    } catch (error) {
+      await logToDiscord(
+        `dbUtils/getUnscrowedBounty: ${(error as any).message}`,
+        "ERROR"
+      );
+      console.error(error);
+      return false;
+    }
+  }
+};
+
+export const getUnscrowedBountyById = async (id: number, user: any) => {
+  if (user) {
+    // AUTH FOR ADMIN
+    const isAdmin = adminGithub.includes((user as string).toLowerCase());
+
+    try {
+      const bounty = await db.bounty.findUnique({
+        where: isAdmin ? { id: id } : { id: id, status: 2 },
+        include: {
+          sponsor: true,
+        },
+      });
+      return bounty;
+    } catch (error) {
+      await logToDiscord(
+        `dbUtils/getUnscrowedBountyById: ${(error as any).message}`,
+        "ERROR"
+      );
+      console.error(error);
+      return false;
+    }
+  } else {
+    try {
+      const bounty = await db.bounty.findUnique({
+        where: { id: id },
+        include: {
+          sponsor: true,
+        },
+      });
+      return bounty;
+    } catch (error) {
+      await logToDiscord(
+        `dbUtils/getUnscrowedBountyById: ${(error as any).message}`,
+        "ERROR"
+      );
+      console.error(error);
+      return false;
+    }
+  }
+};
 
 export const getSponsorProfile = async (id: bigint) => {
-  console.log("id", id);
-
   try {
     const sponsor = await db.sponsor.findMany({
       where: {
         githubId: id,
       },
     });
-    console.log("sponsor", sponsor);
+
     return sponsor;
   } catch (error) {
     await logToDiscord(
       `dbUtils/getSponsorProfile: ${(error as any).message}`,
+      "ERROR"
+    );
+    console.error(error);
+    return false;
+  }
+};
+
+export const setBountySubmission = async (
+  link: string[],
+  note: string,
+  wallet: string,
+  id: number,
+  githubId: bigint
+) => {
+  try {
+    const submission = await db.submission.create({
+      data: {
+        links: link,
+        notes: note,
+        // wallet: wallet,
+        githubId: githubId,
+        bountyId: id,
+      },
+    });
+
+    return submission;
+  } catch (error) {
+    await logToDiscord(
+      `dbUtils/setBountySubmission: ${(error as any).message}`,
+      "ERROR"
+    );
+    console.error(error);
+    return false;
+  }
+};
+
+export const getBountySubmissions = async (id: number) => {
+  try {
+    const submissions = await db.bounty.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        submissions: true,
+      },
+    });
+
+    return submissions;
+  } catch (error) {
+    await logToDiscord(
+      `dbUtils/getBountySubmissions: ${(error as any).message}`,
       "ERROR"
     );
     console.error(error);

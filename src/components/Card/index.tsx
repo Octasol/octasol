@@ -15,7 +15,7 @@ type Props = {
 
 export function Cards(props: Props) {
   return (
-    <Card className="h-full bg-black w-[300px]">
+    <Card className="h-full bg-black w-full">
       <CardHeader>
         <CardTitle>{props.name}</CardTitle>
       </CardHeader>

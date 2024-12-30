@@ -88,3 +88,34 @@ export enum QueuePriority {
   High = "high",
   Low = "low",
 }
+
+export interface Sponsor {
+  id: number;
+  githubId: string;
+  name: string;
+  description: string;
+  type: string;
+  image: string;
+  link: string;
+  discord: string;
+  telegram: string;
+  twitter: string;
+  createdAt: Date | null;
+  updatedAt: Date | null;
+}
+
+export interface Bounty {
+  id: number;
+  bountyname: string;
+  bountyDescription: string;
+  price: number;
+  primaryContact: string;
+  skills: string[];
+  sponsor: Sponsor;
+  sponsorId: number;
+  status: number;
+  time: string;
+  timeExtendedTo: string | null;
+  createdAt: Date | null;
+  updatedAt: Date | null;
+}
