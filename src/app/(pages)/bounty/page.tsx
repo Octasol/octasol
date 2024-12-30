@@ -100,7 +100,7 @@ const Bounty = () => {
                     <p className="text-xs text-muted-foreground">Sponsor</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center ">
                   <DollarSign className="h-4 w-4 text-green-500" />
                   <span className="font-bold">{bounty.price}</span>
                 </div>
