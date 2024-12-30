@@ -57,7 +57,6 @@ const Profile = ({ onPrev, onNext }: Props) => {
     const file = event.target.files?.[0];
     if (file && file.type.startsWith("image/")) {
       const image = await uploadImage(file, user.accessToken as string);
-      console.log("image", image);
       dispatch(setImage(image));
     }
   };
@@ -68,7 +67,6 @@ const Profile = ({ onPrev, onNext }: Props) => {
     const file = event.dataTransfer.files[0];
     if (file && file.type.startsWith("image/")) {
       const image = await uploadImage(file, user.accessToken as string);
-      console.log("image", image);
       dispatch(setImage(image));
     }
   };
@@ -85,7 +83,6 @@ const Profile = ({ onPrev, onNext }: Props) => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.name);
     switch (event.target.name) {
       case "name":
         dispatch(setName(event.target.value));
@@ -123,15 +120,13 @@ const Profile = ({ onPrev, onNext }: Props) => {
       }
     );
     if (response) {
-      console.log(response);
       if (response.status === 200) {
-        console.log("Profile submitted successfully");
         dispatch(setSponsorId(response?.data?.response?.id));
         onNext();
       }
     }
     if (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

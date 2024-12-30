@@ -51,9 +51,6 @@ const BountyDetails = () => {
     const { response } = await GET(`/unescrowedbounty?id=${id}`, {
       Authorization: `Bearer ${user.accessToken}`,
     });
-    console.log("response", response);
-
-    console.log(user.githubId);
     if (!user.githubId) {
       if (response && response.status === 2) {
         setBounty(response);
@@ -81,7 +78,6 @@ const BountyDetails = () => {
   };
 
   const submit = async () => {
-    console.log(submission);
     if (!submission.link.length || !submission.note || !submission.wallet) {
       toast.info("Enter All Fields");
       return;
@@ -114,31 +110,23 @@ const BountyDetails = () => {
 
   const getSubmissions = async (id: number) => {
     const { response } = await GET(`/unescrowedsubmission?id=${id}`);
-    console.log(response);
 
     setSubmissions(response.submissions);
   };
 
   useEffect(() => {
     if (id !== null) {
-      console.log("subbmit");
-
       getSubmissions(parseInt(id.toString()));
     }
   }, [id]);
 
   useEffect(() => {
-    console.log("bounty", bounty);
     if (!bounty) {
       if (counter.value > 0) {
         dispatch(decrement());
       }
     }
   }, [bounty]);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   return (
     <>

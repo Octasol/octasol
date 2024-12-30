@@ -47,7 +47,7 @@ const Bounty = () => {
         setbounties(response.bounties);
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -56,16 +56,10 @@ const Bounty = () => {
   };
 
   useEffect(() => {
-    console.log(bounties);
-  }, [bounties]);
-
-  useEffect(() => {
-    console.log("user", user);
     getBounties();
   }, [user]);
 
   useEffect(() => {
-    console.log("counter/b", counter.value);
     if (bounties.length !== 0 && counter.value > 0) {
       dispatch(decrement());
     }

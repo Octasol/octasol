@@ -12,12 +12,9 @@ export async function GET(req: NextRequest) {
   let user: any = false;
   const authHeader = req.headers.get("Authorization");
 
-  // console.log("wqoeinfioqwenfio", authHeader);
-
   if (authHeader && authHeader != "Bearer") {
     user = await getUserByAuthHeader(authHeader);
   }
-  // console.log("user", user);
 
   const { searchParams } = new URL(req.url);
   const bountyId = searchParams.get("id");

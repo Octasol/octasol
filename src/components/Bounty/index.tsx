@@ -79,7 +79,6 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.name);
     switch (event.target.name) {
       case "bountyname": {
         dispatch(setBountyName(event.target.value));
@@ -112,7 +111,6 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
   };
 
   const submitProfile = async (id: bigint) => {
-    console.log("submitting profile");
     const { response, error } = await POST(
       "/unescrowedbounty",
       {
@@ -122,16 +120,14 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
       { Authorization: `Bearer ${user.accessToken}` }
     );
     if (response) {
-      console.log(response);
       if (response.status === 200) {
-        console.log("Profile submitted successfully");
         dispatch(resetProfile());
         localStorage.removeItem("activeTab");
         setActiveTab();
       }
     }
     if (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

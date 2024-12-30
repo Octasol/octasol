@@ -102,7 +102,6 @@ const Login = () => {
 
   const handleSessionFromCookies = () => {
     const cookieSession = Cookies.get("session");
-    console.log("cookieSession", cookieSession);
 
     if (cookieSession) {
       try {
@@ -141,8 +140,6 @@ const Login = () => {
   };
 
   useLayoutEffect(() => {
-    console.log("session");
-
     if (sessionUser) {
       store.dispatch(decrement());
       const sessionExpiryDate = new Date(session?.expires || "");
@@ -172,8 +169,6 @@ const Login = () => {
   }, [session]);
 
   useEffect(() => {
-    console.log("status", status);
-
     if (status === "unauthenticated") {
       dispatch(
         setUser({
@@ -190,7 +185,6 @@ const Login = () => {
       logout();
       if (!pathname.startsWith("/bounty")) {
         router.push("/");
-        console.log("route testing");
       }
     }
   }, [router, dispatch, status]);
@@ -214,7 +208,6 @@ const Login = () => {
     localStorage.setItem("activeTab", "subheading");
     if (!pathname.startsWith("/bounty")) {
       router.push("/");
-      console.log("route testing");
     }
   };
 
@@ -229,7 +222,6 @@ const Login = () => {
 
   useEffect(() => {
     if (pathname !== "/" && !Cookies.get("session")) {
-      console.log("No session cookie found.");
       if (status !== "loading") {
         dispatch(resetProfile());
         localStorage.setItem("activeTab", "subheading");

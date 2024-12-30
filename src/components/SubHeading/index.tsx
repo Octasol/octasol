@@ -41,7 +41,6 @@ const SubHeading = ({ onNext }: Props) => {
   const getProfile = async (id: bigint) => {
     if (id) {
       const response = await GET(`/unescrowedprofile?userId=${id.toString()}`);
-      console.log(response);
       setSponsorProfiles(response.sponsor);
     }
   };
@@ -51,7 +50,6 @@ const SubHeading = ({ onNext }: Props) => {
   }, [user]);
 
   const setProfile = (profile: any) => {
-    console.log(profile);
     dispatch(setSubHeading(profile?.type));
     dispatch(setName(profile?.name));
     dispatch(setLink(profile?.link));

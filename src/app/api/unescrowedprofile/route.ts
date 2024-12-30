@@ -48,7 +48,6 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get("userId");
-    console.log("userId", userId);
     if (userId !== "") {
       const sponsor = bigintToString(await getSponsorProfile(userId as any));
 
