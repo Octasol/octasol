@@ -1,12 +1,12 @@
 "use client";
 import {
-  Trophy,
   BadgeDollarSign,
   Blocks,
   CopyPlus,
   HomeIcon,
   User,
 } from "lucide-react";
+import { IconChartHistogram } from "@tabler/icons-react";
 import Link from "next/link";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -140,7 +140,7 @@ const Sidebar = ({ verified }: Props) => {
                 href="/leaderboard"
                 className="flex items-center gap-4 hover:text-[#45bd95]"
               >
-                <Trophy
+                <IconChartHistogram
                   size={32}
                   color={isActive("/leaderboard") ? "cyan" : "currentColor"}
                 />
