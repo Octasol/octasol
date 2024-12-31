@@ -821,24 +821,47 @@ export const getSponsorProfile = async (id: bigint) => {
 };
 
 export const setBountySubmission = async (
-  link: string[],
-  note: string,
-  wallet: string,
-  id: number,
-  githubId: bigint
+  links: string[],
+  notes: string,
+  walletAddress: string,
+  bountyId: number,
+  id: any,
+  user: any
 ) => {
   try {
-    const submission = await db.submission.create({
-      data: {
-        links: link,
-        notes: note,
-        // wallet: wallet,
-        githubId: githubId,
-        bountyId: id,
-      },
-    });
+    if (id) {
+      const submission = await db.submission.upsert({
+        where: { id: id },
+        update: {
+          links: links,
+          notes: notes,
+          walletAddress: walletAddress,
+          githubId: user.id,
+          bountyId: bountyId,
+        },
+        create: {
+          links: links,
+          notes: notes,
+          walletAddress: walletAddress,
+          githubId: user.id,
+          bountyId: bountyId,
+        },
+      });
 
-    return submission;
+      return submission;
+    } else {
+      const submission = await db.submission.create({
+        data: {
+          links: links,
+          notes: notes,
+          walletAddress: walletAddress,
+          githubId: user.id,
+          bountyId: bountyId,
+        },
+      });
+
+      return submission;
+    }
   } catch (error) {
     await logToDiscord(
       `dbUtils/setBountySubmission: ${(error as any).message}`,

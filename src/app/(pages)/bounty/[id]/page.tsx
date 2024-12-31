@@ -5,7 +5,7 @@ import { Bounty } from "@/lib/types";
 import { Send, Twitter, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import {
   Drawer,
@@ -23,24 +23,23 @@ import { Textarea } from "@/components/ui/textarea";
 import { useDispatch, useSelector } from "react-redux";
 import { cn } from "@/lib/utils";
 import { toast } from "react-toastify";
-import { decrement, increment } from "@/app/Redux/Features/loader/loaderSlice";
+import { decrement } from "@/app/Redux/Features/loader/loaderSlice";
 
 const bountySubmission = {
-  link: [],
-  note: "",
-  wallet: "",
+  links: [],
+  notes: "",
+  walletAddress: "",
 };
 
 const BountyDetails = () => {
   const pathname = usePathname();
-  const router = useRouter();
-  const counter = useSelector((state: any) => state.counter);
   const dispatch = useDispatch();
+  const counter = useSelector((state: any) => state.counter);
+  const user = useSelector((state: any) => state.user);
   const [id, setId] = useState<number | null>(null);
   const [bounty, setBounty] = useState<Bounty | null>(null);
-  const [submission, setSubmission] = useState(bountySubmission);
-  const user = useSelector((state: any) => state.user);
   const [submissions, setSubmissions] = useState<any>([]);
+  const [submission, setSubmission] = useState(bountySubmission);
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
@@ -60,25 +59,30 @@ const BountyDetails = () => {
     }
   };
 
-  useEffect(() => {
-    if (id) getBounty(id);
-  }, [id, user]);
+  const getSubmissions = async (id: number) => {
+    const { response } = await GET(`/unescrowedsubmission?id=${id}`);
+    setSubmissions(response.submissions);
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
 
-    setSubmission((prevState) => ({
-      ...prevState,
+    setSubmission((submission) => ({
+      ...submission,
       [name]:
-        name === "link" ? value.split(",").map((link) => link.trim()) : value,
+        name === "links" ? value.split(",").map((link) => link.trim()) : value,
       bountyId: id,
     }));
   };
 
   const submit = async () => {
-    if (!submission.link.length || !submission.note || !submission.wallet) {
+    if (
+      !submission.links.length ||
+      !submission.notes ||
+      !submission.walletAddress
+    ) {
       toast.info("Enter All Fields");
       return;
     }
@@ -90,7 +94,11 @@ const BountyDetails = () => {
       }
     );
     if (response && response.status === 200) {
-      return toast.success("Application Submitted Successfully");
+      if (submitted) return toast.success("Application Updated Successfully");
+      else {
+        setSubmitted(true);
+        return toast.success("Application Submitted Successfully");
+      }
     }
 
     if (error && error.status === 401) {
@@ -99,20 +107,26 @@ const BountyDetails = () => {
   };
 
   useEffect(() => {
+    console.log(submissions);
+
     if (submissions.length > 0) {
       submissions.forEach((item: any) => {
         if (item.githubId == user.githubId) {
           setSubmitted(true);
+          console.log(item);
+          setSubmission(item);
         }
       });
     }
   }, [submissions]);
 
-  const getSubmissions = async (id: number) => {
-    const { response } = await GET(`/unescrowedsubmission?id=${id}`);
+  useEffect(() => {
+    if (id) getBounty(id);
+  }, [id, user]);
 
-    setSubmissions(response.submissions);
-  };
+  useEffect(() => {
+    console.log(submission);
+  }, [submission]);
 
   useEffect(() => {
     if (id !== null) {
@@ -263,7 +277,7 @@ const BountyDetails = () => {
                         <DrawerTrigger asChild>
                           <div className="w-fit flex justify-center items-center ">
                             <button
-                              disabled={submitted}
+                              // disabled={submitted}
                               onClick={() => {
                                 if (!user.githubId) {
                                   toast.error(
@@ -272,15 +286,13 @@ const BountyDetails = () => {
                                 }
                               }}
                               className={cn(
-                                `relative inline-flex items-center justify-center p-0.5  overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 `,
-                                submitted
-                                  ? "cursor-not-allowed opacity-50"
-                                  : "cursor-pointer"
+                                `relative inline-flex items-center justify-center p-0.5  overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 
+                               cursor-pointer`
                               )}
                             >
                               <span className="relative px-3 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
                                 {submitted
-                                  ? "Submitted"
+                                  ? "Edit\u00A0Application"
                                   : "Submit\u00A0Application"}
                               </span>
                             </button>
@@ -290,7 +302,9 @@ const BountyDetails = () => {
                           <div className="mx-auto w-full max-w-lg">
                             <DrawerHeader>
                               <DrawerTitle className="flex justify-center items-center w-full">
-                                Submit Your Application
+                                {submitted
+                                  ? "Update Your Application"
+                                  : "Submit Your Application"}
                               </DrawerTitle>
                               <DrawerDescription>
                                 Don&apos;t start working just yet! Apply first,
@@ -298,50 +312,58 @@ const BountyDetails = () => {
                                 been hired for the project by the sponsor.
                               </DrawerDescription>
                             </DrawerHeader>
-                            <div className="conatiner px-2 flex flex-col gap-4 pt-4">
+                            <div className="container px-2 flex flex-col gap-4 pt-4">
                               <div className="grid w-full max-w-lg items-center gap-1.5">
-                                <Label htmlFor="text">
+                                <Label htmlFor="links">
                                   Links to your previous work
                                 </Label>
                                 <Input
                                   type="text"
-                                  id="link"
+                                  id="links"
                                   required
-                                  name="link"
+                                  name="links"
+                                  value={submission?.links}
                                   onChange={handleChange}
-                                  placeholder="Link to your previous work"
+                                  placeholder="Link to your previous work (comma-separated)"
                                 />
                               </div>
                               <div className="grid w-full max-w-lg items-center gap-1.5">
-                                <Label htmlFor="text">
-                                  Something you want to know about you
+                                <Label htmlFor="notes">
+                                  Something you want to share about yourself
                                 </Label>
                                 <Textarea
-                                  name="note"
-                                  id="note"
+                                  name="notes"
+                                  id="notes"
                                   required
+                                  value={submission?.notes || ""}
                                   onChange={handleChange}
-                                  placeholder="Note"
+                                  placeholder="note"
                                 />
                               </div>
                               <div className="grid w-full max-w-lg items-center gap-1.5">
-                                <Label htmlFor="text">Wallet address</Label>
+                                <Label htmlFor="wallet">Wallet address</Label>
                                 <Input
                                   type="text"
                                   id="wallet"
-                                  name="wallet"
+                                  name="walletAddress"
                                   required
+                                  value={submission?.walletAddress || ""}
                                   onChange={handleChange}
-                                  placeholder="wallet address"
+                                  placeholder="Wallet address"
                                 />
                               </div>
                             </div>
                             <DrawerFooter>
-                              <DrawerClose asChild onClick={submit}>
+                              <DrawerClose asChild>
                                 <div className="w-full flex justify-center items-center py-5">
-                                  <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
+                                  <button
+                                    onClick={submit}
+                                    className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
+                                  >
                                     <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
-                                      Submit
+                                      {submitted
+                                        ? "Update Submission"
+                                        : "Submit"}
                                     </span>
                                   </button>
                                 </div>
