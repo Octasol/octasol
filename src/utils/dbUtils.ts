@@ -893,3 +893,41 @@ export const getBountySubmissions = async (id: number) => {
     return false;
   }
 };
+
+export const getUserSubmissions = async (githubId: bigint) => {
+  try {
+    const submissions = await db.submission.findMany({
+      where: {
+        githubId: githubId,
+      },
+      include: {
+        bounty: {
+          include: {
+            sponsor: true,
+          },
+        },
+      },
+    });
+
+    const formattedSubmissions = submissions.map((submission) => ({
+      ...formatDates(submission),
+      bounty: submission.bounty
+        ? {
+            ...formatDates(submission.bounty),
+            sponsor: submission.bounty.sponsor
+              ? formatDates(submission.bounty.sponsor)
+              : null,
+          }
+        : null,
+    }));
+
+    return formattedSubmissions;
+  } catch (error) {
+    await logToDiscord(
+      `dbUtils/getUserSubmissions: ${(error as any).message}`,
+      "ERROR"
+    );
+    console.error(error);
+    return false;
+  }
+};

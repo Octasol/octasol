@@ -1,6 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { CreditCard, ShieldCheck, Zap } from "lucide-react";
+import React, { use, useEffect, useState } from "react";
+import {
+  Calendar,
+  CreditCard,
+  DollarSign,
+  ShieldCheck,
+  Zap,
+} from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -15,12 +21,9 @@ import Image from "next/image";
 import { StatDetails } from "@/components/Charts/StatDetails";
 import RadarLoader from "@/components/ComponentLoader/RadarLoader";
 import { ProfileLoader } from "@/components/ComponentLoader/ProfileLoader";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
+import { GET } from "@/config/axios/requests";
+import { useSelector } from "react-redux";
 
 const ScrollArea = dynamic(
   () => import("@/components/ui/scroll-area").then((mod) => mod.ScrollArea),
@@ -68,6 +71,8 @@ export default function BentoGridDemo() {
   const [radarData, setRadarData] = useState<RadarObject | null>(null);
   const [isRadarLoading, setIsRadarLoading] = useState<boolean>(true);
   const [isUserLoading, setIsUserLoading] = useState<boolean>(true);
+  const user = useSelector((state: any) => state.user);
+  const [userSubmissions, setUserSubmissions] = useState<any[]>([]);
 
   const userData = async (name: string) => {
     setIsUserLoading(true);
@@ -132,28 +137,21 @@ export default function BentoGridDemo() {
     }
   }, [pathname]);
 
-  const features = [
-    {
-      title: "Lightning Fast",
-      description:
-        "Experience blazing fast performance with our optimized solution.",
-      icon: Zap,
-      color: "bg-blue-500",
-    },
-    {
-      title: "Secure",
-      description:
-        "Bank-grade security ensuring your data is always protected.",
-      icon: ShieldCheck,
-      color: "bg-green-500",
-    },
-    {
-      title: "Easy Payments",
-      description: "Seamless payment processing with multiple options.",
-      icon: CreditCard,
-      color: "bg-purple-500",
-    },
-  ];
+  const getUserSubmissions = async () => {
+    try {
+      const response = await GET("/usersubmissions", {
+        Authorization: `Bearer ${user.accessToken}`,
+      });
+      console.log(response);
+      setUserSubmissions(response);
+    } catch (error) {
+      console.error("Error fetching user submissions:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (user.accessToken) getUserSubmissions();
+  }, [user]);
 
   return (
     <>
@@ -349,41 +347,86 @@ export default function BentoGridDemo() {
         </ScrollArea>
       </div>
 
-      <div className="pt-5">
-        <div className="h-full px-4 sm:px-6 lg:px-8">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center pb-12">
-              <h2 className="font-bold text-white text-2xl">
-                Your Submissions
-              </h2>
-            </div>
+      {userSubmissions.length > 0 && (
+        <div className="py-5">
+          <div className="h-full px-4 sm:px-6 lg:px-8">
+            <div className="max-w-5xl mx-auto">
+              <div className="text-center pb-12">
+                <h2 className="font-bold text-white text-2xl">
+                  Your Submissions
+                </h2>
+              </div>
 
-            <div className="grid grid-cols-1 gap-12">
-              {features.map((feature, index) => (
-                <Card
-                  key={index}
-                  className="relative group  rounded-2xl shadow-sm p-8 transition-all duration-500 ease-in-out transform hover:-translate-y-1  cursor-pointer bg-black shadow-[#43aa8a]"
-                >
-                  <div
-                    className={`absolute -top-4 left-6 ${feature.color} rounded-xl p-3 shadow-lg group-hover:scale-110 transition-transform duration-300`}
+              <div className="grid grid-cols-1 gap-12">
+                {userSubmissions.map((submission, index) => (
+                  <Card
+                    key={index}
+                    className="relative group  rounded-2xl shadow-sm p-8 transition-all duration-500 ease-in-out transform hover:-translate-y-1  cursor-pointer bg-black shadow-[#43aa8a]"
                   >
-                    <feature.icon className="w-6 h-6 text-white" />
-                  </div>
+                    <div
+                      className={`absolute -top-8 left-6  rounded-xl p-3 shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                    >
+                      <Image
+                        src={submission.bounty.sponsor.image}
+                        alt=""
+                        width={100}
+                        height={100}
+                      ></Image>
+                    </div>
 
-                  <div className="mt-4">
-                    <h3 className="text-xl font-semibold text-white mt-2">
-                      {feature.title}
-                    </h3>
-                    <p className="mt-4 text-white leading-relaxed">
-                      {feature.description}
-                    </p>
-                  </div>
-                </Card>
-              ))}
+                    <div className="mt-4 w-full flex justify-between items-center">
+                      <div className=" flex flex-col gap-2 w-9/12">
+                        <h2 className="text-xl font-bold">
+                          {submission.bounty.bountyname}
+                        </h2>
+                        <div>
+                          <p className="font-semibold text-sm">
+                            {submission?.bounty?.sponsor?.name}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            Sponsor
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end gap-2">
+                        <div className="flex items-center ">
+                          <DollarSign className="h-4 w-4 text-green-500" />
+                          <span className="font-bold">
+                            {submission.bounty.price}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <ShieldCheck className="h-4 w-4 text-green-500" />
+                          <span className="font-bold">
+                            {submission.status === 0
+                              ? "In Review"
+                              : submission.status === 1
+                              ? "Approved"
+                              : "Rejected"}
+                          </span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                          <Calendar className="h-4 w-4" />
+                          <span>
+                            {new Date(submission?.createdAt).toLocaleDateString(
+                              "en-US",
+                              {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                              }
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
