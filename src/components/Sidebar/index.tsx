@@ -65,16 +65,16 @@ const Sidebar = ({ verified }: Props) => {
           <Tooltip>
             <TooltipTrigger>
               <Link
-                href={`/p/${user?.login}`}
+                href={`/profile/${user?.login}`}
                 className="flex items-center gap-4 hover:text-[#45bd95]"
               >
                 <User
                   size={32}
-                  color={isActive("/p/") ? "cyan" : "currentColor"}
+                  color={isActive("/profile/") ? "cyan" : "currentColor"}
                 />
                 <span
                   className={`hidden group-hover:inline-block transition-all duration-300 ease-in-out  ${
-                    isActive("/p/") && "text-cyan-500"
+                    isActive("/profile/") && "text-cyan-500"
                   }`}
                 >
                   Profile

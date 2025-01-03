@@ -82,7 +82,7 @@ const Leaderboard = () => {
   );
 
   const userProfile = (username: string) => {
-    router.push(`/p/${username}`);
+    router.push(`/profile/${username}`);
   };
 
   const currentUserProfile = profile.find(

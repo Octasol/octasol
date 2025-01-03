@@ -371,7 +371,7 @@ const Login = () => {
                   sessionToVerifyEmail.isVerifiedEmail ? "flex " : "hidden"
                 )}
               >
-                <Link prefetch href={`/p/${user?.login}`}>
+                <Link prefetch href={`/profile/${user?.login}`}>
                   <div className="relative flex md:hidden">
                     {/* <BottomGradient /> */}
                   </div>
