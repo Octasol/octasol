@@ -147,7 +147,7 @@ const BountyDetails = () => {
       {bounty ? (
         <div className="w-full h-full ">
           <div className="w-full flex flex-col md:flex-row ">
-            <div className="w-full md:max-w-[400px] flex flex-col md:flex-row h-full md:h-[90vh] overflow-hidden md:overflow-scroll">
+            <div className="w-full md:max-w-[400px] flex flex-col md:flex-row h-full md:h-[90vh] sticky top-0">
               <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl m-4">
                 <p className=" underline underline-offset-4 font-bold">
                   SPONSOR DETAILS
@@ -253,7 +253,7 @@ const BountyDetails = () => {
                 <div className="w-full h-full bg-gradient-to-r md:bg-gradient-to-b from-transparent via-[#46bf96] to-transparent"></div>
               </div> */}
             </div>
-            <div className="w-full flex md:h-[90vh] overflow-hidden md:overflow-scroll m-4 bg-[#0f0f0f] rounded-xl">
+            <div className="w-full flex h-full m-4 bg-[#0f0f0f] rounded-xl">
               <div className="w-full flex flex-col items-start py-5 px-4 md:px-8 gap-4">
                 <p className=" underline underline-offset-4 font-bold">
                   BOUNTY DETAILS
@@ -402,7 +402,7 @@ const BountyDetails = () => {
                   </div>
                 </div>
 
-                <div className="w-full flex flex-col gap-4 pb-8">
+                <div className="w-full flex flex-col gap-4 ">
                   <p className=" underline underline-offset-4 ">CONTACT</p>
                   <p className="text-slate-300 italic text-sm">
                     Reach out if you have any questions about this listing
