@@ -361,7 +361,7 @@ export default function BentoGridDemo() {
                     className="relative group  rounded-2xl shadow-sm p-8 transition-all duration-500 ease-in-out transform hover:-translate-y-1  cursor-pointer bg-black shadow-[#43aa8a]"
                     onClick={() => {
                       router.push(
-                        `/profile/${user.login}/submission/${submission.bounty.id}`
+                        `/profile/${user.login}/submission/${submission.id}`
                       );
                     }}
                   >

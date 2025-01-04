@@ -26,7 +26,6 @@ interface submission {
 const UserSubmisson = () => {
   const user = useSelector((state: any) => state.user);
   const pathname = usePathname();
-  const router = useRouter();
   const [submissionDetails, setSubmissionDetails] = useState<any>([]);
   const [submission, setSubmission] = useState<submission>({
     bountyId: "",
@@ -69,9 +68,10 @@ const UserSubmisson = () => {
         Authorization: `Bearer ${user.accessToken}`,
       });
 
-      const filteredSubmissions = response.filter(
-        (item: any) => item.bountyId == id
-      );
+      // console.log(response);
+
+      const filteredSubmissions = response.filter((item: any) => item.id == id);
+
       setSubmissionDetails(filteredSubmissions);
     } catch (error) {
       console.error("Error fetching user submissions:", error);
@@ -99,18 +99,6 @@ const UserSubmisson = () => {
     const { name, value } = e.target;
     setSubmission({ ...submission, [name]: value });
   };
-
-  useLayoutEffect(() => {
-    const username = pathname.split("/profile/")[1].split("/submission")[0];
-    if (username && user.login) {
-      console.log(username);
-      console.log(user?.login);
-      if (username !== user.login) {
-        router.push(`/profile/${user.login}`);
-        toast.error("You are not authorized to view this page");
-      }
-    }
-  }, [pathname, user]);
 
   return (
     <>
