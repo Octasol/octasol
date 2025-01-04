@@ -6,42 +6,34 @@ import { Bounty } from "@/lib/types";
 import { Send, Twitter, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { cn } from "@/lib/utils";
 import { toast } from "react-toastify";
-import { decrement } from "@/app/Redux/Features/loader/loaderSlice";
 
 interface submission {
   bountyId: string;
   links: string;
   notes: string;
   walletAddress: string;
+  id: string;
 }
 
 const UserSubmisson = () => {
   const user = useSelector((state: any) => state.user);
   const pathname = usePathname();
+  const router = useRouter();
   const [submissionDetails, setSubmissionDetails] = useState<any>([]);
   const [submission, setSubmission] = useState<submission>({
     bountyId: "",
     links: "",
     notes: "",
     walletAddress: "",
+    id: "",
   });
 
   const submit = async () => {
@@ -99,6 +91,7 @@ const UserSubmisson = () => {
       links: submissionDetails[0]?.links,
       notes: submissionDetails[0]?.notes,
       walletAddress: submissionDetails[0]?.walletAddress,
+      id: submissionDetails[0]?.id,
     });
   }, [submissionDetails]);
 
@@ -106,6 +99,18 @@ const UserSubmisson = () => {
     const { name, value } = e.target;
     setSubmission({ ...submission, [name]: value });
   };
+
+  useLayoutEffect(() => {
+    const username = pathname.split("/profile/")[1].split("/submission")[0];
+    if (username && user.login) {
+      console.log(username);
+      console.log(user?.login);
+      if (username !== user.login) {
+        router.push(`/profile/${user.login}`);
+        toast.error("You are not authorized to view this page");
+      }
+    }
+  }, [pathname, user]);
 
   return (
     <>
