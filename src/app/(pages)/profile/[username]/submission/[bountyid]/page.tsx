@@ -2,18 +2,18 @@
 
 import LoginButton from "@/components/Button/LoginButton";
 import { GET, POST } from "@/config/axios/requests";
-import { Bounty } from "@/lib/types";
 import { Send, Twitter, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useSelector } from "react-redux";
 import { cn } from "@/lib/utils";
 import { toast } from "react-toastify";
+import { adminGithub } from "@/lib/constants";
 
 interface submission {
   bountyId: string;
@@ -26,6 +26,7 @@ interface submission {
 const UserSubmisson = () => {
   const user = useSelector((state: any) => state.user);
   const pathname = usePathname();
+  const router = useRouter();
   const [submissionDetails, setSubmissionDetails] = useState<any>([]);
   const [submission, setSubmission] = useState<submission>({
     bountyId: "",
@@ -99,6 +100,23 @@ const UserSubmisson = () => {
     const { name, value } = e.target;
     setSubmission({ ...submission, [name]: value });
   };
+
+  useEffect(() => {
+    const test = pathname.split("/profile/").pop()?.split("/")[0];
+    console.log(test);
+
+    if (user.login && test) {
+      console.log(user);
+      console.log(adminGithub.includes((test as string).toLowerCase()));
+      if (
+        pathname.split("/profile/").pop()?.split("/")[0] !== user.login &&
+        !adminGithub.includes((test as string).toLowerCase())
+      ) {
+        toast.error("You are not authorized to view this page");
+        window.location.href = `/profile/${user.login}`;
+      }
+    }
+  }, [pathname, user]);
 
   return (
     <>
