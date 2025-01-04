@@ -347,9 +347,7 @@ export default function BentoGridDemo() {
           <div className="h-full px-4 sm:px-6 lg:px-8">
             <div className="max-w-5xl mx-auto">
               <div className="text-center pb-12">
-                <h2 className="font-bold text-white text-2xl">
-                  Your Submissions
-                </h2>
+                <h2 className="font-bold text-white text-2xl">Submissions</h2>
               </div>
 
               <div className="grid grid-cols-1 gap-12">
