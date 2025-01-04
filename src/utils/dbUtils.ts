@@ -936,3 +936,41 @@ export const getUserSubmissions = async (githubId: bigint) => {
     return false;
   }
 };
+
+export const getSubmissionByIdAndUsername = async (
+  submissionId: number,
+  username: string
+) => {
+  try {
+    const submission = await db.submission.findUnique({
+      where: {
+        id: submissionId,
+      },
+      include: {
+        user: {
+          select: {
+            githubUsername: true,
+          },
+        },
+        bounty: {
+          include: {
+            sponsor: true,
+          },
+        },
+      },
+    });
+
+    if (submission?.user?.githubUsername === username) {
+      return submission;
+    }
+
+    return null;
+  } catch (error) {
+    await logToDiscord(
+      `dbUtils/getSubmissionByIdAndUsername: ${(error as any).message}`,
+      "ERROR"
+    );
+    console.error(error);
+    return false;
+  }
+};
