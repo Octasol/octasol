@@ -112,7 +112,7 @@ const UserSubmisson = () => {
     <>
       {submissionDetails ? (
         <div className="w-full h-full flex flex-col md:flex-row gap-5 px-5 pb-2">
-          <section className="rounded-xl shadow-sm shadow-[#375e86] w-full md:w-1/2 flex flex-col md:flex-row h-full sticky top-0 bg-[#0f0f0f]">
+          <section className="rounded-xl shadow-sm shadow-[#375e86] w-full md:w-1/2 flex flex-col md:flex-row h-full md:sticky top-0 bg-[#0f0f0f]">
             <div className="p-4 w-full ">
               <div className="w-full px-2 flex flex-col gap-6 py-4">
                 <p className="w-full text-center font-bold text-lg">
@@ -179,7 +179,7 @@ const UserSubmisson = () => {
             </div>
           </section>
           <div className="w-full md:w-1/2 h-full flex flex-col gap-5">
-            <section className="w-full h-min sticky top-0 z-20 flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl shadow-sm shadow-[#375e86]">
+            <section className="w-full h-min md:sticky top-0 z-20 flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl shadow-sm shadow-[#375e86]">
               <div className="w-full flex flex-col md:flex-row justify-start items-start gap-8">
                 <div className="w-full md:w-fit flex justify-start items-start">
                   {submissionDetails?.bounty?.sponsor?.image ? (
