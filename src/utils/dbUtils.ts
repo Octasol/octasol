@@ -906,6 +906,11 @@ export const getUserSubmissions = async (githubId: bigint) => {
             sponsor: true,
           },
         },
+        user: {
+          select: {
+            githubUsername: true,
+          },
+        },
       },
     });
 

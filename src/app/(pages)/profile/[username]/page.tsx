@@ -133,12 +133,16 @@ export default function BentoGridDemo() {
   }, [pathname]);
 
   const getUserSubmissions = async () => {
+    const name = pathname.split("/profile/").pop();
     try {
       const response = await GET("/usersubmissions", {
         Authorization: `Bearer ${user.accessToken}`,
       });
+
       console.log(response);
-      setUserSubmissions(response);
+
+      if (response[0]?.user?.githubUsername === name)
+        setUserSubmissions(response);
     } catch (error) {
       console.error("Error fetching user submissions:", error);
     }

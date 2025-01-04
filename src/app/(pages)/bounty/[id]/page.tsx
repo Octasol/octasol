@@ -148,43 +148,36 @@ const BountyDetails = () => {
         <div className="w-full h-full ">
           <div className="w-full flex flex-col md:flex-row ">
             <div className="w-full md:max-w-[400px] flex flex-col md:flex-row h-full md:h-[90vh] overflow-hidden md:overflow-scroll">
-              <div className="w-full flex flex-col items-start py-5 px-4 md:px-8 gap-4">
-                <p className=" underline underline-offset-4 text-gray-400">
+              <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl m-4">
+                <p className=" underline underline-offset-4 font-bold">
                   SPONSOR DETAILS
                 </p>
-                <div className="w-full flex justify-between items-center ">
-                  <div className="w-8/12">
-                    {bounty?.sponsor && `${bounty?.sponsor.name}`}
-                  </div>
+                <div className="w-full flex justify-center items-center">
                   {bounty?.sponsor?.image ? (
                     <Image
                       src={bounty?.sponsor?.image || "/sponsor_image"}
                       alt={bounty?.sponsor?.name ?? ""}
-                      width={80}
-                      height={80}
-                      className="rounded-md aspect-square object-cover"
+                      width={100}
+                      height={100}
+                      className="rounded-full aspect-square object-cover"
                     />
                   ) : (
                     <User size={50} />
                   )}
                 </div>
-                <div className="w-full flex flex-col gap-4">
-                  <p className=" underline underline-offset-4 text-gray-400">
-                    DESCRIPTION
-                  </p>
-                  <div className="w-full italic text-gray-400">
-                    {bounty?.sponsor && bounty?.sponsor.description}
-                  </div>
+                <div className="w-full flex justify-between items-center ">
+                  {bounty?.sponsor && `${bounty?.sponsor.name}`}
+                </div>
+                <div className="w-full italic ">
+                  {bounty?.sponsor && bounty?.sponsor.description}
                 </div>
 
                 <div className="w-full flex flex-col gap-4">
-                  <p className=" underline underline-offset-4 text-gray-400">
-                    LINK
-                  </p>
                   <div className="w-full">
                     <Link
                       href={bounty?.sponsor ? bounty?.sponsor.link : "#"}
                       target="_blank"
+                      className="text-green-500"
                     >
                       {bounty?.sponsor?.link}
                     </Link>
@@ -196,9 +189,7 @@ const BountyDetails = () => {
                     bounty?.sponsor?.twitter ||
                     bounty?.sponsor?.discord) && (
                     <>
-                      <p className=" underline underline-offset-4 text-gray-400">
-                        CONTACT
-                      </p>
+                      <p className=" underline underline-offset-4 ">CONTACT</p>
                       <p className="text-slate-500 italic text-sm">
                         Reach out if you have any questions about this listing
                       </p>
@@ -258,13 +249,13 @@ const BountyDetails = () => {
                   </div>
                 </div>
               </div>
-              <div className="rotate-0 md:rotate-180 h-[1px] md:h-[85vh] w-full md:w-px block">
+              {/* <div className="rotate-0 md:rotate-180 h-[1px] md:h-[85vh] w-full md:w-px block">
                 <div className="w-full h-full bg-gradient-to-r md:bg-gradient-to-b from-transparent via-[#46bf96] to-transparent"></div>
-              </div>
+              </div> */}
             </div>
-            <div className="w-full flex md:h-[90vh] overflow-hidden md:overflow-scroll ">
+            <div className="w-full flex md:h-[90vh] overflow-hidden md:overflow-scroll m-4 bg-[#0f0f0f] rounded-xl">
               <div className="w-full flex flex-col items-start py-5 px-4 md:px-8 gap-4">
-                <p className=" underline underline-offset-4 text-gray-400">
+                <p className=" underline underline-offset-4 font-bold">
                   BOUNTY DETAILS
                 </p>
                 <div className="w-full flex justify-between items-center gap-2">
@@ -286,11 +277,11 @@ const BountyDetails = () => {
                                 }
                               }}
                               className={cn(
-                                `relative inline-flex items-center justify-center p-0.5  overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 
+                                `bg-emerald-600 text-black px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors 
                                cursor-pointer`
                               )}
                             >
-                              <span className="relative px-3 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
+                              <span className="relative px-3 py-2 transition-all ease-in duration-75 rounded-md group-hover:bg-opacity-60">
                                 {submitted
                                   ? "Edit\u00A0Application"
                                   : "Submit\u00A0Application"}
@@ -391,11 +382,9 @@ const BountyDetails = () => {
                   </div>
                 </div>
                 <div className="w-full flex flex-col gap-4">
-                  <p className=" underline underline-offset-4 text-gray-400">
-                    DESCRIPTION
-                  </p>
+                  <p className=" underline underline-offset-4 ">DESCRIPTION</p>
                   <div
-                    className="w-full italic text-gray-400"
+                    className="w-full italic "
                     dangerouslySetInnerHTML={{
                       __html: bounty?.bountyDescription ?? "",
                     }}
@@ -403,9 +392,7 @@ const BountyDetails = () => {
                 </div>
 
                 <div className="w-full flex flex-col gap-4">
-                  <p className=" underline underline-offset-4 text-gray-400">
-                    SKILLS
-                  </p>
+                  <p className=" underline underline-offset-4 ">SKILLS</p>
                   <div className="w-full flex flex-wrap gap-5">
                     {bounty?.skills.map((skill) => (
                       <div key={skill}>
@@ -416,10 +403,8 @@ const BountyDetails = () => {
                 </div>
 
                 <div className="w-full flex flex-col gap-4 pb-8">
-                  <p className=" underline underline-offset-4 text-gray-400">
-                    CONTACT
-                  </p>
-                  <p className="text-slate-500 italic text-sm">
+                  <p className=" underline underline-offset-4 ">CONTACT</p>
+                  <p className="text-slate-300 italic text-sm">
                     Reach out if you have any questions about this listing
                   </p>
                   <div className="w-full flex flex-wrap  gap-3 ">
