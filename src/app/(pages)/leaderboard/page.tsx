@@ -94,7 +94,7 @@ const Leaderboard = () => {
 
   return (
     <>
-      <div className="w-full hidden md:flex justify-center items-center text-3xl font-bold tracking-widest pt-8">
+      <div className="w-full hidden md:flex justify-center items-center text-3xl font-bold tracking-widest">
         LEADERBOARD
       </div>
       <div className="w-full h-fit pt-4">

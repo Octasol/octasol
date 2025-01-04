@@ -28,7 +28,7 @@ const Layout = ({ children }: Props) => {
 
         <div className="h-full w-full ml-0 md:ml-[80px]">
           {verifiedEmail ? (
-            <div className="w-full max-h-screen pt-16 overflow-scroll relative">
+            <div className="w-full max-h-screen pt-[80px] overflow-scroll relative">
               {children}
             </div>
           ) : (
