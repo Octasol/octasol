@@ -94,7 +94,7 @@ const Leaderboard = () => {
 
   return (
     <>
-      <div className="w-full hidden md:flex justify-center items-center text-3xl font-bold tracking-widest">
+      <div className="w-full hidden md:flex justify-center items-center text-3xl font-bold tracking-widest pt-8">
         LEADERBOARD
       </div>
       <div className="w-full h-fit pt-4">
@@ -218,7 +218,7 @@ const Leaderboard = () => {
             </Table>
           </div>
         )}
-        <div className="flex justify-between items-center pt-6 pb-6 md:pb-16 w-full">
+        <div className="flex justify-between items-center pt-6 pb-5 w-full">
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
