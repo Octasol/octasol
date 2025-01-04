@@ -1,12 +1,6 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
-import {
-  Calendar,
-  CreditCard,
-  DollarSign,
-  ShieldCheck,
-  Zap,
-} from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Calendar, DollarSign, ShieldCheck } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
