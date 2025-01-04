@@ -13,7 +13,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { DataObject, userNames } from "@/lib/types";
@@ -52,6 +52,7 @@ interface RadarObject {
 
 export default function BentoGridDemo() {
   const pathname = usePathname();
+  const router = useRouter();
   const [userName, setUserName] = useState<userNames>({
     githubUsername: "",
     superteamUsername: "",
@@ -362,6 +363,11 @@ export default function BentoGridDemo() {
                   <Card
                     key={index}
                     className="relative group  rounded-2xl shadow-sm p-8 transition-all duration-500 ease-in-out transform hover:-translate-y-1  cursor-pointer bg-black shadow-[#43aa8a]"
+                    onClick={() => {
+                      router.push(
+                        `/profile/${user.login}/submission/${submission.bounty.id}`
+                      );
+                    }}
                   >
                     <div
                       className={`absolute -top-8 left-6  rounded-xl p-3 shadow-lg group-hover:scale-110 transition-transform duration-300`}
