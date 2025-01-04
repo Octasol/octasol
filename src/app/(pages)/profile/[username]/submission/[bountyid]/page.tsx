@@ -113,7 +113,7 @@ const UserSubmisson = () => {
       {submissionDetails ? (
         <div className="w-full h-full flex flex-col md:flex-row gap-5 px-5 pb-2">
           <section className="rounded-xl shadow-sm shadow-[#375e86] w-full md:w-1/2 flex flex-col md:flex-row h-full sticky top-0 bg-[#0f0f0f]">
-            <div className="m-4 w-full ">
+            <div className="p-4 w-full ">
               <div className="w-full px-2 flex flex-col gap-6 py-4">
                 <p className="w-full text-center font-bold text-lg">
                   YOUR APPLICATION
