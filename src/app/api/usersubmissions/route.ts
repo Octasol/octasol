@@ -24,9 +24,7 @@ export async function GET(req: NextRequest) {
         );
       }
 
-      const userSubmissions = bigintToString(
-        await getUserSubmissions(user.githubId)
-      );
+      const userSubmissions = bigintToString(await getUserSubmissions(user.id));
 
       return NextResponse.json(userSubmissions, { status: 200 });
     } else {

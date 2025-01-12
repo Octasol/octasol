@@ -116,18 +116,14 @@ export default function BentoGridDemo() {
     const name = pathname.split("/profile/").pop();
 
     if (name) {
-      // Step 1: Check for saved radar data in localStorage
       const savedRadarData = localStorage.getItem(`radarData_${name}`);
       if (savedRadarData) {
-        // Step 2: Set saved radar data to the state and show it
         setRadarData(JSON.parse(savedRadarData));
         setIsRadarLoading(false);
       } else {
-        // No saved data, indicate loading
         setIsRadarLoading(true);
       }
 
-      // Step 3: Fetch new radar data
       userData(name);
     }
   }, [pathname]);
@@ -365,16 +361,18 @@ export default function BentoGridDemo() {
                       );
                     }}
                   >
-                    <div
-                      className={`absolute -top-8 left-6  rounded-xl p-3 shadow-lg group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      <Image
-                        src={submission.bounty.sponsor.image}
-                        alt=""
-                        width={100}
-                        height={100}
-                      ></Image>
-                    </div>
+                    {submission?.bounty?.sponsor?.image && (
+                      <div
+                        className={`absolute -top-8 left-6  rounded-xl p-3 shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                      >
+                        <Image
+                          src={submission.bounty.sponsor.image}
+                          alt=""
+                          width={100}
+                          height={100}
+                        ></Image>
+                      </div>
+                    )}
 
                     <div className="mt-4 w-full flex justify-between items-center">
                       <div className=" flex flex-col gap-2 w-9/12">

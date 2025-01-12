@@ -895,6 +895,8 @@ export const getBountySubmissions = async (id: number) => {
 };
 
 export const getUserSubmissions = async (githubId: bigint) => {
+  console.log("githubId", githubId);
+
   try {
     const submissions = await db.submission.findMany({
       where: {
@@ -941,6 +943,9 @@ export const getSubmissionByIdAndUsername = async (
   submissionId: number,
   username: string
 ) => {
+  console.log("submissionId", submissionId);
+  console.log("username", username);
+
   try {
     const submission = await db.submission.findUnique({
       where: {
