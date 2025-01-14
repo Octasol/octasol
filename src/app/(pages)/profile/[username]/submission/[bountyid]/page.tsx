@@ -5,7 +5,7 @@ import { GET, POST } from "@/config/axios/requests";
 import { Send, Twitter, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -26,7 +26,6 @@ interface submission {
 const UserSubmisson = () => {
   const user = useSelector((state: any) => state.user);
   const pathname = usePathname();
-  const router = useRouter();
   const [submissionDetails, setSubmissionDetails] = useState<any>();
   const [submission, setSubmission] = useState<submission>({
     bountyId: "",
@@ -35,6 +34,7 @@ const UserSubmisson = () => {
     walletAddress: "",
     id: "",
   });
+  const [showAcceptButton, setShowAcceptButton] = useState<boolean>(false);
 
   const id = pathname.split("/submission/").pop();
   const username = pathname.split("/profile/").pop()?.split("/")[0];
@@ -69,9 +69,6 @@ const UserSubmisson = () => {
 
   const getUserSubmissions = async () => {
     try {
-      console.log("Extracted ID:", id);
-      console.log("Extracted Username:", username);
-
       const response = await GET(
         `/usersubmissions?username=${username}&id=${id}`
       );
@@ -92,7 +89,6 @@ const UserSubmisson = () => {
   }, [user, pathname]);
 
   useEffect(() => {
-    console.log(submissionDetails);
     setSubmission({
       bountyId: submissionDetails?.bountyId,
       links: submissionDetails?.links,
@@ -102,10 +98,20 @@ const UserSubmisson = () => {
     });
   }, [submissionDetails]);
 
+  useEffect(() => {
+    if (submissionDetails?.bounty?.sponsor?.githubId == user.githubId) {
+      setShowAcceptButton(true);
+    }
+  }, [user, submissionDetails]);
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     if (username === user.login)
       setSubmission({ ...submission, [name]: value });
+  };
+
+  const acceptApplication = (id: bigint) => {
+    console.log(id);
   };
 
   return (
@@ -163,19 +169,39 @@ const UserSubmisson = () => {
                   />
                 </div>
               </div>
-              <div className="w-full flex justify-center items-center mt-5">
-                <button
-                  onClick={submit}
-                  className={cn(
-                    `bg-[#30ad47] text-slate-900 px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors 
+              {username === user.login && (
+                <div className="w-full flex justify-center items-center mt-5">
+                  <button
+                    onClick={submit}
+                    className={cn(
+                      `bg-[#30ad47] text-slate-900 px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors 
                                cursor-pointer`
-                  )}
-                >
-                  <span className="relative px-3 py-2 transition-all ease-in duration-75 rounded-md group-hover:bg-opacity-60">
-                    {"Edit\u00A0Application"}
-                  </span>
-                </button>
-              </div>
+                    )}
+                  >
+                    <span className="relative px-3 py-2 transition-all ease-in duration-75 rounded-md group-hover:bg-opacity-60">
+                      {"Edit\u00A0Application"}
+                    </span>
+                  </button>
+                </div>
+              )}
+
+              {showAcceptButton && (
+                <div className="w-full flex justify-center items-center mt-5">
+                  <button
+                    onClick={() =>
+                      acceptApplication(submissionDetails?.githubId)
+                    }
+                    className={cn(
+                      `bg-[#30ad47] text-slate-900 px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors
+                 cursor-pointer`
+                    )}
+                  >
+                    <span className="relative px-3 py-2 transition-all ease-in duration-75 rounded-md group-hover:bg-opacity-60">
+                      {"Accept\u00A0Application"}
+                    </span>
+                  </button>
+                </div>
+              )}
             </div>
           </section>
           <div className="w-full md:w-1/2 h-full flex flex-col gap-5">
