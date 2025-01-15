@@ -1,6 +1,7 @@
 import { getUserByAuthHeader } from "@/lib/apiUtils";
 import { bigintToString } from "@/lib/utils";
 import { getBountySubmissions, setBountySubmission } from "@/utils/dbUtils";
+import { logToDiscord } from "@/utils/logger";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -25,7 +26,10 @@ export async function POST(req: NextRequest) {
     const response = bigintToString(
       await setBountySubmission(links, notes, walletAddress, bountyId, id, user)
     );
-
+    await logToDiscord(
+      `User ${user.username} has submitted bounty ${bountyId} with
+      links: ${links}, notes: ${notes}, walletAddress: ${walletAddress}`
+    );
     return NextResponse.json({ response }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
