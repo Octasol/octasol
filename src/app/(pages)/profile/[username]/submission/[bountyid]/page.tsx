@@ -43,11 +43,7 @@ const UserSubmisson = () => {
     if (username !== user.login) {
       return toast.error("You are not authorized to edit this submission");
     }
-    if (
-      !submission.links.length ||
-      !submission.notes ||
-      !submission.walletAddress
-    ) {
+    if (!submission.links.length || !submission.walletAddress) {
       toast.info("Enter All Fields");
       return;
     }
@@ -150,7 +146,6 @@ const UserSubmisson = () => {
                   <Textarea
                     name="notes"
                     id="notes"
-                    required
                     value={submission?.notes || ""}
                     onChange={handleChange}
                     placeholder={
