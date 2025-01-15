@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { cn } from "@/lib/utils";
 import { toast } from "react-toastify";
 import { decrement } from "@/app/Redux/Features/loader/loaderSlice";
+import CopyLinkButton from "@/components/Button/CopyLinkButton";
 
 const bountySubmission = {
   links: [],
@@ -155,7 +156,7 @@ const BountyDetails = () => {
       {bounty ? (
         <div className="w-full h-full flex">
           <div className="w-full flex flex-col md:flex-row ">
-            <div className="w-full md:max-w-[400px] flex flex-col md:flex-row h-full md:h-[90vh] relative md:sticky top-0 px-4">
+            <div className="w-full md:max-w-[400px] flex flex-col h-full md:h-[90vh] relative md:sticky top-0 px-4">
               <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl ">
                 <p className=" underline underline-offset-4 font-bold">
                   SPONSOR DETAILS
@@ -254,9 +255,15 @@ const BountyDetails = () => {
                 </div>
               </div>
 
-              <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl ">
-                {submissionLink && <>{`${submissionLink}`}</>}
-              </div>
+              {submissionLink && (
+                <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl ">
+                  <CopyLinkButton data={submissionLink}>
+                    <span className="text-sm md:text-base">
+                      Copy Submission Link
+                    </span>
+                  </CopyLinkButton>
+                </div>
+              )}
               {/* <div className="rotate-0 md:rotate-180 h-[1px] md:h-[85vh] w-full md:w-px block">
                 <div className="w-full h-full bg-gradient-to-r md:bg-gradient-to-b from-transparent via-[#46bf96] to-transparent"></div>
               </div> */}
