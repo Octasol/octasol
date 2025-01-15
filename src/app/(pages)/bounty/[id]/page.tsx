@@ -117,6 +117,9 @@ const BountyDetails = () => {
     if (submissions.length > 0) {
       submissions.forEach((item: any) => {
         if (item.githubId == user.githubId) {
+          setSubmissionLink(
+            `https://octasol.io/profile/${user.login}/submission/${item.id}`
+          );
           setSubmitted(true);
           console.log(item);
 
@@ -269,7 +272,7 @@ const BountyDetails = () => {
                     onClick={() => {
                       handleConnect(submissionLink);
                     }}
-                    className="flex justify-center items-center gap-8 cursor-pointer group"
+                    className="flex justify-center items-center gap-2 cursor-pointer group"
                   >
                     <Copy className="text-white group-hover:text-green-500 transition-colors duration-200" />
                     <span className="text-sm md:text-base text-white group-hover:text-green-500 transition-colors duration-200">
