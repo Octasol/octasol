@@ -28,7 +28,7 @@ interface Bounty {
   bountyname: string;
   skills: string[];
   id: number;
-  createdAt: string;
+  time: string;
 }
 
 const Bounty = () => {
@@ -117,7 +117,7 @@ const Bounty = () => {
                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                   <Calendar className="h-4 w-4" />
                   <span>
-                    {new Date(bounty?.createdAt).toLocaleDateString("en-US", {
+                    {new Date(bounty?.time).toLocaleDateString("en-US", {
                       day: "numeric",
                       month: "short",
                       year: "numeric",
