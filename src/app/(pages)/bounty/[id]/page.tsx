@@ -42,6 +42,7 @@ const BountyDetails = () => {
   const [submission, setSubmission] = useState(bountySubmission);
   const [submitted, setSubmitted] = useState(false);
   const [telegramLink, setTelegramLink] = useState<String>();
+  const [submissionLink, setSubmissionLink] = useState<String>();
 
   useEffect(() => {
     setId(parseInt(pathname.split("/bounty/")[1]));
@@ -113,6 +114,9 @@ const BountyDetails = () => {
     if (submissions.length > 0) {
       submissions.forEach((item: any) => {
         if (item.githubId == user.githubId) {
+          setSubmissionLink(
+            `https://octasol.io/${user.login}/submissions/${item.id}`
+          );
           setSubmitted(true);
           console.log(item);
           setSubmission(item);
@@ -248,6 +252,10 @@ const BountyDetails = () => {
                     )}
                   </div>
                 </div>
+              </div>
+
+              <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl ">
+                {submissionLink && <>{`${submissionLink}`}</>}
               </div>
               {/* <div className="rotate-0 md:rotate-180 h-[1px] md:h-[85vh] w-full md:w-px block">
                 <div className="w-full h-full bg-gradient-to-r md:bg-gradient-to-b from-transparent via-[#46bf96] to-transparent"></div>
