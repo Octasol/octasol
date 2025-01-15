@@ -153,7 +153,9 @@ const UserSubmisson = () => {
                     required
                     value={submission?.notes || ""}
                     onChange={handleChange}
-                    placeholder={submission?.notes || "notes"}
+                    placeholder={
+                      submission?.notes || "Anything you want to tell us"
+                    }
                   />
                 </div>
                 <div className="grid w-full  items-center gap-1.5">
