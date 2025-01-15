@@ -386,7 +386,7 @@ const BountyDetails = () => {
                       )}
                     </div>
                   </div>
-                  <div className="w-full h-[1px] bg-black py- rounded-full"></div>
+                  <div className="w-full h-[1px] bg-black pb-1 rounded-full"></div>
 
                   <div className="w-full flex flex-col gap-4">
                     <p className=" underline underline-offset-4 ">
