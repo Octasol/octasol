@@ -2,7 +2,7 @@
 import LoginButton from "@/components/Button/LoginButton";
 import { GET, POST } from "@/config/axios/requests";
 import { Bounty } from "@/lib/types";
-import { Send, Twitter, User } from "lucide-react";
+import { Copy, Send, Twitter, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -151,6 +151,15 @@ const BountyDetails = () => {
     );
   }, [bounty]);
 
+  const notify = (message: string) => {
+    toast.info(message);
+  };
+
+  const handleConnect = async (data: any) => {
+    navigator.clipboard.writeText(data);
+    notify("Link Copied");
+  };
+
   return (
     <>
       {bounty ? (
@@ -256,12 +265,18 @@ const BountyDetails = () => {
               </div>
 
               {submissionLink && (
-                <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl ">
-                  <CopyLinkButton data={submissionLink}>
+                <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl my-4">
+                  <div
+                    onClick={() => {
+                      handleConnect(submissionLink);
+                    }}
+                    className="flex justify-center items-center"
+                  >
+                    <Copy />
                     <span className="text-sm md:text-base">
                       Copy Submission Link
                     </span>
-                  </CopyLinkButton>
+                  </div>
                 </div>
               )}
               {/* <div className="rotate-0 md:rotate-180 h-[1px] md:h-[85vh] w-full md:w-px block">
