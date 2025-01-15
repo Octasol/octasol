@@ -41,6 +41,7 @@ const BountyDetails = () => {
   const [submissions, setSubmissions] = useState<any>([]);
   const [submission, setSubmission] = useState(bountySubmission);
   const [submitted, setSubmitted] = useState(false);
+  const [telegramLink, setTelegramLink] = useState<String>();
 
   useEffect(() => {
     setId(parseInt(pathname.split("/bounty/")[1]));
@@ -140,6 +141,9 @@ const BountyDetails = () => {
         dispatch(decrement());
       }
     }
+    setTelegramLink(
+      `https://t.me/${bounty?.sponsor?.telegram?.replace("@", "")}`
+    );
   }, [bounty]);
 
   return (
@@ -215,11 +219,7 @@ const BountyDetails = () => {
 
                     {bounty?.sponsor?.telegram && (
                       <Link
-                        href={
-                          bounty?.sponsor
-                            ? `https://t.me/${bounty?.sponsor.telegram}`
-                            : "#"
-                        }
+                        href={bounty?.sponsor ? `${telegramLink}` : "#"}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
