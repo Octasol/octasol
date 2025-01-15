@@ -122,7 +122,9 @@ const UserSubmisson = () => {
             <div className="p-4 w-full ">
               <div className="w-full px-2 flex flex-col gap-6 py-4">
                 <p className="w-full text-center font-bold text-lg">
-                  YOUR APPLICATION
+                  {showAcceptButton
+                    ? "ACCEPT APPLICATION"
+                    : "EDIT YOUR APPLICATION"}
                 </p>
                 <div className="grid w-full  items-center gap-1.5">
                   <Label className="text-base" htmlFor="links">
