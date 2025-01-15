@@ -278,11 +278,10 @@ const BountyDetails = () => {
                                   }
                                 }}
                                 className={cn(
-                                  `bg-emerald-600 text-black px-1 py-3 rounded-lg font-semibold text-start hover:bg-green-600 transition-colors 
-                               cursor-pointer`
+                                  `relative inline-flex items-center justify-center p-0.5  overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 cursor-pointer`
                                 )}
                               >
-                                <span className="relative px-2 py-2 transition-all ease-in duration-75 rounded-md group-hover:bg-opacity-60">
+                                <span className="relative px-3 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md">
                                   {submitted
                                     ? "Edit Application"
                                     : "Submit Application"}
@@ -376,10 +375,9 @@ const BountyDetails = () => {
                                 );
                               }
                             }}
-                            className="bg-emerald-600 text-black px-1 py-3 rounded-lg font-semibold text-start hover:bg-green-600 transition-colors 
-                               cursor-pointer"
+                            className="relative inline-flex items-center justify-center p-0.5  overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 cursor-pointer opacity-50"
                           >
-                            <span className="relative px-3 py-2 transition-all ease-in duration-75  rounded-md group-hover:bg-opacity-60">
+                            <span className="relative px-3 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
                               {"Submit\u00A0Application"}
                             </span>
                           </button>
