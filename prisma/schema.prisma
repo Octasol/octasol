@@ -138,7 +138,7 @@ model Bounty {
 model Submission {
   id            Int      @id @default(autoincrement())
   links         String[] @default([])
-  status        Int      @default(0) // 0: draft, 1: submitted
+  status        Int      @default(0) // 0: draft, 1: submitted, 2: is winner, 3: rejected
   notes         String?
   walletAddress String?
   createdAt     DateTime @default(now())
