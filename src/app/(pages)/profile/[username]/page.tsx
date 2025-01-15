@@ -354,16 +354,21 @@ export default function BentoGridDemo() {
                 {userSubmissions.map((submission, index) => (
                   <Card
                     key={index}
-                    className="relative group  rounded-2xl shadow-sm p-8 transition-all duration-500 ease-in-out transform hover:-translate-y-1  cursor-pointer bg-black shadow-[#43aa8a]"
+                    className="relative group  rounded-2xl shadow-sm p-5  md:p-8 transition-all duration-500 ease-in-out transform hover:-translate-y-1  cursor-pointer bg-black shadow-[#43aa8a]"
                     onClick={() => {
                       router.push(
                         `/profile/${user.login}/submission/${submission.id}`
                       );
                     }}
                   >
-                    {submission?.bounty?.sponsor?.image && (
+                    
+
+                    <div className="mt-4 w-full flex flex-col md:flex-row justify-between items-center gap-5">
+                      <div className=" flex flex-col gap-2 w-full md:w-9/12">
+                      <div className="flex items-center justify-between w-full gap-2">
+                      {submission?.bounty?.sponsor?.image && (
                       <div
-                        className={`absolute -top-8 left-6  rounded-xl p-3 shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                        className={`rounded-xl p-3 shadow-lg group-hover:scale-110 transition-transform duration-300`}
                       >
                         <Image
                           src={submission.bounty.sponsor.image}
@@ -373,38 +378,31 @@ export default function BentoGridDemo() {
                         ></Image>
                       </div>
                     )}
-
-                    <div className="mt-4 w-full flex justify-between items-center">
-                      <div className=" flex flex-col gap-2 w-9/12">
-                        <h2 className="text-xl font-bold">
+                        <h2 className="text-base md:text-xl font-bold w-full">
                           {submission.bounty.bountyname}
                         </h2>
                         <div>
-                          <p className="font-semibold text-sm">
-                            {submission?.bounty?.sponsor?.name}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            Sponsor
-                          </p>
-                        </div>
                       </div>
-                      <div className="flex flex-col items-end gap-2">
+                        </div>
+                         
+                      </div>
+                      <div className="flex flex-row md:flex-col justify-between w-full items-center md:items-end gap-2 px-4">
                         <div className="flex items-center ">
                           <DollarSign className="h-4 w-4 text-green-500" />
                           <span className="font-bold">
                             {submission.bounty.price}
                           </span>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <ShieldCheck className="h-4 w-4 text-green-500" />
-                          <span className="font-bold">
+                        {/* <div className="flex items-center gap-2"> */}
+                          {/* <ShieldCheck className="h-4 w-4 text-green-500" /> */}
+                          {/* <span className="font-bold">
                             {submission.status === 0
                               ? "In Review"
                               : submission.status === 1
                               ? "Approved"
                               : "Rejected"}
-                          </span>
-                        </div>
+                          </span> */}
+                        {/* </div> */}
                         <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                           <Calendar className="h-4 w-4" />
                           <span>

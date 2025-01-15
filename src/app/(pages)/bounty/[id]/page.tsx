@@ -116,7 +116,7 @@ const BountyDetails = () => {
       submissions.forEach((item: any) => {
         if (item.githubId == user.githubId) {
           setSubmissionLink(
-            `https://octasol.io/${user.login}/submissions/${item.id}`
+            `https://octasol.io/profile/${user.login}/submission/${item.id}`
           );
           setSubmitted(true);
           console.log(item);
@@ -265,20 +265,21 @@ const BountyDetails = () => {
               </div>
 
               {submissionLink && (
-                <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl my-4">
-                  <div
-                    onClick={() => {
-                      handleConnect(submissionLink);
-                    }}
-                    className="flex justify-center items-center gap-8 cursor-pointer"
-                  >
-                    <Copy />
-                    <span className="text-sm md:text-base">
-                      Copy Submission Link
-                    </span>
-                  </div>
-                </div>
-              )}
+  <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl my-4">
+    <div
+      onClick={() => {
+        handleConnect(submissionLink);
+      }}
+      className="flex justify-center items-center gap-8 cursor-pointer group"
+    >
+      <Copy className="text-white group-hover:text-green-500 transition-colors duration-200" />
+      <span className="text-sm md:text-base text-white group-hover:text-green-500 transition-colors duration-200">
+        Copy Submission Link
+      </span>
+    </div>
+  </div>
+)}
+
               {/* <div className="rotate-0 md:rotate-180 h-[1px] md:h-[85vh] w-full md:w-px block">
                 <div className="w-full h-full bg-gradient-to-r md:bg-gradient-to-b from-transparent via-[#46bf96] to-transparent"></div>
               </div> */}
