@@ -330,7 +330,7 @@ const BountyDetails = () => {
                                     required
                                     value={submission?.notes || ""}
                                     onChange={handleChange}
-                                    placeholder="note"
+                                    placeholder="Anything you want to tell us"
                                   />
                                 </div>
                                 <div className="grid w-full max-w-lg items-center gap-1.5">
@@ -351,9 +351,10 @@ const BountyDetails = () => {
                                   <div className="w-full flex justify-center items-center py-5">
                                     <button
                                       onClick={submit}
-                                      className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
+                                      className="bg-emerald-600 text-black px-1 py-3 rounded-lg font-semibold text-start hover:bg-green-600 transition-colors 
+                               cursor-pointer"
                                     >
-                                      <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
+                                      <span className="relative px-5 py-2.5 transition-all ease-in duration-75 rounded-md group-hover:bg-opacity-60">
                                         {submitted
                                           ? "Update Submission"
                                           : "Submit"}
