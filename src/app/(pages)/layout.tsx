@@ -26,9 +26,9 @@ const Layout = ({ children }: Props) => {
           <Sidebar verified={verifiedEmail} />
         </div>
 
-        <div className="flex-1 w-full ml-0 md:ml-[80px]">
+        <div className="h-full w-full ml-0 md:ml-[80px]">
           {verifiedEmail ? (
-            <div className="w-full max-h-screen pt-20 overflow-scroll">
+            <div className="w-full max-h-screen pt-[80px] overflow-scroll relative">
               {children}
             </div>
           ) : (

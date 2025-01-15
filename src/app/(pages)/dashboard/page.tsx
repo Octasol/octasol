@@ -7,7 +7,7 @@ import React from "react";
 const Dashboard = () => {
   return (
     <>
-      <div className=" overflow-auto flex flex-col gap-4 h-full w-full items-center relative">
+      <div className=" overflow-auto flex flex-col gap-4 h-full w-full items-center relative py-5">
         <CoverUpPage />
         <h1 className="text-xl md:text-3xl px-8">Dashboard</h1>
         <div className="pb-10 md:pb-4 px-8  w-full">

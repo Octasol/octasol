@@ -82,7 +82,7 @@ const Leaderboard = () => {
   );
 
   const userProfile = (username: string) => {
-    router.push(`/p/${username}`);
+    router.push(`/profile/${username}`);
   };
 
   const currentUserProfile = profile.find(
@@ -98,7 +98,7 @@ const Leaderboard = () => {
         LEADERBOARD
       </div>
       <div className="w-full h-fit pt-4">
-        <div className="w-full flex flex-col justify-center items-center py-2 md:py-10">
+        <div className="w-full flex flex-col justify-center items-center py-2 md:py-5">
           <div className="mb-8 md:mb-0 z-20">
             <RankCard profile={profile[0]} rank={1} />
           </div>
@@ -113,7 +113,7 @@ const Leaderboard = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-[82vh]  md:bottom-10 right-[10px] z-30 max-w-[500px]">
+      <div className="fixed bottom-[82vh]  md:bottom-10 right-[10px] z-30 max-w-[500px]">
         <div>
           <button
             onClick={toggleSearch}
@@ -218,7 +218,7 @@ const Leaderboard = () => {
             </Table>
           </div>
         )}
-        <div className="flex justify-between items-center pt-6 pb-6 md:pb-16 w-full">
+        <div className="flex justify-between items-center pt-6 pb-5 w-full">
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}

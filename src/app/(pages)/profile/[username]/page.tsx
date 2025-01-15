@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { Calendar, DollarSign, ShieldCheck } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { DataObject, userNames } from "@/lib/types";
@@ -14,6 +15,9 @@ import Image from "next/image";
 import { StatDetails } from "@/components/Charts/StatDetails";
 import RadarLoader from "@/components/ComponentLoader/RadarLoader";
 import { ProfileLoader } from "@/components/ComponentLoader/ProfileLoader";
+import { Card } from "@/components/ui/card";
+import { GET } from "@/config/axios/requests";
+import { useSelector } from "react-redux";
 
 const ScrollArea = dynamic(
   () => import("@/components/ui/scroll-area").then((mod) => mod.ScrollArea),
@@ -42,6 +46,7 @@ interface RadarObject {
 
 export default function BentoGridDemo() {
   const pathname = usePathname();
+  const router = useRouter();
   const [userName, setUserName] = useState<userNames>({
     githubUsername: "",
     superteamUsername: "",
@@ -61,6 +66,8 @@ export default function BentoGridDemo() {
   const [radarData, setRadarData] = useState<RadarObject | null>(null);
   const [isRadarLoading, setIsRadarLoading] = useState<boolean>(true);
   const [isUserLoading, setIsUserLoading] = useState<boolean>(true);
+  const user = useSelector((state: any) => state.user);
+  const [userSubmissions, setUserSubmissions] = useState<any[]>([]);
 
   const userData = async (name: string) => {
     setIsUserLoading(true);
@@ -92,7 +99,8 @@ export default function BentoGridDemo() {
     }
 
     try {
-      const radarResponse = (await axios.get(`/api/radar?username=${name}`)).data;
+      const radarResponse = (await axios.get(`/api/radar?username=${name}`))
+        .data;
       setRadarData(radarResponse);
 
       // Save radar data in localStorage
@@ -105,28 +113,44 @@ export default function BentoGridDemo() {
   };
 
   useEffect(() => {
-    const name = pathname.split("/p/").pop();
+    const name = pathname.split("/profile/").pop();
 
     if (name) {
-      // Step 1: Check for saved radar data in localStorage
       const savedRadarData = localStorage.getItem(`radarData_${name}`);
       if (savedRadarData) {
-        // Step 2: Set saved radar data to the state and show it
         setRadarData(JSON.parse(savedRadarData));
         setIsRadarLoading(false);
       } else {
-        // No saved data, indicate loading
         setIsRadarLoading(true);
       }
 
-      // Step 3: Fetch new radar data
       userData(name);
     }
   }, [pathname]);
 
+  const getUserSubmissions = async () => {
+    const name = pathname.split("/profile/").pop();
+    try {
+      const response = await GET("/usersubmissions", {
+        Authorization: `Bearer ${user.accessToken}`,
+      });
+
+      console.log(response);
+
+      if (response[0]?.user?.githubUsername === name)
+        setUserSubmissions(response);
+    } catch (error) {
+      console.error("Error fetching user submissions:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (user.accessToken) getUserSubmissions();
+  }, [user]);
+
   return (
     <>
-      <div className="w-full flex flex-col md:flex-row justify-center items-center px-4">
+      <div className="w-full flex flex-col justify-center items-center px-4 pb-12">
         <div className="w-full md:w-6/12">
           {isRadarLoading ? (
             <RadarLoader />
@@ -134,7 +158,7 @@ export default function BentoGridDemo() {
             radarData && <RadialChart stats={radarData} />
           )}
         </div>
-        <ScrollArea className="w-full md:w-6/12 md:h-[80vh] overflow-scroll px-4 ">
+        <ScrollArea className="w-full max-w-5xl ">
           {isUserLoading ? (
             <ProfileLoader />
           ) : (
@@ -144,7 +168,7 @@ export default function BentoGridDemo() {
                   <AccordionTrigger>
                     <div className="w-full flex justify-start items-center gap-6">
                       <Image
-                        src="/github.webp"
+                        src="/assets/profile/github.webp"
                         alt="github"
                         className="invert"
                         width={40}
@@ -170,7 +194,7 @@ export default function BentoGridDemo() {
                   <AccordionTrigger>
                     <div className="w-full flex justify-start items-center gap-6">
                       <Image
-                        src="/superteam.jpeg"
+                        src="/assets/profile/superteam.jpeg"
                         alt="superteam"
                         className="rounded-full"
                         width={40}
@@ -186,7 +210,7 @@ export default function BentoGridDemo() {
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
-                  <StatDetails stats={superteamData} />
+                    <StatDetails stats={superteamData} />
                   </AccordionContent>
                 </AccordionItem>
               )}
@@ -196,7 +220,7 @@ export default function BentoGridDemo() {
                   <AccordionTrigger>
                     <div className="w-full flex justify-start items-center gap-6">
                       <Image
-                        src="/leetcode.webp"
+                        src="/assets/profile/leetcode.webp"
                         alt="leetcode"
                         className="rounded-full"
                         width={40}
@@ -231,7 +255,7 @@ export default function BentoGridDemo() {
                   <AccordionTrigger>
                     <div className="w-full flex justify-start items-center gap-6">
                       <Image
-                        src="/hackerrank.webp"
+                        src="/assets/profile/hackerrank.webp"
                         alt="hackerrank"
                         className="rounded-full"
                         width={40}
@@ -257,7 +281,7 @@ export default function BentoGridDemo() {
                   <AccordionTrigger>
                     <div className="w-full flex justify-start items-center gap-6">
                       <Image
-                        src="/codechef.png"
+                        src="/assets/profile/codechef.png"
                         alt="codechef"
                         className="rounded-full aspect-square"
                         width={40}
@@ -284,7 +308,7 @@ export default function BentoGridDemo() {
                   <AccordionTrigger>
                     <div className="w-full flex justify-start items-center gap-6">
                       <Image
-                        src="/gfg.png"
+                        src="/assets/profile/gfg.png"
                         alt="gfg"
                         className="rounded-full aspect-square"
                         width={40}
@@ -317,6 +341,92 @@ export default function BentoGridDemo() {
           )}
         </ScrollArea>
       </div>
+
+      {userSubmissions.length > 0 && (
+        <div className="py-5">
+          <div className="h-full px-4 sm:px-6 lg:px-8">
+            <div className="max-w-5xl mx-auto">
+              <div className="text-center pb-12">
+                <h2 className="font-bold text-white text-2xl">Submissions</h2>
+              </div>
+
+              <div className="grid grid-cols-1 gap-12">
+                {userSubmissions.map((submission, index) => (
+                  <Card
+                    key={index}
+                    className="relative group  rounded-2xl shadow-sm p-8 transition-all duration-500 ease-in-out transform hover:-translate-y-1  cursor-pointer bg-black shadow-[#43aa8a]"
+                    onClick={() => {
+                      router.push(
+                        `/profile/${user.login}/submission/${submission.id}`
+                      );
+                    }}
+                  >
+                    {submission?.bounty?.sponsor?.image && (
+                      <div
+                        className={`absolute -top-8 left-6  rounded-xl p-3 shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                      >
+                        <Image
+                          src={submission.bounty.sponsor.image}
+                          alt=""
+                          width={100}
+                          height={100}
+                        ></Image>
+                      </div>
+                    )}
+
+                    <div className="mt-4 w-full flex justify-between items-center">
+                      <div className=" flex flex-col gap-2 w-9/12">
+                        <h2 className="text-xl font-bold">
+                          {submission.bounty.bountyname}
+                        </h2>
+                        <div>
+                          <p className="font-semibold text-sm">
+                            {submission?.bounty?.sponsor?.name}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            Sponsor
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end gap-2">
+                        <div className="flex items-center ">
+                          <DollarSign className="h-4 w-4 text-green-500" />
+                          <span className="font-bold">
+                            {submission.bounty.price}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <ShieldCheck className="h-4 w-4 text-green-500" />
+                          <span className="font-bold">
+                            {submission.status === 0
+                              ? "In Review"
+                              : submission.status === 1
+                              ? "Approved"
+                              : "Rejected"}
+                          </span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                          <Calendar className="h-4 w-4" />
+                          <span>
+                            {new Date(submission?.createdAt).toLocaleDateString(
+                              "en-US",
+                              {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                              }
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

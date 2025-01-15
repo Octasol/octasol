@@ -68,7 +68,7 @@ export function RadialChart(props: Props) {
   return (
     <Card className="bg-transparent !border-0">
       <CardHeader className="items-center pb-4">
-        <CardTitle>Total Stats</CardTitle>
+        <CardTitle>Stats & Profile</CardTitle>
       </CardHeader>
       <CardContent className="!p-0">
         <ChartContainer config={chartConfig} className="aspect-video mx-auto">
