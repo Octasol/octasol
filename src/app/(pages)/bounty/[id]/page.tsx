@@ -82,12 +82,8 @@ const BountyDetails = () => {
   };
 
   const submit = async () => {
-    if (
-      !submission.links.length ||
-      !submission.notes ||
-      !submission.walletAddress
-    ) {
-      toast.info("Enter All Fields");
+    if (!submission.links.length || !submission.walletAddress) {
+      toast.error("Enter All Fields");
       return;
     }
     const { response, error }: any = await POST(
@@ -361,7 +357,6 @@ const BountyDetails = () => {
                                   <Textarea
                                     name="notes"
                                     id="notes"
-                                    required
                                     value={submission?.notes || ""}
                                     onChange={handleChange}
                                     placeholder="Anything you want to tell us"
