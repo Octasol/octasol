@@ -94,12 +94,21 @@ const BountyDetails = () => {
       }
     );
     if (response && response.status === 200) {
+      console.log(response);
+      setSubmissionLink(
+        `https://octasol.io/profile/${user.login}/submission/${response.data.response.id}`
+      );
+
       if (submitted) return toast.success("Application Updated Successfully");
       else {
         setSubmitted(true);
         return toast.success("Application Submitted Successfully");
       }
     }
+
+    useEffect(() => {
+      console.log(submissionLink);
+    }, [submissionLink]);
 
     if (error && error.status === 401) {
       return toast.error("You are not authorized to submit this bounty");
@@ -112,11 +121,9 @@ const BountyDetails = () => {
     if (submissions.length > 0) {
       submissions.forEach((item: any) => {
         if (item.githubId == user.githubId) {
-          setSubmissionLink(
-            `https://octasol.io/profile/${user.login}/submission/${item.id}`
-          );
           setSubmitted(true);
           console.log(item);
+
           setSubmission(item);
         }
       });
@@ -126,10 +133,6 @@ const BountyDetails = () => {
   useEffect(() => {
     if (id) getBounty(id);
   }, [id, user]);
-
-  useEffect(() => {
-    console.log(submission);
-  }, [submission]);
 
   useEffect(() => {
     if (id !== null) {
@@ -164,7 +167,7 @@ const BountyDetails = () => {
     <>
       {bounty ? (
         <div className="w-full h-full flex">
-          <div className="w-full flex flex-col md:flex-row ">
+          <div className="w-full flex flex-col md:flex-row gap-3 md:gap-0">
             <div className="w-full md:max-w-[400px] flex flex-col h-full md:h-[90vh] relative md:sticky top-0 px-4">
               <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl ">
                 <p className=" underline underline-offset-4 font-bold">
