@@ -92,7 +92,6 @@ const Bounty = () => {
                       <p className="font-semibold text-sm">
                         {bounty?.sponsor?.name}
                       </p>
-                      <p className="text-xs text-muted-foreground">Sponsor</p>
                     </div>
                   </div>
                   <div className="flex items-center ">
