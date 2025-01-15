@@ -106,10 +106,6 @@ const BountyDetails = () => {
       }
     }
 
-    useEffect(() => {
-      console.log(submissionLink);
-    }, [submissionLink]);
-
     if (error && error.status === 401) {
       return toast.error("You are not authorized to submit this bounty");
     }
