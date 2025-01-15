@@ -145,10 +145,10 @@ const BountyDetails = () => {
   return (
     <>
       {bounty ? (
-        <div className="w-full h-full ">
+        <div className="w-full h-full flex">
           <div className="w-full flex flex-col md:flex-row ">
-            <div className="w-full md:max-w-[400px] flex flex-col md:flex-row h-full md:h-[90vh] sticky top-0">
-              <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl m-4">
+            <div className="w-full md:max-w-[400px] flex flex-col md:flex-row h-full md:h-[90vh] relative md:sticky top-0 px-4">
+              <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl ">
                 <p className=" underline underline-offset-4 font-bold">
                   SPONSOR DETAILS
                 </p>
@@ -253,177 +253,186 @@ const BountyDetails = () => {
                 <div className="w-full h-full bg-gradient-to-r md:bg-gradient-to-b from-transparent via-[#46bf96] to-transparent"></div>
               </div> */}
             </div>
-            <div className="w-full flex h-full m-4 bg-[#0f0f0f] rounded-xl">
-              <div className="w-full flex flex-col items-start py-5 px-4 md:px-8 gap-4">
-                <p className=" underline underline-offset-4 font-bold">
-                  BOUNTY DETAILS
-                </p>
-                <div className="w-full flex justify-between items-center gap-2">
-                  <div className="w-6/12">
-                    {bounty && `${bounty?.bountyname}`}
-                  </div>
-                  <div className="w-6/12 flex justify-end items-center">
-                    {user?.githubId ? (
-                      <Drawer>
-                        <DrawerTrigger asChild>
-                          <div className="w-fit flex justify-center items-center ">
-                            <button
-                              // disabled={submitted}
-                              onClick={() => {
-                                if (!user.githubId) {
-                                  toast.error(
-                                    "Please login to submit application"
-                                  );
-                                }
-                              }}
-                              className={cn(
-                                `bg-emerald-600 text-black px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors 
-                               cursor-pointer`
-                              )}
-                            >
-                              <span className="relative px-3 py-2 transition-all ease-in duration-75 rounded-md group-hover:bg-opacity-60">
-                                {submitted
-                                  ? "Edit\u00A0Application"
-                                  : "Submit\u00A0Application"}
-                              </span>
-                            </button>
-                          </div>
-                        </DrawerTrigger>
-                        <DrawerContent>
-                          <div className="mx-auto w-full max-w-lg">
-                            <DrawerHeader>
-                              <DrawerTitle className="flex justify-center items-center w-full">
-                                {submitted
-                                  ? "Update Your Application"
-                                  : "Submit Your Application"}
-                              </DrawerTitle>
-                              <DrawerDescription>
-                                Don&apos;t start working just yet! Apply first,
-                                and then begin working only once you&apos;ve
-                                been hired for the project by the sponsor.
-                              </DrawerDescription>
-                            </DrawerHeader>
-                            <div className="container px-2 flex flex-col gap-4 pt-4">
-                              <div className="grid w-full max-w-lg items-center gap-1.5">
-                                <Label htmlFor="links">
-                                  Links to your previous work
-                                </Label>
-                                <Input
-                                  type="text"
-                                  id="links"
-                                  required
-                                  name="links"
-                                  value={submission?.links}
-                                  onChange={handleChange}
-                                  placeholder="Link to your previous work (comma-separated)"
-                                />
-                              </div>
-                              <div className="grid w-full max-w-lg items-center gap-1.5">
-                                <Label htmlFor="notes">
-                                  Something you want to share about yourself
-                                </Label>
-                                <Textarea
-                                  name="notes"
-                                  id="notes"
-                                  required
-                                  value={submission?.notes || ""}
-                                  onChange={handleChange}
-                                  placeholder="note"
-                                />
-                              </div>
-                              <div className="grid w-full max-w-lg items-center gap-1.5">
-                                <Label htmlFor="wallet">Wallet address</Label>
-                                <Input
-                                  type="text"
-                                  id="wallet"
-                                  name="walletAddress"
-                                  required
-                                  value={submission?.walletAddress || ""}
-                                  onChange={handleChange}
-                                  placeholder="Wallet address"
-                                />
-                              </div>
-                            </div>
-                            <DrawerFooter>
-                              <DrawerClose asChild>
-                                <div className="w-full flex justify-center items-center py-5">
-                                  <button
-                                    onClick={submit}
-                                    className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
-                                  >
-                                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
-                                      {submitted
-                                        ? "Update Submission"
-                                        : "Submit"}
-                                    </span>
-                                  </button>
-                                </div>
-                              </DrawerClose>
-                            </DrawerFooter>
-                          </div>
-                        </DrawerContent>
-                      </Drawer>
-                    ) : (
-                      <div className="w-fit flex justify-center items-center ">
-                        <button
-                          onClick={() => {
-                            if (!user.githubId) {
-                              toast.error("Please login to submit application");
-                            }
-                          }}
-                          className="relative inline-flex items-center justify-center p-0.5  overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 cursor-pointer opacity-50"
-                        >
-                          <span className="relative px-3 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
-                            {"Submit\u00A0Application"}
-                          </span>
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="w-full flex flex-col gap-4">
-                  <p className=" underline underline-offset-4 ">DESCRIPTION</p>
-                  <div
-                    className="w-full italic "
-                    dangerouslySetInnerHTML={{
-                      __html: bounty?.bountyDescription ?? "",
-                    }}
-                  ></div>
-                </div>
-
-                <div className="w-full flex flex-col gap-4">
-                  <p className=" underline underline-offset-4 ">SKILLS</p>
-                  <div className="w-full flex flex-wrap gap-5">
-                    {bounty?.skills.map((skill) => (
-                      <div key={skill}>
-                        <LoginButton>{skill}</LoginButton>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="w-full flex flex-col gap-4 ">
-                  <p className=" underline underline-offset-4 ">CONTACT</p>
-                  <p className="text-slate-300 italic text-sm">
-                    Reach out if you have any questions about this listing
+            <div className="px-4">
+              <div className="w-full flex h-full  bg-[#0f0f0f] rounded-xl ">
+                <div className="w-full flex flex-col items-start py-5 px-4 md:px-8 gap-4">
+                  <p className=" underline underline-offset-4 font-bold">
+                    BOUNTY DETAILS
                   </p>
-                  <div className="w-full flex flex-wrap  gap-3 ">
-                    {bounty?.primaryContact && (
-                      <Link
-                        href={
-                          bounty?.primaryContact
-                            ? `https://t.me/${bounty?.primaryContact}`
-                            : "#"
-                        }
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <div className="flex items-center gap-2">
-                          <Send />
-                          {bounty?.primaryContact}
+                  <div className="w-full flex flex-col md:flex-row justify-between items-center gap-5 md:gap-2">
+                    <div className="w-full md:w-6/12 ">
+                      {bounty && `${bounty?.bountyname}`}
+                    </div>
+                    <div className="w-full md:w-6/12 flex justify-center md:justify-end items-center">
+                      {user?.githubId ? (
+                        <Drawer>
+                          <DrawerTrigger asChild>
+                            <div className="w-fit flex justify-center items-center ">
+                              <button
+                                // disabled={submitted}
+                                onClick={() => {
+                                  if (!user.githubId) {
+                                    toast.error(
+                                      "Please login to submit application"
+                                    );
+                                  }
+                                }}
+                                className={cn(
+                                  `bg-emerald-600 text-black px-1 py-3 rounded-lg font-semibold text-start hover:bg-green-600 transition-colors 
+                               cursor-pointer`
+                                )}
+                              >
+                                <span className="relative px-2 py-2 transition-all ease-in duration-75 rounded-md group-hover:bg-opacity-60">
+                                  {submitted
+                                    ? "Edit Application"
+                                    : "Submit Application"}
+                                </span>
+                              </button>
+                            </div>
+                          </DrawerTrigger>
+                          <DrawerContent>
+                            <div className="mx-auto w-full max-w-lg">
+                              <DrawerHeader>
+                                <DrawerTitle className="flex justify-center items-center w-full">
+                                  {submitted
+                                    ? "Update Your Application"
+                                    : "Submit Your Application"}
+                                </DrawerTitle>
+                                <DrawerDescription>
+                                  Don&apos;t start working just yet! Apply
+                                  first, and then begin working only once
+                                  you&apos;ve been hired for the project by the
+                                  sponsor.
+                                </DrawerDescription>
+                              </DrawerHeader>
+                              <div className="container px-2 flex flex-col gap-4 pt-4">
+                                <div className="grid w-full max-w-lg items-center gap-1.5">
+                                  <Label htmlFor="links">
+                                    Links to your previous work
+                                  </Label>
+                                  <Input
+                                    type="text"
+                                    id="links"
+                                    required
+                                    name="links"
+                                    value={submission?.links}
+                                    onChange={handleChange}
+                                    placeholder="Link to your previous work (comma-separated)"
+                                  />
+                                </div>
+                                <div className="grid w-full max-w-lg items-center gap-1.5">
+                                  <Label htmlFor="notes">
+                                    Something you want to share about yourself
+                                  </Label>
+                                  <Textarea
+                                    name="notes"
+                                    id="notes"
+                                    required
+                                    value={submission?.notes || ""}
+                                    onChange={handleChange}
+                                    placeholder="note"
+                                  />
+                                </div>
+                                <div className="grid w-full max-w-lg items-center gap-1.5">
+                                  <Label htmlFor="wallet">Wallet address</Label>
+                                  <Input
+                                    type="text"
+                                    id="wallet"
+                                    name="walletAddress"
+                                    required
+                                    value={submission?.walletAddress || ""}
+                                    onChange={handleChange}
+                                    placeholder="Wallet address"
+                                  />
+                                </div>
+                              </div>
+                              <DrawerFooter>
+                                <DrawerClose asChild>
+                                  <div className="w-full flex justify-center items-center py-5">
+                                    <button
+                                      onClick={submit}
+                                      className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
+                                    >
+                                      <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
+                                        {submitted
+                                          ? "Update Submission"
+                                          : "Submit"}
+                                      </span>
+                                    </button>
+                                  </div>
+                                </DrawerClose>
+                              </DrawerFooter>
+                            </div>
+                          </DrawerContent>
+                        </Drawer>
+                      ) : (
+                        <div className="w-fit flex justify-center items-center ">
+                          <button
+                            onClick={() => {
+                              if (!user.githubId) {
+                                toast.error(
+                                  "Please login to submit application"
+                                );
+                              }
+                            }}
+                            className="relative inline-flex items-center justify-center p-0.5  overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 cursor-pointer opacity-50"
+                          >
+                            <span className="relative px-3 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-60">
+                              {"Submit\u00A0Application"}
+                            </span>
+                          </button>
                         </div>
-                      </Link>
-                    )}
+                      )}
+                    </div>
+                  </div>
+                  <div className="w-full h-[1px] bg-black py- rounded-full"></div>
+
+                  <div className="w-full flex flex-col gap-4">
+                    <p className=" underline underline-offset-4 ">
+                      DESCRIPTION
+                    </p>
+                    <div
+                      className="w-full italic "
+                      dangerouslySetInnerHTML={{
+                        __html: bounty?.bountyDescription ?? "",
+                      }}
+                    ></div>
+                  </div>
+
+                  <div className="w-full flex flex-col gap-4">
+                    <p className=" underline underline-offset-4 ">SKILLS</p>
+                    <div className="w-full flex flex-wrap gap-5">
+                      {bounty?.skills.map((skill) => (
+                        <div key={skill}>
+                          <LoginButton>{skill}</LoginButton>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="w-full flex flex-col gap-4 ">
+                    <p className=" underline underline-offset-4 ">CONTACT</p>
+                    <p className="text-slate-300 italic text-sm">
+                      Reach out if you have any questions about this listing
+                    </p>
+                    <div className="w-full flex flex-wrap  gap-3 ">
+                      {bounty?.primaryContact && (
+                        <Link
+                          href={
+                            bounty?.primaryContact
+                              ? `https://t.me/${bounty?.primaryContact}`
+                              : "#"
+                          }
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <div className="flex items-center gap-2">
+                            <Send />
+                            {bounty?.primaryContact}
+                          </div>
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
