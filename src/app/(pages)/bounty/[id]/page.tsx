@@ -270,7 +270,7 @@ const BountyDetails = () => {
                     onClick={() => {
                       handleConnect(submissionLink);
                     }}
-                    className="flex justify-center items-center"
+                    className="flex justify-center items-center gap-8 cursor-pointer"
                   >
                     <Copy />
                     <span className="text-sm md:text-base">
