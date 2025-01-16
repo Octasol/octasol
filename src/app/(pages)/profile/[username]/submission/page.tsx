@@ -17,7 +17,8 @@ const Submission = (props: Props) => {
   const [userSubmissions, setUserSubmissions] = useState<any[]>([]);
 
   const getUserSubmissions = async () => {
-    const name = pathname.split("/profile/").pop();
+    const name = pathname.split("/profile/").pop()?.split("/").shift();
+
     try {
       const response = await GET("/usersubmissions", {
         Authorization: `Bearer ${user.accessToken}`,
@@ -36,6 +37,10 @@ const Submission = (props: Props) => {
     if (user.accessToken) getUserSubmissions();
   }, [user]);
 
+  useEffect(() => {
+    console.log(userSubmissions);
+  }, [userSubmissions]);
+
   return (
     <>
       {userSubmissions.length > 0 ? (
@@ -43,7 +48,9 @@ const Submission = (props: Props) => {
           <div className="h-full px-4 sm:px-6 lg:px-8">
             <div className="max-w-5xl mx-auto">
               <div className="text-center pb-12">
-                <h2 className="font-bold text-white text-2xl">Submissions</h2>
+                <h2 className="font-bold text-white text-2xl">
+                  Your Submissions
+                </h2>
               </div>
 
               <div className="grid grid-cols-1 gap-12">
@@ -57,7 +64,7 @@ const Submission = (props: Props) => {
                       );
                     }}
                   >
-                    <div className="mt-4 w-full flex flex-col md:flex-row justify-between items-center gap-5">
+                    <div className=" w-full flex flex-col md:flex-row justify-between items-center gap-5">
                       <div className=" flex flex-col gap-2 w-full md:w-9/12">
                         <div className="flex items-center justify-between w-full gap-2">
                           {submission?.bounty?.sponsor?.image && (

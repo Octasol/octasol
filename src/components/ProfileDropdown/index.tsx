@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -5,6 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { FloatingDock } from "@/components/ui/floating-dock";
+import { IconLayoutNavbarCollapse } from "@tabler/icons-react";
 
 import {
   IconBrandX,
@@ -13,50 +15,29 @@ import {
   IconNewSection,
   IconTerminal2,
 } from "@tabler/icons-react";
-
-const links = [
-  {
-    title: "Home",
-    icon: (
-      <IconHome className="h-full w-full text-white dark:text-neutral-300" />
-    ),
-    href: "#hero",
-  },
-  {
-    title: "About",
-    icon: (
-      <IconTerminal2 className="h-full w-full text-white dark:text-neutral-300" />
-    ),
-    href: "#about",
-  },
-  {
-    title: "Programs",
-    icon: (
-      <IconNewSection className="h-full w-full text-white dark:text-neutral-300" />
-    ),
-    href: "#program",
-  },
-  {
-    title: "Courses",
-    icon: (
-      <IconExchange className="h-full w-full text-white dark:text-neutral-300" />
-    ),
-    href: "#courses",
-  },
-  {
-    title: "Workshop",
-    icon: (
-      <IconBrandX className="h-full w-full text-white dark:text-neutral-300" />
-    ),
-    href: "#workshop",
-  },
-];
+import { Dock, User } from "lucide-react";
+import { useSelector } from "react-redux";
 
 export function ProfileDropdown() {
+  const user = useSelector((state: any) => state.user);
+
+  const links = [
+    {
+      title: "Profile",
+      icon: <User className="h-full w-full text-white dark:text-neutral-300" />,
+      href: `/profile/${user.login}`,
+    },
+    {
+      title: "Submissions",
+      icon: <Dock className="h-full w-full text-white dark:text-neutral-300" />,
+      href: `/profile/${user.login}/submission`,
+    },
+  ];
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <IconLayoutNavbarCollapse size={32} className="cursor-pointer" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-min h-full !bg-transparent !border-0">
         <FloatingDock items={links} />
