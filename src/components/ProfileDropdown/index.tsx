@@ -7,15 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { FloatingDock } from "@/components/ui/floating-dock";
 import { IconLayoutNavbarCollapse } from "@tabler/icons-react";
-
-import {
-  IconBrandX,
-  IconExchange,
-  IconHome,
-  IconNewSection,
-  IconTerminal2,
-} from "@tabler/icons-react";
-import { Dock, User } from "lucide-react";
+import { Award, Dock, User } from "lucide-react";
 import { useSelector } from "react-redux";
 
 export function ProfileDropdown() {
@@ -31,6 +23,13 @@ export function ProfileDropdown() {
       title: "Submissions",
       icon: <Dock className="h-full w-full text-white dark:text-neutral-300" />,
       href: `/profile/${user.login}/submission`,
+    },
+    {
+      title: "Sponsor's Dashboard",
+      icon: (
+        <Award className="h-full w-full text-white dark:text-neutral-300" />
+      ),
+      href: `/profile/${user.login}/sponsordashboard`,
     },
   ];
 

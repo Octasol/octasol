@@ -63,8 +63,6 @@ function IconContainer({
   icon: React.ReactNode;
   href: string;
 }) {
-  const pathname = usePathname();
-  const router = useRouter();
   let ref = useRef<HTMLDivElement>(null);
 
   let distance = useTransform(mouseY, (val) => {
@@ -72,10 +70,10 @@ function IconContainer({
     return val - bounds.y - bounds.height / 2;
   });
 
-  let widthTransform = useTransform(distance, [-150, 0, 150], [50, 100, 50]);
-  let heightTransform = useTransform(distance, [-150, 0, 150], [50, 100, 50]);
+  let widthTransform = useTransform(distance, [-100, 0, 100], [50, 100, 50]);
+  let heightTransform = useTransform(distance, [-100, 0, 100], [50, 100, 50]);
 
-  let widthTransformIcon = useTransform(distance, [-150, 0, 150], [30, 60, 30]);
+  let widthTransformIcon = useTransform(distance, [-100, 0, 100], [30, 60, 30]);
   let heightTransformIcon = useTransform(
     distance,
     [-150, 0, 150],
@@ -110,7 +108,11 @@ function IconContainer({
     <Link href={href}>
       <motion.div
         ref={ref}
-        style={{ width, height }}
+        style={{
+          width,
+          height,
+          scale: hovered ? 0.9 : 1, // Reduced scale on hover
+        }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         className="aspect-square rounded-full bg-primary-primary/90 dark:bg-neutral-800 flex items-center justify-center relative"
@@ -128,8 +130,12 @@ function IconContainer({
           )}
         </AnimatePresence>
         <motion.div
-          style={{ width: widthIcon, height: heightIcon }}
-          className="flex items-center justify-center "
+          style={{
+            width: widthIcon,
+            height: heightIcon,
+            scale: hovered ? 0.9 : 1, // Reduced scale for the icon
+          }}
+          className="flex items-center justify-center"
         >
           {icon}
         </motion.div>

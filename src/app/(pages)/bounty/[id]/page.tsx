@@ -45,6 +45,7 @@ const BountyDetails = () => {
   const [telegramLink, setTelegramLink] = useState<String>();
   const [contacttelegramLink, setContactTelegramLink] = useState<String>();
   const [submissionLink, setSubmissionLink] = useState<String>();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     setId(parseInt(pathname.split("/bounty/")[1]));
@@ -162,16 +163,19 @@ const BountyDetails = () => {
     notify("Link Copied");
   };
 
+  const handleToggle = () => setIsExpanded(!isExpanded);
+
   return (
     <>
       {bounty ? (
         <div className="w-full h-full flex">
           <div className="w-full flex flex-col md:flex-row gap-3 md:gap-0">
             <div className="w-full md:max-w-[400px] flex flex-col h-full md:h-[90vh] relative md:sticky top-0 px-4">
-              <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl ">
-                <p className=" underline underline-offset-4 font-bold">
+              <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl">
+                <p className="underline underline-offset-4 font-bold">
                   SPONSOR DETAILS
                 </p>
+
                 <div className="w-full flex justify-center items-center">
                   {bounty?.sponsor?.image ? (
                     <Image
@@ -185,37 +189,54 @@ const BountyDetails = () => {
                     <User size={50} />
                   )}
                 </div>
-                <div className="w-full flex justify-between items-center ">
+
+                <div className="w-full text-center font-bold text-lg">
                   {bounty?.sponsor && `${bounty?.sponsor.name}`}
                 </div>
-                <div className="w-full italic ">
-                  {bounty?.sponsor && bounty?.sponsor.description}
+
+                <div className="w-full h-full italic text-sm md:text-base">
+                  <p
+                    className={`overflow-hidden ${
+                      isExpanded
+                        ? "line-clamp-none"
+                        : "line-clamp-1 md:line-clamp-none"
+                    }`}
+                  >
+                    {bounty?.sponsor?.description}
+                  </p>
+                  <button
+                    className="text-green-500 text-sm md:hidden mt-1"
+                    onClick={handleToggle}
+                  >
+                    {isExpanded ? "Show Less" : "Show More"}
+                  </button>
                 </div>
 
-                <div className="w-full flex flex-col gap-4">
-                  <div className="w-full">
-                    <Link
-                      href={bounty?.sponsor ? bounty?.sponsor.link : "#"}
-                      target="_blank"
-                      className="text-green-500"
-                    >
-                      {bounty?.sponsor?.link}
-                    </Link>
-                  </div>
+                {/* Link */}
+                <div className="w-full">
+                  <Link
+                    href={bounty?.sponsor ? bounty?.sponsor.link : "#"}
+                    target="_blank"
+                    className="text-green-500"
+                  >
+                    {bounty?.sponsor?.link}
+                  </Link>
                 </div>
 
+                {/* Contact Information */}
                 <div className="w-full flex flex-col gap-4">
                   {(bounty?.sponsor?.telegram ||
                     bounty?.sponsor?.twitter ||
                     bounty?.sponsor?.discord) && (
                     <>
-                      <p className=" underline underline-offset-4 ">CONTACT</p>
+                      <p className="underline underline-offset-4">CONTACT</p>
                       <p className="text-slate-500 italic text-sm">
                         Reach out if you have any questions about this listing
                       </p>
                     </>
                   )}
-                  <div className="w-full flex flex-wrap  gap-3 ">
+
+                  <div className="w-full flex flex-wrap gap-3">
                     {bounty?.sponsor?.twitter && (
                       <Link
                         href={
@@ -281,10 +302,6 @@ const BountyDetails = () => {
                   </div>
                 </div>
               )}
-
-              {/* <div className="rotate-0 md:rotate-180 h-[1px] md:h-[85vh] w-full md:w-px block">
-                <div className="w-full h-full bg-gradient-to-r md:bg-gradient-to-b from-transparent via-[#46bf96] to-transparent"></div>
-              </div> */}
             </div>
             <div className="px-4">
               <div className="w-full flex h-full  bg-[#0f0f0f] rounded-xl ">
