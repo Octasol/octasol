@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Calendar, DollarSign, ShieldCheck } from "lucide-react";
+import { Calendar, DollarSign, Home, ShieldCheck } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -150,7 +150,7 @@ export default function BentoGridDemo() {
 
   return (
     <>
-      <div className="w-full flex flex-col justify-center items-center px-4 pb-12">
+      <div className="w-full flex flex-col md:flex-row justify-center items-center px-4">
         <div className="w-full md:w-6/12">
           {isRadarLoading ? (
             <RadarLoader />
@@ -158,7 +158,7 @@ export default function BentoGridDemo() {
             radarData && <RadialChart stats={radarData} />
           )}
         </div>
-        <ScrollArea className="w-full max-w-5xl ">
+        <ScrollArea className="w-full md:w-6/12 md:h-[80vh] overflow-scroll px-4 ">
           {isUserLoading ? (
             <ProfileLoader />
           ) : (
@@ -168,7 +168,7 @@ export default function BentoGridDemo() {
                   <AccordionTrigger>
                     <div className="w-full flex justify-start items-center gap-6">
                       <Image
-                        src="/assets/profile/github.webp"
+                        src="/github.webp"
                         alt="github"
                         className="invert"
                         width={40}
@@ -194,7 +194,7 @@ export default function BentoGridDemo() {
                   <AccordionTrigger>
                     <div className="w-full flex justify-start items-center gap-6">
                       <Image
-                        src="/assets/profile/superteam.jpeg"
+                        src="/superteam.jpeg"
                         alt="superteam"
                         className="rounded-full"
                         width={40}
@@ -220,7 +220,7 @@ export default function BentoGridDemo() {
                   <AccordionTrigger>
                     <div className="w-full flex justify-start items-center gap-6">
                       <Image
-                        src="/assets/profile/leetcode.webp"
+                        src="/leetcode.webp"
                         alt="leetcode"
                         className="rounded-full"
                         width={40}
@@ -255,7 +255,7 @@ export default function BentoGridDemo() {
                   <AccordionTrigger>
                     <div className="w-full flex justify-start items-center gap-6">
                       <Image
-                        src="/assets/profile/hackerrank.webp"
+                        src="/hackerrank.webp"
                         alt="hackerrank"
                         className="rounded-full"
                         width={40}
@@ -281,7 +281,7 @@ export default function BentoGridDemo() {
                   <AccordionTrigger>
                     <div className="w-full flex justify-start items-center gap-6">
                       <Image
-                        src="/assets/profile/codechef.png"
+                        src="/codechef.png"
                         alt="codechef"
                         className="rounded-full aspect-square"
                         width={40}
@@ -308,7 +308,7 @@ export default function BentoGridDemo() {
                   <AccordionTrigger>
                     <div className="w-full flex justify-start items-center gap-6">
                       <Image
-                        src="/assets/profile/gfg.png"
+                        src="/gfg.png"
                         alt="gfg"
                         className="rounded-full aspect-square"
                         width={40}
@@ -361,30 +361,26 @@ export default function BentoGridDemo() {
                       );
                     }}
                   >
-                    
-
                     <div className="mt-4 w-full flex flex-col md:flex-row justify-between items-center gap-5">
                       <div className=" flex flex-col gap-2 w-full md:w-9/12">
-                      <div className="flex items-center justify-between w-full gap-2">
-                      {submission?.bounty?.sponsor?.image && (
-                      <div
-                        className={`rounded-xl p-3 shadow-lg group-hover:scale-110 transition-transform duration-300`}
-                      >
-                        <Image
-                          src={submission.bounty.sponsor.image}
-                          alt=""
-                          width={100}
-                          height={100}
-                        ></Image>
-                      </div>
-                    )}
-                        <h2 className="text-base md:text-xl font-bold w-full">
-                          {submission.bounty.bountyname}
-                        </h2>
-                        <div>
-                      </div>
+                        <div className="flex items-center justify-between w-full gap-2">
+                          {submission?.bounty?.sponsor?.image && (
+                            <div
+                              className={`rounded-xl p-3 shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                            >
+                              <Image
+                                src={submission.bounty.sponsor.image}
+                                alt=""
+                                width={100}
+                                height={100}
+                              ></Image>
+                            </div>
+                          )}
+                          <h2 className="text-base md:text-xl font-bold w-full">
+                            {submission.bounty.bountyname}
+                          </h2>
+                          <div></div>
                         </div>
-                         
                       </div>
                       <div className="flex flex-row md:flex-col justify-between w-full items-center md:items-end gap-2 px-4">
                         <div className="flex items-center ">
@@ -393,16 +389,7 @@ export default function BentoGridDemo() {
                             {submission.bounty.price}
                           </span>
                         </div>
-                        {/* <div className="flex items-center gap-2"> */}
-                          {/* <ShieldCheck className="h-4 w-4 text-green-500" /> */}
-                          {/* <span className="font-bold">
-                            {submission.status === 0
-                              ? "In Review"
-                              : submission.status === 1
-                              ? "Approved"
-                              : "Rejected"}
-                          </span> */}
-                        {/* </div> */}
+
                         <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                           <Calendar className="h-4 w-4" />
                           <span>
