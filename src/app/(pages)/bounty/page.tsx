@@ -17,6 +17,17 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { toast } from "react-toastify";
+import Login from "@/components/Login/Login";
+
 interface Bounty {
   sponsor: {
     name: string;
@@ -37,6 +48,16 @@ const Bounty = () => {
   const user = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
   const [bounties, setbounties] = useState<Bounty[]>([]);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (user.status == "unauthenticated") {
+      const timer = setTimeout(() => {
+        setOpen(true);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [user]);
 
   const getBounties = async () => {
     try {
@@ -65,10 +86,29 @@ const Bounty = () => {
     }
   }, [bounties, counter, dispatch]);
 
+  const loginAlert = () => {
+    toast.error("Login to cotinue reading");
+  };
+
   return (
     <div className="container mx-auto ">
+      <Dialog open={open} onOpenChange={loginAlert}>
+        <DialogContent className="bg-black">
+          <DialogHeader>
+            <DialogTitle>Login</DialogTitle>
+            <DialogDescription>
+              Enter your credentials to continue
+            </DialogDescription>
+          </DialogHeader>
+          <div className="w-full flex justify-center items-center">
+            <div className="w-fit ">
+              <Login />
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
       {bounties.length !== 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-8">
           {bounties.map((bounty, index) => (
             <Card
               key={index}
