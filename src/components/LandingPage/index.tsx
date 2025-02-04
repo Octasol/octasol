@@ -22,7 +22,7 @@ export default function LandingPage() {
   }, [session]);
   return (
     <>
-      <main className="w-full flex flex-col gap-24 pt-32 md:pt-64">
+      <main className="w-full flex flex-col gap-24 pt-32 md:pt-56">
         <section className=" flex flex-col items-center justify-center gap-8">
           <div className="text-5xl md:text-8xl lg:text-[100px] text-center flex items-center justify-center lg:justify-start container px-0 lg:px-36 relative">
             Connecting Your
@@ -171,7 +171,7 @@ export default function LandingPage() {
                 width={100}
                 height={100}
               />
-              <p className="text-[#97F4E4] text-2xl text-start flex justify-start items-start w-full">
+              <p className="text-[#97F4E4] text-2xl font-bold text-start flex justify-start items-start w-full">
                 Escrow-based
                 <br />
                 Bounty System
@@ -190,7 +190,7 @@ export default function LandingPage() {
                 width={100}
                 height={100}
               />
-              <p className="text-[#97F4E4] text-2xl text-start flex justify-start items-start w-full">
+              <p className="text-[#97F4E4] text-2xl font-bold text-start flex justify-start items-start w-full">
                 Zk Proof
                 <br />
                 Integration
@@ -209,7 +209,7 @@ export default function LandingPage() {
                 width={100}
                 height={100}
               />
-              <p className="text-[#97F4E4] text-2xl text-start flex justify-start items-start w-full">
+              <p className="text-[#97F4E4] text-2xl font-bold text-start flex justify-start items-start w-full">
                 Seamless GitHub
                 <br />
                 Integration
@@ -228,7 +228,7 @@ export default function LandingPage() {
                 width={100}
                 height={100}
               />
-              <p className="text-[#97F4E4] text-2xl text-start flex justify-start items-start w-full">
+              <p className="text-[#97F4E4] text-2xl font-bold text-start flex justify-start items-start w-full">
                 Dev ID
                 <br />
                 Verification
@@ -276,6 +276,85 @@ export default function LandingPage() {
                 held in escrow until tasks are successfully completed, fostering
                 trust between maintainers and contributors.
               </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="relative flex flex-col ">
+          <Image
+            src="/octasolLandingLogo.png"
+            alt="discord"
+            className="absolute -left-[150px] top-0 rotate-[12deg] opacity-10"
+            width={400}
+            height={400}
+          />
+
+          <div className="flex container h-fit flex-col gap-12">
+            <div
+              className={cn(
+                "text-2xl md:text-5xl font-bold text-start leading-loose",
+                alexandria.className
+              )}
+            >
+              How zkProof Enhances
+              <br />
+              DevID
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 py-5 md:py-12 gap-5 md:gap-12 container place-items-center z-10">
+            <div className="bg-[#141414] p-8 w-full flex flex-col justify-center gap-8 h-full">
+              <div className="font-semibold">
+                Privacy-Preserving Verification
+              </div>
+              <Image
+                src="/assets/octasol-designs/Media/locker.svg"
+                alt="discord"
+                className="flex items-start w-7/12"
+                width={1000}
+                height={1000}
+              />
+              <div className="text-3xl font-extrabold">
+                Prove account
+                <br />
+                ownership without
+                <br />
+                sharing
+                <br />
+                passwords or private
+                <br />
+                information.
+              </div>
+            </div>
+            <div className="w-full h-full grid grid-rows-2 gap-8">
+              <div className="flex flex-col gap-8 bg-[#141414] p-8">
+                <div className="font-semibold">Immutable Trust</div>
+                <div className="text-4xl font-extrabold">
+                  Trustless system
+                  <br />
+                  for
+                  <br />
+                  contributors
+                  <br />
+                  and maintainers.
+                </div>
+              </div>
+              <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 gap-8 ">
+                <div className="bg-[#141414] p-8 flex flex-col justify-start gap-8">
+                  <div className="font-semibold">
+                    Streamlined Authentication
+                  </div>
+                  <div className="font-extrabold text-4xl">
+                    Simplifies
+                    <br />
+                    account <br />
+                    verification
+                  </div>
+                </div>
+                <div className=" bg-[#141414] p-8 text-4xl font-extrabold flex justify-center items-center">
+                  Multi- Platform Integration
+                </div>
+              </div>
             </div>
           </div>
         </section>
