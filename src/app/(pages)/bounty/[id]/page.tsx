@@ -189,7 +189,7 @@ const BountyDetails = () => {
       {bounty ? (
         <div className="w-full h-full flex">
           <Dialog open={open} onOpenChange={loginAlert}>
-            <DialogContent className="bg-black">
+            <DialogContent  className="[&>button]:hidden bg-black" >
               <DialogHeader>
                 <DialogTitle>Login</DialogTitle>
                 <DialogDescription>

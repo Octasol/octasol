@@ -93,7 +93,7 @@ const Bounty = () => {
   return (
     <div className="container mx-auto ">
       <Dialog open={open} onOpenChange={loginAlert}>
-        <DialogContent className="bg-black">
+        <DialogContent className="bg-black [&>button]:hidden">
           <DialogHeader>
             <DialogTitle>Login</DialogTitle>
             <DialogDescription>
