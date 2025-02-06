@@ -181,7 +181,7 @@ const BountyDetails = () => {
   };
 
   const loginAlert = () => {
-    toast.error("Login to cotinue reading");
+    toast.error("Login to continue reading");
   };
 
   return (
@@ -189,7 +189,7 @@ const BountyDetails = () => {
       {bounty ? (
         <div className="w-full h-full flex">
           <Dialog open={open} onOpenChange={loginAlert}>
-            <DialogContent  className="[&>button]:hidden bg-black" >
+            <DialogContent className="[&>button]:hidden bg-black">
               <DialogHeader>
                 <DialogTitle>Login</DialogTitle>
                 <DialogDescription>

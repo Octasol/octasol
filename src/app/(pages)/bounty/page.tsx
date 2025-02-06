@@ -87,7 +87,7 @@ const Bounty = () => {
   }, [bounties, counter, dispatch]);
 
   const loginAlert = () => {
-    toast.error("Login to cotinue reading");
+    toast.error("Login to continue reading");
   };
 
   return (
