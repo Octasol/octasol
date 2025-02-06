@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import Text from "./Text";
 import dynamic from "next/dynamic";
 import { Link2 } from "lucide-react";
+import Octasol from "../Octasol";
 
 const alexandria = Alexandria({
   weight: ["200", "400"],
@@ -133,6 +134,7 @@ export default function LandingPage() {
               width={1000}
               height={1000}
             />
+            {/* <Octasol /> */}
           </div>
         </section>
 
