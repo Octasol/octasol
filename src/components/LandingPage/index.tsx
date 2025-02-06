@@ -9,6 +9,7 @@ import { Alexandria } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Text from "./Text";
 import dynamic from "next/dynamic";
+import { Link2 } from "lucide-react";
 
 const alexandria = Alexandria({
   weight: ["200", "400"],
@@ -35,7 +36,11 @@ export default function LandingPage() {
     <>
       <main className="w-full flex flex-col gap-12 md:gap-24 pt-[80px]">
         <div className="fixed z-20 w-fit h-fit right-[-140px] top-1/2 -rotate-90 flex justify-center items-center gap-6">
-          <Link href="/" className="flex justify-center items-center gap-2">
+          <Link
+            href="https://discord.gg/zQGv8RD8cx"
+            target="_blank"
+            className="flex justify-center items-center gap-2"
+          >
             <p>Discord</p>
             <Image
               src="/assets/octasol-designs/Media/discord.svg"
@@ -45,21 +50,29 @@ export default function LandingPage() {
               height={20}
             />
           </Link>
-          <Link href="/" className="flex justify-center items-center gap-2">
+          <Link
+            href="https://t.me/theoctasol"
+            target="_blank"
+            className="flex justify-center items-center gap-2"
+          >
             <p>Telegram</p>
             <Image
               src="/assets/octasol-designs/Media/telegram.svg"
-              alt="discord"
+              alt="telegram"
               className="rotate-90"
               width={20}
               height={20}
             />
           </Link>
-          <Link href="/" className="flex justify-center items-center gap-2">
+          <Link
+            href="https://x.com/theoctasol"
+            target="_blank"
+            className="flex justify-center items-center gap-2"
+          >
             <p>Twitter</p>
             <Image
               src="/assets/octasol-designs/Media/twitter.svg"
-              alt="discord"
+              alt="twitter"
               className="rotate-90"
               width={20}
               height={20}
@@ -300,7 +313,7 @@ export default function LandingPage() {
             <div className="flex flex-col gap-8 ">
               <p
                 className={cn(
-                  "text-[#97F4E4] text-lg md:text-6xl font-bold",
+                  "text-[#97F4E4] text-2xl md:text-6xl font-bold",
                   alexandria.className
                 )}
               >
@@ -510,12 +523,25 @@ export default function LandingPage() {
                 <br />
                 era of the internet.
               </p>
-            </div>{" "}
+            </div>
             <div className="w-full md:w-1/2 h-full ">
               <div className="grid grid-rows-3 gap-12 md:gap-32 place-items-end">
-                <div className="flex flex-col gap-5">
-                  <div className="flex font-extrabold text-3xl text-[#97F4E4]">
-                    Community Chat
+                <div className="flex flex-col gap-5 relative md:right-[16px]">
+                  <div className="flex gap-5 items-center font-extrabold text-3xl text-[#97F4E4] ">
+                    <Link
+                      href="https://discord.gg/zQGv8RD8cx"
+                      target="_blank"
+                      className="flex justify-center items-center gap-5 group "
+                    >
+                      <p>Community Chat</p>
+                      <Image
+                        src="/assets/octasol-designs/Media/Line.svg"
+                        alt="discord"
+                        className="transition-transform duration-300 group-hover:rotate-45"
+                        width={15}
+                        height={15}
+                      />
+                    </Link>
                   </div>
                   <p>
                     Ask general questions and chat with the
@@ -524,18 +550,45 @@ export default function LandingPage() {
                   </p>
                 </div>{" "}
                 <div className="flex flex-col gap-5">
-                  <div className="flex font-extrabold text-3xl text-[#97F4E4]">
-                    Twitter
+                  <div className="flex gap-5 items-center font-extrabold text-3xl text-[#97F4E4]">
+                    <Link
+                      href="https://x.com/theoctasol"
+                      target="_blank"
+                      className="flex justify-center items-center gap-5 group"
+                    >
+                      <p>Twitter</p>
+                      <Image
+                        src="/assets/octasol-designs/Media/Line.svg"
+                        alt="discord"
+                        className="transition-transform duration-300 group-hover:rotate-45"
+                        width={15}
+                        height={15}
+                      />
+                    </Link>
                   </div>
+
                   <p>
-                    Follow @octasol to get the latest news
+                    Follow @theoctasol to get the latest news
                     <br />
                     and updates from across the ecosystem.
                   </p>
-                </div>{" "}
+                </div>
                 <div className="flex flex-col gap-5">
-                  <div className="flex font-extrabold text-3xl text-[#97F4E4]">
-                    Developer Chat
+                  <div className="flex gap-5 items-center font-extrabold text-3xl text-[#97F4E4]">
+                    <Link
+                      href="https://t.me/theoctasol"
+                      target="_blank"
+                      className="flex justify-center items-center gap-5 group"
+                    >
+                      <p>Telegram Chat</p>
+                      <Image
+                        src="/assets/octasol-designs/Media/Line.svg"
+                        alt="discord"
+                        className="transition-transform duration-300 group-hover:rotate-45"
+                        width={15}
+                        height={15}
+                      />
+                    </Link>
                   </div>
                   <p>
                     Have technical questions about Octasol?
@@ -547,6 +600,107 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
+
+        <footer className="w-full flex justify-center items-center">
+          <section className="container border-t-2 border-[#97F4E41A]/10 h-full py-24">
+            <div className="grid grid-cols-1 grid-rows-3 sm:grid-cols-3 sm:grid-rows-1 gap-8 place-items-start md:place-items-center md:items-start">
+              <div className="flex flex-col justify-start items-start gap-5">
+                <p className="font-extrabold text-2xl text-[#97F4E4]">
+                  About US
+                </p>
+                <Link href="https://t.me/theoctasol" target="_blank">
+                  <div className="flex justify-center items-center gap-2 ">
+                    <Image
+                      src="/assets/octasol-designs/Media/telegram.svg"
+                      alt="twitter"
+                      className="rotate-90"
+                      width={20}
+                      height={20}
+                    />
+                    Telegram
+                  </div>
+                </Link>
+                <Link href="https://discord.gg/zQGv8RD8cx" target="_blank">
+                  <div className="flex justify-center items-center gap-2 ">
+                    <Image
+                      src="/assets/octasol-designs/Media/discord.svg"
+                      alt="discord"
+                      className="rotate-90"
+                      width={20}
+                      height={20}
+                    />
+                    Discord
+                  </div>
+                </Link>{" "}
+                <Link href="https://x.com/theoctasol" target="_blank">
+                  <div className="flex justify-center items-center gap-2 ">
+                    <Image
+                      src="/assets/octasol-designs/Media/twitter.svg"
+                      alt="twitter"
+                      className="rotate-90"
+                      width={20}
+                      height={20}
+                    />
+                    <p>Twitter</p>
+                  </div>
+                </Link>
+              </div>
+              <div className="flex flex-col justify-start items-start gap-5">
+                <p className="font-extrabold text-2xl text-[#97F4E4]">
+                  Contact US
+                </p>
+                <Link href="https://t.me/AyushAgr91" target="_blank">
+                  <div className="flex justify-center items-center gap-2 ">
+                    <Image
+                      src="/assets/octasol-designs/Media/telegram.svg"
+                      alt="twitter"
+                      className="rotate-90"
+                      width={20}
+                      height={20}
+                    />
+                    Ayush Agrawal
+                  </div>
+                </Link>
+                <Link href="https://t.me/themayankdev" target="_blank">
+                  <div className="flex justify-center items-center gap-2 ">
+                    <Image
+                      src="/assets/octasol-designs/Media/telegram.svg"
+                      alt="twitter"
+                      className="rotate-90"
+                      width={20}
+                      height={20}
+                    />
+                    Mayank Dev
+                  </div>
+                </Link>
+                <Link href="https://t.me/ritikbhatt020" target="_blank">
+                  <div className="flex justify-center items-center gap-2 ">
+                    <Image
+                      src="/assets/octasol-designs/Media/telegram.svg"
+                      alt="twitter"
+                      className="rotate-90"
+                      width={20}
+                      height={20}
+                    />
+                    Ritik Bhatt
+                  </div>
+                </Link>
+              </div>
+              <div className="flex flex-col gap-5">
+                <p className="font-extrabold text-2xl text-[#97F4E4]">DOCS</p>
+                <div className="flex justify-center items-center gap-2">
+                  <Link2 className="-rotate-45" />
+                  <Link
+                    href="https://octasol.gitbook.io/octasol.io/"
+                    target="_blank"
+                  >
+                    <p>Gitbook</p>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
+        </footer>
       </main>
     </>
   );
