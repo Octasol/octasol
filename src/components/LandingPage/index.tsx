@@ -126,16 +126,16 @@ export default function LandingPage() {
               <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-[5px] w-1/4 blur-sm" />
               <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-green-500 to-transparent h-px w-1/4" />
 
-              <SparklesCore
+              {/* <SparklesCore
                 background="transparent"
                 minSize={0.4}
                 maxSize={1}
                 particleDensity={1200}
                 className="absolute inset-0 w-full h-full "
                 particleColor="#FFFFFF"
-              />
+              /> */}
 
-              <div className="absolute inset-0 w-full h-full bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
+              {/* <div className="absolute inset-0 w-full h-full bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div> */}
             </div>
           </div>
 
@@ -165,7 +165,7 @@ export default function LandingPage() {
                 height={300}
               />
             </div>
-            <div className="w-full flex flex-col justify-center items-center text-3xl md:text-5xl">
+            <div className="w-full flex flex-col justify-center items-center text-3xl md:text-5xl lg:text-6xl">
               <div className="leading-relaxed px-5">
                 Track all your
                 <br />
@@ -176,7 +176,7 @@ export default function LandingPage() {
             </div>
 
             <div className="w-full  h-full relative flex justify-center items-center">
-              <div className="w-fit h-fit absolute right-10 top-0 md:top-40 flex flex-col text-end justify-end items-start gap-2">
+              <div className="w-fit h-fit absolute right-10 top-0 md:top-20 flex flex-col text-end justify-end items-start gap-2">
                 <p
                   className={cn(
                     "text-5xl sm:text-3xl md:text-6xl font-bold",
@@ -187,7 +187,7 @@ export default function LandingPage() {
                 </p>
                 <p className="text-lg">Bounties&nbsp;placed</p>
               </div>
-              <div className="w-fit h-fit absolute right-[150px] top-1/2  flex flex-col text-end justify-end items-start pt-2 gap-2">
+              <div className="w-fit h-fit absolute right-[150px] top-[120px] md:top-[250px]  flex flex-col text-end justify-end items-start pt-2 gap-2">
                 <p
                   className={cn(
                     "text-5xl sm:text-3xl md:text-6xl font-bold",
@@ -427,6 +427,15 @@ export default function LandingPage() {
         </section>
 
         <section className="min-h-[80vh] md:min-h-screen py-16 flex flex-col gap-12 justify-center items-start relative overflow-hidden">
+          <div className="absolute -left-[250px] top-[20px] opacity-50 md:opacity-100 ">
+            <Image
+              src="/assets/octasol-designs/Media/green-grad.svg"
+              alt="twitter"
+              className=""
+              width={500}
+              height={500}
+            />
+          </div>
           <div className="flex flex-col gap-12 justify-center items-start container ">
             <div className="text-4xl md:text-8xl font-extrabold">
               How we Built
@@ -529,9 +538,9 @@ export default function LandingPage() {
           <Image
             src="/assets/octasol-designs/Media/green-grad.svg"
             alt="twitter"
-            className=" absolute -right-[400px] -bottom-[200px]"
-            width={800}
-            height={800}
+            className=" absolute -right-[250px] -bottom-[200px]"
+            width={500}
+            height={500}
           />
           <div className="container flex flex-col md:flex-row justify-center items-center gap-8 z-20 py-12">
             <div className="w-full md:w-1/2 flex flex-col gap-10 h-full">
