@@ -72,7 +72,7 @@ export default function RootLayout({ children, session }: Props) {
             <SessionProviderWrapper session={session}>
               <Loader />
               <TooltipProvider>
-                <div className="min-h-screen w-full flex flex-col bg-black">
+                <div className="min-h-screen w-full flex flex-col bg-transparent">
                   <Header />
                   {children}
                 </div>

@@ -11,6 +11,7 @@ import Text from "./Text";
 import dynamic from "next/dynamic";
 import { Link2 } from "lucide-react";
 import Octasol from "../Octasol";
+import Footer from "../Footer";
 
 const alexandria = Alexandria({
   weight: ["200", "400"],
@@ -80,62 +81,15 @@ export default function LandingPage() {
             />
           </Link>
         </div>
-        <section className="min-h-[calc(100vh-80px)] flex flex-col justify-center gap-20 overflow-hidden">
-          <div className=" relative w-full flex justify-between">
-            <div className="absolute -left-[400px] -top-[350px] opacity-50 md:opacity-100 ">
-              <Image
-                src="/assets/octasol-designs/Media/green-grad.svg"
-                alt="twitter"
-                className=""
-                width={800}
-                height={800}
-              />
-              <Image
-                src="/assets/octasol-designs/Media/Ellipse_65.svg"
-                alt="twitter"
-                className="absolute left-[150px] top-[150px] opacity-50"
-                width={400}
-                height={400}
-              />
-            </div>
-            <div className="absolute -right-[400px] -top-[350px] opacity-50 md:opacity-100 ">
-              <Image
-                src="/assets/octasol-designs/Media/green-grad.svg"
-                alt="twitter"
-                className=""
-                width={800}
-                height={800}
-              />
-              <Image
-                src="/assets/octasol-designs/Media/Ellipse_65.svg"
-                alt="twitter"
-                className="absolute right-[150px] top-[100px] opacity-50"
-                width={400}
-                height={400}
-              />
-            </div>
-          </div>
-
-          <div className="flex flex-col justify-center items-center gap-6 container overflow-hidden">
+        <section className="min-h-[calc(100vh-80px)] flex flex-col justify-center gap-20 relative overflow-hidden">
+          <div className="flex flex-col justify-center items-center gap-8 container overflow-hidden">
             <div className="container">
               <Text />
             </div>
-            <div className="w-[40rem] h-40 relative">
-              <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-green-500 to-transparent h-[2px] w-3/4 blur-sm" />
-              <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4" />
-              <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-[5px] w-1/4 blur-sm" />
-              <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-green-500 to-transparent h-px w-1/4" />
-
-              {/* <SparklesCore
-                background="transparent"
-                minSize={0.4}
-                maxSize={1}
-                particleDensity={1200}
-                className="absolute inset-0 w-full h-full "
-                particleColor="#FFFFFF"
-              /> */}
-
-              {/* <div className="absolute inset-0 w-full h-full bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div> */}
+            <div className="max-w-3xl h-40 text-xs sm:text-base text-center word-wrap relative">
+              Octasol redefines open-source collaboration by connecting
+              maintainers with top contributors worldwide. It streamlines bounty
+              management on GitHub.
             </div>
           </div>
 
@@ -147,7 +101,6 @@ export default function LandingPage() {
               width={1000}
               height={1000}
             />
-            {/* <Octasol /> */}
           </div>
         </section>
 
@@ -202,13 +155,13 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="relative flex flex-col justify-center items-center">
+        <section className="relative flex flex-col justify-center items-center py-8">
           <Image
             src="/octasolLandingLogo.png"
             alt="discord"
-            className="absolute -left-[150px] top-0 rotate-[12deg] opacity-10"
-            width={400}
-            height={400}
+            className="absolute -left-[190px] top-0 rotate-[12deg] opacity-20"
+            width={500}
+            height={500}
           />
           <div className="flex w-fit h-fit flex-col gap-12">
             <div
@@ -317,9 +270,9 @@ export default function LandingPage() {
           <Image
             src="/octasolLandingLogo.png"
             alt="discord"
-            className="absolute -right-[150px] -top-[80px] -rotate-[12deg] opacity-10 "
-            width={400}
-            height={400}
+            className="absolute -right-[190px] -top-[80px] -rotate-[12deg] opacity-10 "
+            width={500}
+            height={500}
           />
           <div className="grid grid-rows-2 md:grid-rows-1 grid-cols-1 md:grid-cols-2 place-items-center container justify-between items-center md:p-16">
             <Image
@@ -427,15 +380,6 @@ export default function LandingPage() {
         </section>
 
         <section className="min-h-[80vh] md:min-h-screen py-16 flex flex-col gap-12 justify-center items-start relative overflow-hidden">
-          <div className="absolute -left-[250px] top-[20px] opacity-50 md:opacity-100 ">
-            <Image
-              src="/assets/octasol-designs/Media/green-grad.svg"
-              alt="twitter"
-              className=""
-              width={500}
-              height={500}
-            />
-          </div>
           <div className="flex flex-col gap-12 justify-center items-start container ">
             <div className="text-4xl md:text-8xl font-extrabold">
               How we Built
@@ -535,13 +479,7 @@ export default function LandingPage() {
             width={500}
             height={500}
           />
-          <Image
-            src="/assets/octasol-designs/Media/green-grad.svg"
-            alt="twitter"
-            className=" absolute -right-[250px] -bottom-[200px]"
-            width={500}
-            height={500}
-          />
+
           <div className="container flex flex-col md:flex-row justify-center items-center gap-8 z-20 py-12">
             <div className="w-full md:w-1/2 flex flex-col gap-10 h-full">
               <p className="text-5xl lg:text-7xl font-extrabold ">
@@ -636,106 +574,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <footer className="w-full flex justify-center items-center">
-          <section className="container border-t-2 border-[#97F4E41A]/10 h-full py-24">
-            <div className="grid grid-cols-1 grid-rows-3 sm:grid-cols-3 sm:grid-rows-1 gap-8 place-items-start md:place-items-center md:items-start">
-              <div className="flex flex-col justify-start items-start gap-5">
-                <p className="font-extrabold text-2xl text-[#97F4E4]">
-                  About US
-                </p>
-                <Link href="https://t.me/theoctasol" target="_blank">
-                  <div className="flex justify-center items-center gap-2 ">
-                    <Image
-                      src="/assets/octasol-designs/Media/telegram.svg"
-                      alt="twitter"
-                      className="rotate-90"
-                      width={20}
-                      height={20}
-                    />
-                    Telegram
-                  </div>
-                </Link>
-                <Link href="https://discord.gg/zQGv8RD8cx" target="_blank">
-                  <div className="flex justify-center items-center gap-2 ">
-                    <Image
-                      src="/assets/octasol-designs/Media/discord.svg"
-                      alt="discord"
-                      className="rotate-90"
-                      width={20}
-                      height={20}
-                    />
-                    Discord
-                  </div>
-                </Link>{" "}
-                <Link href="https://x.com/theoctasol" target="_blank">
-                  <div className="flex justify-center items-center gap-2 ">
-                    <Image
-                      src="/assets/octasol-designs/Media/twitter.svg"
-                      alt="twitter"
-                      className="rotate-90"
-                      width={20}
-                      height={20}
-                    />
-                    <p>Twitter</p>
-                  </div>
-                </Link>
-              </div>
-              <div className="flex flex-col justify-start items-start gap-5">
-                <p className="font-extrabold text-2xl text-[#97F4E4]">
-                  Contact US
-                </p>
-                <Link href="https://t.me/AyushAgr91" target="_blank">
-                  <div className="flex justify-center items-center gap-2 ">
-                    <Image
-                      src="/assets/octasol-designs/Media/telegram.svg"
-                      alt="twitter"
-                      className="rotate-90"
-                      width={20}
-                      height={20}
-                    />
-                    Ayush Agrawal
-                  </div>
-                </Link>
-                <Link href="https://t.me/themayankdev" target="_blank">
-                  <div className="flex justify-center items-center gap-2 ">
-                    <Image
-                      src="/assets/octasol-designs/Media/telegram.svg"
-                      alt="twitter"
-                      className="rotate-90"
-                      width={20}
-                      height={20}
-                    />
-                    Mayank Dev
-                  </div>
-                </Link>
-                <Link href="https://t.me/ritikbhatt020" target="_blank">
-                  <div className="flex justify-center items-center gap-2 ">
-                    <Image
-                      src="/assets/octasol-designs/Media/telegram.svg"
-                      alt="twitter"
-                      className="rotate-90"
-                      width={20}
-                      height={20}
-                    />
-                    Ritik Bhatt
-                  </div>
-                </Link>
-              </div>
-              <div className="flex flex-col gap-5">
-                <p className="font-extrabold text-2xl text-[#97F4E4]">DOCS</p>
-                <div className="flex justify-center items-center gap-2">
-                  <Link2 className="-rotate-45" />
-                  <Link
-                    href="https://octasol.gitbook.io/octasol.io/"
-                    target="_blank"
-                  >
-                    <p>Gitbook</p>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </section>
-        </footer>
+        <Footer />
       </main>
     </>
   );
