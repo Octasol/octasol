@@ -153,7 +153,7 @@ export default function LandingPage() {
 
         <section className="w-full h-full relative">
           <div
-            className="min-h-[50vh] container h-full grid grid-cols-1 grid-rows-2
+            className="min-h-[60vh] container  grid grid-cols-1 grid-rows-2
          md:grid-cols-2 md:grid-rows-1 place-items-center gap-8 "
           >
             <div className="absolute right-0 -top-[50px]">
@@ -165,41 +165,38 @@ export default function LandingPage() {
                 height={300}
               />
             </div>
-            <div className="w-full flex flex-col justify-center items-center text-3xl md:text-6xl leading-normal">
-              <div>
+            <div className="w-full flex flex-col justify-center items-center text-3xl md:text-5xl">
+              <div className="leading-relaxed px-5">
                 Track all your
                 <br />
                 achievements
                 <br />
                 in one place
               </div>
-              {/* <div className="text-base text-[#4A4646] font-bold border-2 my-8 py-2 px-4 bg-gradient-to-r from-[#97F4E4] to-[#8E54E9]">
-              Learn More
-            </div> */}
             </div>
 
             <div className="w-full  h-full relative flex justify-center items-center">
-              <div className="w-fit h-fit absolute right-10 top-0 flex flex-col text-end justify-end">
+              <div className="w-fit h-fit absolute right-10 top-0 md:top-40 flex flex-col text-end justify-end items-start gap-2">
                 <p
                   className={cn(
-                    "text-3xl md:text-6xl font-bold",
+                    "text-5xl sm:text-3xl md:text-6xl font-bold",
                     alexandria.className
                   )}
                 >
                   $100+
                 </p>
-                <p>Bounty&nbsp;placed</p>
+                <p className="text-lg">Bounties&nbsp;placed</p>
               </div>
-              <div className="w-fit h-fit absolute right-[150px] top-1/3 flex flex-col text-end justify-end items-start pt-8">
+              <div className="w-fit h-fit absolute right-[150px] top-1/2  flex flex-col text-end justify-end items-start pt-2 gap-2">
                 <p
                   className={cn(
-                    "text-3xl md:text-6xl font-bold",
+                    "text-5xl sm:text-3xl md:text-6xl font-bold",
                     alexandria.className
                   )}
                 >
                   400+
                 </p>
-                <p>Users</p>
+                <p className="text-lg">Developers</p>
               </div>
             </div>
           </div>
