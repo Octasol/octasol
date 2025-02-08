@@ -80,7 +80,42 @@ export default function LandingPage() {
             />
           </Link>
         </div>
-        <section className="min-h-[calc(100vh-80px)] flex flex-col justify-center gap-20 relative">
+        <section className="min-h-[calc(100vh-80px)] flex flex-col justify-center gap-20 overflow-hidden">
+          <div className=" relative w-full flex justify-between">
+            <div className="absolute -left-[400px] -top-[350px] opacity-50 md:opacity-100 ">
+              <Image
+                src="/assets/octasol-designs/Media/green-grad.svg"
+                alt="twitter"
+                className=""
+                width={800}
+                height={800}
+              />
+              <Image
+                src="/assets/octasol-designs/Media/Ellipse_65.svg"
+                alt="twitter"
+                className="absolute left-[150px] top-[150px] opacity-50"
+                width={400}
+                height={400}
+              />
+            </div>
+            <div className="absolute -right-[400px] -top-[350px] opacity-50 md:opacity-100 ">
+              <Image
+                src="/assets/octasol-designs/Media/green-grad.svg"
+                alt="twitter"
+                className=""
+                width={800}
+                height={800}
+              />
+              <Image
+                src="/assets/octasol-designs/Media/Ellipse_65.svg"
+                alt="twitter"
+                className="absolute right-[150px] top-[100px] opacity-50"
+                width={400}
+                height={400}
+              />
+            </div>
+          </div>
+
           <div className="flex flex-col justify-center items-center gap-6 container overflow-hidden">
             <div className="container">
               <Text />
@@ -104,28 +139,6 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* <div className="text-5xl md:text-7xl lg:text-[90px] text-center flex items-center justify-center lg:justify-start container px-8 lg:px-36 relative">
-            Connecting Your
-            <br />
-            Issues with
-            <br />
-            Solutions
-          </div> */}
-
-          {/* <div className="text-base min-w-fit container text-start flex justify-end items-end pe-12">
-            Octasol redefines
-            <br />
-            open-source collaboration by
-            <br />
-            connecting maintainers with top
-            <br />
-            contributors worldwide. It
-            <br />
-            streamlines bounty management
-            <br />
-            on GitHub.
-          </div> */}
-
           <div className="flex items-end bottom-0 absolute">
             <Image
               src="/assets/octasol-designs/Media/octasol.svg"
@@ -138,45 +151,56 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section
-          className="min-h-[50vh] container h-full grid grid-cols-1 grid-rows-2
-         md:grid-cols-2 md:grid-rows-1 place-items-center gap-8"
-        >
-          <div className="w-full flex flex-col justify-center items-center text-3xl md:text-6xl leading-normal">
-            <div>
-              Track all your
-              <br />
-              achievements
-              <br />
-              in one place
+        <section className="w-full h-full relative">
+          <div
+            className="min-h-[50vh] container h-full grid grid-cols-1 grid-rows-2
+         md:grid-cols-2 md:grid-rows-1 place-items-center gap-8 "
+          >
+            <div className="absolute right-0 -top-[50px]">
+              <Image
+                src="/assets/octasol-designs/Media/Thorus.svg"
+                alt="twitter"
+                className=""
+                width={300}
+                height={300}
+              />
             </div>
-            {/* <div className="text-base text-[#4A4646] font-bold border-2 my-8 py-2 px-4 bg-gradient-to-r from-[#97F4E4] to-[#8E54E9]">
+            <div className="w-full flex flex-col justify-center items-center text-3xl md:text-6xl leading-normal">
+              <div>
+                Track all your
+                <br />
+                achievements
+                <br />
+                in one place
+              </div>
+              {/* <div className="text-base text-[#4A4646] font-bold border-2 my-8 py-2 px-4 bg-gradient-to-r from-[#97F4E4] to-[#8E54E9]">
               Learn More
             </div> */}
-          </div>
-
-          <div className="w-full  h-full relative flex justify-center items-center">
-            <div className="w-fit h-fit absolute right-10 top-0 flex flex-col text-end justify-end">
-              <p
-                className={cn(
-                  "text-3xl md:text-6xl font-bold",
-                  alexandria.className
-                )}
-              >
-                20+
-              </p>
-              <p>Platforms and companies</p>
             </div>
-            <div className="w-fit h-fit absolute right-[150px] top-1/3 flex flex-col text-end justify-end pt-8">
-              <p
-                className={cn(
-                  "text-3xl md:text-6xl font-bold",
-                  alexandria.className
-                )}
-              >
-                30+
-              </p>
-              <p>Bounties&nbsp;Offered</p>
+
+            <div className="w-full  h-full relative flex justify-center items-center">
+              <div className="w-fit h-fit absolute right-10 top-0 flex flex-col text-end justify-end">
+                <p
+                  className={cn(
+                    "text-3xl md:text-6xl font-bold",
+                    alexandria.className
+                  )}
+                >
+                  $100+
+                </p>
+                <p>Bounty&nbsp;placed</p>
+              </div>
+              <div className="w-fit h-fit absolute right-[150px] top-1/3 flex flex-col text-end justify-end items-start pt-8">
+                <p
+                  className={cn(
+                    "text-3xl md:text-6xl font-bold",
+                    alexandria.className
+                  )}
+                >
+                  400+
+                </p>
+                <p>Users</p>
+              </div>
             </div>
           </div>
         </section>
@@ -189,7 +213,6 @@ export default function LandingPage() {
             width={400}
             height={400}
           />
-
           <div className="flex w-fit h-fit flex-col gap-12">
             <div
               className={cn(
@@ -211,87 +234,84 @@ export default function LandingPage() {
               and bounty management
             </div>
           </div>
-
           <div className="grid grid-cols-1 grid-rows-4 md:grid-cols-2 md:grid-rows-2 py-12 gap-8 container place-items-center">
-            <div className="flex flex-col gap-2 justify-start items-start">
+            <div className="flex flex-col gap-2 justify-center items-center text-start">
               <Image
                 src="/assets/octasol-designs/Media/escrowed.svg"
                 alt="discord"
-                className="flex justify-center items-center w-full"
+                className="flex justify-center items-center !w-[200px] !h-[250px] md:!w-[300px] md:!h-[350px] object-cover"
                 width={100}
                 height={100}
               />
-              <p className="text-[#97F4E4] text-2xl font-bold text-start flex justify-start items-start w-full">
-                Escrow-based
-                <br />
-                Bounty System
-              </p>
-              <p className="text-start flex justify-start">
-                Ensuring funds are securely
-                <br />
-                locked until deliverables are met.
-              </p>
+              <div className="w-full flex flex-col gap-5 ">
+                <p className="text-[#97F4E4] text-2xl font-bold text-start flex justify-start items-start w-full">
+                  Escrow-based
+                  <br />
+                  Bounty System
+                </p>
+                <div className="text-start flex justify-start w-[250px] md:w-[300px]">
+                  Ensuring funds are securely locked until deliverables are met.
+                </div>
+              </div>
             </div>
-            <div className="flex flex-col gap-2 justify-start items-start">
+            <div className="flex flex-col gap-2 justify-center items-center text-start">
               <Image
                 src="/assets/octasol-designs/Media/zkProof.svg"
                 alt="discord"
-                className="flex justify-center items-center w-full"
+                className="flex justify-center items-center !w-[200px] !h-[250px] md:!w-[300px] md:!h-[350px] object-cover"
                 width={100}
                 height={100}
               />
-              <p className="text-[#97F4E4] text-2xl font-bold text-start flex justify-start items-start w-full">
-                Zk Proof
-                <br />
-                Integration
-              </p>
-              <p className="text-start flex justify-start">
-                For secure, decentralized verification
-                <br />
-                of developer credentials and activity.
-              </p>
+              <div className="w-full flex flex-col gap-5 ">
+                <p className="text-[#97F4E4] text-2xl font-bold text-start flex justify-start items-start w-full">
+                  Zk Proof
+                  <br />
+                  Integration
+                </p>
+                <div className="text-start flex justify-start w-[250px] md:w-[300px]">
+                  For secure, decentralized verification of developer
+                  credentials and activity.
+                </div>
+              </div>
             </div>{" "}
-            <div className="flex flex-col gap-2 justify-start items-start">
+            <div className="flex flex-col gap-2 justify-center items-center text-start">
               <Image
                 src="/assets/octasol-designs/Media/seamless.svg"
                 alt="discord"
-                className="flex justify-center items-center w-full"
+                className="flex justify-center items-center !w-[200px] !h-[250px] md:!w-[300px] md:!h-[350px] object-cover"
                 width={100}
                 height={100}
               />
-              <p className="text-[#97F4E4] text-2xl font-bold text-start flex justify-start items-start w-full">
-                Seamless GitHub
-                <br />
-                Integration
-              </p>
-              <p className="text-start flex justify-start px-0">
-                Streamlining the workflow for
-                <br />
-                maintainers and contributors.
-              </p>
+              <div className="w-full flex flex-col gap-5 justify-start items-start px-2 text-start">
+                <p className="text-[#97F4E4] text-2xl font-bold text-start flex justify-start items-start w-full">
+                  Seamless GitHub
+                  <br />
+                  Integration
+                </p>
+                <div className="text-start flex justify-start w-[250px] md:w-[300px]">
+                  Streamlining the workflow for maintainers and contributors.
+                </div>
+              </div>
             </div>
-            <div className="flex flex-col gap-2 justify-start items-start">
+            <div className="flex flex-col gap-2 justify-start items-start pt-6">
               <Image
                 src="/assets/octasol-designs/Media/devID.svg"
                 alt="discord"
-                className="flex justify-center items-center w-full"
+                className="flex justify-center items-center !w-[200px] !h-[250px] md:!w-[300px] md:!h-[350px] object-cover"
                 width={100}
                 height={100}
               />
-              <p className="text-[#97F4E4] text-2xl font-bold text-start flex justify-start items-start w-full">
-                Dev ID
-                <br />
-                Verification
-              </p>
-              <p className="text-start flex justify-start">
-                A unified developer identity
-                <br />
-                connecting multiple profiles
-                <br />
-                like Github and Leetcode for trust
-                <br />
-                and credibility.
-              </p>
+              <div className="w-full flex flex-col gap-5 ">
+                <p className="text-[#97F4E4] text-2xl font-bold text-start flex justify-start items-start w-full">
+                  Dev ID
+                  <br />
+                  Verification
+                </p>
+                <div className="text-start flex justify-start w-[250px] md:w-[300px]">
+                  A unified developer identity connecting multiple profiles like
+                  Github and Leetcode for trust and credibility.
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -501,13 +521,20 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="w-full flex justify-center items-center min-h-screen relative">
+        <section className="w-screen flex justify-center items-center min-h-screen relative overflow-hidden">
           <Image
             src="/assets/octasol-designs/Media/sphere.svg"
             alt="discord"
             className="absolute -left-0"
             width={500}
             height={500}
+          />
+          <Image
+            src="/assets/octasol-designs/Media/green-grad.svg"
+            alt="twitter"
+            className=" absolute -right-[400px] -bottom-[200px]"
+            width={800}
+            height={800}
           />
           <div className="container flex flex-col md:flex-row justify-center items-center gap-8 z-20 py-12">
             <div className="w-full md:w-1/2 flex flex-col gap-10 h-full">
