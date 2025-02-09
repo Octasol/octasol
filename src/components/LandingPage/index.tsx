@@ -573,9 +573,9 @@ export default function LandingPage() {
                     </Link>
                   </div>
                   <p>
-                    Have technical questions about Octasol?
+                    Be part of the conversation! Join our chat
                     <br />
-                    Ask a developer on the Discord.
+                    on Telegram!
                   </p>
                 </div>
               </div>
