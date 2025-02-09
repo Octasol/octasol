@@ -9,8 +9,6 @@ import { Alexandria } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Text from "./Text";
 import dynamic from "next/dynamic";
-import { Link2 } from "lucide-react";
-import Octasol from "../Octasol";
 import Footer from "../Footer";
 
 const alexandria = Alexandria({
