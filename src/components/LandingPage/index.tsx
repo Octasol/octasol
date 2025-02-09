@@ -37,6 +37,7 @@ export default function LandingPage() {
   return (
     <>
       <main className="w-full flex flex-col gap-12 md:gap-24 pt-[80px]">
+        {/* Link */}
         <div className="fixed z-20 w-fit h-fit right-[-140px] top-1/2 -rotate-90 flex justify-center items-center gap-6">
           <Link
             href="https://discord.gg/zQGv8RD8cx"
@@ -81,6 +82,8 @@ export default function LandingPage() {
             />
           </Link>
         </div>
+
+        {/* Hero */}
         <section className="min-h-[calc(100vh-80px)] flex flex-col justify-center gap-20 relative overflow-hidden">
           <div className="flex flex-col justify-center items-center gap-8 container overflow-hidden">
             <div className="container">
@@ -104,18 +107,19 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Track all achievements */}
         <section className="w-full h-full relative">
           <div
             className="min-h-[60vh] container  grid grid-cols-1 grid-rows-2
          md:grid-cols-2 md:grid-rows-1 place-items-center gap-8 "
           >
-            <div className="absolute right-0 -top-[50px]">
+            <div className="absolute -right-[100px] -top-[90px]">
               <Image
-                src="/assets/octasol-designs/Media/Thorus.svg"
+                src="/assets/octasol-designs/Media/Thorus.png"
                 alt="twitter"
                 className=""
-                width={300}
-                height={300}
+                width={600}
+                height={600}
               />
             </div>
             <div className="w-full flex flex-col justify-center items-center text-3xl md:text-5xl lg:text-6xl">
@@ -155,6 +159,7 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Bounty platform*/}
         <section className="relative flex flex-col justify-center items-center py-8">
           <Image
             src="/octasolLandingLogo.png"
@@ -266,6 +271,7 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Trust and security */}
         <section className="relative flex flex-col justify-center items-center w-full overflow-hidden">
           <Image
             src="/octasolLandingLogo.png"
@@ -300,6 +306,7 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* zK proof */}
         <section className="relative flex flex-col ">
           <Image
             src="/octasolLandingLogo.png"
@@ -379,37 +386,38 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="min-h-[80vh] md:min-h-screen py-16 flex flex-col gap-12 justify-center items-start relative overflow-hidden">
+        {/* Build */}
+        <section className="min-h-[80vh]  flex flex-col gap-12 justify-center items-start relative overflow-hidden">
           <div className="flex flex-col gap-12 justify-center items-start container ">
             <div className="text-4xl md:text-8xl font-extrabold">
               How we Built
               <br />
               Octasol?
             </div>
-            <div className="text-[#97F4E4] text-xl md:text-2xl">
-              At Octasol, our goal was to create
-              <br />
-              a secure, efficient, and user-friendly
-              <br />
-              platform for developers collaboration.
+            <div className="max-w-lg text-start">
+              <div className="text-[#97F4E4] text-xl md:text-2xl">
+                At Octasol, our goal was to create a secure, efficient, and
+                user-friendly platform for developers collaboration.
+              </div>
             </div>
           </div>
           <Image
-            src="/assets/octasol-designs/Media/cylinder.svg"
+            src="/assets/octasol-designs/Media/cylinder.png"
             alt="discord"
-            className="absolute right-0 top-0  opacity-50 "
-            width={500}
-            height={500}
+            className="absolute -right-[180px] top-[50px] filter brightness-150"
+            width={700}
+            height={700}
           />{" "}
         </section>
 
+        {/* Why join */}
         <section className="w-full h-full flex flex-col gap-28 justify-center items-center py-12 relative overflow-hidden">
           <Image
             src="/octasolLandingLogo.png"
             alt="discord"
-            className="absolute -right-[150px] -top-[80px] -rotate-[12deg] opacity-10 "
-            width={400}
-            height={400}
+            className="absolute -right-[190px] -top-[80px] -rotate-[12deg] opacity-10 "
+            width={500}
+            height={500}
           />
           <div className="text-6xl font-extrabold px-5">Why Join Octasol</div>
           <div className="grid grid-rows-3 grid-cols-1 md:grid-cols-3 md:grid-rows-1 gap-6 container">
@@ -471,13 +479,14 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Community */}
         <section className="w-screen flex justify-center items-center min-h-screen relative overflow-hidden">
           <Image
-            src="/assets/octasol-designs/Media/sphere.svg"
+            src="/assets/octasol-designs/Media/sphere.png"
             alt="discord"
-            className="absolute -left-0"
-            width={500}
-            height={500}
+            className="absolute -left-[250px]"
+            width={800}
+            height={800}
           />
 
           <div className="container flex flex-col md:flex-row justify-center items-center gap-8 z-20 py-12">

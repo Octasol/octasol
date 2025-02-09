@@ -91,12 +91,14 @@ const Footer = (props: Props) => {
           <div className="flex flex-col gap-5">
             <p className="font-extrabold text-2xl text-[#97F4E4]">DOCS</p>
             <div className="flex justify-center items-center gap-2">
-              <Link2 className="-rotate-45" />
               <Link
                 href="https://octasol.gitbook.io/octasol.io/"
                 target="_blank"
               >
-                <p>Gitbook</p>
+                <div className="flex justify-center items-center gap-2 ">
+                  <Link2 className="-rotate-45" />
+                  Gitbook
+                </div>
               </Link>
             </div>
           </div>
