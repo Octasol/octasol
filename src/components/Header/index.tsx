@@ -9,7 +9,7 @@ type Props = {};
 const Header = (props: Props) => {
   return (
     <>
-      <nav className="text-white fixed top-0 right-0 left-0 w-full h-20 flex justify-between items-center md:px-20 px-2 py-6 bg-black z-50 ">
+      <nav className="text-white fixed top-0 right-0 left-0 w-full h-20 flex justify-between items-center md:px-20 px-2 py-6 z-50  backdrop-blur-md">
         <div className="flex justify-center items-center">
           <Link href="/dashboard" passHref>
             <Image
