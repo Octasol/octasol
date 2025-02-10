@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Montserrat, Poppins } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Session } from "next-auth";
@@ -17,7 +17,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const poppins = Poppins({
+const montserrat = Montserrat({
   weight: ["200", "400"],
   subsets: ["latin"],
   preload: true,
@@ -58,7 +58,7 @@ export default function RootLayout({ children, session }: Props) {
       <body
         className={cn(
           "min-h-screen h-full bg-black text-white",
-          poppins.className
+          montserrat.className
         )}
       >
         <ThemeProvider
@@ -72,7 +72,7 @@ export default function RootLayout({ children, session }: Props) {
             <SessionProviderWrapper session={session}>
               <Loader />
               <TooltipProvider>
-                <div className="min-h-screen w-full flex flex-col bg-black">
+                <div className="min-h-screen w-full flex flex-col bg-transparent">
                   <Header />
                   {children}
                 </div>
