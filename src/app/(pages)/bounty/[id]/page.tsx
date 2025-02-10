@@ -22,9 +22,17 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useDispatch, useSelector } from "react-redux";
 import { cn } from "@/lib/utils";
-import { toast } from "react-toastify";
 import { decrement } from "@/app/Redux/Features/loader/loaderSlice";
-import CopyLinkButton from "@/components/Button/CopyLinkButton";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { toast } from "react-toastify";
+import Login from "@/components/Login/Login";
 
 const bountySubmission = {
   links: [],
@@ -45,6 +53,16 @@ const BountyDetails = () => {
   const [telegramLink, setTelegramLink] = useState<String>();
   const [contacttelegramLink, setContactTelegramLink] = useState<String>();
   const [submissionLink, setSubmissionLink] = useState<String>();
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (user.status == "unauthenticated") {
+      const timer = setTimeout(() => {
+        setOpen(true);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [user]);
 
   useEffect(() => {
     setId(parseInt(pathname.split("/bounty/")[1]));
@@ -162,10 +180,29 @@ const BountyDetails = () => {
     notify("Link Copied");
   };
 
+  const loginAlert = () => {
+    toast.error("Login to continue reading");
+  };
+
   return (
     <>
       {bounty ? (
         <div className="w-full h-full flex">
+          <Dialog open={open} onOpenChange={loginAlert}>
+            <DialogContent className="[&>button]:hidden bg-black">
+              <DialogHeader>
+                <DialogTitle>Login</DialogTitle>
+                <DialogDescription>
+                  Enter your credentials to continue
+                </DialogDescription>
+              </DialogHeader>
+              <div className="w-full flex justify-center items-center">
+                <div className="w-fit ">
+                  <Login />
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
           <div className="w-full flex flex-col md:flex-row gap-3 md:gap-0">
             <div className="w-full md:max-w-[400px] flex flex-col h-full md:h-[90vh] relative md:sticky top-0 px-4">
               <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl ">
