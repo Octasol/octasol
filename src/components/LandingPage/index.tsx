@@ -423,10 +423,10 @@ export default function LandingPage() {
               <p>CONNECT</p>
               <div className="flex flex-col gap-5">
                 <p className="text-[#97F4E4] font-bold text-3xl">Bounties</p>
-                <p>
+                {/* <p>
                   Grow the economy of your chain by connecting to Cronos Hub
                   services using IBC protocol.
-                </p>
+                </p> */}
               </div>
               <Image
                 src="/assets/octasol-designs/Media/format-square.svg"
@@ -442,10 +442,10 @@ export default function LandingPage() {
                 <p className="text-[#97F4E4] font-bold text-3xl">
                   Escrow-based
                 </p>
-                <p>
+                {/* <p>
                   Get support to bring users to Cronos by providing services
                   such as exchanges, wallets and more.
-                </p>
+                </p> */}
               </div>
               <Image
                 src="/assets/octasol-designs/Media/copy-success.svg"
@@ -461,10 +461,10 @@ export default function LandingPage() {
                 <p className="text-[#97F4E4] font-bold text-3xl">
                   Dev ID Verification
                 </p>
-                <p>
+                {/* <p>
                   Join the ranks of trusted decentralized validator operators in
                   the network and help secure the interchain.
-                </p>
+                </p> */}
               </div>
               <Image
                 src="/assets/octasol-designs/Media/people.svg"
