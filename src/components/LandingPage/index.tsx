@@ -89,8 +89,8 @@ export default function LandingPage() {
             </div>
             <div className="max-w-3xl h-40 text-xs sm:text-base text-center word-wrap relative">
               Octasol redefines open-source collaboration by connecting
-              maintainers with top contributors worldwide. It streamlines bounty
-              management on GitHub.
+              maintainers with top contributors worldwide. It keeps developers
+              proof of work verifiable and real.
             </div>
           </div>
 
@@ -124,7 +124,7 @@ export default function LandingPage() {
               <div className="leading-relaxed px-5">
                 Track all your
                 <br />
-                achievements
+                proof of work
                 <br />
                 in one place
               </div>
@@ -296,7 +296,7 @@ export default function LandingPage() {
                 Trust and Security
               </p>
               <p className="text-base md:text-xl ">
-                By leveraging the Solana blockchain, Octasol ensures funds are
+                By leveraging blockchain technology, Octasol ensures funds are
                 held in escrow until tasks are successfully completed, fostering
                 trust between maintainers and contributors.
               </p>
@@ -556,7 +556,7 @@ export default function LandingPage() {
                 <div className="flex flex-col gap-5">
                   <div className="flex gap-5 items-center font-extrabold text-3xl text-[#97F4E4]">
                     <Link
-                      href="https://t.me/theoctasol"
+                      href="https://t.me/octasol"
                       target="_blank"
                       className="flex justify-center items-center gap-5 group"
                     >
