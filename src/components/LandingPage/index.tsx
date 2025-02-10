@@ -96,7 +96,7 @@ export default function LandingPage() {
 
           <div className="flex items-end bottom-0 absolute">
             <Image
-              src="/assets/octasol-designs/Media/octasol.svg"
+              src="/assets/octasol-designs/Media/_octasol.svg"
               alt="discord"
               className="flex items-start px-8 "
               width={1000}
