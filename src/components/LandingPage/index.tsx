@@ -36,7 +36,7 @@ export default function LandingPage() {
     <>
       <main className="w-full flex flex-col gap-12 md:gap-24 pt-[80px]">
         {/* Link */}
-        <div className="fixed z-20 w-fit h-fit right-[-140px] top-1/2 -rotate-90 flex justify-center items-center gap-6">
+        <div className="fixed z-[1000] w-fit h-fit right-[-140px] top-1/2 -rotate-90 flex justify-center items-center gap-6">
           <Link
             href="https://discord.gg/zQGv8RD8cx"
             target="_blank"
@@ -487,7 +487,7 @@ export default function LandingPage() {
             height={800}
           />
 
-          <div className="container flex flex-col md:flex-row justify-center items-center gap-8 z-20 py-12">
+          <div className="container flex flex-col md:flex-row justify-center items-center gap-16 md:gap-8 z-20 py-12">
             <div className="w-full md:w-1/2 flex flex-col gap-10 h-full">
               <p className="text-5xl lg:text-7xl font-extrabold ">
                 Meet Our
@@ -505,7 +505,7 @@ export default function LandingPage() {
               </p>
             </div>
             <div className="w-full md:w-1/2 h-full ">
-              <div className="grid grid-rows-3 gap-12 md:gap-32 place-items-end">
+              <div className="grid grid-rows-3 gap-12 md:gap-32 place-items-start md:place-items-end">
                 <div className="flex flex-col gap-5 relative md:right-[16px]">
                   <div className="flex gap-5 items-center font-extrabold text-3xl text-[#97F4E4] ">
                     <Link

@@ -248,7 +248,7 @@ const Login = () => {
           )}
           {status === "unauthenticated" && (
             <button onClick={userLogin} className="py-2 outline-none border-0 ring-0">
-              <span className="text-sm md:text-base ">
+              <span className="text-xs md:text-base ">
                 Sign in with GitHub&nbsp;
               </span>
               <span className="pt-[2px]">&gt;</span>

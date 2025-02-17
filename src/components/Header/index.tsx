@@ -23,7 +23,7 @@ const Header = (props: Props) => {
               loading="lazy"
             />
           </Link>
-          <span className="text-sm font-bold tracking-widest">Octasol Beta</span>
+          <span className="text-xs font-bold tracking-widest">Octasol Beta</span>
         </div>
         <div className="flex items-center gap-6">
           <Login />
