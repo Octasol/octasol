@@ -112,7 +112,7 @@ const Bounty = () => {
           {bounties.map((bounty, index) => (
             <Card
               key={index}
-              className="hover:shadow-sm transition-shadow duration-500 cursor-pointer bg-black hover:shadow-[#43aa8a]"
+              className="hover:shadow-sm transition-shadow duration-500 cursor-pointer bg-black hover:shadow-[#43aa8a] flex flex-col h-full"
               onClick={() => bountyDetails(bounty.id)}
             >
               <CardHeader className="space-y-4">
@@ -134,7 +134,7 @@ const Bounty = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center ">
+                  <div className="flex items-center">
                     <DollarSign className="h-4 w-4 text-green-500" />
                     <span className="font-bold">{bounty.price}</span>
                   </div>
@@ -142,7 +142,7 @@ const Bounty = () => {
                 <h2 className="text-xl font-bold">{bounty?.bountyname}</h2>
               </CardHeader>
 
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 flex-grow">
                 <div className="flex flex-wrap gap-2">
                   {bounty.skills.map((skill, skillIndex) => (
                     <Badge key={skillIndex} className="bg-gray-800">
@@ -152,7 +152,7 @@ const Bounty = () => {
                 </div>
               </CardContent>
 
-              <CardFooter className="flex items-center justify-between pt-4 border-t">
+              <CardFooter className="flex items-center justify-between pt-4 border-t border-gray-700">
                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                   <Calendar className="h-4 w-4" />
                   <span>
