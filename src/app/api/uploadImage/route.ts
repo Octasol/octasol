@@ -41,13 +41,15 @@ export async function POST(req: NextRequest) {
   });
   const bucket = process.env.AWS_BUCKET_NAME || "";
   const key = `uploads/${randomUUID()}`; // Define your folder structure as desired
+  const buffer = Buffer.from(await file.arrayBuffer());
 
+  console.log("Buffer Created", buffer.length);
   try {
     // Upload to S3
     const uploadParams = {
       Bucket: bucket,
       Key: key,
-      Body: Buffer.from(await file.arrayBuffer()), // Convert file to buffer
+      Body: buffer,
       ContentType: file.type,
     };
     const upload = await awsClient.send(new PutObjectCommand(uploadParams), {
