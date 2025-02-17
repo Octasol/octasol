@@ -35,7 +35,10 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const awsClient = new S3Client({ region: process.env.AWS_REGION });
+  const awsClient = new S3Client({
+    region: process.env.AWS_REGION,
+    logger: console,
+  });
   const bucket = process.env.AWS_BUCKET_NAME || "";
   const key = `uploads/${randomUUID()}`; // Define your folder structure as desired
 
@@ -47,10 +50,18 @@ export async function POST(req: NextRequest) {
       Body: Buffer.from(await file.arrayBuffer()), // Convert file to buffer
       ContentType: file.type,
     };
-    await awsClient.send(new PutObjectCommand(uploadParams));
+    const upload = await awsClient.send(new PutObjectCommand(uploadParams), {
+      requestTimeout: 60000,
+    });
+    console.log(
+      "File uploaded successfully",
+      upload.$metadata,
+      upload.Expiration
+    );
 
     // Return the S3 URL
     const url = `https://${bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+    console.log("File URL:", url);
     return NextResponse.json({ success: true, url });
   } catch (error) {
     console.error("Error uploading file", error);
