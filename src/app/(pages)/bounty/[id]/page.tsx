@@ -470,7 +470,7 @@ const BountyDetails = () => {
 
                   <div className="w-full flex flex-col gap-4">
                     <p className=" underline underline-offset-4 ">SKILLS</p>
-                    <div className="w-full flex flex-wrap gap-5">
+                    <div className="w-full flex flex-wrap gap-2">
                       {bounty?.skills.map((skill) => (
                         <div key={skill}>
                           <LoginButton>{skill}</LoginButton>
