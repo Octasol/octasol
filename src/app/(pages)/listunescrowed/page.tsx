@@ -15,7 +15,7 @@ export default function ListUnescrowed() {
 
   useEffect(() => {
     if (user?.login) {
-      if (!adminGithub.includes(user.login)) router.back();
+      if (!adminGithub.includes(user.login.toLowerCase())) router.back();
     }
   }, [user]);
 
