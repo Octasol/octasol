@@ -1,3 +1,4 @@
+"use state";
 import {
   Card,
   CardContent,
@@ -18,7 +19,7 @@ import {
 } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import React from "react";
+import React, { useState } from "react";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import NextButton from "@/components/Button/NextButton";
 import { useDispatch, useSelector } from "react-redux";
@@ -36,8 +37,7 @@ import {
 } from "@/app/Redux/Features/profile/profileSlice";
 import { MultiSelect } from "@/components/ui/multi-select";
 import { POST } from "@/config/axios/requests";
-import { Form } from "../ui/form";
-import RichTextEditor from "../RichTextEditor";
+import MDEditor from "@uiw/react-md-editor";
 
 const frameworksList = [
   { value: "Frontend", label: "Frontend" },
@@ -107,8 +107,10 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
   };
 
   const handleDescriptionChange = (value: string | undefined) => {
+    setValue(value);
     dispatch(setBountyDescription(value || ""));
   };
+  const [value, setValue] = useState<any>("**Hello world!!!**");
 
   const submitProfile = async (id: bigint) => {
     const { response, error } = await POST(
@@ -182,14 +184,11 @@ const Bounty = ({ onPrev, setActiveTab }: Props) => {
           <div className="grid grid-cols-1 gap-6">
             <div className="space-y-1">
               <Label htmlFor="bounty-description">Bounty Description</Label>
-              <Form {...form}>
-                <form>
-                  <RichTextEditor
-                    content={profile.bountyDescription}
-                    onChange={handleDescriptionChange}
-                  />
-                </form>
-              </Form>
+              <MDEditor
+                value={value}
+                onChange={handleDescriptionChange}
+                className="!h-96 prose"
+              />
             </div>
           </div>
 

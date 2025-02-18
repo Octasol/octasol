@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "react-toastify";
 import Login from "@/components/Login/Login";
+import MDEditor from "@uiw/react-md-editor";
 
 const bountySubmission = {
   links: [],
@@ -460,12 +461,14 @@ const BountyDetails = () => {
                     <p className=" underline underline-offset-4 ">
                       DESCRIPTION
                     </p>
-                    <div
-                      className="w-full italic "
-                      dangerouslySetInnerHTML={{
-                        __html: bounty?.bountyDescription ?? "",
+
+                    <MDEditor.Markdown
+                      source={bounty?.bountyDescription}
+                      style={{
+                        backgroundColor: "#0f0f0f",
                       }}
-                    ></div>
+                      className="prose"
+                    />
                   </div>
 
                   <div className="w-full flex flex-col gap-4">
