@@ -165,22 +165,24 @@ export default function BentoGridDemo() {
             <Accordion type="single" collapsible>
               {userName.githubUsername && (
                 <AccordionItem value="github">
-                  <AccordionTrigger>
-                    <div className="w-full flex justify-start items-center gap-6">
-                      <Image
-                        src="/assets/profile/github.webp"
-                        alt="github"
-                        className="invert"
-                        width={40}
-                        height={40}
-                        priority={false}
-                        loading="lazy"
-                        placeholder="blur"
-                        blurDataURL="data:image/png;base64,..."
-                      />
-                      <span className="text-base font-semibold ">
-                        {userName.githubUsername}
-                      </span>
+                  <AccordionTrigger className="hover:no-underline">
+                    <div className="w-full flex justify-start items-center">
+                      <a target="_blank" href={`https://github.com/${userName.githubUsername}`} className="flex items-center gap-6 hover:underline hover:opacity-80">
+                        <Image
+                          src="/assets/profile/github.webp"
+                          alt="github"
+                          className="invert"
+                          width={40}
+                          height={40}
+                          priority={false}
+                          loading="lazy"
+                          placeholder="blur"
+                          blurDataURL="data:image/png;base64,..."
+                        />
+                        <span className="text-base font-semibold ">
+                          {userName.githubUsername}
+                        </span>
+                      </a>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
@@ -191,22 +193,24 @@ export default function BentoGridDemo() {
 
               {userName.superteamUsername && (
                 <AccordionItem value="superteam">
-                  <AccordionTrigger>
-                    <div className="w-full flex justify-start items-center gap-6">
-                      <Image
-                        src="/assets/profile/superteam.jpeg"
-                        alt="superteam"
-                        className="rounded-full"
-                        width={40}
-                        height={40}
-                        priority={false}
-                        loading="lazy"
-                        placeholder="blur"
-                        blurDataURL="data:image/png;base64,..."
-                      />
-                      <span className="text-base font-semibold ">
-                        {userName.superteamUsername}
-                      </span>
+                  <AccordionTrigger className="hover:no-underline">
+                    <div className="w-full flex justify-start items-center">
+                      <a target="_blank" href={`https://earn.superteam.fun/t/${userName.superteamUsername}`} className="flex items-center gap-6 hover:underline hover:opacity-80">
+                        <Image
+                          src="/assets/profile/superteam.jpeg"
+                          alt="superteam"
+                          className="rounded-full"
+                          width={40}
+                          height={40}
+                          priority={false}
+                          loading="lazy"
+                          placeholder="blur"
+                          blurDataURL="data:image/png;base64,..."
+                        />
+                        <span className="text-base font-semibold ">
+                          {userName.superteamUsername}
+                        </span>
+                      </a>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
@@ -217,22 +221,24 @@ export default function BentoGridDemo() {
 
               {userName.leetcodeUsername && (
                 <AccordionItem value="leetcode">
-                  <AccordionTrigger>
-                    <div className="w-full flex justify-start items-center gap-6">
-                      <Image
-                        src="/assets/profile/leetcode.webp"
-                        alt="leetcode"
-                        className="rounded-full"
-                        width={40}
-                        height={40}
-                        priority={false}
-                        loading="lazy"
-                        placeholder="blur"
-                        blurDataURL="data:image/png;base64,..."
-                      />
-                      <span className="text-base font-semibold ">
-                        {userName.leetcodeUsername}
-                      </span>
+                  <AccordionTrigger className="hover:no-underline">
+                    <div className="w-full flex justify-start items-center">
+                      <a target="_blank" href={`https://leetcode.com/${userName.leetcodeUsername}`} className="flex items-center gap-6 hover:underline hover:opacity-80">
+                        <Image
+                          src="/assets/profile/leetcode.webp"
+                          alt="leetcode"
+                          className="rounded-full"
+                          width={40}
+                          height={40}
+                          priority={false}
+                          loading="lazy"
+                          placeholder="blur"
+                          blurDataURL="data:image/png;base64,..."
+                        />
+                        <span className="text-base font-semibold ">
+                          {userName.leetcodeUsername}
+                        </span>
+                      </a>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
@@ -245,29 +251,34 @@ export default function BentoGridDemo() {
                 <AccordionItem value="codeforces">
                   <AccordionTrigger>Codeforces</AccordionTrigger>
                   <AccordionContent>
-                    Username: {userName.codeforcesUsername}
+                    <span>Username:</span>
+                    <a href={`https://codeforces.com/profile/${userName.codeforcesUsername}`} target="_blank" className="underline">
+                      {userName.codeforcesUsername}
+                    </a>
                   </AccordionContent>
                 </AccordionItem>
               )}
 
               {userName.hackerrankUsername && (
                 <AccordionItem value="hackerrank">
-                  <AccordionTrigger>
-                    <div className="w-full flex justify-start items-center gap-6">
-                      <Image
-                        src="/assets/profile/hackerrank.webp"
-                        alt="hackerrank"
-                        className="rounded-full"
-                        width={40}
-                        height={40}
-                        priority={false}
-                        loading="lazy"
-                        placeholder="blur"
-                        blurDataURL="data:image/png;base64,..."
-                      />
-                      <span className="text-base font-semibold ">
-                        {userName.hackerrankUsername}
-                      </span>
+                  <AccordionTrigger className="hover:no-underline">
+                    <div className="w-full flex justify-start items-center">
+                      <a target="_blank" href={`https://www.hackerrank.com/profile/${userName.hackerrankUsername}`} className="flex items-center gap-6 hover:underline hover:opacity-80">
+                        <Image
+                          src="/assets/profile/hackerrank.webp"
+                          alt="hackerrank"
+                          className="rounded-full"
+                          width={40}
+                          height={40}
+                          priority={false}
+                          loading="lazy"
+                          placeholder="blur"
+                          blurDataURL="data:image/png;base64,..."
+                        />
+                        <span className="text-base font-semibold ">
+                          {userName.hackerrankUsername}
+                        </span>
+                      </a>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
@@ -278,22 +289,24 @@ export default function BentoGridDemo() {
 
               {userName.codechefUsername && (
                 <AccordionItem value="codechef">
-                  <AccordionTrigger>
-                    <div className="w-full flex justify-start items-center gap-6">
-                      <Image
-                        src="/assets/profile/codechef.png"
-                        alt="codechef"
-                        className="rounded-full aspect-square"
-                        width={40}
-                        height={40}
-                        priority={false}
-                        loading="lazy"
-                        placeholder="blur"
-                        blurDataURL="data:image/png;base64,..."
-                      />
-                      <span className="text-base font-semibold ">
-                        {userName.codechefUsername}
-                      </span>
+                  <AccordionTrigger className="hover:no-underline">
+                    <div className="w-full flex justify-start items-center">
+                      <a target="_blank" href={`https://www.codechef.com/users/${userName.codechefUsername}`} className="flex items-center gap-6 hover:underline hover:opacity-80">
+                        <Image
+                          src="/assets/profile/codechef.png"
+                          alt="codechef"
+                          className="rounded-full aspect-square"
+                          width={40}
+                          height={40}
+                          priority={false}
+                          loading="lazy"
+                          placeholder="blur"
+                          blurDataURL="data:image/png;base64,..."
+                        />
+                        <span className="text-base font-semibold ">
+                          {userName.codechefUsername}
+                        </span>
+                      </a>
                     </div>
                   </AccordionTrigger>
 
@@ -305,22 +318,24 @@ export default function BentoGridDemo() {
 
               {userName.gfgUsername && (
                 <AccordionItem value="gfg">
-                  <AccordionTrigger>
-                    <div className="w-full flex justify-start items-center gap-6">
-                      <Image
-                        src="/assets/profile/gfg.png"
-                        alt="gfg"
-                        className="rounded-full aspect-square"
-                        width={40}
-                        height={40}
-                        priority={false}
-                        loading="lazy"
-                        placeholder="blur"
-                        blurDataURL="data:image/png;base64,..."
-                      />
-                      <span className="text-base font-semibold ">
-                        {userName.gfgUsername}
-                      </span>
+                  <AccordionTrigger className="hover:no-underline">
+                    <div className="w-full flex justify-start items-center">
+                      <a target="_blank" href={`https://www.geeksforgeeks.org/user/${userName.gfgUsername}`} className="flex items-center gap-6 hover:underline hover:opacity-80">
+                        <Image
+                          src="/assets/profile/gfg.png"
+                          alt="gfg"
+                          className="rounded-full aspect-square"
+                          width={40}
+                          height={40}
+                          priority={false}
+                          loading="lazy"
+                          placeholder="blur"
+                          blurDataURL="data:image/png;base64,..."
+                        />
+                        <span className="text-base font-semibold ">
+                          {userName.gfgUsername}
+                        </span>
+                      </a>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
@@ -333,7 +348,10 @@ export default function BentoGridDemo() {
                 <AccordionItem value="gitlab">
                   <AccordionTrigger>GitLab</AccordionTrigger>
                   <AccordionContent>
-                    Username: {userName.gitlabUsername}
+                    <span>Username:</span> 
+                    <a href={`https://gitlab.com/${userName.gitlabUsername}`} target="_blank" className="underline">
+                      {userName.gitlabUsername}
+                    </a>
                   </AccordionContent>
                 </AccordionItem>
               )}
