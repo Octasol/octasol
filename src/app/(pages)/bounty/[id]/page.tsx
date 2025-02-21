@@ -208,7 +208,7 @@ const BountyDetails = () => {
             <div className="w-full md:max-w-[400px] flex flex-col h-full md:h-[90vh] relative md:sticky top-0 px-4">
               <div className="w-full h-min flex flex-col items-start py-5 px-4 md:px-8 gap-4 bg-[#0f0f0f] rounded-xl ">
                 <p className=" underline underline-offset-4 font-bold">
-                  SPONSOR DETAILS
+                  About Sponsor
                 </p>
                 <div className="w-full flex justify-center items-center">
                   {bounty?.sponsor?.image ? (
@@ -223,10 +223,10 @@ const BountyDetails = () => {
                     <User size={50} />
                   )}
                 </div>
-                <div className="w-full flex justify-between items-center ">
+                <div className="w-full flex justify-between items-center font-semibold">
                   {bounty?.sponsor && `${bounty?.sponsor.name}`}
                 </div>
-                <div className="w-full italic ">
+                <div className="w-full ">
                   {bounty?.sponsor && bounty?.sponsor.description}
                 </div>
 
@@ -328,7 +328,7 @@ const BountyDetails = () => {
               <div className="w-full flex h-full  bg-[#0f0f0f] rounded-xl ">
                 <div className="w-full flex flex-col items-start py-5 px-4 md:px-8 gap-4">
                   <p className=" underline underline-offset-4 font-bold">
-                    BOUNTY DETAILS
+                    Details
                   </p>
                   <div className="w-full flex flex-col md:flex-row justify-between items-center gap-5 md:gap-2">
                     <div className="w-full md:w-6/12 ">
@@ -458,8 +458,8 @@ const BountyDetails = () => {
                   <div className="w-full h-[1px] bg-black pb-1 rounded-full"></div>
 
                   <div className="w-full flex flex-col gap-4">
-                    <p className=" underline underline-offset-4 ">
-                      DESCRIPTION
+                    <p className=" underline underline-offset-4 font-semibold">
+                      Description
                     </p>
 
                     <MDEditor.Markdown
