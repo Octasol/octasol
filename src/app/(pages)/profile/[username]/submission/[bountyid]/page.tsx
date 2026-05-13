@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import { cn } from "@/lib/utils";
 import { toast } from "react-toastify";
 import { adminGithub } from "@/lib/constants";
+import SafeHtml from "@/components/SafeHtml";
 
 interface submission {
   bountyId: string;
@@ -327,13 +328,10 @@ const UserSubmisson = () => {
                   </div>
                 </div>
                 <div className="w-full flex flex-col gap-4">
-                  <div
+                  <SafeHtml
                     className="w-full italic "
-                    dangerouslySetInnerHTML={{
-                      __html:
-                        submissionDetails?.bounty?.bountyDescription ?? "",
-                    }}
-                  ></div>
+                    html={submissionDetails?.bounty?.bountyDescription}
+                  />
                 </div>
 
                 <div className="w-full flex flex-col gap-4">

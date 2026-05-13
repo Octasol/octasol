@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "react-toastify";
 import Login from "@/components/Login/Login";
+import SafeHtml from "@/components/SafeHtml";
 
 const bountySubmission = {
   links: [],
@@ -460,12 +461,10 @@ const BountyDetails = () => {
                     <p className=" underline underline-offset-4 font-semibold">
                       Description
                     </p>
-                    <div
+                    <SafeHtml
                       className="w-full "
-                      dangerouslySetInnerHTML={{
-                        __html: bounty?.bountyDescription ?? "",
-                      }}
-                    ></div>
+                      html={bounty?.bountyDescription}
+                    />
                   </div>
 
                   <div className="w-full flex flex-col gap-4">
