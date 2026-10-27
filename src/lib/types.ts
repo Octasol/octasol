@@ -1,7 +1,8 @@
 export interface Profile {
+  githubId?: string;
   githubUsername: string;
   totalPoints: number;
-  rank: number;
+  rank?: number;
 }
 
 export interface GithubDevProfile {

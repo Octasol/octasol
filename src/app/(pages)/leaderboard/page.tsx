@@ -21,50 +21,46 @@ import { Input } from "@/components/ui/input";
 const Leaderboard = () => {
   const router = useRouter();
   const [profile, setProfile] = useState<Profile[]>([]);
+  const [top3, setTop3] = useState<Profile[]>([]);
   const user = useSelector((state: any) => state.user);
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 15;
+  const [totalPages, setTotalPages] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [filteredProfiles, setFilteredProfiles] = useState<Profile[]>([]);
 
   useEffect(() => {
-    const fetchProfiles = async () => {
-      const { response } = await POST(leaderboard, {});
-      setProfile(response?.data);
-      setFilteredProfiles(response?.data);
+    const fetchPage = async () => {
+      const { response } = await POST(leaderboard, { page: currentPage });
+      const data = response?.data;
+      if (!data) return;
+      setProfile(data.profiles ?? []);
+      setTop3(data.top3 ?? []);
+      setTotalPages(data.totalPages ?? 1);
+      if (currentPage > (data.totalPages ?? 1)) setCurrentPage(data.totalPages ?? 1);
     };
-    fetchProfiles();
-  }, []);
+    fetchPage();
+  }, [currentPage]);
 
   useEffect(() => {
-    if (search) {
-      const rankedProfiles = profile.map((p, index) => ({
-        ...p,
-        rank: index + 1,
-      }));
-      setFilteredProfiles(
-        rankedProfiles.filter((p) =>
-          p.githubUsername.toLowerCase().includes(search.toLowerCase())
-        )
-      );
-    } else {
+    if (!search.trim()) {
       setFilteredProfiles([]);
+      return;
     }
-  }, [search, profile]);
+    let cancelled = false;
+    const timer = setTimeout(async () => {
+      const { response } = await POST(leaderboard, { search });
+      if (!cancelled) setFilteredProfiles(response?.data?.profiles ?? []);
+    }, 250);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [search]);
 
   const toggleSearch = () => {
     setIsOpen(!isOpen);
   };
-
-  const response = async () => {
-    const { response } = await POST(leaderboard, {});
-    setProfile(response?.data);
-  };
-
-  useEffect(() => {
-    response();
-  }, []);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
@@ -74,13 +70,6 @@ const Leaderboard = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  const totalPages = Math.ceil(profile.length / recordsPerPage);
-
-  const paginatedProfiles = profile.slice(
-    (currentPage - 1) * recordsPerPage,
-    currentPage * recordsPerPage
-  );
-
   const userProfile = (username: string) => {
     router.push(`/profile/${username}`);
   };
@@ -88,9 +77,7 @@ const Leaderboard = () => {
   const currentUserProfile = profile.find(
     (item: Profile) => item.githubUsername === user?.login
   );
-  const currentUserRank = profile.findIndex(
-    (item: Profile) => item.githubUsername === user?.login
-  );
+  const currentUserRank = currentUserProfile?.rank ?? 0;
 
   return (
     <>
@@ -100,14 +87,14 @@ const Leaderboard = () => {
       <div className="w-full h-fit pt-4">
         <div className="w-full flex flex-col justify-center items-center py-2 md:py-5">
           <div className="mb-8 md:mb-0 z-20">
-            <RankCard profile={profile[0]} rank={1} />
+            <RankCard profile={top3[0]} rank={1} />
           </div>
           <div className="flex flex-col md:flex-row justify-evenly items-center gap-4 md:gap-32 container place-items-center mt-5">
             <div>
-              <RankCard profile={profile[1]} rank={2} />
+              <RankCard profile={top3[1]} rank={2} />
             </div>
             <div>
-              <RankCard profile={profile[2]} rank={3} />
+              <RankCard profile={top3[2]} rank={3} />
             </div>
           </div>
         </div>
@@ -183,14 +170,14 @@ const Leaderboard = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {paginatedProfiles.map((item: Profile, index: number) => (
+            {profile.map((item: Profile, index: number) => (
               <TableRow
                 key={index}
                 onClick={() => userProfile(item.githubUsername)}
                 className="cursor-pointer"
               >
                 <TableCell className="font-medium">
-                  {(currentPage - 1) * recordsPerPage + index + 1}
+                  {item.rank ?? index + 1}
                 </TableCell>
                 <TableCell>{item.githubUsername}</TableCell>
                 <TableCell className="text-right">{item.totalPoints}</TableCell>
@@ -207,7 +194,7 @@ const Leaderboard = () => {
                   className="cursor-pointer "
                 >
                   <TableCell className="font-medium w-[100px]">
-                    {currentUserRank + 1}
+                    {currentUserRank}
                   </TableCell>
                   <TableCell>{currentUserProfile.githubUsername}</TableCell>
                   <TableCell className="text-right">
